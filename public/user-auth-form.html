@@ -56,7 +56,7 @@
               response.json().then(json => {
                 client_id = json.client_id;
                 google.accounts.id.initialize({
-                    client_id: '600915655715-o9ssvjgtj0aiap2q4gc8jq81pefqsmu9.apps.googleusercontent.com',
+                    client_id: `${client_id}`,
                     callback: handleCredentialResponse
                 });
                 google.accounts.id.renderButton(
