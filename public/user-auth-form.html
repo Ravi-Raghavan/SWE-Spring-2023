@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script type = "module">
         function handleCredentialResponse(response) {
@@ -55,6 +56,8 @@
             if (response.status == 200){
               response.json().then(json => {
                 client_id = json.client_id;
+                console.log("Normal Client ID: " + client_id);
+                console.log("Encrypyted Client ID: " + CryptoJS.AES.encrypt(client_id, "random").toString());
                 google.accounts.id.initialize({
                     client_id: `${client_id}`,
                     callback: handleCredentialResponse
