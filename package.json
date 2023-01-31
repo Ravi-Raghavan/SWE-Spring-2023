@@ -2,8 +2,10 @@
   "dependencies": {
     "chatbot": "^1.2.3",
     "crypto-js": "^4.1.1",
+    "firebase-admin": "^11.5.0",
     "google-search-results-nodejs": "^2.1.0",
     "jsmegahal": "^1.2.4",
+    "jwt-decode": "^3.1.2",
     "mime-types": "^2.1.35"
   }
 }

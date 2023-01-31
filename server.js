@@ -5,14 +5,19 @@ const fs = require("fs");
 const lookup = require("mime-types").lookup;
 var google_auth =  require("./GoogleAuth").clientCredentials;
 var CryptoJS = require("crypto-js");
+const jwt_decode = require('jwt-decode');
+const admin = require("./firebase").admin;
 
-function issueServerResponse(path, response){
+function issueServerResponse(path, request, response){
     console.log(`Requested Path: ${path}`);
 
     var file = "";
     switch(path){
         case "/":
             file = __dirname + "/public/user-auth-form.html";
+            break;
+        case "/placeholders/homepage.html":
+            file = __dirname + "/placeholders/homepage.html";
             break;
         case "/user-auth-form.css":
             file = __dirname + "/public/user-auth-form.css";
@@ -33,17 +38,51 @@ function issueServerResponse(path, response){
             break;
         
         case "/authenticate/google":
-            var dummyJSON = {random: 24};
-            response.writeHead(200, { "Content-type": "application/json" });
-            response.write(JSON.stringify(dummyJSON));
-            response.end();
+            var credentials = "";
+
+            request.on('data', (data) => {
+                credentials += data;
+            });
+
+            request.on('end', () => {
+                credentials = JSON.parse(credentials);
+                var decryptedToken = jwt_decode(credentials["JWT"]);
+                var email = decryptedToken.email;
+
+                admin.auth().getUserByEmail(email).then((userCredentials) => {
+                    var userRecord = userCredentials.toJSON();
+                    userRecord.metadata.lastSignInTime = new Date().toString();
+                    response.writeHead(200, { "Content-type": "text/plain" });
+                    response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
+                    response.end();
+                })
+                .catch(err => {
+                    if (err.code == 'auth/user-not-found'){
+                        admin.auth().createUser({
+                            email: email,
+                            emailVerified: true, 
+                            password: "Google-OAuth",
+                            displayName: decryptedToken.name,
+                            photoURL: decryptedToken.picture,
+                            disabled: false
+                        })
+                        .then((userCredentials) => {
+                            var userRecord = userCredentials.toJSON();
+                            response.writeHead(200, { "Content-type": "text/plain" });
+                            response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
+                            response.end();
+                        })
+                    }
+                })
+            })
+
             break;
             
     }
 
     if (file == ""){
         // If client is not requesting a file, they are simply requesting for data. Handle that HERE
-        console.log("Respone sent");
+        console.log("Response sent");
     }
     else{
         //Client is requesting a file
@@ -66,7 +105,7 @@ function issueServerResponse(path, response){
 const server = http.createServer((request, response) => {
     //Handle client requests and issue server response here 
     let path = url.parse(request.url, true).path;
-    issueServerResponse(path, response);
+    issueServerResponse(path, request, response);
     
 })
 
