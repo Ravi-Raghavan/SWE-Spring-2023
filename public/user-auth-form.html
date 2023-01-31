@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login</title>
+    <link rel="stylesheet" href="./user-auth-form.css">
+
+</head>
+
+<body>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script type = "module">
+        function handleCredentialResponse(response) {
+          console.log("Encoded JWT ID token: " + response.credential);
+          
+          var data = {
+            JWT: response.credential
+          };
+          
+          fetch("/register/google", {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+          })
+          .then( (response) => {
+            if (response.status == 200){
+              response.json().then(json => {
+                if (typeof(Storage) != "undefined"){
+                  localStorage.setItem("User Record", JSON.stringify(json))
+                }
+                else{
+                  console.log("This Browser doesn't support local client side storage")
+                }
+                window.location.href = "homepage.html";
+              })
+            }
+          }
+          );
+        }
+
+        window.onload = function () {
+          var client_id = "";
+          fetch("/GoogleAuth", {
+            method: "GET",
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          .then((response) => {
+            if (response.status == 200){
+              response.json().then(json => {
+                client_id = json.client_id;
+                google.accounts.id.initialize({
+                    client_id: '600915655715-o9ssvjgtj0aiap2q4gc8jq81pefqsmu9.apps.googleusercontent.com',
+                    callback: handleCredentialResponse
+                });
+                google.accounts.id.renderButton(
+                    document.getElementById("google-login"),
+                    { theme: "outline", size: "large" , shape: "pill", width: 350, theme: "filled_blue"}  // customization attributes
+                );
+                google.accounts.id.prompt(); // also display the One Tap dialog
+              })
+            }
+          })
+
+        }
+    </script>
+
+    <div class = "bg-img"></div>
+
+    <form>
+        <div class="user-auth-form-field">
+            <input type="email" placeholder="Email" required/>
+        </div>
+    
+        <div class="user-auth-form-field">
+            <input type="password" placeholder="Password" required/>                         
+        </div>
+    
+        <div class="user-auth-form-field">
+            <button class="register-button">Register</button>
+        </div>
+
+        <div class="user-auth-form-field">
+            <button class="login-button">Log in</button>
+        </div>
+
+        <div class = "google-login" id ="google-login"></div>
+    </form>
+  
+</body>
+</html>
