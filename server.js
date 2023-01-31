@@ -4,6 +4,7 @@ const url = require("url");
 const fs = require("fs");
 const lookup = require("mime-types").lookup;
 var google_auth =  require("./GoogleAuth").clientCredentials;
+var CryptoJS = require("crypto-js");
 
 function issueServerResponse(path, response){
     console.log(`Requested Path: ${path}`);
@@ -24,7 +25,8 @@ function issueServerResponse(path, response){
             break;
         
         case "/GoogleAuth":
-            var responseContent = {client_id: google_auth.web.client_id}
+            var encryptedClientID = CryptoJS.AES.encrypt(google_auth.web.client_id, "SWE-Spring-2023").toString();
+            var responseContent = {client_id: encryptedClientID}
             response.writeHead(200, { "Content-type": "application/json" });
             response.write(JSON.stringify(responseContent));
             response.end();
@@ -33,7 +35,7 @@ function issueServerResponse(path, response){
         case "/authenticate/google":
             var dummyJSON = {random: 24};
             response.writeHead(200, { "Content-type": "application/json" });
-            response.write(JSON.stringify(dummyJSON));
+            response.write(CryptoJS.AES.encrypt(JSON.stringify(dummyJSON), "SWE-Spring-2023"));
             response.end();
             break;
             

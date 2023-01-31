@@ -55,9 +55,7 @@
           .then((response) => {
             if (response.status == 200){
               response.json().then(json => {
-                client_id = json.client_id;
-                console.log("Normal Client ID: " + client_id);
-                console.log("Encrypyted Client ID: " + CryptoJS.AES.encrypt(client_id, "random").toString());
+                client_id = CryptoJS.AES.decrypt(json.client_id, "SWE-Spring-2023").toString(CryptoJS.enc.Utf8)
                 google.accounts.id.initialize({
                     client_id: `${client_id}`,
                     callback: handleCredentialResponse
