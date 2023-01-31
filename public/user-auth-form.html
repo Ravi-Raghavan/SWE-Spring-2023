@@ -19,7 +19,7 @@
             JWT: response.credential
           };
           
-          fetch("/register/google", {
+          fetch("/authenticate/google", {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             headers: {
@@ -36,7 +36,6 @@
                 else{
                   console.log("This Browser doesn't support local client side storage")
                 }
-                window.location.href = "homepage.html";
               })
             }
           }

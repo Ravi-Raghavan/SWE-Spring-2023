@@ -29,6 +29,13 @@ function issueServerResponse(path, response){
             response.write(JSON.stringify(responseContent));
             response.end();
             break;
+        
+        case "/authenticate/google":
+            var dummyJSON = {random: 24};
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(dummyJSON));
+            response.end();
+            break;
             
     }
 
