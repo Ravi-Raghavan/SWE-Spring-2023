@@ -67,13 +67,13 @@ function issueServerResponse(path, request, response){
             })
             break;
         
-        case "/completeValidation":
+        case "/validateEmail":
             //Complete the validation of an email
-            file = __dirname + "/public/email-verified.html";
+            file = __dirname + "/public/email-validated.html";
             break;
         
-        case "/complete-validation.html":
-            file = __dirname + "/public/complete-validation.html";
+        case "/waiting-for-validation.html":
+            file = __dirname + "/public/waiting-for-validation.html";
             break;
         
         case "/validate/user":
@@ -104,29 +104,10 @@ function issueServerResponse(path, request, response){
             });
 
 
-            request.on('end', () => {
+            request.on('end', async () => {
                 credentials = JSON.parse(credentials);
                 var uid = credentials.uid;
-                ref.child(`${uid}`).on('value', (snapshot) => {
-                    var value = snapshot.val();
-                    if (value == null){
-                        response.writeHead(200, { "Content-type": "text/plain" });
-                        response.write("false");
-                        response.end();
-                    }
-                    else{
-                        var isValidated = value["emailVerified"];
-
-                        var responseContent = "false";
-                        if (isValidated){
-                            responseContent = "true";
-                        }
-
-                        response.writeHead(200, { "Content-type": "text/plain" });
-                        response.write(responseContent);
-                        response.end();
-                    }
-                })
+                await firebaseAPI.checkUserValidation(uid, response);
             })
             break;
         

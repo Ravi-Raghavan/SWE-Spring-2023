@@ -62,8 +62,32 @@ async function searchUser(searchParameters){
     return doesExist;
 }
 
+//function which checks if a user's email has been validated yet
+async function checkUserValidation(uid, response){
+    ref.child(`${uid}`).on('value', (snapshot) => {
+        var value = snapshot.val();
+        if (value == null){
+            response.writeHead(200, { "Content-type": "text/plain" });
+            response.write("false");
+            response.end();
+        }
+        else{
+            var isValidated = value["emailVerified"];
+
+            var responseContent = "false";
+            if (isValidated){
+                responseContent = "true";
+            }
+
+            response.writeHead(200, { "Content-type": "text/plain" });
+            response.write(responseContent);
+            response.end();
+        }
+    })
+}
 
 module.exports = {
     createUser: createUser,
-    searchUser: searchUser
+    searchUser: searchUser,
+    checkUserValidation: checkUserValidation
 }

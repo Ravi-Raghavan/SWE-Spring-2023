@@ -33,7 +33,7 @@
                         var userRecord = JSON.parse(originalText);
                         if (typeof(Storage) != "undefined"){
                             localStorage.setItem("User Record", JSON.stringify(userRecord))
-                            window.location.href = "complete-validation.html";
+                            window.location.href = "waiting-for-validation.html";
                         }
                         else{
                             console.log("This Browser doesn't support local client side storage")
