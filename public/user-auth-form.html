@@ -68,7 +68,7 @@
 
         window.onload = function () {
           var client_id = "";
-          fetch("/GoogleAuth", {
+          fetch("/credentials/google", {
             method: "GET",
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             headers: {

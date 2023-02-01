@@ -10,6 +10,7 @@ var ref = db.ref("/users/");
 
 const SMTP = require("./public/SMTP");
 const GoogleAuth = require("./public/GoogleAuth")
+const firebaseAPI = require("./public/FirebaseAPI");
 
 
 function issueServerResponse(path, request, response){
@@ -42,7 +43,7 @@ function issueServerResponse(path, request, response){
             file = __dirname + "/img/favicon.ico";
             break;
         
-        case "/GoogleAuth":
+        case "/credentials/google":
            GoogleAuth.retrieveClientCredentials(response);
            break;
         
@@ -50,7 +51,7 @@ function issueServerResponse(path, request, response){
             GoogleAuth.authenticateViaGoogle(request, response);            
             break;
         
-        case "/validate/email":
+        case "/register":
             var credentials = "";
 
             request.on('data', (data) => {
@@ -61,23 +62,8 @@ function issueServerResponse(path, request, response){
                 credentials = JSON.parse(credentials);
                 var email = credentials.email
                 await SMTP.sendValidationEmail(email);
-                admin.auth().createUser({
-                    email: email,
-                    emailVerified: false, 
-                    password: "Google-OAuth",
-                    disabled: true
-                })
-                .then((userCredentials) => {
-                    var userRecord = userCredentials.toJSON();
-                    ref.child(`${userCredentials.uid}`).set({
-                        uid: userRecord.uid, 
-                        email: userRecord.email,
-                        emailVerified: false
-                    })
-                    response.writeHead(200, { "Content-type": "text/plain" });
-                    response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
-                    response.end();
-                })
+                var userParameters = {email: email, emailVerified: false, password: "random", disabled: true}
+                await firebaseAPI.createUser(userParameters, response);
             })
             break;
         

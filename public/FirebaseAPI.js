@@ -2,7 +2,7 @@
 
 const { createMockUserToken } = require("@firebase/util");
 
-const admin = require("./firebase").admin;
+const admin = require("../firebase").admin;
 var db = admin.database();
 var ref = db.ref("/users/");
 
@@ -21,7 +21,8 @@ async function createUser(userParameters, response){
     })
     
     //Create the user in the database table
-    var userRecord = userCredentials.JSON();
+    console.log("User Credentials: " + userCredentials.toJSON());
+    var userRecord = userCredentials.toJSON();
     var uid = userRecord.uid;
 
     ref.child(`${uid}`).set({
@@ -41,9 +42,28 @@ async function createUser(userParameters, response){
     response.end();
 }
 
+//This function is responsible for searching for a user in the database. Returns "True" if user is there. Else, returns "False"
+async function searchUser(searchParameters){
+    var email = searchParameters.email;
 
+    var doesExist = await new Promise((resolve, reject) => {
+        admin.auth().getUserByEmail(email)
+        .then((userCredentials) => {
+            var userRecord = userCredentials.toJSON();
+            resolve(JSON.stringify(userRecord));
+        })
+        .catch((err) => {
+            if (err.code == 'auth/user-not-found'){
+                resolve("N/A")
+            }
+        })
+    })
+
+    return doesExist;
+}
 
 
 module.exports = {
-    createUser: createUser
+    createUser: createUser,
+    searchUser: searchUser
 }
