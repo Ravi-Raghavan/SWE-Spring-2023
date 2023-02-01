@@ -12,12 +12,12 @@
     </body>
     <script>
         function isUserVerified(){
-            var user_record = localStorage.getItem("User Record");
+            var user_record = JSON.parse(localStorage.getItem("User Record"));
             var uid = user_record.uid;
             var data = {
                 uid: uid
             }
-            
+
             fetch("/checkUserValidation", {
                 method: 'POST', 
                 cache: 'no-cache', 
