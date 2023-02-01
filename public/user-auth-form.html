@@ -30,6 +30,14 @@
             },
             body: JSON.stringify(data) // body data type must match "Content-Type" header
         })
+        .then((response) => {
+          if (response.status == 200){
+            response.json().then(json => {
+              alert("JSON: " + json);
+              window.location.href = "./placeholders/homepage.html";
+            })
+          }
+        })
       })
         document.getElementById("register-button").addEventListener("click", function(){
             window.location.href = "./user-registration-form.html";
@@ -99,11 +107,11 @@
 
     <form>
         <div class="user-auth-form-field">
-            <input type="email" placeholder="Email" required/>
+            <input id = "email" type="email" placeholder="Email" required/>
         </div>
     
         <div class="user-auth-form-field">
-            <input type="password" placeholder="Password" required/>                         
+            <input id = "password" type="password" placeholder="Password" required/>                         
         </div>
 
         <div class="user-auth-form-field">

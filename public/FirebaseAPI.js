@@ -86,8 +86,24 @@ async function checkUserValidation(uid, response){
     })
 }
 
+async function loginUser(searchParameters, response){
+    var userRecord = await searchUser(searchParameters);
+    if (userRecord == "N/A"){
+        var responseContent = "false";
+        response.writeHead(404, { "Content-type": "text/plain" });
+        response.write(responseContent);
+        response.end();
+    }
+    else{
+        response.writeHead(200, { "Content-type": "application/json" });
+        response.write(JSON.stringify(userRecord));
+        response.end();
+    }
+}
+
 module.exports = {
     createUser: createUser,
     searchUser: searchUser,
-    checkUserValidation: checkUserValidation
+    checkUserValidation: checkUserValidation,
+    loginUser: loginUser
 }

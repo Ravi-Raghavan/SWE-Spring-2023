@@ -119,25 +119,12 @@ function issueServerResponse(path, request, response){
             });
 
 
-            request.on('end', () => {
+            request.on('end', async () => {
                 credentials = JSON.parse(credentials);
                 var email = credentials["email"];
                 var password = credentials["password"];
-
-                admin.auth().getUserByEmail(email).then(userCredentials => {
-                    var userRecord = userCredentials.toJSON();
-                    response.writeHead(200, { "Content-type": "application/json" });
-                    response.write(JSON.stringify(userRecord));
-                    response.end();
-                })
-                .catch(err => {
-                    if (err.code == "auth/user-not-found"){
-                        var userRecord = {uid: "ERROR"};
-                        response.writeHead(400, { "Content-type": "application/json" });
-                        response.write(JSON.stringify(userRecord));
-                        response.end();
-                    }
-                })
+                var searchParameters = {email: email};
+                await firebaseAPI.loginUser(searchParameters, response);
             })
             break;
             
