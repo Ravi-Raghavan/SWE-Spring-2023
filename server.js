@@ -7,6 +7,37 @@ var google_auth =  require("./GoogleAuth").clientCredentials;
 var CryptoJS = require("crypto-js");
 const jwt_decode = require('jwt-decode');
 const admin = require("./firebase").admin;
+const nodemailer = require('nodemailer');
+
+async function sendValidationEmail(email){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+        user: 'swespring2023@gmail.com',
+        pass: 'lotrlepvzmwdnsny'
+    }
+    });
+    
+    var mailOptions = {
+        from: 'swespring2023@gmail.com',
+        to: `${email}`,
+        subject: 'Sending Email using Node.js',
+        text: `Please Click the following link to complete the validation of your email: http://localhost:8000/completeValidation`
+    };
+
+    result = await new Promise((resolve, rejects) => {
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                rejects(error);
+            } else {
+                resolve('Email sent: ' + info.response);
+                console.log("Email Sent: " + info.response);
+            }
+        });
+    })
+
+    console.log("Done with sendValidationEmail()");
+}
 
 function issueServerResponse(path, request, response){
     console.log(`Requested Path: ${path}`);
@@ -57,9 +88,10 @@ function issueServerResponse(path, request, response){
                 credentials = JSON.parse(credentials);
                 var decryptedToken = jwt_decode(credentials["JWT"]);
                 var email = decryptedToken.email;
-
+                
                 admin.auth().getUserByEmail(email).then((userCredentials) => {
                     var userRecord = userCredentials.toJSON();
+                    console.log("User Record: " + JSON.stringify(userRecord));
                     userRecord.metadata.lastSignInTime = new Date().toString();
                     response.writeHead(200, { "Content-type": "text/plain" });
                     response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
@@ -77,6 +109,7 @@ function issueServerResponse(path, request, response){
                         })
                         .then((userCredentials) => {
                             var userRecord = userCredentials.toJSON();
+                            console.log("User Record: " + JSON.stringify(userRecord));
                             response.writeHead(200, { "Content-type": "text/plain" });
                             response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
                             response.end();
@@ -85,6 +118,29 @@ function issueServerResponse(path, request, response){
                 })
             })
 
+            break;
+        
+        case "/validate/email":
+            var credentials = "";
+
+            request.on('data', (data) => {
+                credentials += data;
+            });
+
+            request.on('end', async () => {
+                credentials = JSON.parse(credentials);
+                var email = credentials.email
+                await sendValidationEmail(email);
+                response.writeHead(200, { "Content-type": "application/json" });
+                response.write(JSON.stringify({emailStatus: "delivered"}));
+                response.end();
+            })
+            break;
+        
+        case "/completeValidation":
+            //Complete the validation of an email
+            console.log("Almost there!");
+            file = __dirname + "/public/complete-validation.html";
             break;
             
     }

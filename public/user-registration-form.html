@@ -13,6 +13,29 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script type = "module">
+        document.getElementById("register-button").addEventListener('click', function(){
+            var email = document.getElementById("email").value
+            var data = {
+                email: email
+            }
+            fetch("/validate/email", {
+                method: 'POST', 
+                cache: 'no-cache', 
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then( (response) => {
+                if (response.status == 200){
+                    response.json().then(json => {
+                        console.log("JSON: " + json);
+                    })
+                    console.log("Successful HTTP communication!")
+                }
+            })
+        })
+
         function handleCredentialResponse(response) {
           var data = {
             JWT: response.credential
@@ -78,7 +101,7 @@
 
     <form>
         <div class="user-auth-form-field">
-            <input type="email" placeholder="Email" required/>
+            <input id = "email" type="email" placeholder="Email" required/>
         </div>
     
         <div class="user-auth-form-field">
@@ -86,7 +109,7 @@
         </div>
     
         <div class="user-auth-form-field">
-            <button class="register-button">Register</button>
+            <button id = "register-button" class="register-button">Register</button>
         </div>
         <div class = "google-login" id ="google-login"></div>
     </form>
