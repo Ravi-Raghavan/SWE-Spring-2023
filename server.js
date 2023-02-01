@@ -62,7 +62,7 @@ function issueServerResponse(path, request, response){
                 credentials = JSON.parse(credentials);
                 var email = credentials.email
                 await SMTP.sendValidationEmail(email);
-                var userParameters = {email: email, emailVerified: false, password: "random", disabled: true}
+                var userParameters = {email: email, emailVerified: false, password: "random", displayName: "First Last", photoURL: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png", disabled: true}
                 await firebaseAPI.createUser(userParameters, response);
             })
             break;
@@ -87,14 +87,8 @@ function issueServerResponse(path, request, response){
                 credentials = JSON.parse(credentials);
                 var uid = credentials.uid;
 
-                await admin.auth().updateUser(uid, {
-                    emailVerified: true, 
-                    disabled: false
-                })
-
-                await ref.child(`${uid}`).update({
-                    emailVerified: true
-                })
+                await admin.auth().updateUser(uid, {emailVerified: true, disabled: false})
+                await ref.child(`${uid}`).update({emailVerified: true})
 
                 response.writeHead(200, { "Content-type": "text/plain" });
                 response.write("Done!");

@@ -1,7 +1,7 @@
 //helper functions to interface with Firebase API 
 
 const { createMockUserToken } = require("@firebase/util");
-
+var CryptoJS = require("crypto-js");
 const admin = require("../firebase").admin;
 var db = admin.database();
 var ref = db.ref("/users/");
@@ -10,28 +10,28 @@ var ref = db.ref("/users/");
 //Function to create a user in our database
 //userParameters: parameters for a particular user(i.e. name, email, etc)
 async function createUser(userParameters, response){
+
     //Create the user in the authentication table
     let userCredentials = await admin.auth().createUser({
         email: userParameters.email,
-        emailVerified: true, 
+        emailVerified: userParameters.emailVerified, 
         password: userParameters.password,
         displayName: userParameters.displayName,
-        photoURL: userParameters.picture,
+        photoURL: userParameters.photoURL,
         disabled: userParameters.disabled
     })
     
     //Create the user in the database table
-    console.log("User Credentials: " + userCredentials.toJSON());
     var userRecord = userCredentials.toJSON();
-    var uid = userRecord.uid;
 
+    var uid = userRecord.uid;
     ref.child(`${uid}`).set({
         uid: uid,
         email: userRecord.email,
         emailVerified: userParameters.emailVerified,
         password: userParameters.password, 
         displayName: userParameters.displayName,
-        photoURL: userParameters.picture,
+        photoURL: userParameters.photoURL,
         disabled: userParameters.disabled
     })
 
