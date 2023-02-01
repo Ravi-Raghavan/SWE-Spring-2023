@@ -13,6 +13,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script type = "module">
+      document.getElementById("login-button").addEventListener("click", function(){
+        var email = document.getElementById("email").value
+        var password = document.getElementById("password").value
+
+        var data = {
+          email: email,
+          password: password
+        }
+
+        fetch("/login", {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        })
+      })
         document.getElementById("register-button").addEventListener("click", function(){
             window.location.href = "./user-registration-form.html";
         })
@@ -89,7 +107,7 @@
         </div>
 
         <div class="user-auth-form-field">
-            <button class="login-button">Log in</button>
+            <button id = "login-button" class="login-button">Log in</button>
         </div>
 
         <div class = "google-login" id ="google-login"></div>

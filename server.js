@@ -3,45 +3,14 @@ const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const lookup = require("mime-types").lookup;
-var google_auth =  require("./GoogleAuth").clientCredentials;
 var CryptoJS = require("crypto-js");
-const jwt_decode = require('jwt-decode');
 const admin = require("./firebase").admin;
-const nodemailer = require('nodemailer');
-const cheerio = require('cheerio');
-
 var db = admin.database();
 var ref = db.ref("/users/");
 
-async function sendValidationEmail(email){
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-        user: 'swespring2023@gmail.com',
-        pass: 'lotrlepvzmwdnsny'
-    }
-    });
-    
-    var mailOptions = {
-        from: 'swespring2023@gmail.com',
-        to: `${email}`,
-        subject: 'Sending Email using Node.js',
-        text: `Please Click the following link to complete the validation of your email: http://localhost:8000/completeValidation`
-    };
+const SMTP = require("./public/SMTP");
+const GoogleAuth = require("./public/GoogleAuth")
 
-    result = await new Promise((resolve, rejects) => {
-        transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-                rejects(error);
-            } else {
-                resolve('Email sent: ' + info.response);
-                console.log("Email Sent: " + info.response);
-            }
-        });
-    })
-
-    console.log("Done with sendValidationEmail()");
-}
 
 function issueServerResponse(path, request, response){
     console.log(`Requested Path: ${path}`);
@@ -74,54 +43,11 @@ function issueServerResponse(path, request, response){
             break;
         
         case "/GoogleAuth":
-            var encryptedClientID = CryptoJS.AES.encrypt(google_auth.web.client_id, "SWE-Spring-2023").toString();
-            var responseContent = {client_id: encryptedClientID}
-            response.writeHead(200, { "Content-type": "application/json" });
-            response.write(JSON.stringify(responseContent));
-            response.end();
-            break;
+           GoogleAuth.retrieveClientCredentials(response);
+           break;
         
         case "/authenticate/google":
-            var credentials = "";
-
-            request.on('data', (data) => {
-                credentials += data;
-            });
-
-            request.on('end', () => {
-                credentials = JSON.parse(credentials);
-                var decryptedToken = jwt_decode(credentials["JWT"]);
-                var email = decryptedToken.email;
-                
-                admin.auth().getUserByEmail(email).then((userCredentials) => {
-                    var userRecord = userCredentials.toJSON();
-                    console.log("User Record: " + JSON.stringify(userRecord));
-                    userRecord.metadata.lastSignInTime = new Date().toString();
-                    response.writeHead(200, { "Content-type": "text/plain" });
-                    response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
-                    response.end();
-                })
-                .catch(err => {
-                    if (err.code == 'auth/user-not-found'){
-                        admin.auth().createUser({
-                            email: email,
-                            emailVerified: true, 
-                            password: "Google-OAuth",
-                            displayName: decryptedToken.name,
-                            photoURL: decryptedToken.picture,
-                            disabled: false
-                        })
-                        .then((userCredentials) => {
-                            var userRecord = userCredentials.toJSON();
-                            console.log("User Record: " + JSON.stringify(userRecord));
-                            response.writeHead(200, { "Content-type": "text/plain" });
-                            response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
-                            response.end();
-                        })
-                    }
-                })
-            })
-
+            GoogleAuth.authenticateViaGoogle(request, response);            
             break;
         
         case "/validate/email":
@@ -134,7 +60,7 @@ function issueServerResponse(path, request, response){
             request.on('end', async () => {
                 credentials = JSON.parse(credentials);
                 var email = credentials.email
-                await sendValidationEmail(email);
+                await SMTP.sendValidationEmail(email);
                 admin.auth().createUser({
                     email: email,
                     emailVerified: false, 
@@ -201,7 +127,6 @@ function issueServerResponse(path, request, response){
             request.on('end', () => {
                 credentials = JSON.parse(credentials);
                 var uid = credentials.uid;
-                console.log("UID: " + uid);
                 ref.child(`${uid}`).on('value', (snapshot) => {
                     var value = snapshot.val();
                     if (value == null){
@@ -219,6 +144,36 @@ function issueServerResponse(path, request, response){
 
                         response.writeHead(200, { "Content-type": "text/plain" });
                         response.write(responseContent);
+                        response.end();
+                    }
+                })
+            })
+            break;
+        
+        case "/login":
+            var credentials = "";
+
+            request.on('data', (data) => {
+                credentials += data;
+            });
+
+
+            request.on('end', () => {
+                credentials = JSON.parse(credentials);
+                var email = credentials["email"];
+                var password = credentials["password"];
+
+                admin.auth().getUserByEmail(email).then(userCredentials => {
+                    var userRecord = userCredentials.toJSON();
+                    response.writeHead(200, { "Content-type": "application/json" });
+                    response.write(JSON.stringify(userRecord));
+                    response.end();
+                })
+                .catch(err => {
+                    if (err.code == "auth/user-not-found"){
+                        var userRecord = {uid: "ERROR"};
+                        response.writeHead(400, { "Content-type": "application/json" });
+                        response.write(JSON.stringify(userRecord));
                         response.end();
                     }
                 })
