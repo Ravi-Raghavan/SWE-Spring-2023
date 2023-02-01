@@ -6,6 +6,7 @@
     "google-search-results-nodejs": "^2.1.0",
     "jsmegahal": "^1.2.4",
     "jwt-decode": "^3.1.2",
-    "mime-types": "^2.1.35"
+    "mime-types": "^2.1.35",
+    "nodemailer": "^6.9.1"
   }
 }

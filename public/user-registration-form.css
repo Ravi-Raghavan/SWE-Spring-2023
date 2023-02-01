@@ -81,7 +81,6 @@ form .register-button {
     cursor: pointer;
     display: inline-block;
     margin: 0 auto;
-    margin-top: 50px;
     padding: 1rem 3rem;
     text-align: center;
     background-color: blue;
@@ -103,4 +102,3 @@ form .login-button {
   border-radius: 8px;
   font-size: 17px;
 }
-

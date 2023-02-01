@@ -19,6 +19,15 @@ function issueServerResponse(path, request, response){
         case "/placeholders/homepage.html":
             file = __dirname + "/placeholders/homepage.html";
             break;
+
+        case "/user-registration-form.css":
+            file = __dirname + "/public/user-registration-form.css";
+            break;
+
+        case "/user-registration-form.html":
+            file = __dirname + "/public/user-registration-form.html";
+            break;
+
         case "/user-auth-form.css":
             file = __dirname + "/public/user-auth-form.css";
             break;
