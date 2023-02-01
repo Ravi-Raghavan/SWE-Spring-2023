@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <script type = "module">
+            var user_record = localStorage.getItem("User Record");
+            user_record = JSON.parse(user_record);
+
+            var uid = user_record.uid;
+
+            var data = {
+                uid: uid
+            }
+
+            fetch("/validate/user", {
+                method: 'POST', 
+                cache: 'no-cache', 
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            
+
+        </script>
+        <div>
+            Congratulations your email has been verified!
+        </div>
+    </body>
+</html>

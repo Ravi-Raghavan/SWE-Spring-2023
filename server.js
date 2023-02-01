@@ -8,6 +8,8 @@ var CryptoJS = require("crypto-js");
 const jwt_decode = require('jwt-decode');
 const admin = require("./firebase").admin;
 const nodemailer = require('nodemailer');
+var db = admin.database();
+var ref = db.ref("/users/");
 
 async function sendValidationEmail(email){
     var transporter = nodemailer.createTransport({
@@ -131,16 +133,95 @@ function issueServerResponse(path, request, response){
                 credentials = JSON.parse(credentials);
                 var email = credentials.email
                 await sendValidationEmail(email);
-                response.writeHead(200, { "Content-type": "application/json" });
-                response.write(JSON.stringify({emailStatus: "delivered"}));
-                response.end();
+                admin.auth().createUser({
+                    email: email,
+                    emailVerified: false, 
+                    password: "Google-OAuth",
+                    disabled: true
+                })
+                .then((userCredentials) => {
+                    var userRecord = userCredentials.toJSON();
+                    ref.child(`${userCredentials.uid}`).set({
+                        uid: userRecord.uid, 
+                        email: userRecord.email,
+                        emailVerified: false
+                    })
+                    response.writeHead(200, { "Content-type": "text/plain" });
+                    response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
+                    response.end();
+                })
             })
             break;
         
         case "/completeValidation":
             //Complete the validation of an email
-            console.log("Almost there!");
+            file = __dirname + "/public/email-verified.html";
+            break;
+        
+        case "/complete-validation.html":
             file = __dirname + "/public/complete-validation.html";
+            break;
+        
+        case "/validate/user":
+            var credentials = "";
+
+            request.on('data', (data) => {
+                credentials += data;
+            });
+
+            request.on('end', async () => {
+                credentials = JSON.parse(credentials);
+                var uid = credentials.uid;
+
+                await admin.auth().updateUser(uid, {
+                    emailVerified: true, 
+                    disabled: false
+                })
+
+                await ref.child(`${uid}`).update({
+                    emailVerified: true
+                })
+
+                response.writeHead(200, { "Content-type": "text/plain" });
+                response.write("Done!");
+                response.end();
+            })
+            break;
+        
+        case "/checkUserValidation":
+            var credentials = "";
+
+            request.on('data', (data) => {
+                credentials += data;
+            });
+
+
+            request.on('end', () => {
+                credentials = JSON.parse(credentials);
+                var uid = credentials.uid;
+                console.log("UID: " + uid);
+                ref.child(`${uid}`).on('value', (snapshot) => {
+                    var value = snapshot.val();
+                    if (value == null){
+                        response.writeHead(200, { "Content-type": "text/plain" });
+                        response.write("false");
+                        response.end();
+                    }
+                    else{
+                        console.log("IM HERE BITCHHH");
+                        var isValidated = value["emailVerified"];
+
+                        var responseContent = "false";
+                        if (isValidated){
+                            responseContent = "true";
+                        }
+
+                        response.writeHead(200, { "Content-type": "text/plain" });
+                        response.write(responseContent);
+                        response.end();
+                    }
+                })
+            })
             break;
             
     }

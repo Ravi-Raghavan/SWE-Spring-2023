@@ -1,3 +1,43 @@
-<div>
-    Congratulations, your email has been validated!
-</div>
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <div>
+            <div id="time">yay </div>
+
+            Please click the link in your email to validate your email!
+        </div>
+    </body>
+    <script>
+        function isUserVerified(){
+            var user_record = localStorage.getItem("User Record");
+            var uid = user_record.uid;
+            var data = {
+                uid: uid
+            }
+            fetch("/checkUserValidation", {
+                method: 'POST', 
+                cache: 'no-cache', 
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                 body: JSON.stringify(data)
+            })
+            .then((response ) => {
+                if (response.status == 200){
+                    response.text().then(text => {
+                        if (text == "true"){
+                            window.location.href = "../placeholders/homepage.html";
+                        }
+                    })
+                }
+            })
+
+            setTimeout(isUserVerified, 10);
+        }
+        
+        isUserVerified();
+    </script>
+</html>
