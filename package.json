@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "chatbot": "^1.2.3",
+    "cheerio": "^1.0.0-rc.12",
     "crypto-js": "^4.1.1",
     "firebase-admin": "^11.5.0",
     "google-search-results-nodejs": "^2.1.0",

@@ -8,6 +8,8 @@ var CryptoJS = require("crypto-js");
 const jwt_decode = require('jwt-decode');
 const admin = require("./firebase").admin;
 const nodemailer = require('nodemailer');
+const cheerio = require('cheerio');
+
 var db = admin.database();
 var ref = db.ref("/users/");
 
@@ -208,7 +210,6 @@ function issueServerResponse(path, request, response){
                         response.end();
                     }
                     else{
-                        console.log("IM HERE BITCHHH");
                         var isValidated = value["emailVerified"];
 
                         var responseContent = "false";

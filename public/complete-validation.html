@@ -17,6 +17,7 @@
             var data = {
                 uid: uid
             }
+            
             fetch("/checkUserValidation", {
                 method: 'POST', 
                 cache: 'no-cache', 
@@ -37,7 +38,7 @@
 
             setTimeout(isUserVerified, 10);
         }
-        
         isUserVerified();
+       
     </script>
 </html>
