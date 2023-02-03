@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Verification</title>
-    <link rel="stylesheet" href="SWEStyle.css">
+    <link rel="stylesheet" href="./SWEStyle.css">
     <!-- <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&display=swap" rel="stylesheet"> -->
     <style>
         body{
@@ -93,7 +93,7 @@
             <div class = "icon">
                 <div class="imagecontainer">
 
-                 <img src="imagesforsite/DHTransparentPill.png" / class = "avatar" /> 
+                 <img src="../img/DHTransparentPill.png" / class = "avatar" /> 
             </div>
             <div class = "container"> 
                 <h1> Verify Your Email </h1> 
@@ -117,6 +117,37 @@
     </form>
 </div>
 </body>
+<script>
+    function isUserVerified(){
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        var uid = user_record.uid;
+        var data = {
+            uid: uid
+        }
+
+        fetch("/checkUserValidation", {
+            method: 'POST', 
+            cache: 'no-cache', 
+            headers:{
+                'Content-Type': 'application/json'
+            },
+             body: JSON.stringify(data)
+        })
+        .then((response ) => {
+            if (response.status == 200){
+                response.text().then(text => {
+                    if (text == "true"){
+                        window.location.href = "./homepage.html";
+                    }
+                })
+            }
+        })
+
+        setTimeout(isUserVerified, 10);
+    }
+    isUserVerified();
+   
+</script>
 </html>
 
 <!-- <h1> Verify Your Email </h1> 

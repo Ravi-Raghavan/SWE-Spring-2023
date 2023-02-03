@@ -128,6 +128,18 @@ function issueServerResponse(path, request, response){
             file = __dirname + "/public/waiting-for-validation.html";
             break;
         
+        case "/SWEIndex.html":
+            file = __dirname + "/public/SWEIndex.html";
+            break;
+        
+        case "/SWEStyle.css":
+            file = __dirname + "/public/SWEStyle.css"
+            break;
+        
+        case "/img/DHTransparentPill.png":
+            file = __dirname + "/img/DHTransparentPill.png";
+            break;
+        
         case "/validate/user":
             var credentials = "";
 
