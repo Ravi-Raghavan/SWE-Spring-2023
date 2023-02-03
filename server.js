@@ -21,8 +21,60 @@ function issueServerResponse(path, request, response){
         case "/":
             file = __dirname + "/public/user-auth-form.html";
             break;
-        case "/placeholders/homepage.html":
-            file = __dirname + "/placeholders/homepage.html";
+        case "/homepage.html":
+            file = __dirname + "/public/homepage.html";
+            break;
+        
+        case "/nav.css":
+            file = __dirname + "/public/nav.css";
+            break;
+        
+        case "/main.css":
+            file = __dirname + "/public/main.css";
+            break;
+        
+        case "/img/top_logo.png":
+            file = __dirname + "/img/top_logo.png";
+            break;
+
+        case "/img/tablets.png":
+            file = __dirname + "/img/tablets.png";
+            break;
+        
+        case "/img/tablets_3.png":
+            file = __dirname + "/img/tablets_3.png";
+            break;
+        
+        case "/img/tablets_2.png":
+            file = __dirname + "/img/tablets_2.png";
+            break;
+        
+        case "/img/protein_powder.png":
+            file = __dirname + "/img/protein_powder.png";
+            break;
+        
+        case "/img/protein_powder_2.png":
+            file = __dirname + "/img/protein_powder_2.png";
+            break;
+        
+        case "/img/mayank_profile.png":
+            file = __dirname + "/img/mayank_profile.png";
+            break;
+        
+        case "/img/logo.png":
+            file = __dirname + "/img/logo.png";
+            break;
+        
+        case "/img/jeff_profile.png":
+            file = __dirname + "/img/jeff_profile.png";
+            break;
+        
+        case "/img/insulin_meter.png":
+            file = __dirname + "/img/insulin_meter.png";
+            break;
+        
+        case "/img/bottom_logo.png":
+            file = __dirname + "/img/bottom_logo.png";
             break;
 
         case "/user-registration-form.css":
