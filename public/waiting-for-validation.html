@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Verification</title>
-    <link rel="stylesheet" href="./SWEStyle.css">
+    <link rel="stylesheet" href="./waiting-for-validation.css">
     <!-- <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&display=swap" rel="stylesheet"> -->
     <style>
         body{
@@ -137,7 +137,7 @@
                 if (response.status == 200){
                     response.text().then(text => {
                         if (text == "true"){
-                            window.location.href = "../placeholders/homepage.html";
+                            window.location.href = "./homepage.html";
                         }
                     })
                 }

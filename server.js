@@ -25,6 +25,24 @@ function issueServerResponse(path, request, response){
             file = __dirname + "/public/homepage.html";
             break;
         
+        case "/homepage.css":
+            file = __dirname + "/public/homepage.css";
+            break;
+        
+        case "/homepage-nav.css":
+            file = __dirname + "/public/homepage-nav.css";
+            break;
+        
+        case "/img/protien_powder.png":
+            file = __dirname + "/img/protien_powder.png";
+            break;
+        
+        case "/img/protien_powder_2.png":
+            file = __dirname + "/img/protien_powder_2.png";
+            break;
+            
+        
+        
         case "/nav.css":
             file = __dirname + "/public/nav.css";
             break;
@@ -128,12 +146,13 @@ function issueServerResponse(path, request, response){
             file = __dirname + "/public/waiting-for-validation.html";
             break;
         
-        case "/SWEIndex.html":
-            file = __dirname + "/public/SWEIndex.html";
+        
+        case "/email-validated.css": 
+            file = __dirname + "/public/email-validated.css";
             break;
         
-        case "/SWEStyle.css":
-            file = __dirname + "/public/SWEStyle.css"
+        case "/waiting-for-validation.css":
+            file = __dirname + "/public/waiting-for-validation.css"
             break;
         
         case "/img/DHTransparentPill.png":
