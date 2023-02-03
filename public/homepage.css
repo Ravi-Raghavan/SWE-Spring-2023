@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Noto+Serif:wght@700&display=swap');
+
 *   {
     margin: 0;
     padding: 0;
@@ -11,7 +13,8 @@
     --primary: #fff;
     --secondary: #8fc0e3;
     --tertiary: #4b7a5b;
-    }
+    --fourth: #707173;
+}
 
 .main   {
     display: flex;
@@ -23,17 +26,25 @@
 .left_main  {
     padding-left: 50px;
     padding-top: 20px;
-    width:50%;
+    width:60%;
+    height: 460px;
     color: var(--primary);
 }
 
 .left_main h1   {
     font-size: 120px;
+    line-height: 1;
+}
+
+.left_main h2{
+    margin-top: 10px;
+    font-family: 'Didact Gothic', sans-serif;
+    word-spacing: 10px;
 }
 
 .right_main {
     padding-right: 50px;;
-    width:50%;
+    width:40%;
 }
 
 .left_main input[type=text] {
@@ -42,11 +53,14 @@
     border: none;
     margin-top: 30px;
     font-size: 17px;
-    height: 30px;
     border-radius: 6px;
-  }
+    height: 50px;
+    width: 450px;
+    font-size: 30px;
+    color: var(--tertiary);
+}
   
-  @media screen and (max-width: 600px) {
+@media screen and (max-width: 200px) {
     .left_main input[type=text] {
       float: none;
       display: block;
@@ -55,26 +69,31 @@
       margin: 0;
       padding: 14px;
     }
-}
+}  
 
 .search {
     margin-top:32.5px;
     margin-bottom: 10px;
-    height:25px;
+    height:44px;
+    width: 44px;
     border:none;
-    width:25px;
-    transform: translate(-28px);
+    transform: translate(-48px);
     border-radius: 6px;
-    background-color: var(--secondary);
+    background-color: var(--tertiary);
+}
+
+.search_icon {
+    color: var(--primary);
+    margin-top: 2px;
 }
 
 .search::placeholder    {
     width: 30px;
 }
 
+
 .astrick    {
     color:red;
-    padding-top: 60px;
 }
 
 .main_body  {
@@ -89,13 +108,14 @@
     text-align: center;
     color: var(--tertiary);
     margin-bottom: 30px;
+    font-size: 60px;
 }
 
 .table_for_items    {
     display: flex;
     padding: 0;
-    margin-left: -50px;
-    margin-right: -50px;
+    margin-left: -60px;
+    margin-right: -60px;
     padding-top: 20px;
     height: 300px;
     justify-content: center;
@@ -107,8 +127,8 @@
     background-color: var(--tertiary);
     width: 220px;
     height: 220px;
-    margin-left: 43px;
-    margin-right: 43px;
+    margin-left: 20px;
+    margin-right: 20px;
     border-radius: 10px;
     padding-top: 10px;
     
@@ -118,22 +138,30 @@
     height: 200px;
 }
 
+.table_for_items .item_list:hover  {
+    background-color: var(--secondary);
+}
+
 .table_for_items .item_name {
     margin-top: 20px;
     text-align: left;
     max-width: 220px;
     overflow-wrap: break-word;
     color: var(--secondary);
+    font-family:'Didact Gothic', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
 }
 
 .table_for_items .item_price    {
     margin-top: 0px;
     text-align: left;
+    color: var(--fourth);
 }
 
 .arrow  {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 50px;
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
@@ -142,12 +170,16 @@
 .arrow .arrow_img   {
     margin-left: 15px;
     margin-right: 15px;
-    height: 40px;
     padding-top: 5px;
-    width: 40px;
+    height: 70px;
+    width: 70px;
     border-radius: 10px;
     background-color: var(--tertiary);
     color: var(--primary);
+}
+
+.arrow .arrow_img:hover {
+    background-color: var(--secondary);
 }
 
 .service_grid   {
@@ -176,6 +208,9 @@
     text-align: left;
     padding-left: 10px;
     padding-right: 10px;
+    font-family: 'Didact Gothic', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
 }
 
 .service_grid .right_side   {
@@ -195,7 +230,8 @@
 
 .service_grid button    {
     display: block;
-    margin-top: 50px;
+    margin-top: 14px;
+    font-size: 20px;
     color: var(--primary);
 }
 
@@ -207,4 +243,37 @@
     border-radius: 10px;
     cursor: pointer;
     transition:  all 0.3s ease 0s;
+}
+
+.lower_main_body .main_body_title   {
+    margin-top: 40px;
+}
+
+.table_plans    {
+    background-color: burlywood;
+    height: 80px;
+}
+
+.table_plans    {
+    display: flex;
+    padding: 0;
+    margin-left: -60px;
+    margin-right: -60px;
+    padding-top: 20px;
+    height: 300px;
+    justify-content: center;
+    text-align: center;
+}
+
+.table_plans .plan_name {
+    display: inline-block;
+    background-color: var(--tertiary);
+    width: 180px;
+    height: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 10px;
+    font-size: 20px;
+    color:  var(--primary);
+    
 }
