@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="./homepage.css" >
     <link rel="stylesheet" type="text/css" href="./homepage-nav.css" >
+    <link rel="stylesheet" type="text/css" href="./homepage.css" >
     <link rel="stylesheet" type="text/css" href="./homepage-footer.css" >
     <title>Home Page</title>
 </head>
@@ -15,15 +15,25 @@
         <img src="../img/bottom_logo.png" class="logo_name" alt="logo">
         <nav>
             <ul class="nav_links">
-                <li><a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="profile" viewBox="0 0 16 16">
+                <li>
+                <div class="dropdown">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="profile" id ="dropbtn" viewBox="0 0 16 16">
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                     </svg>
-                    </a></li>
-                <li><a href="#">Medicines</a></li>
-                <li><a href="#">Delivery</a></li>
-                <li><a href="#">Our Service</a></li>
-                <li><a href="#">Contact</a></li>
+                    <div class="dropdown-content">
+                        <a href="#" class="drop_link">Link 1</a>
+                        <a href="#" class="drop_link">Link 2</a>
+                        <a href="#" class="drop_link">Link 3</a>
+                        <a href="#" class="drop_link">Link 4</a>
+                        <a href="#" class="drop_link">Link 5</a>
+                        <a href="#" class="drop_link">Link 6</a>
+                      </div>
+                    </div></li>
+            
+                <li><a href="#" class="header_link">Medicines</a></li>
+                <li><a href="#" class="header_link">Delivery</a></li>
+                <li><a href="#" class="header_link">Our Service</a></li>
+                <li><a href="#" class="header_link">Contact</a></li>
             </ul>
         </nav>
         <a href="#"><button class="cart">Cart</button></a>
@@ -232,11 +242,11 @@
         <img src="../img/bottom_logo.png" class="logo_name_footer" alt="logo">
         <nav>
             <ul class="footer_links">
-                <li><a href="#">
+                <li>
                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="profile" viewBox="0 0 16 16">
                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
                     </svg>
-                    </a></li>
+                    </li>
                 <li class="text"><a href="#">Medicines</a></li>
                 <li class="text"><a href="#">Delivery</a></li>
                 <li class="text"><a href="#">Our Service</a></li>
