@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="with=device-width, initial-scale=1.0">
+        <title>DrugHub!</title>
+        <link rel ="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+
+    <body>
+        <section class="header">
+            <nav>
+                <a href="homepage.html"><img src="images/logo.png" ></a>
+                <div class="nav-links" id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="">Home</a></li>
+                        <li><a href="">Search</a></li>
+                        <li><a href="">User</a></li>
+                        <li><a href="">Cart</a></li>
+                        <li><a href="">About</a></li>
+                    </ul>
+                </div>
+                <i class="fa fa-bars" onclick="showMenu()"></i>
+            </nav>
+
+            <div class ="text-box">
+                <h1>Welcome to the Drug Database</h1>
+                <p> Got Questions? We got answers.<br> </p>
+                <input type="text" placeholder="Search..."></a>
+                <a href="#info" class="log-btn">Find Out.</a>
+            </div>
+        </section>
+
+        <section id="info" class="DrugFo">
+            <h1>Search Results</h1>
+            <p> Here's what we found:</p>
+
+            <div class="row">
+                <div class="col">
+                    <h3>Viagara</h3>
+                    <p> Sildenafil, sold under the brand name Viagra, among others, is a medication used to treat erectile dysfunction and pulmonary arterial hypertension. It is unclear if it is effective for treating sexual dysfunction in women. It is taken by mouth or by injection into a vein.</p>
+                </div>
+
+                <div class="col">
+                    <h3>Adderall</h3>
+                    <p> Adderall and Mydayis are trade names for a combination drug called mixed amphetamine salts containing four salts of amphetamine. The mixture is composed of equal parts racemic amphetamine and dextroamphetamine, which produces a ratio between dextroamphetamine and levoamphetamine, the two enantiomers of amphetamine.</p>
+                </div>
+
+                <div class="col">
+                    <h3>Tylenol</h3>
+                    <p> Paracetamol, also known as acetaminophen, is a medication used to treat fever and mild to moderate pain. Common brand names include Tylenol and Panadol. </p>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <section class="another thing">
+            <h1> </h1>
+        </section>
+
+        <script>
+            var navLinks = document.getElementById("navLinks");
+            function showMenu(){
+                navLinks.style.right="0";
+            }
+
+            function hideMenu(){
+                navLinks.style.right="-200px";
+            }
+        </script>
+
+    </body>
+
+</html>
