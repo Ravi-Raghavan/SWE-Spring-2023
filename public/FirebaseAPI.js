@@ -23,7 +23,7 @@ async function createUser(userParameters, response){
     
     //Create the user in the database table
     var userRecord = userCredentials.toJSON();
-
+    userRecord["metadata"]["lastSignInTime"] = new Date().toString();
     var uid = userRecord.uid;
     ref.child(`${uid}`).set({
         uid: uid,
@@ -36,7 +36,6 @@ async function createUser(userParameters, response){
     })
 
     //Send Request
-    var userRecord = userCredentials.toJSON();
     response.writeHead(200, { "Content-type": "text/plain" });
     response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
     response.end();
@@ -50,6 +49,7 @@ async function searchUser(searchParameters){
         admin.auth().getUserByEmail(email)
         .then((userCredentials) => {
             var userRecord = userCredentials.toJSON();
+            userRecord["metadata"]["lastSignInTime"] = new Date().toString();
             resolve(JSON.stringify(userRecord));
         })
         .catch((err) => {

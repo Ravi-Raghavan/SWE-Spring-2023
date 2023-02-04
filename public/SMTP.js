@@ -15,7 +15,7 @@ async function sendValidationEmail(email){
     var mailOptions = {
         from: 'swespring2023@gmail.com',
         to: `${email}`,
-        subject: 'Sending Email using Node.js',
+        subject: 'Validate Email Address',
         text: `Please Click the following link to complete the validation of your email: http://localhost:8000/email-validated.html`
     };
 

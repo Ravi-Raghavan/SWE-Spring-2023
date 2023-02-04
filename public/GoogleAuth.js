@@ -33,6 +33,7 @@ function authenticateViaGoogle(request, response){
         var userRecord = await firebaseAPI.searchUser(searchParameters);
                 
         if (userRecord != "N/A"){
+            userRecord = JSON.parse(userRecord);
             userRecord.metadata.lastSignInTime = new Date().toString();
             response.writeHead(200, { "Content-type": "text/plain" });
             response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());

@@ -15,25 +15,20 @@
         <img src="../img/bottom_logo.png" class="logo_name" alt="logo">
         <nav>
             <ul class="nav_links">
-                <li>
-                <div class="dropdown">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="profile" id ="dropbtn" viewBox="0 0 16 16">
-                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3Zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                    </svg>
-                    <div class="dropdown-content">
-                        <a href="#" class="drop_link">Link 1</a>
-                        <a href="#" class="drop_link">Link 2</a>
-                        <a href="#" class="drop_link">Link 3</a>
-                        <a href="#" class="drop_link">Link 4</a>
-                        <a href="#" class="drop_link">Link 5</a>
-                        <a href="#" class="drop_link">Link 6</a>
-                      </div>
-                    </div></li>
-            
                 <li><a href="#" class="header_link">Medicines</a></li>
                 <li><a href="#" class="header_link">Delivery</a></li>
                 <li><a href="#" class="header_link">Our Service</a></li>
                 <li><a href="#" class="header_link">Contact</a></li>
+                <li>
+                <div class="dropdown">
+                    <image class="profile" id ="dropbtn" src = "../img/profile.jpg" ></image>
+                    <div class="dropdown-content">
+                        <a href="#" class="drop_link">Manage Account</a>
+                        <a href="#" class="drop_link">Request Prescriptions</a>
+                        <a href="#" class="drop_link">View Orders</a>
+                        <a href="#" id = "Link6" onclick = 'logout()' class="drop_link">Log Out</a>
+                      </div>
+                    </div></li>
             </ul>
         </nav>
         <a href="#"><button class="cart">Cart</button></a>
@@ -267,4 +262,24 @@
         </ul>
     </section>
 </body>
+<script>
+    function logout(){
+        var innerText = document.getElementById("Link6").innerHTML
+        if (innerText == "Log Out"){
+            localStorage.removeItem("User Record");
+        }
+        window.location.href = "./user-auth-form.html";
+    }
+    window.onload = function(){
+        if (localStorage.getItem("User Record") == null){
+            document.getElementById("Link6").innerHTML = "Log In";
+        }
+        else{
+            var user_record = JSON.parse(localStorage.getItem("User Record"));
+            var profilePicture = user_record.photoURL
+            document.getElementById("dropbtn").src = profilePicture
+            //alert(user_record["metadata"]["lastSignInTime"]);
+        }
+    }
+</script>
 </html>

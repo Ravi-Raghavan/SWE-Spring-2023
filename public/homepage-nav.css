@@ -56,17 +56,17 @@ header {
     padding: 0px 20px;
 }
 
-.nav_links li a, .nav_links li svg{
+.nav_links li a, .nav_links li image{
     color: var(--secondary);
     transition:  all 0.3s ease 0s;
 }
 
-.nav_links li svg{
+.nav_links li image{
     border: 2px solid var(--primary);
     border-radius: 100%;
 }
 
-.nav_links li .header_link:hover, .nav_links li svg:hover{
+.nav_links li .header_link:hover, .nav_links li image:hover{
     color:var(--tertiary);
     text-decoration: underline;
     text-underline-offset: 32px;
@@ -75,6 +75,9 @@ header {
 
 .nav_links li .profile  {
     margin-bottom:-4px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px
 }
 
 .nav_links li:hover .profile {

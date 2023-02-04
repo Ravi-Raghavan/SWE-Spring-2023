@@ -15,7 +15,7 @@ const public_paths = ["/homepage.html", "/homepage.css", "/homepage-nav.css", "/
                     "/waiting-for-validation.html", "/waiting-for-validation.css", "/email-validated.css", "/user-auth-form.html", "/email-validated.html", "/SMTP.js"]
 const img_paths = ["/img/protien_powder_2.png", "/img/top_logo.png", "/img/tablets.png", "/img/tablets_3.png", "/img/tablets_2.png", "/img/protein_powder.png",
                     "/img/protein_powder_2.png", "/img/mayank_profile.png", "/img/logo.png", "/img/jeff_profile.png", "/img/insulin_meter.png", "/img/bottom_logo.png",
-                    "/img/pharmacy.jpg","/img/DHTransparentPill.png", "/img/favicon.ico"];
+                    "/img/pharmacy.jpg","/img/DHTransparentPill.png", "/img/favicon.ico", "/img/profile.png", "/img/profile.png"];
 
 function login(request, response){
     var credentials = "";
@@ -117,7 +117,7 @@ const server = http.createServer((request, response) => {
     let path = url.parse(request.url, true).path;
     console.log(`Requested Path: ${path}`);
     var file = "";
-    path = path == "/" ? "/user-auth-form.html" : path
+    path = path == "/" ? "/homepage.html" : path
     path = path == "/favicon.ico" ? "/img/favicon.ico" : path
 
     if (public_paths.includes(path)){
