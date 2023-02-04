@@ -11,235 +11,140 @@ var ref = db.ref("/users/");
 const SMTP = require("./public/SMTP");
 const GoogleAuth = require("./public/GoogleAuth")
 const firebaseAPI = require("./public/FirebaseAPI");
+const public_paths = ["/homepage.html", "/homepage.css", "/homepage-nav.css", "/user-registration-form.html",  "/user-registration-form.css", "/user-auth-form.css", 
+                    "/waiting-for-validation.html", "/waiting-for-validation.css", "/email-validated.css", "/user-auth-form.html", "/email-validated.html"]
+const img_paths = ["/img/protien_powder_2.png", "/img/top_logo.png", "/img/tablets.png", "/img/tablets_3.png", "/img/tablets_2.png", "/img/protein_powder.png",
+                    "/img/protein_powder_2.png", "/img/mayank_profile.png", "/img/logo.png", "/img/jeff_profile.png", "/img/insulin_meter.png", "/img/bottom_logo.png",
+                    "/img/pharmacy.jpg","/img/DHTransparentPill.png", "/img/favicon.ico"];
+
+function login(request, response){
+    var credentials = "";
+        
+    request.on('data', (data) => {
+        credentials += data;
+    });
 
 
-function issueServerResponse(path, request, response){
-    console.log(`Requested Path: ${path}`);
+    request.on('end', async () => {
+        credentials = JSON.parse(credentials);
+        var email = credentials["email"];
+        var password = credentials["password"];
+        var searchParameters = {email: email};
+        await firebaseAPI.loginUser(searchParameters, response);
+    }) 
+}
+function register(request, response){
+    var credentials = "";
+    
+    request.on('data', (data) => {
+        credentials += data;
+    });
+    
+    request.on('end', async () => {
+        credentials = JSON.parse(credentials);
+        var email = credentials.email
+        await SMTP.sendValidationEmail(email);
+        var userParameters = {email: email, emailVerified: false, password: "random", displayName: "First Last", photoURL: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png", disabled: true}
+        await firebaseAPI.createUser(userParameters, response);
+    })
+}
+function serveFileContent(file, response){
+    fs.readFile(file, function(err, content){
+        if (err){
+            console.log(`File Not Found ${file}`);
+            response.writeHead(404);
+            response.end()
+        }
+        else{
+            let mime = lookup(file);
+            response.writeHead(200, { "Content-type": mime });
+            response.write(content);
+            response.end();
+        }
+    })
+}
 
-    var file = "";
-    switch(path){
-        case "/":
-            file = __dirname + "/public/user-auth-form.html";
-            break;
-        case "/homepage.html":
-            file = __dirname + "/public/homepage.html";
-            break;
-        
-        case "/homepage.css":
-            file = __dirname + "/public/homepage.css";
-            break;
-        
-        case "/homepage-nav.css":
-            file = __dirname + "/public/homepage-nav.css";
-            break;
-        
-        case "/img/protien_powder.png":
-            file = __dirname + "/img/protien_powder.png";
-            break;
-        
-        case "/img/protien_powder_2.png":
-            file = __dirname + "/img/protien_powder_2.png";
-            break;
-            
-        
-        
-        case "/nav.css":
-            file = __dirname + "/public/nav.css";
-            break;
-        
-        case "/main.css":
-            file = __dirname + "/public/main.css";
-            break;
-        
-        case "/img/top_logo.png":
-            file = __dirname + "/img/top_logo.png";
-            break;
+function completeValidation(request, response){
+    var credentials = "";
+    
+    request.on('data', (data) => {
+        credentials += data;
+    });
 
-        case "/img/tablets.png":
-            file = __dirname + "/img/tablets.png";
-            break;
-        
-        case "/img/tablets_3.png":
-            file = __dirname + "/img/tablets_3.png";
-            break;
-        
-        case "/img/tablets_2.png":
-            file = __dirname + "/img/tablets_2.png";
-            break;
-        
-        case "/img/protein_powder.png":
-            file = __dirname + "/img/protein_powder.png";
-            break;
-        
-        case "/img/protein_powder_2.png":
-            file = __dirname + "/img/protein_powder_2.png";
-            break;
-        
-        case "/img/mayank_profile.png":
-            file = __dirname + "/img/mayank_profile.png";
-            break;
-        
-        case "/img/logo.png":
-            file = __dirname + "/img/logo.png";
-            break;
-        
-        case "/img/jeff_profile.png":
-            file = __dirname + "/img/jeff_profile.png";
-            break;
-        
-        case "/img/insulin_meter.png":
-            file = __dirname + "/img/insulin_meter.png";
-            break;
-        
-        case "/img/bottom_logo.png":
-            file = __dirname + "/img/bottom_logo.png";
-            break;
+    request.on('end', async () => {
+        credentials = JSON.parse(credentials);
+        var uid = credentials.uid;
 
-        case "/user-registration-form.css":
-            file = __dirname + "/public/user-registration-form.css";
-            break;
+        await admin.auth().updateUser(uid, {emailVerified: true, disabled: false})
+        await ref.child(`${uid}`).update({emailVerified: true})
 
-        case "/user-registration-form.html":
-            file = __dirname + "/public/user-registration-form.html";
-            break;
+        response.writeHead(200, { "Content-type": "text/plain" });
+        response.write("Done!");
+        response.end();
+    })    
+}
 
-        case "/user-auth-form.css":
-            file = __dirname + "/public/user-auth-form.css";
-            break;
-        case "/img/pharmacy.jpg":
-            file = __dirname + "/img/pharmacy.jpg";
-            break;
-        case "/favicon.ico":
-            file = __dirname + "/img/favicon.ico";
-            break;
-        
-        case "/credentials/google":
-           GoogleAuth.retrieveClientCredentials(response);
-           break;
-        
-        case "/authenticate/google":
-            GoogleAuth.authenticateViaGoogle(request, response);            
-            break;
-        
-        case "/register":
-            var credentials = "";
+function checkValidation(request, response){
+    var credentials = "";
+    
+    request.on('data', (data) => {
+        credentials += data;
+    });
 
-            request.on('data', (data) => {
-                credentials += data;
-            });
-
-            request.on('end', async () => {
-                credentials = JSON.parse(credentials);
-                var email = credentials.email
-                await SMTP.sendValidationEmail(email);
-                var userParameters = {email: email, emailVerified: false, password: "random", displayName: "First Last", photoURL: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png", disabled: true}
-                await firebaseAPI.createUser(userParameters, response);
-            })
-            break;
-        
-        case "/validateEmail":
-            //Complete the validation of an email
-            file = __dirname + "/public/email-validated.html";
-            break;
-        
-        case "/waiting-for-validation.html":
-            file = __dirname + "/public/waiting-for-validation.html";
-            break;
-        
-        
-        case "/email-validated.css": 
-            file = __dirname + "/public/email-validated.css";
-            break;
-        
-        case "/waiting-for-validation.css":
-            file = __dirname + "/public/waiting-for-validation.css"
-            break;
-        
-        case "/img/DHTransparentPill.png":
-            file = __dirname + "/img/DHTransparentPill.png";
-            break;
-        
-        case "/validate/user":
-            var credentials = "";
-
-            request.on('data', (data) => {
-                credentials += data;
-            });
-
-            request.on('end', async () => {
-                credentials = JSON.parse(credentials);
-                var uid = credentials.uid;
-
-                await admin.auth().updateUser(uid, {emailVerified: true, disabled: false})
-                await ref.child(`${uid}`).update({emailVerified: true})
-
-                response.writeHead(200, { "Content-type": "text/plain" });
-                response.write("Done!");
-                response.end();
-            })
-            break;
-        
-        case "/checkUserValidation":
-            var credentials = "";
-
-            request.on('data', (data) => {
-                credentials += data;
-            });
-
-
-            request.on('end', async () => {
-                credentials = JSON.parse(credentials);
-                var uid = credentials.uid;
-                await firebaseAPI.checkUserValidation(uid, response);
-            })
-            break;
-        
-        case "/login":
-            var credentials = "";
-
-            request.on('data', (data) => {
-                credentials += data;
-            });
-
-
-            request.on('end', async () => {
-                credentials = JSON.parse(credentials);
-                var email = credentials["email"];
-                var password = credentials["password"];
-                var searchParameters = {email: email};
-                await firebaseAPI.loginUser(searchParameters, response);
-            })
-            break;
-            
-    }
-
-    if (file == ""){
-        // If client is not requesting a file, they are simply requesting for data. Handle that HERE
-        console.log("Response sent");
-    }
-    else{
-        //Client is requesting a file
-        fs.readFile(file, function(err, content){
-            if (err){
-                console.log(`File Not Found ${file}`);
-                response.writeHead(404);
-                response.end()
-            }
-            else{
-                let mime = lookup(file);
-                response.writeHead(200, { "Content-type": mime });
-                response.write(content);
-                response.end();
-            }
-        })
-    }
+    request.on('end', async () => {
+        credentials = JSON.parse(credentials);
+        var uid = credentials.uid;
+        await firebaseAPI.checkUserValidation(uid, response);
+    })
 }
 
 const server = http.createServer((request, response) => {
     //Handle client requests and issue server response here 
     let path = url.parse(request.url, true).path;
-    issueServerResponse(path, request, response);
-    
+    console.log(`Requested Path: ${path}`);
+    var file = "";
+    path = path == "/" ? "/user-auth-form.html" : path
+    path = path == "/favicon.ico" ? "/img/favicon.ico" : path
+
+    if (public_paths.includes(path)){
+        file = __dirname + "/public" + path;
+    }
+    else if(img_paths.includes(path)){
+        file = __dirname +  path;
+    }
+
+    if (file == ""){
+        // If client is not requesting a file, they are simply requesting for data. Handle that HERE
+        switch(path){
+            case "/credentials/google":
+               GoogleAuth.retrieveClientCredentials(response);
+               break;
+            
+            case "/authenticate/google":
+                GoogleAuth.authenticateViaGoogle(request, response);            
+                break;
+            
+            case "/register":
+                register(request, response);
+                break;
+            
+            case "/login":
+                login(request, response);
+                break;
+            
+            case "/validate/user":
+                completeValidation(request, response);
+                break;
+            
+            case "/fetch/user/validation":
+                checkValidation(request, response);
+                break;                
+        }
+    }
+    else{
+        //Client is requesting a file
+        serveFileContent(file, response);
+    }
 })
 
 

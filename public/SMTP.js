@@ -16,7 +16,7 @@ async function sendValidationEmail(email){
         from: 'swespring2023@gmail.com',
         to: `${email}`,
         subject: 'Sending Email using Node.js',
-        text: `Please Click the following link to complete the validation of your email: http://localhost:8000/validateEmail`
+        text: `Please Click the following link to complete the validation of your email: http://localhost:8000/email-validated.html`
     };
 
     result = await new Promise((resolve, rejects) => {

@@ -99,13 +99,13 @@
                 <h1> Verify Your Email </h1> 
                 <p> &nbsp </p>
                 <p> &nbsp </p>
-                <p>We sent an email to testemail@dweebmail.com</p>
+                <p id = "emailText">We sent an email to testemail@dweebmail.com</p>
                 <p> &nbsp </p>
                 <p>Click on the link to complete your signup. If you don't see it, you may need to check your spam folder</p>
                 <p> &nbsp </p>
                 <p>Still can't find it?<p>
                     <p> &nbsp </p>
-                <button> Resend Email </button>
+                <button id = "resendButton"> Resend Email </button>
                 <label>
                     <p>Need Help?<a href = "#">Contact Us</a></p>
                 </label>
@@ -118,14 +118,21 @@
 </div>
     </body>
     <script>
+        window.onload = function(){
+            document.getElementById("emailText").innerHTML = `We have sent an email to ${email}`
+            document.getElementById("resendButton").addEventListener('click', function(){
+
+            })
+        }
         function isUserVerified(){
             var user_record = JSON.parse(localStorage.getItem("User Record"));
             var uid = user_record.uid;
+            var email = user_record.email;
             var data = {
                 uid: uid
             }
 
-            fetch("/checkUserValidation", {
+            fetch("/fetch/user/validation", {
                 method: 'POST', 
                 cache: 'no-cache', 
                 headers:{
