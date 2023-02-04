@@ -11,7 +11,7 @@ var ref = db.ref("/users/");
 const SMTP = require("./public/SMTP");
 const GoogleAuth = require("./public/GoogleAuth")
 const firebaseAPI = require("./public/FirebaseAPI");
-const public_paths = ["/homepage.html", "/homepage.css", "/homepage-nav.css", "/user-registration-form.html",  "/user-registration-form.css", "/user-auth-form.css", 
+const public_paths = ["/homepage.html", "/homepage.css", "/homepage-nav.css", "/homepage-footer.css", "/user-registration-form.html",  "/user-registration-form.css", "/user-auth-form.css", 
                     "/waiting-for-validation.html", "/waiting-for-validation.css", "/email-validated.css", "/user-auth-form.html", "/email-validated.html", "/SMTP.js"]
 const img_paths = ["/img/protien_powder_2.png", "/img/top_logo.png", "/img/tablets.png", "/img/tablets_3.png", "/img/tablets_2.png", "/img/protein_powder.png",
                     "/img/protein_powder_2.png", "/img/mayank_profile.png", "/img/logo.png", "/img/jeff_profile.png", "/img/insulin_meter.png", "/img/bottom_logo.png",
@@ -123,7 +123,7 @@ const server = http.createServer((request, response) => {
     if (public_paths.includes(path)){
         file = __dirname + "/public" + path;
     }
-    else if(img_paths.includes(path)){
+    else if(path.includes("/img")){
         file = __dirname +  path;
     }
 
@@ -161,6 +161,7 @@ const server = http.createServer((request, response) => {
     }
     else{
         //Client is requesting a file
+        console.log("Serving File Content");
         serveFileContent(file, response);
     }
 })
