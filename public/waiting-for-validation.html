@@ -117,11 +117,25 @@
     </form>
 </div>
     </body>
-    <script>
+    <script type = "module">
         window.onload = function(){
+            var user_record = JSON.parse(localStorage.getItem("User Record"));
+            var email = user_record.email;
+            var data = {
+                email: email
+            }
             document.getElementById("emailText").innerHTML = `We have sent an email to ${email}`
             document.getElementById("resendButton").addEventListener('click', function(){
-
+                
+                fetch("/send/email", {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                
             })
         }
         function isUserVerified(){

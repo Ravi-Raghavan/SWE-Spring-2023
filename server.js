@@ -12,7 +12,7 @@ const SMTP = require("./public/SMTP");
 const GoogleAuth = require("./public/GoogleAuth")
 const firebaseAPI = require("./public/FirebaseAPI");
 const public_paths = ["/homepage.html", "/homepage.css", "/homepage-nav.css", "/user-registration-form.html",  "/user-registration-form.css", "/user-auth-form.css", 
-                    "/waiting-for-validation.html", "/waiting-for-validation.css", "/email-validated.css", "/user-auth-form.html", "/email-validated.html"]
+                    "/waiting-for-validation.html", "/waiting-for-validation.css", "/email-validated.css", "/user-auth-form.html", "/email-validated.html", "/SMTP.js"]
 const img_paths = ["/img/protien_powder_2.png", "/img/top_logo.png", "/img/tablets.png", "/img/tablets_3.png", "/img/tablets_2.png", "/img/protein_powder.png",
                     "/img/protein_powder_2.png", "/img/mayank_profile.png", "/img/logo.png", "/img/jeff_profile.png", "/img/insulin_meter.png", "/img/bottom_logo.png",
                     "/img/pharmacy.jpg","/img/DHTransparentPill.png", "/img/favicon.ico"];
@@ -48,6 +48,20 @@ function register(request, response){
         await firebaseAPI.createUser(userParameters, response);
     })
 }
+
+function sendEmail(request, response){
+    var credentials = "";
+    request.on('data', (data) => {credentials += data;});
+    request.on('end', async () => {
+        credentials = JSON.parse(credentials);
+        var email = credentials.email;
+        await SMTP.sendValidationEmail(email);
+    })
+    response.writeHead(200, { "Content-type": "text/plain" });
+    response.write("Done!");
+    response.end();
+}
+
 function serveFileContent(file, response){
     fs.readFile(file, function(err, content){
         if (err){
@@ -138,7 +152,11 @@ const server = http.createServer((request, response) => {
             
             case "/fetch/user/validation":
                 checkValidation(request, response);
-                break;                
+                break;  
+            
+            case "/send/email":
+                sendEmail(request, response);
+                break;
         }
     }
     else{
