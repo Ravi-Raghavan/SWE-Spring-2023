@@ -8,6 +8,7 @@ const admin = require("./firebase").admin;
 var db = admin.database();
 var ref = db.ref("/users/");
 
+const SERP = require("./public/SERP");
 const SMTP = require("./public/SMTP");
 const GoogleAuth = require("./public/GoogleAuth")
 const firebaseAPI = require("./public/FirebaseAPI");
@@ -16,7 +17,8 @@ const public_paths = ["/homepage.html", "/homepage.css", "/homepage-nav.css", "/
                     "/knowledge-base.html", "/knowledge-base.css"]
 const img_paths = ["/img/protien_powder_2.png", "/img/top_logo.png", "/img/tablets.png", "/img/tablets_3.png", "/img/tablets_2.png", "/img/protein_powder.png",
                     "/img/protein_powder_2.png", "/img/mayank_profile.png", "/img/logo.png", "/img/jeff_profile.png", "/img/insulin_meter.png", "/img/bottom_logo.png",
-                    "/img/pharmacy.jpg","/img/DHTransparentPill.png", "/img/favicon.ico", "/img/profile.png", "/img/profile.png", "/img/background.jpg"];
+                    "/img/pharmacy.jpg","/img/DHTransparentPill.png", "/img/favicon.ico", "/img/profile.png", "/img/profile.png", "/img/background.jpg", "/img/img_avatar.png",
+                    "/img/no_thumbnail.jpg"];
 
 function login(request, response){
     var credentials = "";
@@ -113,6 +115,22 @@ function checkValidation(request, response){
     })
 }
 
+function knowledgeBaseSearch(request, response){
+    var credentials = "";
+    request.on('data', (data) => {
+        credentials += data;
+    });
+
+    request.on('end', async () => {
+        credentials = JSON.parse(credentials);
+        var query = credentials.query;
+        var jsonString = await SERP.executeQuery(query);
+        response.writeHead(200, { "Content-type": "application/json" });
+        response.write(jsonString);
+        response.end();
+    })
+}
+
 const server = http.createServer((request, response) => {
     //Handle client requests and issue server response here 
     let path = url.parse(request.url, true).path;
@@ -160,6 +178,10 @@ const server = http.createServer((request, response) => {
             
             case "/send/email":
                 sendEmail(request, response);
+                break;
+            
+            case "/knowledgebase/search":
+                knowledgeBaseSearch(request, response);
                 break;
         }
     }

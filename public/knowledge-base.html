@@ -30,8 +30,8 @@
             <div class ="text-box">
                 <h1>Welcome to the Drug Database</h1>
                 <p> Got Questions? We got answers.<br> </p>
-                <input type="text" placeholder="Search..."></a>
-                <a href="#info" class="log-btn">Find Out.</a>
+                <input id = "search_field" type="text" placeholder="Search..."></a>
+                <button  id = "search_box"  class="log-btn">Find Out.</button>
             </div>
         </section>
 
@@ -40,7 +40,7 @@
             <p> Here's what we found:</p>
 
             <div class="row">
-                <div class="col">
+                <!-- <div class="col">
                     <h3>Viagara</h3>
                     <p> Sildenafil, sold under the brand name Viagra, among others, is a medication used to treat erectile dysfunction and pulmonary arterial hypertension. It is unclear if it is effective for treating sexual dysfunction in women. It is taken by mouth or by injection into a vein.</p>
                 </div>
@@ -58,7 +58,17 @@
                 <div>
                     <h3>Tylenol</h3>
                     <p> Paracetamol, also known as acetaminophen, is a medication used to treat fever and mild to moderate pain. Common brand names include Tylenol and Panadol. </p>
-                </div>
+                </div> -->
+
+                <div class="card">
+                    <!-- <img src="../img/img_avatar.png" alt="Avatar" style="width:100%"> -->
+                    <div class="container">
+                        <image id = "Thumbnail" src= "https://serpapi.com/searches/63dfb38c8ccee03eaf3c3af3/images/dae440aefeb2ddc0eaaa887d89a38e700d5ddc30a70fd1cb23ffe74443d2dba6.jpeg"  alt="Thumbnail" style="width:100%"></image>
+                      <h4><b><a id = "displayed_link" href = "https://www.webmd.com/drugs/2/drug-63163/adderall-oral/details">https://www.webmd.com › drugs › adderall-oral › details</a></b></h4>
+                      <p id = "title">Adderall Oral: Uses, Side Effects, Interactions ... - WebMD</p>
+                      <p id = "snippet">This combination medication is used to treat attention deficit hyperactivity disorder - ADHD. It works by changing the amounts of certain natural substances ...</p>
+                    </div>
+                  </div>
         </section>
 
 
@@ -67,18 +77,61 @@
         <section class="another thing">
             <h1> </h1>
         </section>
-
-        <script>
-            var navLinks = document.getElementById("navLinks");
-            function showMenu(){
-                navLinks.style.right="0";
-            }
-
-            function hideMenu(){
-                navLinks.style.right="-200px";
-            }
-        </script>
-
     </body>
+    <script>
+        document.getElementById("search_box").addEventListener("click", function (){
+            var query = document.getElementById("search_field").value
+
+            var data = {
+                query: query
+            };
+
+            fetch("/knowledgebase/search", {
+                method: 'POST',
+                cache: 'no-cache',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then((response ) => {
+                if (response.status == 200){
+                    response.json().then(json => {
+                        var organic_results = json["organic_results"];
+                        var first_result = organic_results[0];
+                        try{
+                            var thumbnail = first_result["thumbnail"];
+                            if (thumbnail == undefined){
+                                document.getElementById("Thumbnail").src = "../img/no_thumbnail.jpg"
+                            }
+                            else{
+                                document.getElementById("Thumbnail").src = thumbnail;
+                            }
+                            
+                            
+                        }
+                        catch(e){
+                            document.getElementById("Thumbnail").src = "../img/no_thumbnail.jpg"
+                        }
+                        document.getElementById("displayed_link").innerHTML = first_result["displayed_link"];
+                        document.getElementById("displayed_link").href = first_result["link"];
+                        document.getElementById("title").innerHTML = first_result["title"];
+                        document.getElementById("snippet").innerHTML = first_result["snippet"];
+
+                    })
+                }
+
+            })
+        });
+
+        var navLinks = document.getElementById("navLinks");
+        function showMenu(){
+            navLinks.style.right="0";
+        }
+
+        function hideMenu(){
+            navLinks.style.right="-200px";
+        }
+    </script>
 
 </html>
