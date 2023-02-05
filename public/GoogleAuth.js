@@ -49,7 +49,6 @@ function login(request, response){
 
         var userParameters = {email: email};
         var userRecord = await firebaseAPI.search(userParameters);
-                
         if (userRecord != "N/A"){
             userRecord = JSON.parse(userRecord);
             response.writeHead(200, { "Content-type": "text/plain" });

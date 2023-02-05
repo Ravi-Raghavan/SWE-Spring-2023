@@ -121,7 +121,7 @@ async function login(userParameters, response){
     }
     else{
         response.writeHead(200, { "Content-type": "application/json" });
-        response.write(JSON.stringify(userRecord));
+        response.write(userRecord);
         response.end();
     }
 }

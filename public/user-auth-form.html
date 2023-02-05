@@ -32,7 +32,7 @@
         })
         .then((response) => {
           if (response.status == 200){
-            response.json().then(json => {
+            response.json().then(userRecord => {
               if (typeof(Storage) != "undefined"){
                 localStorage.setItem("User Record", JSON.stringify(userRecord))
                 window.location.href = "./homepage.html";
