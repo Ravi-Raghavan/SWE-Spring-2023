@@ -31,9 +31,8 @@ function login(request, response){
     request.on('end', async () => {
         credentials = JSON.parse(credentials);
         var email = credentials["email"];
-        var password = credentials["password"];
-        var searchParameters = {email: email};
-        await firebaseAPI.loginUser(searchParameters, response);
+        var userParameters = {email: email};
+        await firebaseAPI.login(userParameters, response);
     }) 
 }
 function register(request, response){
@@ -46,9 +45,11 @@ function register(request, response){
     request.on('end', async () => {
         credentials = JSON.parse(credentials);
         var email = credentials.email
+        var accountType = credentials.accountType;
+
         await SMTP.sendValidationEmail(email);
-        var userParameters = {email: email, emailVerified: false, password: "random", displayName: "First Last", photoURL: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png", disabled: true}
-        await firebaseAPI.createUser(userParameters, response);
+        var userParameters = {accountType: accountType, email: email, emailVerified: false, password: "random", displayName: "First Last", photoURL: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png", disabled: true}
+        await firebaseAPI.register(userParameters, response);
     })
 }
 
@@ -111,7 +112,7 @@ function checkValidation(request, response){
     request.on('end', async () => {
         credentials = JSON.parse(credentials);
         var uid = credentials.uid;
-        await firebaseAPI.checkUserValidation(uid, response);
+        await firebaseAPI.isValidated(uid, response);
     })
 }
 
@@ -156,16 +157,20 @@ const server = http.createServer((request, response) => {
                GoogleAuth.retrieveClientCredentials(response);
                break;
             
-            case "/authenticate/google":
-                GoogleAuth.authenticateViaGoogle(request, response);            
-                break;
-            
             case "/register":
                 register(request, response);
                 break;
             
+            case "/register/google":
+                GoogleAuth.register(request, response);
+                break;
+            
             case "/login":
                 login(request, response);
+                break;
+            
+            case "/login/google":
+                GoogleAuth.login(request, response);
                 break;
             
             case "/validate/user":

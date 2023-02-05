@@ -16,8 +16,26 @@ function retrieveClientCredentials(response){
     response.end();
 }
 
-//responsible for authenticating via google
-function authenticateViaGoogle(request, response){
+function register(request, response){
+    var credentials = "";
+
+    request.on('data', (data) => {
+        credentials += data;
+    });
+
+    request.on('end', async () => {
+        credentials = JSON.parse(credentials);
+        var decryptedToken = jwt_decode(credentials["JWT"]);
+        var email = decryptedToken.email;
+        var accountType = credentials.accountType;
+
+        var userParameters = {accountType: accountType, email: email, emailVerified: true, password: "Google-OAuth", displayName: decryptedToken.name, photoURL: decryptedToken.picture, disabled: false}
+        await firebaseAPI.register(userParameters, response);
+    })
+}
+
+
+function login(request, response){
     var credentials = "";
 
     request.on('data', (data) => {
@@ -29,25 +47,26 @@ function authenticateViaGoogle(request, response){
         var decryptedToken = jwt_decode(credentials["JWT"]);
         var email = decryptedToken.email;
 
-        var searchParameters = {email: email};
-        var userRecord = await firebaseAPI.searchUser(searchParameters);
+        var userParameters = {email: email};
+        var userRecord = await firebaseAPI.search(userParameters);
                 
         if (userRecord != "N/A"){
             userRecord = JSON.parse(userRecord);
-            userRecord.metadata.lastSignInTime = new Date().toString();
             response.writeHead(200, { "Content-type": "text/plain" });
             response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
             response.end();
         }
         else{
-            var userParameters = {email: email, emailVerified: true, password: "Google-OAuth", displayName: decryptedToken.name, photoURL: decryptedToken.picture, disabled: false}
-            await firebaseAPI.createUser(userParameters, response);
+            var responseContent = "false";
+            response.writeHead(404, { "Content-type": "text/plain" });
+            response.write(responseContent);
+            response.end();
         }
     })
 }
 
-
 module.exports = {
     retrieveClientCredentials: retrieveClientCredentials,
-    authenticateViaGoogle: authenticateViaGoogle
+    register: register, 
+    login: login
 }

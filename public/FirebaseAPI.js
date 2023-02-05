@@ -1,15 +1,12 @@
 //helper functions to interface with Firebase API 
-
-const { createMockUserToken } = require("@firebase/util");
 var CryptoJS = require("crypto-js");
 const admin = require("../firebase").admin;
 var db = admin.database();
-var ref = db.ref("/users/");
+var ref = db.ref(`/users/`);
 
-
-//Function to create a user in our database
+//Function to create a user(i.e. registration!) in our database
 //userParameters: parameters for a particular user(i.e. name, email, etc)
-async function createUser(userParameters, response){
+async function register(userParameters, response){
 
     //Create the user in the authentication table
     let userCredentials = await admin.auth().createUser({
@@ -23,7 +20,11 @@ async function createUser(userParameters, response){
     
     //Create the user in the database table
     var userRecord = userCredentials.toJSON();
+    var accountType = userParameters.accountType;
+
     userRecord["metadata"]["lastSignInTime"] = new Date().toString();
+    userRecord["Account Type"] = accountType;
+
     var uid = userRecord.uid;
     ref.child(`${uid}`).set({
         uid: uid,
@@ -32,7 +33,8 @@ async function createUser(userParameters, response){
         password: userParameters.password, 
         displayName: userParameters.displayName,
         photoURL: userParameters.photoURL,
-        disabled: userParameters.disabled
+        disabled: userParameters.disabled,
+        accountType: accountType
     })
 
     //Send Request
@@ -42,14 +44,17 @@ async function createUser(userParameters, response){
 }
 
 //This function is responsible for searching for a user in the database. Returns "True" if user is there. Else, returns "False"
-async function searchUser(searchParameters){
+async function search(searchParameters){
     var email = searchParameters.email;
 
     var doesExist = await new Promise((resolve, reject) => {
         admin.auth().getUserByEmail(email)
-        .then((userCredentials) => {
+        .then(async (userCredentials) => {
             var userRecord = userCredentials.toJSON();
+            var uid = userRecord.uid;
+            var accountType = await getAccountType(uid);
             userRecord["metadata"]["lastSignInTime"] = new Date().toString();
+            userRecord["Account Type"] = accountType;
             resolve(JSON.stringify(userRecord));
         })
         .catch((err) => {
@@ -63,7 +68,7 @@ async function searchUser(searchParameters){
 }
 
 //function which checks if a user's email has been validated yet
-async function checkUserValidation(uid, response){
+async function isValidated(uid, response){
     ref.child(`${uid}`).on('value', (snapshot) => {
         var value = snapshot.val();
         if (value == null){
@@ -86,8 +91,28 @@ async function checkUserValidation(uid, response){
     })
 }
 
-async function loginUser(searchParameters, response){
-    var userRecord = await searchUser(searchParameters);
+//get account type of user with given uid
+async function getAccountType(uid){
+    var accountType = await new Promise((resolve, reject) => {
+        ref.child(`${uid}`).on('value', (snapshot) => {
+            var value = snapshot.val();
+            if (value == null){
+                resolve("N/A");
+            }
+            else{
+                var accountType = value["accountType"];
+                resolve(accountType);
+            }
+        })
+    })
+
+    return accountType;
+
+}
+
+//login user
+async function login(userParameters, response){
+    var userRecord = await search(userParameters);
     if (userRecord == "N/A"){
         var responseContent = "false";
         response.writeHead(404, { "Content-type": "text/plain" });
@@ -102,8 +127,9 @@ async function loginUser(searchParameters, response){
 }
 
 module.exports = {
-    createUser: createUser,
-    searchUser: searchUser,
-    checkUserValidation: checkUserValidation,
-    loginUser: loginUser
+    register: register,
+    search: search,
+    isValidated: isValidated,
+    getAccountType: getAccountType,
+    login: login
 }

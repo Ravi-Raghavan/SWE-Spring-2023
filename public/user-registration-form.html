@@ -14,10 +14,15 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script type = "module">
         document.getElementById("register-button").addEventListener('click', function(){
+            var accountSelector = document.getElementById('account-selection');
+            var accountType = accountSelector.value;
             var email = document.getElementById("email").value
+
             var data = {
-                email: email
+                email: email,
+                accountType: accountType
             }
+
             fetch("/register", {
                 method: 'POST', 
                 cache: 'no-cache', 
@@ -44,11 +49,14 @@
         })
 
         function handleCredentialResponse(response) {
+          var accountSelector = document.getElementById('account-selection');
+          var accountType = accountSelector.value;
           var data = {
-            JWT: response.credential
+            JWT: response.credential,
+            accountType: accountType
           };
           
-          fetch("/authenticate/google", {
+          fetch("/register/google", {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
             headers: {
@@ -63,12 +71,11 @@
                     var userRecord = JSON.parse(originalText);
                     if (typeof(Storage) != "undefined"){
                         localStorage.setItem("User Record", JSON.stringify(userRecord))
+                        window.location.href = "./homepage.html";
                     }
                     else{
                         console.log("This Browser doesn't support local client side storage")
                     }
-
-                    window.location.href = "./homepage.html";
                 })
             }
           }
@@ -113,6 +120,14 @@
     
         <div class="user-auth-form-field">
             <input type="password" placeholder="Password" required/>                         
+        </div>
+
+        <div name="account-type" id="account-type">
+          <select id = "account-selection">
+            <option value="Patient">Patient</option>
+            <option value="Doctor">Doctor</option>
+            <option value="Pharmacy">Pharmacy</option>
+          </select>
         </div>
     
         <div class="user-auth-form-field">

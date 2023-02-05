@@ -102,3 +102,12 @@ form .login-button {
   border-radius: 8px;
   font-size: 17px;
 }
+
+.account-type{
+  position: relative;
+  font-family: Arial;
+}
+
+.account-type select{
+  display: none;
+}
