@@ -89,7 +89,7 @@
         <script type = "module">
             var user_record = localStorage.getItem("User Record");
             user_record = JSON.parse(user_record);
-
+            document.getElementById("emailVerification").innerHTML = `${user_record["email"]} has been verified!`
             var uid = user_record.uid;
 
             var data = {
@@ -119,15 +119,8 @@
                 <h1> Email has been verified! </h1> 
                 <p> &nbsp </p>
                 <p> &nbsp </p>
-                <p>We sent an email to testemail@dweebmail.com</p>
+                <p id = "emailVerification"></p>
                 <p> &nbsp </p>
-                <p>Click on the link to complete your signup. If you don't see it, you may need to check your spam folder</p>
-                <p> &nbsp </p>
-                <p>Still can't find it?<p>
-                    <p> &nbsp </p>
-                <label>
-                    <p>Need Help?<a href = "#">Contact Us</a></p>
-                </label>
             </div>
         </div>
     </div>

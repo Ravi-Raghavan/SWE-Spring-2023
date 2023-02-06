@@ -24,6 +24,7 @@ async function register(userParameters, response){
 
     userRecord["metadata"]["lastSignInTime"] = new Date().toString();
     userRecord["Account Type"] = accountType;
+    userRecord["Subscription Plan"] = "Free";
 
     var uid = userRecord.uid;
     ref.child(`${uid}`).set({
@@ -34,7 +35,8 @@ async function register(userParameters, response){
         displayName: userParameters.displayName,
         photoURL: userParameters.photoURL,
         disabled: userParameters.disabled,
-        accountType: accountType
+        accountType: accountType,
+        subscriptionPlan: "Free"
     })
 
     //Send Request
@@ -53,8 +55,12 @@ async function search(searchParameters){
             var userRecord = userCredentials.toJSON();
             var uid = userRecord.uid;
             var accountType = await getAccountType(uid);
+            var subscriptionPlan = await getSubscriptionPlan(uid);
+
             userRecord["metadata"]["lastSignInTime"] = new Date().toString();
             userRecord["Account Type"] = accountType;
+            userRecord["Subscription Plan"] = subscriptionPlan
+
             resolve(JSON.stringify(userRecord));
         })
         .catch((err) => {
@@ -110,6 +116,24 @@ async function getAccountType(uid){
 
 }
 
+//get subscription plan for user based on uid
+async function getSubscriptionPlan(uid){
+    var subscriptionPlan = await new Promise((resolve, reject) => {
+        ref.child(`${uid}`).on('value', (snapshot) => {
+            var value = snapshot.val();
+            if (value == null){
+                resolve("N/A");
+            }
+            else{
+                var subscriptionPlan = value["subscriptionPlan"];
+                resolve(subscriptionPlan);
+            }
+        })
+    })
+
+    return subscriptionPlan;
+}
+
 //login user
 async function login(userParameters, response){
     var userRecord = await search(userParameters);
@@ -120,8 +144,9 @@ async function login(userParameters, response){
         response.end();
     }
     else{
-        response.writeHead(200, { "Content-type": "application/json" });
-        response.write(userRecord);
+        response.writeHead(200, { "Content-type": "text/plain" });
+        response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
+        //response.write(userRecord);
         response.end();
     }
 }
@@ -131,5 +156,6 @@ module.exports = {
     search: search,
     isValidated: isValidated,
     getAccountType: getAccountType,
+    getSubscriptionPlan: getSubscriptionPlan,
     login: login
 }
