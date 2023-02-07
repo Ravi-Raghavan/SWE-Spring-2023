@@ -5,7 +5,7 @@ async function executeQuery(query){
 
     return await new Promise((resolve, rejects) => {
         search.json({
-            q: `${query}`, 
+            q: `site:www.webmd.com ${query}`, 
             location: "Austin, TX"
            }, (result) => {
                 resolve(JSON.stringify(result))
