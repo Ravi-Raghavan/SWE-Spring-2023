@@ -13,6 +13,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script type = "module">
+      function failedAuthentication(text) {
+        var error = document.getElementById("error")
+        error.textContent = text
+        error.style.color = "red"
+    }
       document.getElementById("login-button").addEventListener("click", function(){
         var email = document.getElementById("email").value
         var password = document.getElementById("password").value
@@ -42,6 +47,12 @@
               else{
                   console.log("This Browser doesn't support local client side storage")
               }
+            })
+          }
+          else{
+            //handle error here(this happens when user enters wrong email or some stuff)
+            response.text().then(text => {
+              failedAuthentication(text);
             })
           }
         })
@@ -76,6 +87,12 @@
 
                     window.location.href = "./homepage.html";
                 })
+            }
+            else{
+              //handle error here(this happens when user enters wrong email or some stuff)
+              response.text().then(text => {
+                failedAuthentication(text);
+              })
             }
           }
           );
@@ -118,7 +135,8 @@
         </div>
     
         <div class="user-auth-form-field">
-            <input id = "password" type="password" placeholder="Password" required/>                         
+            <input id = "password" type="password" placeholder="Password" required/>    
+            <span id="error"></span>                     
         </div>
 
         <div class="user-auth-form-field">

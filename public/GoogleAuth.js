@@ -58,7 +58,7 @@ function login(request, response){
         else{
             var responseContent = "false";
             response.writeHead(404, { "Content-type": "text/plain" });
-            response.write(responseContent);
+            response.write(`Account associated with ${email} doesn't exist!`);
             response.end();
         }
     })

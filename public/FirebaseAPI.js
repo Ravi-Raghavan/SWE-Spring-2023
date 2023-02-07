@@ -138,9 +138,8 @@ async function getSubscriptionPlan(uid){
 async function login(userParameters, response){
     var userRecord = await search(userParameters);
     if (userRecord == "N/A"){
-        var responseContent = "false";
         response.writeHead(404, { "Content-type": "text/plain" });
-        response.write(responseContent);
+        response.write(`Account associated with ${userParameters.email} doesn't exist!`);
         response.end();
     }
     else{
