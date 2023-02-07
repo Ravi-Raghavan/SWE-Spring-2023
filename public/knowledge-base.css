@@ -8,7 +8,33 @@
 html{
     scroll-behavior: smooth;
 }
-
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    transition: 0.5s;
+    position:fixed;
+    top:0;
+    width:120%;
+    height:114%;
+    opacity: 0;
+  }
+  
+  .loading::after {
+    content: "";
+    width: 37.6px;
+    height: 37.6px;
+    border: 20px solid #bbdbfc;
+    border-top-color: #0c6cf2;
+    border-radius: 50%;
+    animation: loading 1s linear infinite;
+  }
+  
+  @keyframes loading {
+    to {
+      transform: rotate(1turn);
+    }
+  }
 .header{
     min-height: 100vh;
     width: 100%;

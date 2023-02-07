@@ -11,7 +11,7 @@
     </head>
 
     <body>
-        <section class="header">
+        <section id="top" class="header">
             <nav>
                 <a href="./homepage.html"><img src="../img/logo.png" ></a>
                 <div class="nav-links" id="navLinks">
@@ -26,7 +26,9 @@
                 </div>
                 <i class="fa fa-bars" onclick="showMenu()"></i>
             </nav>
+            <div class="loading">
 
+              </div>
             <div class ="text-box">
                 <h1>Welcome to the Drug Database</h1>
                 <p> Got Questions? We got answers.<br> </p>
@@ -104,9 +106,14 @@
         </section>
     </body>
     <script>
-        document.getElementById("search_box").addEventListener("click", function (){
+        document.getElementById("search_box").addEventListener("click",  function (){
+            document.getElementById("top").scrollIntoView();
+            document.body.classList.add("stop-scrolling");
+            document.querySelector('.header').style.opacity = 0.75;
+            document.querySelector('.loading').style.opacity = 1;
+            
+           
             var query = document.getElementById("search_field").value
-
             var data = {
                 query: query
             };
@@ -149,8 +156,16 @@
                 }
 
             })
+            setTimeout( () => {document.querySelector('.loading').style.opacity = 0;
+            document.querySelector('.header').style.opacity = 1;
+                document.body.classList.remove("stop-scrolling")  
+            document.getElementById("info").scrollIntoView()},5000);
+        
         });
-
+        
+        function firstFunction(){
+            
+        }
         var navLinks = document.getElementById("navLinks");
         function showMenu(){
             navLinks.style.right="0";
