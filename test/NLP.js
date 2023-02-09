@@ -1,6 +1,22 @@
 var natural = require('natural');
 var classifier = new natural.BayesClassifier();
 
+function normalize(json_list){
+    var labels = 5;
+    var total_sum = 0;
+
+    for (let i = 0; i < labels; i ++){
+        total_sum = total_sum + json_list[i]["value"];
+    }
+
+    for (let i = 0; i < labels; i ++){
+        json_list[i]["value"] = json_list[i]["value"] / total_sum;
+    }
+
+    return json_list
+}
+
+
 classifier.addDocument("Can I get automatic refills for my medications?", "Prescription Refill");
 classifier.addDocument("Can I obtain an early refill of my medications?", "Prescription Refill");
 classifier.addDocument("How do I order a refill for a medication I get through delivery?", "Prescription Refill");
@@ -18,6 +34,10 @@ classifier.addDocument("Do I need a prescription to enable refill?", "Prescripti
 classifier.addDocument("What is DrugHub?", "About Us");
 classifier.addDocument("Is there a mobile app for DrugHub?", "About Us");
 classifier.addDocument("Is there a website for DrugHub?", "About Us");
+classifier.addDocument("Describe DrugHub", "About Us");
+classifier.addDocument("What does DrugHub do?", "About Us");
+classifier.addDocument("How does DrugHub work?", "About Us");
+classifier.addDocument("Explain the procedural operations of DrugHub", "About Us");
 
 
 classifier.addDocument("How do I know if I am a DrugHub member?", "Subcription Plan");
@@ -51,8 +71,8 @@ classifier.addDocument("What do I do if I need help with the medication instruct
 
 classifier.train();
 
-question = "How do you guys coordinate delivery?";
-console.log(classifier.getClassifications(question));
+question = "Who do I contact for support?";
+console.log(normalize(classifier.getClassifications(question)));
 console.log(natural.PorterStemmer.tokenizeAndStem(question).sort());
 
 article = "Avoid going to a pharmacy with home delivery!";
