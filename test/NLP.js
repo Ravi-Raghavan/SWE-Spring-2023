@@ -71,7 +71,7 @@ classifier.addDocument("What do I do if I need help with the medication instruct
 
 classifier.train();
 
-question = "Who do I contact for support?";
+question = "How does delivery work?";
 console.log(normalize(classifier.getClassifications(question)));
 console.log(natural.PorterStemmer.tokenizeAndStem(question).sort());
 
