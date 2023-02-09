@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="with=device-width, initial-scale=1.0">
+        <title>DrugHub!</title>
+        <link rel ="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+
+    <body>
+        <header>
+            <img src="img/top_logo.png" class="logo" alt="logo">
+            <img src="img/bottom_logo.png" class="logo_name" alt="logo">
+            <nav>
+                <ul class="nav_links">
+                    <li>
+                        <div class = "dropdown">
+                            <a href="#" class="header_link">Medicines</a>
+                            <div class = "dropdown-content">
+                                <a href="./knowledge-base.html" class="drop_link">Knowledge Base</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#" class="header_link">Delivery</a></li>
+                    <li><a href="#" class="header_link">Our Service</a></li>
+                    <li><a href="#" class="header_link">Contact</a></li>
+                    <li>
+                    <div class="dropdown">
+                        <image class="profile" id ="dropbtn" src = "img/profile.jpg" ></image>
+                        <div class="dropdown-content">
+                            <a href="#" class="drop_link">Manage Account</a>
+                            <a href="#" class="drop_link">Request Prescriptions</a>
+                            <a href="#" class="drop_link">View Orders</a>
+                            <a href="#" id = "Link6" onclick = 'logout()' class="drop_link">Log Out</a>
+                          </div>
+                        </div></li>
+                </ul>
+            </nav>
+            <a href="#"><button class="cart">Cart</button></a>
+        </header>
+
+        <section class="header">
+  
+            <div class ="text-box">
+                <h1>Curious about DrugHub?</h1>
+                <p> We won't bite! Ask Away! <br> </p>
+                <input type="text" placeholder="Tell me..."></a>
+                <a href="#info" class="log-btn">Ask.</a>
+            </div>
+        </section>
+
+        <section id="info" class="DrugFo">
+            <h1>Frequently Asked Questions</h1>
+            <p> Learn all about us:</p>
+
+            <div class="row">
+                <div class="col">
+                    <h3>What is DrugHub?</h3>
+                    <p> We are a service that seeks to revolutionize prescription delivery! Want to have your carefully tailored prescriptions delivered straight to your door? Leave it to us. Send your prescription, and we'll verify it. Once confirmed, we'll get your prescription to you in a week's time!</p>
+                </div>
+
+                <div class="col">
+                    <h3>Adderall</h3>
+                    <p> Adderall and Mydayis are trade names for a combination drug called mixed amphetamine salts containing four salts of amphetamine. The mixture is composed of equal parts racemic amphetamine and dextroamphetamine, which produces a ratio between dextroamphetamine and levoamphetamine, the two enantiomers of amphetamine.</p>
+                </div>
+
+                <div class="col">
+                    <h3>Tylenol</h3>
+                    <p> Paracetamol, also known as acetaminophen, is a medication used to treat fever and mild to moderate pain. Common brand names include Tylenol and Panadol. </p>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <section class="another thing">
+            <h1> </h1>
+        </section>
+
+        <script>
+            var navLinks = document.getElementById("navLinks");
+            function showMenu(){
+                navLinks.style.right="0";
+            }
+
+            function hideMenu(){
+                navLinks.style.right="-200px";
+            }
+        </script>
+
+    </body>
+
+</html>
