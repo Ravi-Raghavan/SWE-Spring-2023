@@ -46,12 +46,13 @@ classifier.addDocument("Who do I call if I have additional questions or need hel
 classifier.addDocument("Are there representatives I can speak to?", "Contact Us");
 classifier.addDocument("Contact Information for DrugHub", "Contact Us");
 classifier.addDocument("Reaching out to Representatives", "Contact Us");
+classifier.addDocument("What do I do if I need help with the medication instructions?", "Contact Us");
 
 
 classifier.train();
 
-question = "Representatives?";
-console.log(classifier.classify(question));
+question = "Do you deliver products straight to people's residences?";
+console.log(classifier.getClassifications(question));
 console.log(natural.PorterStemmer.tokenizeAndStem(question).sort());
 
 article = "Avoid going to a pharmacy with home delivery!";
