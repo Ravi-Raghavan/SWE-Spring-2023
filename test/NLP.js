@@ -69,9 +69,29 @@ classifier.addDocument("Reaching out to Representatives", "Contact Us");
 classifier.addDocument("What do I do if I need help with the medication instructions?", "Contact Us");
 
 
+classifier.addDocument("How do I place an order?", "Placing an Order");
+classifier.addDocument("Orders", "Placing an Order");
+classifier.addDocument("How much does it cost to place an order?", "Placing an Order")
+classifier.addDocument("Do we get unlimited orders?", "Placing an Order")
+classifier.addDocument("What is the cancellation policy for orders?", "Placing an Order")
+classifier.addDocument("How long do orders take to get verified?", "Placing an Order")
+classifier.addDocument("How long are we to wait to place an order after already placing an order?", "Placing an Order")
+classifier.addDocument("Benefits of ordering medication through DrugHUb", "Placing an Order")
+classifier.addDocument("Why should I order medication here? Why not just go to Amazon?", "Placing an Order")
+classifier.addDocument("How do I purchase medication?", "Placing an Order");
+classifier.addDocument("Purchases", "Placing an Order");
+classifier.addDocument("How much does it cost to purchase medication?", "Placing an Order")
+classifier.addDocument("Do we get unlimited purchases?", "Placing an Order")
+classifier.addDocument("What is the cancellation policy for purchases?", "Placing an Order")
+classifier.addDocument("How long do purchases take to get verified?", "Placing an Order")
+classifier.addDocument("How long are we to wait to place an purchases after already placing an order?", "Placing an Order")
+classifier.addDocument("Benefits of purchases medication through DrugHUb", "Placing an Order")
+classifier.addDocument("Why should I purchases medication here? Why not just go to Amazon?", "Placing an Order")
+
+
 classifier.train();
 
-question = "How does delivery work?";
+question = "Where can I purchase a membership?";
 console.log(normalize(classifier.getClassifications(question)));
 console.log(natural.PorterStemmer.tokenizeAndStem(question).sort());
 
