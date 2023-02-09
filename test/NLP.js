@@ -51,7 +51,7 @@ classifier.addDocument("What do I do if I need help with the medication instruct
 
 classifier.train();
 
-question = "Do you deliver products straight to people's residences?";
+question = "How do you guys coordinate delivery?";
 console.log(classifier.getClassifications(question));
 console.log(natural.PorterStemmer.tokenizeAndStem(question).sort());
 
