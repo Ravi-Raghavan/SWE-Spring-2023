@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="with=device-width, initial-scale=1.0">
+        <title>DrugHub!</title>
+        <link rel ="stylesheet" href="./knowledge-base.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+
+    <body>
+        <section id="top" class="header">
+            <nav>
+                <a href="./homepage.html"><img src="../img/logo.png" ></a>
+                <div class="nav-links" id="navLinks">
+                    <i class="fa fa-times" onclick="hideMenu()"></i>
+                    <ul>
+                        <li><a href="./homepage.html">Home</a></li>
+                        <li><a href="">Search</a></li>
+                        <li><a href="">User</a></li>
+                        <li><a href="">Cart</a></li>
+                        <li><a href="">About</a></li>
+                    </ul>
+                </div>
+                <i class="fa fa-bars" onclick="showMenu()"></i>
+            </nav>
+            <div class="loading">
+
+              </div>
+            <div class ="text-box">
+                <h1>Welcome to the Drug Database</h1>
+                <p> Got Questions? We got answers.<br> </p>
+                <input id = "search_field" type="text" placeholder="Search..."></a>
+                <button  id = "search_box"  class="log-btn">Find Out.</button>
+            </div>
+        </section>
+
+        <section id="info" class="DrugFo">
+            <h1>Search Results</h1>
+            <p> Here's what we found:</p>
+
+            <div class="row">
+
+                <div class = "tableContainer">
+                    <table id="tableArticles" class = "table">                      
+                        <thead>
+                            <tr ><th> Articles</th></tr>
+                        </thead>
+                        
+                        <tbody id = "body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+                
+            <div id="popup1" class="overlay">
+                <div class="popup">
+                    <h2 id="articleTitle">Here i am</h2>
+                    <a class="close" href="#">&times;</a>
+                    <div id="articleContent" class="content">
+                        Thank to pop me out of that button, but now i'm done so you can close this window.
+                    </div>
+                </div>
+            </div>
+  
+                  
+                  
+        </section>
+
+
+
+
+        <section class="another thing">
+            <h1> </h1>
+        </section>
+    </body>
+    <script>
+        var array = [];
+        document.getElementById("search_box").addEventListener("click",  function (){    
+            document.getElementById("top").scrollIntoView();
+            
+            var tableHeaderRowCount = 1;
+            var table = document.getElementById('tableArticles');
+            var rowCount = table.rows.length;
+            for (var i = tableHeaderRowCount; i < rowCount; i++) {
+                table.deleteRow(tableHeaderRowCount);
+            }
+
+            document.body.classList.add("stop-scrolling");
+            document.querySelector('.header').style.opacity = 0.75;
+            document.querySelector('.loading').style.opacity = 1;
+            
+           
+            var query = document.getElementById("search_field").value
+            var data = {
+                query: query
+            };
+
+            fetch("/knowledgebase/search", {
+                method: 'POST',
+                cache: 'no-cache',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then((response ) => {
+                if (response.status == 200){
+                    array = [];
+                    response.json().then(json => {
+                        var organic_results = json["organic_results"];
+                        for (let i = 0; i < Object.keys(organic_results).length || i < 50; i ++){
+                            var result = organic_results[i];
+                            let index = i + 1;
+                            array.push(result);
+                            //document.getElementById("tableArticles").innerHTML = result["displayed_link"];
+
+                            //document.getElementById(`displayed_link_${index}`).href = result["link"];
+                            //document.getElementById(`title_${index}`).innerHTML = result["title"];
+                            //document.getElementById(`snippet_${index}`).innerHTML = result["snippet"];
+                            //document.getElementById()
+
+                            
+
+                            //$('#tableArticle').append('<tr> <td> <a style="display: block;" href="#popup1">'+'THE TEST HAS WORKED!'+' </a> </td></tr>');
+                            var rows= '<tr onclick="rowListen(this)"> <td><a style="display: block;" href="#popup1">'+result["title"]+'</a></td></tr>';
+                            var table = document.getElementById('tableArticles');
+                            var template = document.createElement('template');
+                            template.innerHTML = rows;
+                            table.appendChild(template.content);
+
+                        }
+                    })
+                }
+
+            })
+            setTimeout( () => {document.querySelector('.loading').style.opacity = 0;
+            document.querySelector('.header').style.opacity = 1;
+                document.body.classList.remove("stop-scrolling")  
+            document.getElementById("info").scrollIntoView()},5000);
+        
+        });
+        
+
+        var navLinks = document.getElementById("navLinks");
+        function showMenu(){
+            navLinks.style.right="0";
+        }
+
+        function hideMenu(){
+            navLinks.style.right="-200px";
+        }
+        function rowListen(x){
+            var result = array[x.rowIndex-1];
+            document.getElementById("articleTitle").innerText = result["title"];
+           
+            document.getElementById("articleContent").innerText = result["snippet"];
+           
+            
+        }
+    </script>
+
+</html>
