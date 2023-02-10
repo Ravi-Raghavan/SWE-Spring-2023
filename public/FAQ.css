@@ -136,7 +136,7 @@ header {
 .header{
     min-height: 30vh;
     width: 100%;
-    background-image: linear-gradient(rgba(4, 30, 8, 0.59), rgba(4, 30, 6, 0.59)), url(images/background.jpg);
+    background-image: linear-gradient(rgba(4, 30, 8, 0.59), rgba(4, 30, 6, 0.59)), url(./FAQ_images/background.jpg);
     background-position: center;
     background-size: cover;
     position: relative;
