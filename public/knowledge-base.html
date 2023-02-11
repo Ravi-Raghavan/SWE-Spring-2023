@@ -11,24 +11,39 @@
     </head>
 
     <body>
-        <section id="top" class="header">
+        <header id="top" class = "testing">
+            <img src="img/top_logo.png" class="logo" alt="logo">
+            <img src="img/bottom_logo.png" class="logo_name" alt="logo">
             <nav>
-                <a href="./homepage.html"><img src="../img/logo.png" ></a>
-                <div class="nav-links" id="navLinks">
-                    <i class="fa fa-times" onclick="hideMenu()"></i>
-                    <ul>
-                        <li><a href="./homepage.html">Home</a></li>
-                        <li><a href="">Search</a></li>
-                        <li><a href="">User</a></li>
-                        <li><a href="">Cart</a></li>
-                        <li><a href="">About</a></li>
-                    </ul>
-                </div>
-                <i class="fa fa-bars" onclick="showMenu()"></i>
+                <ul class="nav_links">
+                    <li>
+                        <div class = "dropdown">
+                            <a href="#" class="header_link">Medicines</a>
+                            <div class = "dropdown-content">
+                                <a href="./knowledge-base.html" class="drop_link">Knowledge Base</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#" class="header_link">Delivery</a></li>
+                    <li><a href="#" class="header_link">Our Service</a></li>
+                    <li><a href="#" class="header_link">Contact</a></li>
+                    <li>
+                    <div class="dropdown">
+                        <image class="profile" id ="dropbtn" src = "img/profile.jpg" ></image>
+                        <div class="dropdown-content">
+                            <a href="#" class="drop_link">Manage Account</a>
+                            <a href="#" class="drop_link">Request Prescriptions</a>
+                            <a href="#" class="drop_link">View Orders</a>
+                            <a href="#" id = "Link6" onclick = 'logout()' class="drop_link">Log Out</a>
+                          </div>
+                        </div></li>
+                </ul>
             </nav>
-            <div class="loading">
+            <a href="#"><button class="cart">Cart</button></a>
+        </header>
+        <section  class="header">
 
-              </div>
+            
             <div class ="text-box">
                 <h1>Welcome to the Drug Database</h1>
                 <p> Got Questions? We got answers.<br> </p>
@@ -36,6 +51,7 @@
                 <button  id = "search_box"  class="log-btn">Find Out.</button>
             </div>
         </section>
+
 
         <section id="info" class="DrugFo">
             <h1>Search Results</h1>
@@ -52,17 +68,26 @@
                         <tbody id = "body">
                         </tbody>
                     </table>
+                    <div class="loader"></div>
+                   
+
                 </div>
+                
+
+                
             </div>
                 
             <div id="popup1" class="overlay">
                 <div class="popup">
-                    <h2 id="articleTitle">Here i am</h2>
-                    <a class="close" href="#">&times;</a>
+                    <h2 id="articleTitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat nihil rerum omnis nulla non odit esse quasi eius maiores fuga ducimus quod, optio repudiandae porro recusandae laudantium animi adipisci rem!</h2>
                     <div id="articleContent" class="content">
-                        Thank to pop me out of that button, but now i'm done so you can close this window.
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ad exercitationem nobis voluptates corporis quae amet incidunt sunt. Aliquam, vel. Quae tempore explicabo qui ea ut officia veniam aspernatur adipisci?
                     </div>
+                    <a  id = "goTo"  class="close" href="#">Check it Out</button>
+                    <a   class="close" href="#">Exit</button>
                 </div>
+
+                
             </div>
   
                   
@@ -75,11 +100,14 @@
         <section class="another thing">
             <h1> </h1>
         </section>
-    </body>
+
+
+
     <script>
         var array = [];
         document.getElementById("search_box").addEventListener("click",  function (){    
-            document.getElementById("top").scrollIntoView();
+            
+            document.getElementById("info").scrollIntoView();
             
             var tableHeaderRowCount = 1;
             var table = document.getElementById('tableArticles');
@@ -89,9 +117,9 @@
             }
 
             document.body.classList.add("stop-scrolling");
-            document.querySelector('.header').style.opacity = 0.75;
-            document.querySelector('.loading').style.opacity = 1;
-            
+            document.querySelector('.table').style.opacity = 0.50;
+            document.querySelector('.loader').style.opacity = 1;
+            document.querySelector('.tableContainer').style.pointerEvents = "none";
            
             var query = document.getElementById("search_field").value
             var data = {
@@ -136,10 +164,13 @@
                 }
 
             })
-            setTimeout( () => {document.querySelector('.loading').style.opacity = 0;
-            document.querySelector('.header').style.opacity = 1;
-                document.body.classList.remove("stop-scrolling")  
+            setTimeout( () => {
+            document.querySelector('.table').style.opacity = 1;
+            document.querySelector('.loader').style.opacity = 0;
+            document.body.classList.remove("stop-scrolling")
+            document.querySelector('.tableContainer').style.pointerEvents = "auto";  
             document.getElementById("info").scrollIntoView()},5000);
+            
         
         });
         
@@ -155,8 +186,9 @@
         function rowListen(x){
             var result = array[x.rowIndex-1];
             document.getElementById("articleTitle").innerText = result["title"];
-           
+            document.getElementById("goTo").href = result["link"];
             document.getElementById("articleContent").innerText = result["snippet"];
+            
            
             
         }
