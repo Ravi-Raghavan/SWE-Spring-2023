@@ -226,10 +226,10 @@ nav .fa{
 }
 
 .DrugFo{
-    width: 80%;
+    width: 90%;
     margin: auto;
     text-align: center;
-    padding-top: 100px;
+    padding-top: 70px;
 
 }
 
@@ -248,27 +248,46 @@ p{
 }
 
 .row{
-    margin-top: 5%;
+    margin-top: 3%;
     display: flex;
     justify-content: space-between;
+    
 
 }
 
 .col{
+    height: 150px;
     flex-basis: 31%;
     background: #c2ebbb;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-bottom: 5%;
     padding: 20px 12px;
     box-sizing: border-box;
     transition: 0.5s;
+    margin-right: 10px;
+    position: relative;
 }
 
 h3{
     text-align: center;
     font-weight: 600;
-    margin: 10px 0;
+    position: relative;
+    top: 50%;
+    transform: translate(0, -50%);
+    
 }
+
+.left{
+    height: 150px;
+    width: auto;
+    opacity: 1;
+}
+
+.right{
+    height: 150px;
+    width: auto;
+}
+
 
 .col:hover{
     box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.2);
@@ -278,3 +297,66 @@ h3{
         flex-direction: column;
     }
 }
+
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+  }
+ 
+  
+  .popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+  }
+  
+  .popup h2 {
+    margin-top: 0;
+    color: #333;
+    padding-bottom: 10px;
+  }
+  .popup .close {
+
+    transition: all 200ms;
+
+
+
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    padding-top: 10px;
+    background: rgba(64, 77, 219, 0.612);
+    font-size: 25px;
+    text-decoration: none;
+    border: white;
+    cursor: pointer;
+  }
+  .popup .close:hover {
+    color: #06D85F;
+  }
+  .popup .content {
+    padding-bottom: 25px;
+    max-height: 30%;
+    overflow: auto;
+  }
+  
+  @media screen and (max-width: 700px){
+    .box{
+      width: 70%;
+    }
+    .popup{
+      width: 70%;
+    }
+  }

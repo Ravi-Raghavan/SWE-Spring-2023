@@ -57,21 +57,56 @@
             <p> Learn all about us:</p>
 
             <div class="row">
-                <div class="col">
-                    <h3>What is DrugHub?</h3>
-                    <p> We are a service that seeks to revolutionize prescription delivery! Want to have your carefully tailored prescriptions delivered straight to your door? Leave it to us. Send your prescription, and we'll verify it. Once confirmed, we'll get your prescription to you in a week's time!</p>
+                <div >
+                    <img class="left" src="../img/leftArrow.png">
+                </div>
+                
+                <div class="col" id= "col1" onClick="showPopup()">
+                    <a  href="#popup1">
+                        <h3>What is DrugHub?</h3>
+                    </a>
+                    
+                </div>
+                
+
+                <div class="col" id = "col2" onClick="showPopup()">
+                    <a  href="#popup1">
+                    <h3>What is the subscription plan?</h3>
+                    </a>
                 </div>
 
-                <div class="col">
-                    <h3>Adderall</h3>
-                    <p> Adderall and Mydayis are trade names for a combination drug called mixed amphetamine salts containing four salts of amphetamine. The mixture is composed of equal parts racemic amphetamine and dextroamphetamine, which produces a ratio between dextroamphetamine and levoamphetamine, the two enantiomers of amphetamine.</p>
+                <div class="col" id = "col3" onClick="showPopup()">
+                    <a  href="#popup1">
+                        <h3>Why should I buy prescriptions from this site instead of at a pharmacy?</h3>
+                    </a>
                 </div>
 
-                <div class="col">
-                    <h3>Tylenol</h3>
-                    <p> Paracetamol, also known as acetaminophen, is a medication used to treat fever and mild to moderate pain. Common brand names include Tylenol and Panadol. </p>
+                <div class="col" id = "col4" onClick="showPopup()">
+                    <a  href="#popup1">
+                        <h3>Who are the creators of Drughub?</h3>
+                    </a>
+                </div>
+
+                <div class="col" id = "col5" onClick="showPopup()">
+                    <a  href="#popup1">
+                        <h3>Is Abid the best damn coder out there?</h3>
+                    </a>
+                </div>
+                <div >
+                    <img class="right" src="../img/rightArrow.png">
                 </div>
             </div>
+
+            <div id="popup1" class="overlay">
+                <div class="popup">
+                    <h2 id="articleTitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat nihil rerum omnis nulla non odit esse quasi eius maiores fuga ducimus quod, optio repudiandae porro recusandae laudantium animi adipisci rem!</h2>
+                    <div id="articleContent" class="content">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ad exercitationem nobis voluptates corporis quae amet incidunt sunt. Aliquam, vel. Quae tempore explicabo qui ea ut officia veniam aspernatur adipisci?
+                    </div>
+                    <a  onclick="exit()" class="close" >Got it!</a>
+                </div>
+            </div>
+
         </section>
 
 
@@ -89,6 +124,16 @@
 
             function hideMenu(){
                 navLinks.style.right="-200px";
+            }
+
+            function showPopup(){
+                document.querySelector('.overlay').style.opacity = 1;
+                document.querySelector('.overlay').style.visibility = "visible";
+            }
+
+            function exit(){
+            document.querySelector('.overlay').style.opacity = 0;
+            document.querySelector('.overlay').style.visibility = "hidden";
             }
         </script>
 
