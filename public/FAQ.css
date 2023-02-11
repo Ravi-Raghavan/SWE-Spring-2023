@@ -280,12 +280,15 @@ h3{
 .left{
     height: 150px;
     width: auto;
-    opacity: 1;
+    opacity: 0;
+    cursor: pointer;
+    pointer-events: none;
 }
 
 .right{
     height: 150px;
     width: auto;
+    cursor: pointer;
 }
 
 
