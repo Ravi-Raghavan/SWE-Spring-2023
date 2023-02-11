@@ -382,10 +382,7 @@ tr:hover td{
     visibility: hidden;
     opacity: 0;
   }
-  .overlay:target {
-    visibility: visible;
-    opacity: 1;
-  }
+ 
   
   .popup {
     margin: 70px auto;
@@ -435,5 +432,10 @@ tr:hover td{
       width: 70%;
     }
   }
+
+
+  .reset-style, .reset-style * {
+    all: revert;
+}
 
 
