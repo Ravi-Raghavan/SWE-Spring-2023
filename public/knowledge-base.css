@@ -50,7 +50,7 @@ header {
     display:flex;
     justify-content:flex-end;
     align-items: center;
-    padding: 30px 100px;
+    padding: 30px 10px;
     background-color: var(--primary);
     font-size: 30px;
     z-index: 100;
@@ -63,6 +63,7 @@ header {
     margin: -90px;
     cursor: pointer;
     margin-bottom: -75px;
+    margin-left: 0px;
     
 }
 
@@ -75,13 +76,22 @@ header {
 
 .nav_links  {
     list-style:none;
-    
 }
 
 .nav_links li {
     display: inline-block;
     padding: 0px 20px;
 }
+
+@media screen and (max-width: 1280px) {
+    .nav_links {
+      font-size: 25px;
+    }
+
+    .nav_links li {
+        padding: 0px 10px;
+    }
+  }
 
 .nav_links li a, .nav_links li image{
     color: var(--secondary);
@@ -104,7 +114,7 @@ header {
     margin-bottom:-4px;
     border-radius: 50%;
     width: 30px;
-    height: 30px
+    height: 30px;
 }
 
 .nav_links li:hover .profile {
@@ -115,7 +125,6 @@ header {
 .cart {
     padding: 9px 25px;
     margin-left: 10px;
-    margin-right: 50px;
     background-color: var(--tertiary);
     color: var(--primary);
     border: none;
@@ -224,10 +233,13 @@ nav .fa{
 }
 @media(max-width:700px){
     .text-box h1{
+        font-size:40px;
+
+    }
+    .text-box p{
         font-size:20px;
 
     }
-
     .nav-links ul li{
         display: block;
     }
