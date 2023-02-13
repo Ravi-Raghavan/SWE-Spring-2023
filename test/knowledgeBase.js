@@ -1,11 +1,9 @@
+const admin = require("../firebase").admin;
+var db = admin.database();
+var ref = db.ref("/knowledgeBase/");
 
 
-fetch("https://serpapi.com/search.json?engine=google&q=Whatislife?")
-.then((response) => {
-    response.json().then((json) => {
-        var organicResults = json["organic_results"]
-        console.log("JSON: " + JSON.stringify(organicResults[0]));
-    })
+var uid = "article_1";
+ref.child(`${uid}`).set({
+    title: "Who is Jeff Acevedo?"
 })
-
-
