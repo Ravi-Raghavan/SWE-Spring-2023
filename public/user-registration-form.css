@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,700");
 
+h2 {
+  text-align: center;
+}
+
 .bg-img {
   position: fixed;
   left: 0;
@@ -10,9 +14,16 @@
   background-image: url(../img/pharmacy.jpg);
 }
 
+:root {
+  --primary: #fff;
+  --secondary: #8fc0e3;
+  --tertiary: #4b7a5b;
+  --fourth: #707173;
+}
+
 body {
-  font-family: 'Lato', sans-serif;
-  color: #4A4A4A;
+  font-family: "Lato", sans-serif;
+  color: var(--fourth);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,12 +37,15 @@ form {
   width: 350px;
   position: relative;
 }
+
+form input {
+  border-radius: 50px;
+  text-align: center;
+}
 form .user-auth-form-field::before {
   font-size: 20px;
   position: absolute;
-  left: 15px;
-  top: 17px;
-  color: #888888;
+  color: var(--fourth);
   content: " ";
   display: block;
   background-size: cover;
@@ -42,52 +56,56 @@ form .user-auth-form-field:nth-child(1)::before {
   height: 20px;
   top: 15px;
 }
+
 form .user-auth-form-field:nth-child(2)::before {
   width: 16px;
   height: 16px;
 }
 
 form .user-auth-form-field {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
   justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
   margin-bottom: 1rem;
   position: relative;
 }
+
 form input {
   font-family: inherit;
   width: 100%;
   outline: none;
-  background-color: #fff;
+  background-color: var(--primary);
   border-radius: 4px;
   border: none;
   display: block;
   padding: 0.9rem 0.7rem;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
-  font-size: 17px;
-  color: #4A4A4A;
+  border: 1.75px solid var(--fourth);
+  border-radius: 50px;
+  font-size: 20px;
+  color: var(--secondary);
   text-indent: 40px;
 }
 
 form .register-button {
-    outline: none;
-    border: none;
-    cursor: pointer;
-    display: inline-block;
-    margin: 0 auto;
-    padding: 1rem 3rem;
-    text-align: center;
-    background-color: blue;
-    color: #fff;
-    border-radius: 8px;
-    font-size: 17px;
-  }
+  outline: none;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 auto;
+  padding: 1rem 3rem;
+  text-align: center;
+  background-color: var(--tertiary);
+  color: var(--primary);
+  border-radius: 8px;
+  font-size: 20px;
+  width: 350px;
+  transition: 0.2s ease-in-out;
+  border-radius: 50px;
+  margin-top: 15px;
+}
+
+form .register-button:hover {
+  background-color: var(--secondary);
+}
 
 form .login-button {
   outline: none;
@@ -97,17 +115,53 @@ form .login-button {
   margin: 0 auto;
   padding: 1rem 3rem;
   text-align: center;
-  background-color: blue;
-  color: #fff;
+  background-color: var(--tertiary);
+  color: var(--primary);
   border-radius: 8px;
   font-size: 17px;
 }
 
-.account-type{
+.account-type {
   position: relative;
   font-family: Arial;
 }
 
-.account-type select{
+.account-type select {
   display: none;
+}
+
+#account-selection {
+  background-color: var(--secondary);
+  color: var(--primary);
+  height: 55px;
+  width: 350px;
+  border-radius: 50px;
+  border: 0px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+input::placeholder {
+  text-indent: -10px;
+}
+
+option {
+  background-color: var(--secondary);
+  height: 400px;
+  color: var(--primary);
+}
+
+select::-ms-expand {
+  display: none;
+}
+
+.select:hover::after {
+  color: var(--tertiary);
+}
+
+.select::after {
+  -webkit-transition: 0.25s all ease;
+  -o-transition: 0.25s all ease;
+  transition: 0.25s all ease;
 }
