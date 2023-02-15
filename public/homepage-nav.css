@@ -7,12 +7,12 @@
   box-sizing: border-box;
   user-select: none;
   font-family: "Noto Serif", serif;
+  max-width: 2560px;
 }
 
 body {
   margin-left: auto;
   margin-right: auto;
-  width: 1920px;
 }
 
 :root {
@@ -29,6 +29,9 @@ header {
   padding: 30px 100px;
   background-color: var(--primary);
   font-size: 30px;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
 }
 
 .logo {
@@ -69,8 +72,6 @@ header {
 .nav_links li .header_link:hover,
 .nav_links li image:hover {
   color: var(--tertiary);
-  text-decoration: underline;
-  text-underline-offset: 32px;
 }
 
 .nav_links li .profile {
@@ -78,6 +79,7 @@ header {
   border-radius: 50%;
   width: 30px;
   height: 30px;
+  border: 1px solid var(--primary);
 }
 
 .nav_links li:hover .profile {
@@ -118,6 +120,7 @@ header {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   border-radius: 10px;
+  z-index: 12;
 }
 
 .nav_links .dropdown-content a {

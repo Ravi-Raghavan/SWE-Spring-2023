@@ -49,6 +49,7 @@ footer {
 
 .footer_links {
   list-style: none;
+  transition: all 0.3s ease 0s;
 }
 
 .footer_links li {
@@ -65,13 +66,11 @@ footer {
   margin-bottom: -4px;
 }
 
-.footer_links .text:hover {
-  text-decoration: underline;
-  text-underline-offset: 5px;
+.footer_links .text a:hover {
+  color: var(--secondary);
 }
 
 .footer_links li a:hover .profile {
-  border: 2px solid var(--primary);
   border-radius: 100%;
   transition: all 0s ease-out;
 }

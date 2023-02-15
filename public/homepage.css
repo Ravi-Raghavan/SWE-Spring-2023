@@ -25,15 +25,15 @@ body {
 .main {
   display: flex;
   justify-content: flex-start;
-  margin-top: -15px;
   background-color: var(--secondary);
+  padding-top: 150px;
 }
 
 .left_main {
   padding-left: 150px;
   padding-top: 20px;
   width: 60%;
-  height: 460px;
+  height: 600px;
   color: var(--primary);
 }
 
