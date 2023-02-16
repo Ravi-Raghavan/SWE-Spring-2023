@@ -283,8 +283,11 @@
         var innerText = document.getElementById("Link6").innerHTML
         if (innerText == "Log Out"){
             localStorage.removeItem("User Record");
+            window.location.href = "./logoutPage.html"
         }
-        window.location.href = "./user-auth-form.html";
+        else{
+            window.location.href = "./user-auth-form.html";
+        }
     }
     window.onload = function(){
         if (localStorage.getItem("User Record") == null){

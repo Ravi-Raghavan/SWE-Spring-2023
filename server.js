@@ -14,7 +14,7 @@ const GoogleAuth = require("./public/GoogleAuth")
 const firebaseAPI = require("./public/FirebaseAPI");
 const public_paths = ["/homepage.html", "/homepage.css", "/homepage-nav.css", "/homepage-footer.css", "/user-registration-form.html",  "/user-registration-form.css", "/user-auth-form.css", 
                     "/waiting-for-validation.html", "/waiting-for-validation.css", "/email-validated.css", "/user-auth-form.html", "/email-validated.html", "/SMTP.js",
-                    "/knowledge-base.html", "/knowledge-base.css", "/FAQ.html", "/FAQ.css", "/PrescriptionRequest.html"]
+                    "/knowledge-base.html", "/knowledge-base.css", "/FAQ.html", "/FAQ.css", "/PrescriptionRequest.html", "/logoutPage.html"]
 const img_paths = ["/img/protien_powder_2.png", "/img/top_logo.png", "/img/tablets.png", "/img/tablets_3.png", "/img/tablets_2.png", "/img/protein_powder.png",
                     "/img/protein_powder_2.png", "/img/mayank_profile.png", "/img/logo.png", "/img/jeff_profile.png", "/img/insulin_meter.png", "/img/bottom_logo.png",
                     "/img/pharmacy.jpg","/img/DHTransparentPill.png", "/img/favicon.ico", "/img/profile.png", "/img/profile.png", "/img/background.jpg", "/img/img_avatar.png",
