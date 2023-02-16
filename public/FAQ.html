@@ -188,8 +188,10 @@
 
             ];
          ///////////////////////////////////////////////////////////////////////////////////////
+        var globalindex = 0;
 
-         function NLPResults(){
+        nextResults();
+        function NLPResults(){
             var searchQuery = document.getElementById("searchField").value
             
             fetch("/faq/search", {
@@ -206,14 +208,16 @@
                         for(let i = 0; i < json.length; i ++){
                             console.log(json[i]);
                         }
+                        Articles=json;
+                        globalindex = 0;
+                        nextResults();
+                        hideLeft();
                     })
                 }
             })
          }
             
-            var globalindex = 0;
-
-            nextResults();
+   
             var navLinks = document.getElementById("navLinks");
             function showMenu(){
                 navLinks.style.right="0";

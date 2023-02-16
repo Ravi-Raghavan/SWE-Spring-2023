@@ -168,13 +168,6 @@ let FAQ_collection = [
         topics: ["Contact Us"]
     },
 
-    {
-        title: "Don’t See Your Question?",
-
-        content: "Contact Us",
-
-        topics: ["Contact Us"]
-    },
 
 
     {
