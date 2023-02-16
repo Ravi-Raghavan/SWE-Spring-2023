@@ -140,7 +140,7 @@ let FAQ_collection = [
 
         content: "As DrugHub deals in delivering medication, these limits are set in place so one does not order too much medication within a specific time frame. ",
 
-        topics: ["Placing an Order"]
+        topics: ["Place an Order"]
     },
 
     {
