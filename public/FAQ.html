@@ -47,8 +47,8 @@
             <div class ="text-box">
                 <h1>Curious about DrugHub?</h1>
                 <p> We won't bite! Ask Away! <br> </p>
-                <input type="text" placeholder="Tell me..."></a>
-                <a href="#info" class="log-btn">Ask.</a>
+                <input id = "searchField" type="text" placeholder="Tell me..."></a>
+                <a href="#info" onclick = 'NLPResults()' class="log-btn">Ask.</a>
             </div>
         </section>
 
@@ -188,6 +188,28 @@
 
             ];
          ///////////////////////////////////////////////////////////////////////////////////////
+
+         function NLPResults(){
+            var searchQuery = document.getElementById("searchField").value
+            
+            fetch("/faq/search", {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: searchQuery // body data type must match "Content-Type" header
+            })
+            .then((response) => {
+                if (response.status == 200){
+                    response.json().then((json) => {
+                        for(let i = 0; i < json.length; i ++){
+                            console.log(json[i]);
+                        }
+                    })
+                }
+            })
+         }
             
             var globalindex = 0;
 

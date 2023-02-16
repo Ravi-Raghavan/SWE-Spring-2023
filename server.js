@@ -5,8 +5,10 @@ const fs = require("fs");
 const lookup = require("mime-types").lookup;
 var CryptoJS = require("crypto-js");
 const admin = require("./firebase").admin;
+var natural = require('natural');
 var db = admin.database();
 var ref = db.ref("/users/");
+var FAQ_ref = db.ref("/FAQ/");
 
 const SERP = require("./public/SERP");
 const SMTP = require("./public/SMTP");
@@ -19,6 +21,126 @@ const img_paths = ["/img/protien_powder_2.png", "/img/top_logo.png", "/img/table
                     "/img/protein_powder_2.png", "/img/mayank_profile.png", "/img/logo.png", "/img/jeff_profile.png", "/img/insulin_meter.png", "/img/bottom_logo.png",
                     "/img/pharmacy.jpg","/img/DHTransparentPill.png", "/img/favicon.ico", "/img/profile.png", "/img/profile.png", "/img/background.jpg", "/img/img_avatar.png",
                     "/img/no_thumbnail.jpg"];
+
+function binarySearch(list, target){
+    var lo = 0;
+    var hi = list.length - 1;
+
+    while (lo <= hi){
+        var mid = Math.floor((lo + hi) / 2);
+
+        if (list[mid] == target){
+            return mid;
+        }
+
+        else if (list[mid] < target){
+            lo = mid + 1;
+        }
+        else{
+            hi = mid - 1;
+        }
+    }
+
+    if (lo < 0){lo = 0;}
+    else if (lo > list.length - 1){lo = list.length - 1;}
+    
+    if (lo > 0 && lo < list.length - 1){
+        let distanceA = natural.LevenshteinDistance(list[lo - 1], target);
+        let distanceB = natural.LevenshteinDistance(list[lo], target);
+        let distanceC = natural.LevenshteinDistance(list[lo + 1], target);
+
+        if (distanceA < distanceB && distanceA < distanceC){
+            return lo - 1;
+        }
+
+        if (distanceB < distanceA && distanceB < distanceC){
+            return lo;
+        }
+
+        if (distanceC < distanceB && distanceC < distanceA){
+            return lo + 1;
+        }
+    }
+    else if (lo == 0 && lo + 1 <= list.length - 1){
+        let distanceA = natural.LevenshteinDistance(list[lo], target);
+        let distanceB = natural.LevenshteinDistance(list[lo + 1], target);
+
+        if (distanceA < distanceB){
+            return lo;
+        }
+
+        if (distanceB < distanceA){
+            return lo + 1;
+        }
+    }
+    else if (lo == list.length - 1 && lo - 1 >= 0){
+        let distanceA = natural.LevenshteinDistance(list[lo], target);
+        let distanceB = natural.LevenshteinDistance(list[lo - 1], target);
+
+        if (distanceA < distanceB){
+            return lo;
+        }
+
+        if (distanceB < distanceA){
+            return lo - 1;
+        }
+    }
+
+
+    return lo;
+}
+
+
+function FAQ(request, response){
+    var searchQuery = "";
+        
+    request.on('data', (data) => {
+        searchQuery += data;
+    });
+
+    request.on('end', async () => {
+        var stemmedTokensSearchQuery = natural.PorterStemmer.tokenizeAndStem(searchQuery).sort();
+        var fileName = "./test/BayesianClassifier.json";
+        natural.BayesClassifier.load(fileName, null, function(err, classifier) {
+            var category = classifier.classify(searchQuery);
+            console.log("Category: " + category);
+            var results = []
+            FAQ_ref.once('value', function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                  var childKey = childSnapshot.key;
+                  var childData = childSnapshot.val();
+                  var topicList = childData.topics;
+                  var articleTitle = childData.title;
+
+                  if (topicList.includes(category)){
+                    var stemmedTokensArticle = natural.PorterStemmer.tokenizeAndStem(articleTitle).sort(); 
+                    console.log("Stemmed Tokens for Query: " + stemmedTokensSearchQuery);
+                    console.log("Stemmed Tokens for Article: " + stemmedTokensArticle);
+                    var similarity = 0;
+
+                    stemmedTokensSearchQuery.forEach((term) => {
+                        var index = binarySearch(stemmedTokensArticle, term);
+                        console.log("Term: " + term);
+                        console.log("Index: " + index);
+                        similarity = similarity + natural.LevenshteinDistance(stemmedTokensArticle[index], term)
+                    })
+
+                    console.log("Levenshtein Distance: " + similarity);
+
+                    if (similarity <= 15){
+                        results.push(childData);
+                    }
+                  }
+                });
+
+                console.log("Search Results: " + JSON.stringify(results));
+                response.writeHead(200, { "Content-type": "application/json" });
+                response.write(JSON.stringify(results));
+                response.end();
+              });
+        });
+    })
+}
 
 function login(request, response){
     var credentials = "";
@@ -187,6 +309,10 @@ const server = http.createServer((request, response) => {
             
             case "/knowledgebase/search":
                 knowledgeBaseSearch(request, response);
+                break;
+            
+            case "/faq/search":
+                FAQ(request, response);
                 break;
         }
     }
