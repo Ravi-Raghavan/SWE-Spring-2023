@@ -167,12 +167,12 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span id = "displayName" class="d-none d-lg-inline-flex">John Doe</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a href="#"  onclick = 'logout()' class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -484,5 +484,43 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
+
+<script>
+
+    function logout(){
+        localStorage.removeItem("User Record");
+        window.location.href = "../logoutPage.html"
+    }
+
+    window.onload = function(){
+        var dashboardProfilePicture = document.getElementsByClassName("rounded-circle me-lg-2")
+        var dashboardProfilePicture = dashboardProfilePicture[0]
+
+        var adminProfilePicture = document.getElementsByClassName("rounded-circle")
+        var adminProfilePicture = adminProfilePicture[0]
+
+        
+        var displayName = document.getElementById("displayName");
+        var adminName = document.getElementsByClassName("mb-0");
+        adminName = adminName[0]
+        
+
+
+        if (localStorage.getItem("User Record") == null){
+            dashboardProfilePicture.src = "../../img/profile.jpg"
+            adminProfilePicture.src = "../../img/profile.jpg"
+        }
+        else{
+            var user_record = JSON.parse(localStorage.getItem("User Record"));
+            var profilePicture = user_record.photoURL
+    
+            dashboardProfilePicture.src = profilePicture
+            adminProfilePicture.src = profilePicture
+            displayName.innerHTML = user_record.displayName;
+            adminName.innerHTML = user_record.displayName;
+        }
+    }
+
+</script>
 
 </html>
