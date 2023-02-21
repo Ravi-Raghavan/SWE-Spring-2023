@@ -23,6 +23,8 @@ const img_paths = ["/img/protien_powder_2.png", "/img/top_logo.png", "/img/table
                     "/img/pharmacy.jpg","/img/DHTransparentPill.png", "/img/favicon.ico", "/img/profile.png", "/img/profile.png", "/img/background.jpg", "/img/img_avatar.png",
                     "/img/no_thumbnail.jpg", "/img/Codeine.jpg", "/img/Ibuprophen.jpg", "/img/Oxycotin.jpg"];
 
+const { createProduct } = require("./OrderProcessing/Products/productController");
+
 function binarySearch(list, target){
     var lo = 0;
     var hi = list.length - 1;
@@ -314,6 +316,10 @@ const server = http.createServer((request, response) => {
             
             case "/faq/search":
                 FAQ(request, response);
+                break;
+
+            case "/api/products":
+                createProduct(request, response);
                 break;
         }
     }
