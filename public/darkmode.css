@@ -1,0 +1,27 @@
+:root {
+  --primary: #fff;
+  --secondary: #8fc0e3;
+  --tertiary: #4b7a5b;
+  --fourth: #707173;
+
+  --primary-dark: #121212;
+}
+
+body.dark,
+ body.dark header,
+ body.dark .low_footer{
+  background-color: var(--primary-dark);
+}
+
+body.dark .item_price,
+body.dark .social,
+body.dark p,
+body.dark h1 {
+  color:var(--primary)
+}
+
+body.dark .moon {
+  height: 27px;
+  background-color: var(--primary);
+  border-radius: 50%;
+}
