@@ -194,8 +194,9 @@ h3{
 
 
 .overlay {
-    position: fixed;
-    top: 0;
+    position: fixed; 
+    margin-top: 100px 0;
+    top: 100px;
     bottom: 0;
     left: 0;
     right: 0;
@@ -252,6 +253,30 @@ h3{
     }
     .popup{
       width: 70%;
+    }
+  }
+
+  @media screen and (max-width: 2560px){
+    .box{
+      width: 70%;
+    }
+    .popup{
+      width: 70%;
+    }
+    .header{ 
+        min-height: 40vh;
+    }
+  }
+
+  @media screen and (min-width: 2560px){
+    .box{
+      width: 70%;
+    }
+    .popup{
+      width: 70%;
+    }
+    .header{ 
+        min-height: 40vh;
     }
   }
 
