@@ -58,11 +58,11 @@
                     <h2>Personal Information:</h2>
                     <div class="col">
                         <h3>Full Name</h3>
-                             <p> Some Random Full Name</p>
+                             <p id = "full-name"> Some Random Full Name</p>
                         <hr>
 
                         <h3>Email</h3>
-                            <p> randomassemail@random.com</p>        
+                            <p id = "email"> randomassemail@random.com</p>        
                         <hr>
 
                         <h3>Address</h3>
@@ -113,6 +113,8 @@
                 document.getElementById("profile-pic").src = profilePicture
                 document.getElementById("profile").src = profilePicture
                 document.getElementById("welcome-text").innerHTML = user_record.displayName
+                document.getElementById("full-name").innerHTML = user_record.displayName
+                document.getElementById("email").innerHTML = user_record.email
             }
         }
     </script>
