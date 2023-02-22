@@ -265,7 +265,7 @@ const server = http.createServer((request, response) => {
     path = path == "/" ? "/homepage.html" : path
     path = path == "/favicon.ico" ? "/img/favicon.ico" : path
 
-    if (public_paths.includes(path) || path.includes("FAQ") || path.includes("darkpan")){
+    if (public_paths.includes(path) || path.includes("FAQ") || path.includes("darkpan") || path.includes("darkmode")){
         file = __dirname + "/public" + path;
     }
     else if(path.includes("/img")){
