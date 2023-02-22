@@ -42,11 +42,11 @@
             <a href="#"><button class="cart">Cart</button></a>
         </header>
 
-        <div class="sidebar">
-            <a class="active" href="#" onclick = 'swapDisplay("profile-info")'>Profile Information</a>
-            <a href="#" onclick = 'swapDisplay("order-info")'>Order History</a>
-            <a href="#" onclick = 'swapDisplay("prescription-info")'>Prescriptions</a>
-            <a href="#" onclick = 'swapDisplay("settings-info")'>Settings</a>
+        <div id = "sideMenu" class="sidebar">
+            <a id = "infoOption" class="active" href="#" onclick = 'swapDisplay("profile-info", "infoOption")'>Profile Information</a>
+            <a id = "orderOption" class = "" href="#" onclick = 'swapDisplay("order-info", "orderOption")'>Order History</a>
+            <a id = "prescriptionOption" class = "" href="#" onclick = 'swapDisplay("prescription-info", "prescriptionOption")'>Prescriptions</a>
+            <a id = "settingsOption" class = "" href="#" onclick = 'swapDisplay("settings-info", "settingsOption")'>Settings</a>
             <a onclick = 'logout()' href="">Logout</a>
         </div>
 
@@ -175,8 +175,13 @@
             }
         }
 
-        function swapDisplay(location){
+        function swapDisplay(location, menuOption){
+            var links = document.getElementById("sideMenu").getElementsByTagName('a');
+            for(i = 0; i < links.length; i++){
+                links[i].className = "";
+            }
             document.getElementById("interface").innerHTML = document.getElementById(location).innerHTML;
+            document.getElementById(menuOption).className = "active";
         }
     </script>
 
