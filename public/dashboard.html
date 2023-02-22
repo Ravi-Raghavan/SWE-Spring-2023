@@ -47,7 +47,7 @@
             <a id = "orderOption" class = "" href="#" onclick = 'swapDisplay("order-info", "orderOption")'>Order History</a>
             <a id = "prescriptionOption" class = "" href="#" onclick = 'swapDisplay("prescription-info", "prescriptionOption")'>Prescriptions</a>
             <a id = "settingsOption" class = "" href="#" onclick = 'swapDisplay("settings-info", "settingsOption")'>Settings</a>
-            <a onclick = 'logout()' href="">Logout</a>
+            <a onclick = 'logout()'>Logout</a>
         </div>
 
         <div id="interface" class = "interface-container">
@@ -156,7 +156,7 @@
 
         function logout(){
             localStorage.removeItem("User Record");
-            window.location.href = "../logoutPage.html"
+            window.location.href = "./logoutPage.html"
         }
 
         window.onload = function(){
