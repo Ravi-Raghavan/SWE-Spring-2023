@@ -28,7 +28,7 @@ header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 30px 100px;
+  padding: 30px 20px;
   background-color: var(--primary);
   font-size: 30px;
   position: fixed;
