@@ -19,7 +19,6 @@
 body {
   margin-left: auto;
   margin-right: auto;
-  width: 1920px;
 }
 
 .main {
@@ -32,7 +31,7 @@ body {
 .left_main {
   padding-left: 150px;
   padding-top: 20px;
-  width: 60%;
+  width: 70%;
   height: 600px;
   color: var(--primary);
 }

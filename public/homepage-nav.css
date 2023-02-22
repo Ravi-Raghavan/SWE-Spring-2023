@@ -7,7 +7,6 @@
   box-sizing: border-box;
   user-select: none;
   font-family: "Noto Serif", serif;
-  max-width: 2560px;
 }
 
 body {
@@ -20,6 +19,9 @@ body {
   --secondary: #8fc0e3;
   --tertiary: #4b7a5b;
   --fourth: #707173;
+
+  --primary-dark: #121212;
+  --fourth: #fff;
 }
 
 header {
@@ -55,18 +57,19 @@ header {
 
 .nav_links li {
   display: inline-block;
-  padding: 0px 20px;
+  padding: 0px 10px;
 }
 
 .nav_links li a,
 .nav_links li image {
   color: var(--secondary);
-  transition: all 0.3s ease 0s;
+  transition: color 0.3s ease 0s;
 }
 
 .nav_links li image {
   border: 2px solid var(--primary);
   border-radius: 100%;
+
 }
 
 .nav_links li .header_link:hover,
@@ -79,18 +82,20 @@ header {
   border-radius: 50%;
   width: 30px;
   height: 30px;
-  border: 1px solid var(--primary);
+  border: 2px solid var(--primary);
+filter: opacity(0.4) drop-shadow(0 0 0 var(--secondary)); 
+transition: all 0.5s ease-out;
 }
 
 .nav_links li:hover .profile {
   border: 2px solid var(--tertiary);
   border-radius: 100%;
+  filter: opacity(0.4) drop-shadow(0 0 0 var(--tertiary)); 
 }
 
 .cart {
-  padding: 9px 25px;
-  margin-left: 20px;
-  margin-right: 50px;
+  font-size: 25px;
+  padding: 2px 15px;
   background-color: var(--tertiary);
   color: var(--primary);
   border: none;
@@ -98,13 +103,15 @@ header {
   cursor: pointer;
   transition: all 0.3s ease 0s;
   font-family: "Didact Gothic", sans-serif;
-  font-size: 20px;
   font-weight: 600;
   letter-spacing: 1px;
+  justify-content: calc(20);
+  transition:  0.5s transform ease-out;;
 }
 
 .cart:hover {
   background-color: var(--secondary);
+  transform:  translateY(-2.5px);
 }
 
 .nav_links .dropdown {
@@ -143,3 +150,14 @@ header {
 .nav_links .dropdown:hover .dropdown-content {
   display: block;
 }
+
+.nav_links .moon  {
+  height: 27px;
+  transition: 0.5s transform ease-out;
+  filter: opacity(0.4) drop-shadow(0 0 0 var(--tertiary));
+}
+
+.nav_links .moon:hover{
+  transform:  translateY(-2.5px);
+}
+
