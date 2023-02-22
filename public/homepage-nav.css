@@ -26,9 +26,8 @@ body {
 
 header {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  padding: 30px 20px;
+  padding: 30px 40px;
   background-color: var(--primary);
   font-size: 30px;
   position: fixed;
@@ -42,7 +41,6 @@ header {
   margin: -20px;
   cursor: pointer;
   margin-right: 20px;
-  margin-left: 20px;
 }
 
 .logo_name {
@@ -53,6 +51,8 @@ header {
 
 .nav_links {
   list-style: none;
+  margin-left: auto; 
+margin-right: 0;
 }
 
 .nav_links li {
