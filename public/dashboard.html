@@ -43,13 +43,20 @@
         </header>
 
         <div class="sidebar">
-            <a class="active" href="">Profile Information</a>
-            <a href="">Order History</a>
-            <a href="">Prescriptions</a>
-            <a href="">Settings</a>
+            <a class="active" href="#" onclick = 'swapDisplay("profile-info")'>Profile Information</a>
+            <a href="#" onclick = 'swapDisplay("order-info")'>Order History</a>
+            <a href="#" onclick = 'swapDisplay("prescription-info")'>Prescriptions</a>
+            <a href="#" onclick = 'swapDisplay("settings-info")'>Settings</a>
             <a onclick = 'logout()' href="">Logout</a>
         </div>
-        <div class ="info-container">
+
+        <div id="interface" class = "interface-container">
+
+        </div>
+
+
+        <!---PROFILE INFORMATION-->
+        <div id = "profile-info" class ="info-container">
             <section id="info" class="DrugFo">
                 <image id = "profile-pic" class="profile-pic" src = "./FAQ_img/profile.jpg" ></image>
                 <h1 id = 'welcome-text'>Welcome, Anonymous!</h1>
@@ -94,6 +101,55 @@
             </section>
         </div>    
 
+        <!---ORDER INFORMATION-->
+
+        
+        <div id = "order-info" class ="info-container">
+            <section id="info" class="DrugFo">
+
+                <div class="row">
+
+                    <h2>Recent Orders:</h2>
+                    <div class="col">
+                        <h3>Order #69420</h3>
+                            <h4>Name</h4>
+                                <p>Tylenol</p>
+                            <h4>Ordered:</h4>
+                                <p>6/9/12</p>                               
+                            <h4>Prescribed By:</h4>
+                                <p>Doctor DicBud</p>
+                                
+                            <h4>Order Status:</h4>
+                                <p>Up the states of Uranus</p> 
+                    </div>
+
+
+                </div>
+            </section>
+        </div>    
+
+         <!---PRESCRIPTION INFORMATION-->
+         <div id = "prescription-info" class ="info-container">
+            <section id="info" class="DrugFo">
+
+                <div class="row">
+
+                    <h2>Placeholder: You're look at the prescription menu.</h2>
+                </div>
+            </section>
+        </div>    
+
+        <!---SETTINGS INFORMATION-->
+        <div id = "settings-info" class ="info-container">
+            <section id="info" class="DrugFo">
+
+                <div class="row">
+
+                    <h2>Placeholder: You're look at the settings menu.</h2>
+                </div>
+            </section>
+       </div> 
+
     </body>
 
     <script>
@@ -104,6 +160,7 @@
         }
 
         window.onload = function(){
+            document.getElementById("interface").innerHTML = document.getElementById("profile-info").innerHTML;
             if (localStorage.getItem("User Record") == null){
                 //
             }
@@ -116,6 +173,10 @@
                 document.getElementById("full-name").innerHTML = user_record.displayName
                 document.getElementById("email").innerHTML = user_record.email
             }
+        }
+
+        function swapDisplay(location){
+            document.getElementById("interface").innerHTML = document.getElementById(location).innerHTML;
         }
     </script>
 

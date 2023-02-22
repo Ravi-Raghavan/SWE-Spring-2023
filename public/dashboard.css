@@ -149,6 +149,7 @@ body{
 
 .info-container{
     background-color: whitesmoke;
+    display: none;
 }
 .sidebar {
     margin: 0;
@@ -177,7 +178,7 @@ body{
     color: white;
   }
   
-  div.info-container {
+  div.interface-container {
     margin-left: 200px;
     padding: 1px 16px;
     height: 1000px;
