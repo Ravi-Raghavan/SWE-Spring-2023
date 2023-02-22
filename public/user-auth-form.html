@@ -85,7 +85,24 @@
                         console.log("This Browser doesn't support local client side storage")
                     }
 
-                    window.location.href = "./homepage.html";
+                    if (localStorage.getItem("URL Stack") != null){
+                      var json_string = localStorage.getItem("URL Stack");
+                      var json_data = JSON.parse(json_string)
+                      var url_stack = json_data["url_stack"]
+                      if (url_stack.length > 0){
+                        var value = url_stack.shift()
+                        
+                        if (url_stack.length > 0){
+                          var next_destination = url_stack[0]
+                          window.location.href = next_destination
+                        }
+                        
+                      }                  
+                      else{
+                        window.location.href = "./homepage.html";
+                      }
+                    }
+                    
                 })
             }
             else{
