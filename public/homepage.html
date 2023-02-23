@@ -24,7 +24,7 @@
                 <div class="dropdown">
                     <image class="profile" id ="dropbtn" src = "../img/profile.jpg" referrerpolicy="no-referrer"></image>
                     <div class="dropdown-content">
-                        <a href="./dashboard.html" class="drop_link">Manage Account</a>
+                        <a onclick = 'handleUserManagingAccount()' class="drop_link">Manage Account</a>
                         <a href="./PrescriptionRequest.html" class="drop_link">Request Prescriptions</a>
                         <a href="#" class="drop_link">View Orders</a>
                         <a href="#" id = "Link6" onclick = 'logout()' class="drop_link">Log Out</a>
@@ -282,6 +282,17 @@
     </section>
 </body>
 <script>
+    function handleUserManagingAccount(){
+        if (localStorage.getItem("User Record") == null){
+            var url_stack = ['./user-auth-form.html', './dashboard.html']
+            var json_data = {url_stack: url_stack}
+            localStorage.setItem("URL Stack", JSON.stringify(json_data))
+            window.location.href = './user-auth-form.html'
+        }
+        else{
+            window.location.href = './dashboard.html'
+        }
+    }
     function toggleDarkMode() {
         const body = document.body;
         body.classList.toggle("dark");
