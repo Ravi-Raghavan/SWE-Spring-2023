@@ -86,10 +86,16 @@ footer {
 }
 
 .low_footer {
+  display: flex;
   background-color: var(--primary);
   margin-top: -10px;
   padding-left: 40px;
+  padding-right: 50px;
   height: 60px;
+}
+
+.low_footer .email {
+  margin-right: auto;
 }
 
 .low_footer h1 {
@@ -120,6 +126,8 @@ footer {
 
 .social {
   list-style: none;
+  margin-left: auto;
+  margin-right: 0;
 }
 
 .social li {
@@ -129,7 +137,7 @@ footer {
 }
 
 .social .email {
-  margin-right: 1200px;
+  margin-right: auto;
 }
 .social li img {
   height: 25px;

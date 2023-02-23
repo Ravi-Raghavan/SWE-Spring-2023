@@ -20,21 +20,6 @@
     position: relative;
 
 }
-@media screen and (max-width: 1280px) {
-    .nav_links {
-      font-size: 25px;
-    }
-
-
-    .nav_links li {
-        padding: 0px 10px;
-    }
-
-    .header{
-        min-height: 50vh;
-    }
-  }
-
 
 .text-box{
     width: 90%;

@@ -57,43 +57,6 @@ header {
     position: relative;
 }
 
-.logo   {
-    height: 100px;
-    width: 150px;
-    margin: -90px;
-    cursor: pointer;
-    margin-bottom: -40px;
-    margin-left: 0px;
-    
-}
-
-.logo_name  {
-    height: 50px;
-    margin: -15px;
-    margin-right: auto;
-    margin-left: 75px;
-}
-
-.nav_links  {
-    list-style:none;
-}
-
-.nav_links li {
-    display: inline-block;
-    padding: 0px 20px;
-}
-
-@media screen and (max-width: 1280px) {
-    .nav_links {
-      font-size: 25px;
-    }
-
-    .nav_links li {
-        padding: 0px 10px;
-    }
-  }
-
-
 
 .nav_links .dropdown:hover .dropdown-content {display: block;}
 .header{
