@@ -1,3 +1,23 @@
+var order = [
+
+    {
+        "item-name" : "tylenol",
+        "price" : 10.99,
+        "quantity" : 2
+    },
+    {
+        "item-name" : "ibuprophen",
+        "price" : 11.99,
+        "quantity" : 1
+    },
+    {
+        "item-name" : "ibuprophen",
+        "price" : 11.99,
+        "quantity" : 1
+    }
+
+
+]
 
 if(document.readyState == 'loading') {
     //wait for webpage to be loaded
