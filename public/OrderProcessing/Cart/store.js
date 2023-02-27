@@ -1,3 +1,23 @@
+var order = [
+
+    {
+        "item-name" : "tylenol",
+        "price" : 10.99,
+        "quantity" : 2
+    },
+    {
+        "item-name" : "ibuprophen",
+        "price" : 11.99,
+        "quantity" : 1
+    },
+    {
+        "item-name" : "ibuprophen",
+        "price" : 11.99,
+        "quantity" : 1
+    }
+
+
+]
 
 if(document.readyState == 'loading') {
     //wait for webpage to be loaded
@@ -82,7 +102,7 @@ function addItemToCart(title, price, imageSrc) {
     {
         if(cartItemNames[i].innerText == title) {
             alert('This item is already added to the cart')
-            return
+            return 
         }
     }
 
