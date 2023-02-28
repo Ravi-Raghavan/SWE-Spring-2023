@@ -33,6 +33,13 @@ function ready() {
     var removeCartItemButtons = document.getElementsByClassName('btn-danger')
     console.log(removeCartItemButtons)
 
+    var cartItems = document.getElementsByClassName('cart-items')[0]
+    while (cartItems.hasChildNodes()) {
+        cartItems.removeChild(cartItems.firstChild)
+    }
+    updateCartTotal()
+
+
 for (var i = 0; i <removeCartItemButtons.length; i++)
 {
     var button = removeCartItemButtons[i]
@@ -98,7 +105,7 @@ function addItemToCart(title, price, imageSrc) {
     var cartItems = document.getElementsByClassName('cart-items')[0]
     var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
     
-    for (var i = 0; i < cartItems.length; i++)
+    for (var i = 0; i < cartItemNames.length; i++)
     {
         if(cartItemNames[i].innerText == title) {
             alert('This item is already added to the cart')
