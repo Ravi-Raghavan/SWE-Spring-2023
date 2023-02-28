@@ -8,20 +8,27 @@
 }
 
 body.dark,
- body.dark header,
- body.dark .low_footer{
+body.dark header,
+body.dark .low_footer {
   background-color: var(--primary-dark);
 }
 
 body.dark .item_price,
 body.dark .social,
 body.dark p,
-body.dark h1 {
-  color:var(--primary)
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4 {
+  color: var(--primary);
 }
 
 body.dark .moon {
   height: 27px;
   background-color: var(--primary);
   border-radius: 50%;
+}
+
+body.dark .col {
+  border-color: #fff;
 }
