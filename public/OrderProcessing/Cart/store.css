@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Noto+Serif:wght@700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+:root {
+  --primary: #fff;
+  --secondary: #8fc0e3;
+  --tertiary: #4b7a5b;
+  --fourth: #707173;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  padding: 30px 40px;
+  background-color: var(--tertiary);
+  font-size: 30px;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
+}

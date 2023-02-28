@@ -24,7 +24,6 @@ body.dark h4 {
 }
 
 body.dark .moon {
-  height: 27px;
   background-color: var(--primary);
   border-radius: 50%;
 }
