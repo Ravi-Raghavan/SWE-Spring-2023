@@ -1,187 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta name="viewport" content="with=device-width, initial-scale=1.0">
-        <title>DrugHub!</title>
-        <link rel ="stylesheet" href="./dashboard.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
-    </head>
+  <head>
+    <meta name="viewport" content="with=device-width, initial-scale=1.0" />
+    <title>DrugHub!</title>
+    <link rel="stylesheet" href="./dashboard.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&display=swap"rel="stylesheet"/>
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="./homepage-nav.css" />
+    <link rel="stylesheet" type="text/css" href="./darkmode.css" />
+    <link rel="stylesheet" type="text/css" href="./dynamic-size.css" />
+  </head>
 
-    <body>
-        <header>
-            <a href = "./homepage.html"><img src="./FAQ_img/top_logo.png" class="logo" alt="logo"></a>
-            <img src="./FAQ_img/bottom_logo.png" class="logo_name" alt="logo">
-            <nav>
-                <ul class="nav_links">
-                    <li>
-                        <div class = "dropdown">
-                            <a href="#" class="header_link">Medicines</a>
-                            <div class = "dropdown-content">
-                                <a href="./knowledge-base.html" class="drop_link">Knowledge Base</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li><a href="#" class="header_link">Delivery</a></li>
-                    <li><a href="#" class="header_link">Our Service</a></li>
-                    <li><a href="#" class="header_link">Contact</a></li>
-                    <li>
-                    <div class="dropdown">
-                        <image id = 'profile' class="profile" id ="dropbtn" src = "./FAQ_img/profile.jpg" ></image>
-                        <div class="dropdown-content">
-                            <a href = '#' class="drop_link">Manage Account</a>
-                            <a href="#" class="drop_link">Request Prescriptions</a>
-                            <a href="#" class="drop_link">View Orders</a>
-                            <a href="#" id = "Link6" onclick = 'logout()' class="drop_link">Log Out</a>
-                          </div>
-                        </div></li>
-                </ul>
-            </nav>
-            <a href="#"><button class="cart">Cart</button></a>
-        </header>
+  <body>
+    <header>
+      <a href="./homepage.html"
+        ><img src="../img/top_logo.png" class="logo" alt="logo"
+      /></a>
+      <img src="../img/bottom_logo.png" class="logo_name" alt="logo" />
+      <nav>
+        <ul class="nav_links">
+          <li>
+            <img
+              onclick="toggleDarkMode()"
+              class="moon"
+              src="../img/moon.png"
+              alt="picture of moon"
+            />
+          </li>
+          <li>
+            <div class="dropdown">
+              <image
+                class="profile"
+                id="dropbtn"
+                src="../img/profile.jpg"
+                referrerpolicy="no-referrer"
+              ></image>
+              <div class="dropdown-content">
+                <a onclick="handleUserManagingAccount()" class="drop_link"
+                  >Manage Account</a
+                >
+                <a href="./PrescriptionRequest.html" class="drop_link"
+                  >Request Prescriptions</a
+                >
+                <a href="#" class="drop_link">View Orders</a>
+                <a href="#" id="Link6" onclick="logout()" class="drop_link"
+                  >Log Out</a
+                >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="dropdown">
+              <a href="#" class="header_link">Medicines</a>
+              <div class="dropdown-content">
+                <a href="./knowledge-base.html" class="drop_link"
+                  >Knowledge Base</a
+                >
+              </div>
+            </div>
+          </li>
+          <li><a href="#" class="header_link">Delivery</a></li>
+          <li>
+            <div class="dropdown">
+              <a href="#" class="header_link">Our Service</a>
+              <div class="dropdown-content">
+                <a href="./FAQ.html" class="drop_link">FAQ</a>
+              </div>
+            </div>
+          </li>
+          <li><a href="#" class="header_link">Contact</a></li>
+          <li>
+            <a href="./OrderProcessing/Cart/store.html"
+              ><button class="cart">Cart</button></a
+            >
+          </li>
+        </ul>
+      </nav>
+    </header>
 
-        <div id = "sideMenu" class="sidebar">
-            <a id = "infoOption" class="active" href="#" onclick = 'swapDisplay("profile-info", "infoOption")'>Profile Information</a>
-            <a id = "orderOption" class = "" href="#" onclick = 'swapDisplay("order-info", "orderOption")'>Order History</a>
-            <a id = "prescriptionOption" class = "" href="#" onclick = 'swapDisplay("prescription-info", "prescriptionOption")'>Prescriptions</a>
-            <a id = "settingsOption" class = "" href="#" onclick = 'swapDisplay("settings-info", "settingsOption")'>Settings</a>
-            <a onclick = 'logout()'>Logout</a>
+    <div id="sideMenu" class="sidebar">
+      <a
+        id="infoOption"
+        class="active"
+        href="#"
+        onclick='swapDisplay("profile-info", "infoOption")'
+        >Profile Information</a
+      >
+      <a
+        id="orderOption"
+        class=""
+        href="#"
+        onclick='swapDisplay("order-info", "orderOption")'
+        >Order History</a
+      >
+      <a
+        id="prescriptionOption"
+        class=""
+        href="#"
+        onclick='swapDisplay("prescription-info", "prescriptionOption")'
+        >Prescriptions</a
+      >
+      <a
+        id="settingsOption"
+        class=""
+        href="#"
+        onclick='swapDisplay("settings-info", "settingsOption")'
+        >Settings</a
+      >
+      <a onclick="logout()">Logout</a>
+    </div>
+
+    <div id="interface" class="interface-container"></div>
+
+    <!---PROFILE INFORMATION-->
+    <div id="profile-info" class="info-container">
+      <section id="info" class="DrugFo">
+        <image
+          id="profile-pic"
+          class="profile-pic"
+          src="./FAQ_img/profile.jpg"
+        ></image>
+        <h1 id="welcome-text">Welcome, Anonymous!</h1>
+
+        <div class="row">
+          <h2>Personal Information:</h2>
+          <div class="col">
+            <h3>Full Name</h3>
+            <p id="full-name">Some Random Full Name</p>
+            <hr />
+
+            <h3>Email</h3>
+            <p id="email">randomassemail@random.com</p>
+            <hr />
+
+            <h3>Address</h3>
+            <p>220 Poopoo Pl, Kailua, HI 96734</p>
+            <hr />
+
+            <h3>Phone</h3>
+            <p>666-420-6666</p>
+          </div>
+
+          <h2>Recent Orders:</h2>
+          <div class="col">
+            <h3>Order #69420</h3>
+            <h4>Name</h4>
+            <p>Tylenol</p>
+            <h4>Ordered:</h4>
+            <p>6/9/12</p>
+            <h4>Prescribed By:</h4>
+            <p>Doctor DicBud</p>
+
+            <h4>Order Status:</h4>
+            <p>Up the states of Uranus</p>
+          </div>
         </div>
+      </section>
+    </div>
 
-        <div id="interface" class = "interface-container">
+    <!---ORDER INFORMATION-->
 
+    <div id="order-info" class="info-container">
+      <section id="info" class="DrugFo">
+        <div class="row">
+          <h2>Recent Orders:</h2>
+          <div class="col">
+            <h3>Order #69420</h3>
+            <h4>Name</h4>
+            <p>Tylenol</p>
+            <h4>Ordered:</h4>
+            <p>6/9/12</p>
+            <h4>Prescribed By:</h4>
+            <p>Doctor DicBud</p>
+
+            <h4>Order Status:</h4>
+            <p>Up the states of Uranus</p>
+          </div>
         </div>
+      </section>
+    </div>
 
+    <!---PRESCRIPTION INFORMATION-->
+    <div id="prescription-info" class="info-container">
+      <section id="info" class="DrugFo">
+        <div class="row">
+          <h2>Placeholder: You're look at the prescription menu.</h2>
+        </div>
+      </section>
+    </div>
 
-        <!---PROFILE INFORMATION-->
-        <div id = "profile-info" class ="info-container">
-            <section id="info" class="DrugFo">
-                <image id = "profile-pic" class="profile-pic" src = "./FAQ_img/profile.jpg" ></image>
-                <h1 id = 'welcome-text'>Welcome, Anonymous!</h1>
+    <!---SETTINGS INFORMATION-->
+    <div id="settings-info" class="info-container">
+      <section id="info" class="DrugFo">
+        <div class="row">
+          <h2>Placeholder: You're look at the settings menu.</h2>
+        </div>
+      </section>
+    </div>
+  </body>
 
-                <div class="row">
-                    <h2>Personal Information:</h2>
-                    <div class="col">
-                        <h3>Full Name</h3>
-                             <p id = "full-name"> Some Random Full Name</p>
-                        <hr>
+  <script>
+    function toggleDarkMode() {
+      const body = document.body;
+      body.classList.toggle("dark");
+    }
 
-                        <h3>Email</h3>
-                            <p id = "email"> randomassemail@random.com</p>        
-                        <hr>
+    function logout() {
+      localStorage.removeItem("User Record");
+      window.location.href = "./logoutPage.html";
+    }
 
-                        <h3>Address</h3>
-                            <p> 220 Poopoo Pl, Kailua, HI 96734</p>
-                        <hr>
+    window.onload = function () {
+      document.getElementById("interface").innerHTML =
+        document.getElementById("profile-info").innerHTML;
+      if (localStorage.getItem("User Record") == null) {
+        //
+      } else {
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        var profilePicture = user_record.photoURL;
+        document.getElementById("profile-pic").src = profilePicture;
+        document.getElementById("profile").src = profilePicture;
+        document.getElementById("welcome-text").innerHTML =
+          user_record.displayName;
+        document.getElementById("full-name").innerHTML =
+          user_record.displayName;
+        document.getElementById("email").innerHTML = user_record.email;
+      }
+    };
 
-
-                        <h3>Phone</h3>
-                            <p> 666-420-6666</p> 
-                                        
-                    </div>
-
-                    <h2>Recent Orders:</h2>
-                    <div class="col">
-                        <h3>Order #69420</h3>
-                            <h4>Name</h4>
-                                <p>Tylenol</p>
-                            <h4>Ordered:</h4>
-                                <p>6/9/12</p>                               
-                            <h4>Prescribed By:</h4>
-                                <p>Doctor DicBud</p>
-                                
-                            <h4>Order Status:</h4>
-                                <p>Up the states of Uranus</p> 
-                    </div>
-
-
-                </div>
-            </section>
-        </div>    
-
-        <!---ORDER INFORMATION-->
-
-        
-        <div id = "order-info" class ="info-container">
-            <section id="info" class="DrugFo">
-
-                <div class="row">
-
-                    <h2>Recent Orders:</h2>
-                    <div class="col">
-                        <h3>Order #69420</h3>
-                            <h4>Name</h4>
-                                <p>Tylenol</p>
-                            <h4>Ordered:</h4>
-                                <p>6/9/12</p>                               
-                            <h4>Prescribed By:</h4>
-                                <p>Doctor DicBud</p>
-                                
-                            <h4>Order Status:</h4>
-                                <p>Up the states of Uranus</p> 
-                    </div>
-
-
-                </div>
-            </section>
-        </div>    
-
-         <!---PRESCRIPTION INFORMATION-->
-         <div id = "prescription-info" class ="info-container">
-            <section id="info" class="DrugFo">
-
-                <div class="row">
-
-                    <h2>Placeholder: You're look at the prescription menu.</h2>
-                </div>
-            </section>
-        </div>    
-
-        <!---SETTINGS INFORMATION-->
-        <div id = "settings-info" class ="info-container">
-            <section id="info" class="DrugFo">
-
-                <div class="row">
-
-                    <h2>Placeholder: You're look at the settings menu.</h2>
-                </div>
-            </section>
-       </div> 
-
-    </body>
-
-    <script>
-        function logout(){
-            localStorage.removeItem("User Record");
-            window.location.href = "./logoutPage.html"
-        }
-
-        window.onload = function(){
-            document.getElementById("interface").innerHTML = document.getElementById("profile-info").innerHTML;
-            if (localStorage.getItem("User Record") == null){
-                //
-            }
-            else{
-                var user_record = JSON.parse(localStorage.getItem("User Record"));
-                var profilePicture = user_record.photoURL
-                document.getElementById("profile-pic").src = profilePicture
-                document.getElementById("profile").src = profilePicture
-                document.getElementById("welcome-text").innerHTML = user_record.displayName
-                document.getElementById("full-name").innerHTML = user_record.displayName
-                document.getElementById("email").innerHTML = user_record.email
-            }
-        }
-
-        function swapDisplay(location, menuOption){
-            var links = document.getElementById("sideMenu").getElementsByTagName('a');
-            for(i = 0; i < links.length; i++){
-                links[i].className = "";
-            }
-            document.getElementById("interface").innerHTML = document.getElementById(location).innerHTML;
-            document.getElementById(menuOption).className = "active";
-        }
-    </script>
-
+    function swapDisplay(location, menuOption) {
+      var links = document.getElementById("sideMenu").getElementsByTagName("a");
+      for (i = 0; i < links.length; i++) {
+        links[i].className = "";
+      }
+      document.getElementById("interface").innerHTML =
+        document.getElementById(location).innerHTML;
+      document.getElementById(menuOption).className = "active";
+    }
+  </script>
 </html>
