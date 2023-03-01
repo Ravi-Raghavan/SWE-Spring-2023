@@ -10,6 +10,10 @@
     padding-top: 60px;
   }
 
+  .dropdown-content a{
+    font-size: 10px;
+  }
+
   .nav_links li,
   .footer_links li {
     margin-left: -10px;
@@ -46,11 +50,6 @@
 }
 
 @media screen and (max-width: 1280px) {
-  header,
-  header a {
-    font-size: 15px;
-  }
-
   header {
     padding-top: 40px;
   }
@@ -62,7 +61,7 @@
   .logo {
     height: 30px;
     width: 45px;
-    transform: translateY(-15px);
+    margin-top: 0;
   }
 
   .logo_name {
@@ -72,6 +71,10 @@
 
   .nav_links .moon  {
     height: 20px;
+  }
+
+  .nav_links{
+    font-size: 15px;
   }
 
   .nav_links li .profile,
