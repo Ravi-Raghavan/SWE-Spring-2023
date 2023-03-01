@@ -217,7 +217,7 @@
 
 @media screen and (max-width: 1112px) {
   .second {
-    background-color: aqua;
+    background-color: rgb(76, 18, 184);
   }
 
   .second .item_list {
@@ -225,7 +225,7 @@
     width: 180px;
     padding: 0;
   }
-
+  
   .second img {
     height: 170px;
     width: 170px;
