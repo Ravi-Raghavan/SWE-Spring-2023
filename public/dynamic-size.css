@@ -10,7 +10,7 @@
     padding-top: 60px;
   }
 
-  .dropdown-content a{
+  .dropdown-content a {
     font-size: 10px;
   }
 
@@ -69,11 +69,11 @@
     margin-top: -15px;
   }
 
-  .nav_links .moon  {
+  .nav_links .moon {
     height: 20px;
   }
 
-  .nav_links{
+  .nav_links {
     font-size: 15px;
   }
 
@@ -215,7 +215,7 @@
   }
 }
 
-@media screen and (max-width: 1112px){
+@media screen and (max-width: 1112px) {
   .second {
     background-color: aqua;
   }
@@ -224,14 +224,11 @@
     height: 180px;
     width: 180px;
     padding: 0;
-    background-color: bisque;
   }
 
-  .second img{
-   height: 170px;
-    width: 170px; 
+  .second img {
+    height: 170px;
+    width: 170px;
     border-radius: 5px;
   }
 }
-
-
