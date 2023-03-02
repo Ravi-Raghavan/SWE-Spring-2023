@@ -9,13 +9,7 @@ var order = [
         "item-name" : "ibuprophen",
         "price" : 11.99,
         "quantity" : 1
-    },
-    {
-        "item-name" : "ibuprophen",
-        "price" : 11.99,
-        "quantity" : 1
     }
-
 
 ]
 
@@ -30,14 +24,17 @@ else
 }
 
 function ready() {
-    var removeCartItemButtons = document.getElementsByClassName('btn-danger')
-    console.log(removeCartItemButtons)
 
-    var cartItems = document.getElementsByClassName('cart-items')[0]
+var removeCartItemButtons = document.getElementsByClassName('btn-danger')
+console.log(removeCartItemButtons)
+
+var cartItems = document.getElementsByClassName('cart-items')[0]
     while (cartItems.hasChildNodes()) {
         cartItems.removeChild(cartItems.firstChild)
     }
-    updateCartTotal()
+updateCartTotal()
+
+//upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc)
 
 
 for (var i = 0; i <removeCartItemButtons.length; i++)
@@ -92,8 +89,14 @@ function addToCartClicked(event) {
     var shopItem = button.parentElement.parentElement
     var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
     var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
+    var priceVal = parseFloat(shopItem.getElementsByClassName('shop-item-price')[0].innerText.replace('$',''))
+
     var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
-    console.log(title, price, imageSrc)
+    console.log(title, price)
+    //Add item to order JSON.
+    order.push({"item-name" : title, "price" : priceVal , "quantity" : 1})
+    console.log(order)  
+
     addItemToCart(title, price,imageSrc)
     updateCartTotal()
 }   
