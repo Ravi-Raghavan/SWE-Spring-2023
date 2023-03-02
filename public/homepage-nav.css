@@ -153,8 +153,9 @@ transition: all 0.5s ease-out;
 }
 
 .nav_links .moon  {
-  height: 27px;
+  height: 30px;
   transition: 0.5s transform ease-out;
+  transform: translateY(2px);
   filter: opacity(0.4) drop-shadow(0 0 0 var(--tertiary));
 }
 
