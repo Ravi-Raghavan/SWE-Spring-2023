@@ -9,13 +9,7 @@ var order = [
         "item-name" : "ibuprophen",
         "price" : 11.99,
         "quantity" : 1
-    },
-    {
-        "item-name" : "ibuprophen",
-        "price" : 11.99,
-        "quantity" : 1
     }
-
 
 ]
 
@@ -92,8 +86,14 @@ function addToCartClicked(event) {
     var shopItem = button.parentElement.parentElement
     var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
     var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
+    var priceVal = parseFloat(shopItem.getElementsByClassName('shop-item-price')[0].innerText.replace('$',''))
+
     var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
-    console.log(title, price, imageSrc)
+    console.log(title, price)
+    //Add item to order JSON.
+    order.push({"item-name" : title, "price" : priceVal , "quantity" : 1})
+    console.log(order)  
+
     addItemToCart(title, price,imageSrc)
     updateCartTotal()
 }   
