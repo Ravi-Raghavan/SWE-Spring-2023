@@ -24,14 +24,17 @@ else
 }
 
 function ready() {
-    var removeCartItemButtons = document.getElementsByClassName('btn-danger')
-    console.log(removeCartItemButtons)
 
-    var cartItems = document.getElementsByClassName('cart-items')[0]
+var removeCartItemButtons = document.getElementsByClassName('btn-danger')
+console.log(removeCartItemButtons)
+
+var cartItems = document.getElementsByClassName('cart-items')[0]
     while (cartItems.hasChildNodes()) {
         cartItems.removeChild(cartItems.firstChild)
     }
-    updateCartTotal()
+updateCartTotal()
+
+//upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc)
 
 
 for (var i = 0; i <removeCartItemButtons.length; i++)
