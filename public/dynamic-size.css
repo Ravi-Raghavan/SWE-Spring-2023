@@ -211,7 +211,8 @@
   .table_for_items {
     margin-left: 0;
     margin-right: 0;
-    padding: 0;
+    padding-left: 0;
+    padding-right: -0;
   }
 }
 
@@ -230,5 +231,23 @@
     height: 170px;
     width: 170px;
     border-radius: 5px;
+  }
+}
+
+@media screen and (max-width: 1200px){
+  body{
+    background-color: rgb(243, 253, 147);
+  }
+}
+
+@media screen and (max-width: 1100px){
+  body{
+    background-color: #fff;
+  }
+}
+
+@media screen and (max-width: 1000px){
+  body{
+    background-color: rgb(83, 2, 2);
   }
 }
