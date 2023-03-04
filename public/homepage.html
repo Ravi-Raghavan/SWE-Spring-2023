@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="./dynamic-size.css" >
     <title>Home Page</title>
 </head>
+
 <body> 
     <!-- screen size for demo 2560 x 1600-->
     <header>
@@ -22,15 +24,15 @@
                     <img onclick="toggleDarkMode()" class="moon" src="../img/moon.png" alt="picture of moon">
                 </li>
                 <li>
-                <div class="dropdown">
-                    <image class="profile" id ="dropbtn" src = "../img/profile.jpg" referrerpolicy="no-referrer"></image>
-                    <div class="dropdown-content">
-                        <a onclick = 'handleUserManagingAccount()' class="drop_link">Manage Account</a>
-                        <a href="./PrescriptionRequest.html" class="drop_link">Request Prescriptions</a>
-                        <a href="#" class="drop_link">View Orders</a>
-                        <a href="#" id = "Link6" onclick = 'logout()' class="drop_link">Log Out</a>
+                    <div class="dropdown">
+                        <image class="profile" id ="dropbtn" src = "../img/profile.jpg" referrerpolicy="no-referrer"></image>
+                        <div class="dropdown-content">
+                            <a onclick = 'handleUserManagingAccount()' class="drop_link">Manage Account</a>
+                            <a href="./PrescriptionRequest.html" class="drop_link">Request Prescriptions</a>
+                            <a href="#" class="drop_link">View Orders</a>
+                            <a href="#" id = "Link6" onclick = 'logout()' class="drop_link">Log Out</a>
+                        </div>
                     </div>
-                </div>
                 </li>
                 <li>
                     <div class = "dropdown">
@@ -49,7 +51,16 @@
                         </div>
                     </div>
                 </li>
-                <li><a href="#" class="header_link">Contact</a></li>
+                
+                <li>
+                    <div class = "dropdown">
+                        <a href="#" class="header_link">Contact</a>
+                        <div class = "dropdown-content">
+                            <a href="./contact-us.html" class="drop_link">Contact Us!</a>
+                        </div>
+                    </div>
+                </li>
+
                 <li><a href="./OrderProcessing/Cart/store.html"><button class="cart">Cart</button></a></li>
             </ul>
             
@@ -60,8 +71,8 @@
     <div class="main">
         <section class="left_main">
             <h1>Reliable on time home delivery</h1>
-            <h2>Our in house pharmacist ensure your medicines<br>
-            reach you when you need them</h2>
+            <h2>Our in-house pharmacists ensure your medicines<br>
+            reach you when you need them.</h2>
             <input type="text" placeholder="Search...">
             <span>
                 <button class="search">
@@ -71,14 +82,13 @@
                 </button>
             </span>
             <br>
-            <span class="astrick">*</span> For America Only
+            <span class="astrick">*</span> US Customers Only
         </section>
         <section class="right_main"></section>
     </div>
 
     <section class="main_body">
         <h1 class="main_body_title">Most Popular Products</h1>
-
         <div class="table_for_items">
             <ul>
                 <li class="item_list"><section class="item">
@@ -123,24 +133,25 @@
         </section>
 
         <div class="service_grid">
-                <section class="main_box">
-                        <section class="left_side">
-                            Chat with a Doctor
-                            Don't self medicate.Talk to an expert. 
-                            Consult a doctor in less than 2 mins.
-                            <button class="call_doctor">
-                                Get Started
-                            </button>
-                        </section>
-                        <section class="right_side">
-                            <img src="../img/mayank_profile.png">
-                        </section>
+            <section class="main_box">
+                <section class="left_side">
+                    Chat with a Doctor.
+                    Don't self medicate. Talk to an expert. 
+                    Consult a doctor in less than 2 mins.
+                    <button class="call_doctor"> 
+                        Get Started 
+                    </button>
+                </section>
+
+                <section class="right_side">
+                    <img src="../img/mayank_profile.png">
+                </section>
             </section>
 
             <section class="main_box">
                 <section class="left_side">
-                    Chat with a Doctor
-                    Don't self medicate.Talk to an expert. 
+                    Chat with a Doctor.
+                    Don't self medicate. Talk to an expert. 
                     Consult a doctor in less than 2 mins.
                     <button class="order">
                         Order Now
@@ -149,102 +160,103 @@
                 <section class="right_side">
                     <img src="../img/jeff_profile.png">
                 </section>
-        </section>
+            </section>
+        </div>
     </section>
+        
+
+    <section class="lower_main_body">
+        <h1 class="main_body_title">Browse Medicine & Health Products</h1>
+        <section class="table_plans">
+            <ul>
+                <li class="plan_name">
+                    <img src="../img/baby.png">
+                    <span>Baby Care</span></li>
+                <li class="plan_name">
+                    <img src="../img/family.png">
+                    <span>Family Care</span></li>
+                <li class="plan_name">
+                    <img src="../img/apple.png">
+                    <span>Alternate</span></li>
+                <li class="plan_name">
+                    <img src="../img/fitness.png">
+                    <span>Fitness</span></li>
+                <li class="plan_name">
+                    <img src="../img/house.png">
+                    <span>Women's Care</span></li>
+                <li class="plan_name">
+                    <img src="../img/doctor.png">
+                    <span>Devices</span></li>
+            </ul>
+        </section>
+
+        <div class="table_for_items second">
+            <ul>
+                <li class="item_list"><section class="item">
+                    <img src="../img/tablets.png" alt="product 1"></section>
+                    <section class="item_name_prt">Tamsul 0.4mg</section>
+                    <section class="item_price_prt">$10.00</section>
+                </li>
+                <li class="item_list"><section class="item">
+                    <img src="../img/tablets.png" alt="product 2"></section>
+                    <section class="item_name_prt">Tamsul 0.4mg</section>
+                    <section class="item_price_prt">$10.00</section>
+                </li>
+                <li class="item_list"><section class="item">
+                    <img src="../img/tablets.png" alt="product 3"></section>
+                    <section class="item_name_prt">Tamsul 0.4mg</section>
+                    <section class="item_price_prt">$10.00</section>
+                </li>
+                <li class="item_list"><section class="item">
+                    <img src="../img/tablets.png" alt="product 4"></section>
+                    <section class="item_name_prt">Tamsul 0.4mg</section>
+                    <section class="item_price_prt">$10.00</section>
+                </li>
+                <li class="item_list"><section class="item">
+                    <img src="../img/tablets.png" alt="product 1"></section>
+                    <section class="item_name_prt">Tamsul 0.4mg</section>
+                    <section class="item_price_prt">$10.00</section>
+                </li>
+                <li class="item_list"><section class="item">
+                    <img src="../img/tablets.png" alt="product 2"></section>
+                    <section class="item_name_prt">Tamsul 0.4mg</section>
+                    <section class="item_price_prt">$10.00</section>
+                </li>
+                <li class="item_list"><section class="item">
+                    <img src="../img/tablets.png" alt="product 3"></section>
+                    <section class="item_name_prt">Tamsul 0.4mg</section>
+                    <section class="item_price_prt">$10.00</section>
+                </li>
+                <li class="item_list"><section class="item">
+                    <img src="../img/tablets.png" alt="product 4"></section>
+                    <section class="item_name_prt">Tamsul 0.4mg</section>
+                    <section class="item_price_prt">$10.00</section>
+                </li>
+            </ul>
         </div>
 
-        <section class="lower_main_body">
-            <h1 class="main_body_title">Browse Medicine & Health Products</h1>
-            <section class="table_plans">
-                <ul>
-                    <li class="plan_name">
-                        <img src="../img/baby.png">
-                        <span>Baby Care</span></li>
-                    <li class="plan_name">
-                        <img src="../img/family.png">
-                        <span>Family Care</span></li>
-                    <li class="plan_name">
-                        <img src="../img/apple.png">
-                        <span>Alternate</span></li>
-                    <li class="plan_name">
-                        <img src="../img/fitness.png">
-                        <span>Fitness</span></li>
-                    <li class="plan_name">
-                        <img src="../img/house.png">
-                        <span>Women's Care</span></li>
-                    <li class="plan_name">
-                        <img src="../img/doctor.png">
-                        <span>Devices</span></li>
-                </ul>
+
+        <a href="#"><button class="visit_button"><h1>Visit Here</h1></button></a>
+
+        <h1 class="main_body_title">Customer review & recommendation</h1>  
+
+        <section class="review_box">
+            <section class="review_left_box">
+                <img src="../img/abid_img.png">
             </section>
-
-            <div class="table_for_items second">
-                <ul>
-                    <li class="item_list"><section class="item">
-                        <img src="../img/tablets.png" alt="product 1"></section>
-                        <section class="item_name_prt">Tamsul 0.4mg</section>
-                        <section class="item_price_prt">$10.00</section>
-                    </li>
-                    <li class="item_list"><section class="item">
-                        <img src="../img/tablets.png" alt="product 2"></section>
-                        <section class="item_name_prt">Tamsul 0.4mg</section>
-                        <section class="item_price_prt">$10.00</section>
-                    </li>
-                    <li class="item_list"><section class="item">
-                        <img src="../img/tablets.png" alt="product 3"></section>
-                        <section class="item_name_prt">Tamsul 0.4mg</section>
-                        <section class="item_price_prt">$10.00</section>
-                    </li>
-                    <li class="item_list"><section class="item">
-                        <img src="../img/tablets.png" alt="product 4"></section>
-                        <section class="item_name_prt">Tamsul 0.4mg</section>
-                        <section class="item_price_prt">$10.00</section>
-                    </li>
-                    <li class="item_list"><section class="item">
-                        <img src="../img/tablets.png" alt="product 1"></section>
-                        <section class="item_name_prt">Tamsul 0.4mg</section>
-                        <section class="item_price_prt">$10.00</section>
-                    </li>
-                    <li class="item_list"><section class="item">
-                        <img src="../img/tablets.png" alt="product 2"></section>
-                        <section class="item_name_prt">Tamsul 0.4mg</section>
-                        <section class="item_price_prt">$10.00</section>
-                    </li>
-                    <li class="item_list"><section class="item">
-                        <img src="../img/tablets.png" alt="product 3"></section>
-                        <section class="item_name_prt">Tamsul 0.4mg</section>
-                        <section class="item_price_prt">$10.00</section>
-                    </li>
-                    <li class="item_list"><section class="item">
-                        <img src="../img/tablets.png" alt="product 4"></section>
-                        <section class="item_name_prt">Tamsul 0.4mg</section>
-                        <section class="item_price_prt">$10.00</section>
-                    </li>
-                </ul>
-            </div>
-
-
-            <a href="#"><button class="visit_button"><h1>Visit Here</h1></button></a>
-
-            <h1 class="main_body_title">Customer review & recommendation</h1>  
-
-            <section class="review_box">
-                <section class="review_left_box">
-                    <img src="../img/abid_img.png">
+            <section class="review_right_box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="quotation" viewBox="0 0 16 16">
+                    <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z"/>
+                    </svg>
+                <section class="text">Beautiful application with elegant UI Design. I found this
+                website very useful. Placed order for a few medicines
+                and received in just 50 minutes. Same
+                medicine costs me $100 from local shop. Recommended 
+                this website.
                 </section>
-                <section class="review_right_box">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="quotation" viewBox="0 0 16 16">
-                        <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z"/>
-                      </svg>
-                    <section class="text">Beautiful application with elegant UI Design. I found this
-                    website very useful. Placed order for a few medicines
-                    and received in just 50 minutes. Same
-                    medicine costs me $100 from local shop. Recommended 
-                    this website.
-                    </section>
-                    
-                    <section class="author">Abid Azad - Rutgers Student</section>
-                </section>
+                
+                <section class="author">Abid Azad - Rutgers Student</section>
+            </section>
         </section>
         <div class="under_review_box">
           <span class="outer">.</span><span class="inside">.<span class="outer">.</span>
@@ -267,6 +279,7 @@
         </nav>
     </footer>
     <div class="white_transparent_box"></div>
+
     <section class="low_footer">
         <li class="email"><a href=""><h1>rr1133@scarletmail.rutgers.edu</h1></a></li>
         <ul class="social">
@@ -278,6 +291,7 @@
         </ul>
     </section>
 </body>
+
 <script>
     function handleUserManagingAccount(){
         if (localStorage.getItem("User Record") == null){
@@ -315,4 +329,5 @@
         }
     }
 </script>
+
 </html>
