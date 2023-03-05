@@ -328,7 +328,7 @@ const server = http.createServer((request, response) => {
     }
     else{
         //Client is requesting a file
-        console.log("Serving File Content");
+        console.log("Serving File Content: " + file);
         serveFileContent(file, response);
     }
 })
