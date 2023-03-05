@@ -1,239 +1,223 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Drug Hub | Cart</title>
-    <meta name="description" content="This is the description" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="store.js" async></script>
-    
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" type="text/css" href="../../homepage-nav.css" />
-    <link rel="stylesheet" type="text/css" href="../../homepage-footer.css" />
-    <link rel="stylesheet" type="text/css" href="../../darkmode.css" />
-    <link rel="stylesheet" type="text/css" href="../../dynamic-size.css" />
-  </head>
-  <body>
-    <header>
-      <a href="./../../homepage.html"
-        ><img src="../../../img/top_logo.png" class="logo" alt="logo"
-      /></a>
-      <img src="../../../img/bottom_logo.png" class="logo_name" alt="logo" />
-      <nav>
-        <ul class="nav_links">
-          <li>
-            <img
-              onclick="toggleDarkMode()"
-              class="moon"
-              src="../../../img/moon.png"
-              alt="picture of moon"
-            />
-          </li>
-          <li>
-            <div class="dropdown">
-              <image
-                class="profile"
-                id="dropbtn"
-                src="../../../img/profile.jpg"
-                referrerpolicy="no-referrer"
-              ></image>
-              <div class="dropdown-content">
-                <a onclick="handleUserManagingAccount()" class="drop_link"
-                  >Manage Account</a
-                >
-                <a href="./../../PrescriptionRequest.html" class="drop_link"
-                  >Request Prescriptions</a
-                >
-                <a href="#" class="drop_link">View Orders</a>
-                <a href="#" id="Link6" onclick="logout()" class="drop_link"
-                  >Log Out</a
-                >
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="dropdown">
-              <a href="#" class="header_link">Medicines</a>
-              <div class="dropdown-content">
-                <a href="./../../knowledge-base.html" class="drop_link"
-                  >Knowledge Base</a
-                >
-              </div>
-            </div>
-          </li>
-          <li><a href="#" class="header_link">Delivery</a></li>
-          <li>
-            <div class="dropdown">
-              <a href="#" class="header_link">Our Service</a>
-              <div class="dropdown-content">
-                <a href="./../FAQ.html" class="drop_link">FAQ</a>
-              </div>
-            </div>
-          </li>
-          <li><a href="#" class="header_link">Contact</a></li>
-          <li>
-            <a href="./../Cart/store.html"
-              ><button class="cart">Cart</button></a
-            >
-          </li>
-        </ul>
-      </nav>
-    </header>
 
-    <section class="container content-section">
-      <h2 class="section-header">Over-The-Counter</h2>
-      <div class="shop-items">
-        <div class="shop-item">
-          <span class="shop-item-title">Ibuprofen</span>
-          <img class="shop-item-image" src="../../../img/Ibuprofen.jpg" />
-          <div class="shop-item-details">
-            <span class="shop-item-price">$12.99</span>
-            <button class="btn btn-primary shop-item-button" type="button">
-              ADD TO CART
-            </button>
-          </div>
-        </div>
-        <div class="shop-item">
-          <span class="shop-item-title">Happy Juice</span>
-          <img class="shop-item-image" src="../../../img/Codeine.jpg" />
-          <div class="shop-item-details">
-            <span class="shop-item-price">$14.99</span>
-            <button class="btn btn-primary shop-item-button" type="button">
-              ADD TO CART
-            </button>
-          </div>
-        </div>
-        <!-- <div class="shop-item">
-          <span class="shop-item-title">Album 3</span>
-          <img class="shop-item-image" src="Images/Album 3.png" />
-          <div class="shop-item-details">
-            <span class="shop-item-price">$9.99</span>
-            <button class="btn btn-primary shop-item-button" type="button">
-              ADD TO CART
-            </button>
-          </div>
-        </div> -->
-        <!-- <div class="shop-item">
-          <span class="shop-item-title">Album 4</span>
-          <img class="shop-item-image" src="Images/Album 4.png" />
-          <div class="shop-item-details">
-            <span class="shop-item-price">$19.99</span>
-            <button class="btn btn-primary shop-item-button" type="button">
-              ADD TO CART
-            </button>
-          </div>
-        </div> -->
-      </div>
-    </section>
-    <section class="container content-section">
-      <h2 class="section-header">Prescriptions</h2>
-      <div class="shop-items">
-        <div class="shop-item">
-          <span class="shop-item-title">Oxycotin</span>
-          <img class="shop-item-image" src="../../../img/Oxycotin.jpg" />
-          <div class="shop-item-details">
-            <span class="shop-item-price">$19.99</span>
-            <button class="btn btn-primary shop-item-button" type="button">
-              ADD TO CART
-            </button>
-          </div>
-        </div>
-        <!-- <div class="shop-item">
-          <span class="shop-item-title">Coffee Cup</span>
-          <img class="shop-item-image" src="Images/Cofee.png" />
-          <div class="shop-item-details">
-            <span class="shop-item-price">$6.99</span>
-            <button class="btn btn-primary shop-item-button" type="button">
-              ADD TO CART
-            </button>
-          </div>
-        </div> -->
-      </div>
-    </section>
-    <section class="container content-section">
-      <h2 class="section-header">CART</h2>
-      <div class="cart-row">
-        <span class="cart-item cart-header cart-column">ITEM</span>
-        <span class="cart-price cart-header cart-column">PRICE</span>
-        <span class="cart-quantity cart-header cart-column">QUANTITY</span>
-      </div>
-      <div class="cart-items">
-        <!-- <div class="cart-row">
-          <div class="cart-item cart-column">
-            <img
-              class="cart-item-image"
-              src="Images/Shirt.png"
-              width="100"
-              height="100"
-            />
-            <span class="cart-item-title">T-Shirt</span>
-          </div>
-          <span class="cart-price cart-column">$19.99</span>
-          <div class="cart-quantity cart-column">
-            <input class="cart-quantity-input" type="number" value="1" />
-            <button class="btn btn-danger" type="button">REMOVE</button>
-          </div>
-        </div> -->
-        <!-- <div class="cart-row">
-          <div class="cart-item cart-column">
-            <img
-              class="cart-item-image"
-              src="..img/Album 3.png"
-              width="100"
-              height="100"
-            />
-            <span class="cart-item-title">Album 3</span>
-          </div>
-          <span class="cart-price cart-column">$9.99</span>
-          <div class="cart-quantity cart-column">
-            <input class="cart-quantity-input" type="number" value="2" />
-            <button class="btn btn-danger" type="button">REMOVE</button>
-          </div>
-        </div> -->
-      </div>
-      <div class="cart-total">
-        <strong class="cart-total-title">Total</strong>
-        <span class="cart-total-price">$0</span>
-      </div>
-      <a href="../PayPal/public/index.html">
+    <head>
+        <title>Drug Hub | Cart</title>
+        <meta name="description" content="This is the description" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="store.js" async></script>
 
-      </a><button class="btn btn-primary btn-purchase" type="button"><a href="../PayPal/public/index.html">
-        PURCHASE
-      </a>
-      </button>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" type="text/css" href="../../homepage-nav.css" />
+        <link rel="stylesheet" type="text/css" href="../../homepage-footer.css" />
+        <link rel="stylesheet" type="text/css" href="../../darkmode.css" />
+        <link rel="stylesheet" type="text/css" href="../../dynamic-size.css" />
+    </head>
 
-    </section>
-    
-    <footer>
-        <img src="../../../img/top_logo.png" class="logo_footer" alt="logo">
-        <img src="../../../img/bottom_logo.png" class="logo_name_footer" alt="logo">
-        <nav>
-            <ul class="footer_links">
-                <li>
-                   <image class="profile" id ="dropbtn" src = "../../../img/profile.jpg" referrerpolicy="no-referrer"></image>
+    <body>
+        <header>
+            <a href="./../../homepage.html"><img src="../../../img/top_logo.png" class="logo" alt="logo" /></a>
+            <img src="../../../img/bottom_logo.png" class="logo_name" alt="logo" />
+            <nav>
+                <ul class="nav_links">
+                    <li>
+                        <img onclick="toggleDarkMode()" class="moon" src="../../../img/moon.png" alt="picture of moon" />
                     </li>
-                <li class="text"><a href="#">Medicines</a></li>
-                <li class="text"><a href="#">Delivery</a></li>
-                <li class="text"><a href="#">Our Service</a></li>
-                <li class="text"><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </footer>
-    <div class="white_transparent_box"></div>
-    <section class="low_footer">
-        <li class="email"><a href=""><h1>rr1133@scarletmail.rutgers.edu</h1></a></li>
-        <ul class="social">
-            <li class="social_title"><h1>Follow us on:</h1></li>
-            <li><a href="#"><img src="../../../img/facebook.png"></a></li>
-            <li><a href="#"><img src="../../../img/link.png"></a></li>
-            <li><a href="#"><img src="../../../img/twitter.png"></a></li>
-            <li><a  class="last" href="#"><img src="../../../img/insta.png"></a></li>
-        </ul>
-    </section>
-  </body>
-  <script>
-    function toggleDarkMode() {
-      const body = document.body;
-      body.classList.toggle("dark");
-    }
-  </script>
+                    <li>
+                        <div class="dropdown">
+                            <image class="profile" id="dropbtn" src="../../../img/profile.jpg" referrerpolicy="no-referrer">
+                            </image>
+                            <div class="dropdown-content">
+                                <a onclick="handleUserManagingAccount()" class="drop_link">Manage Account</a>
+                                <a href="./../../PrescriptionRequest.html" class="drop_link">Request Prescriptions</a>
+                                <a href="#" class="drop_link">View Orders</a>
+                                <a href="#" id="Link6" onclick="logout()" class="drop_link">Log Out</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <a href="#" class="header_link">Medicines</a>
+                            <div class="dropdown-content">
+                                <a href="./../../knowledge-base.html" class="drop_link">Knowledge Base</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#" class="header_link">Delivery</a></li>
+                    <li>
+                        <div class="dropdown">
+                            <a href="#" class="header_link">Our Service</a>
+                            <div class="dropdown-content">
+                                <a href="./../FAQ.html" class="drop_link">FAQ</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a href="#" class="header_link">Contact</a></li>
+                    <li>
+                        <a href="./../Cart/store.html"><button class="cart">Cart</button></a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="container content-section">
+            <h2 class="section-header">Over-The-Counter</h2>
+            <div class="shop-items">
+                <div class="shop-item">
+                    <span class="shop-item-title">Ibuprofen</span>
+                    <img class="shop-item-image" src="../../../img/Ibuprofen.jpg" />
+                    <div class="shop-item-details">
+                        <span class="shop-item-price">$12.99</span>
+                        <button class="btn btn-primary shop-item-button" type="button">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+                <div class="shop-item">
+                    <span class="shop-item-title">Happy Juice</span>
+                    <img class="shop-item-image" src="../../../img/Codeine.jpg" />
+                    <div class="shop-item-details">
+                        <span class="shop-item-price">$14.99</span>
+                        <button class="btn btn-primary shop-item-button" type="button">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+                <!-- <div class="shop-item">
+                    <span class="shop-item-title">Album 3</span>
+                    <img class="shop-item-image" src="Images/Album 3.png" />
+                    <div class="shop-item-details">
+                    <span class="shop-item-price">$9.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button">
+                    ADD TO CART
+                    </button>
+                    </div>
+                    </div> -->
+                    <!-- <div class="shop-item">
+                        <span class="shop-item-title">Album 4</span>
+                        <img class="shop-item-image" src="Images/Album 4.png" />
+                        <div class="shop-item-details">
+                        <span class="shop-item-price">$19.99</span>
+                        <button class="btn btn-primary shop-item-button" type="button">
+                        ADD TO CART
+                        </button>
+                        </div>
+                        </div> -->
+            </div>
+        </section>
+        <section class="container content-section">
+            <h2 class="section-header">Prescriptions</h2>
+            <div class="shop-items">
+                <div class="shop-item">
+                    <span class="shop-item-title">Oxycotin</span>
+                    <img class="shop-item-image" src="../../../img/Oxycotin.jpg" />
+                    <div class="shop-item-details">
+                        <span class="shop-item-price">$19.99</span>
+                        <button class="btn btn-primary shop-item-button" type="button">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div>
+                <!-- <div class="shop-item">
+                    <span class="shop-item-title">Coffee Cup</span>
+                    <img class="shop-item-image" src="Images/Cofee.png" />
+                    <div class="shop-item-details">
+                    <span class="shop-item-price">$6.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button">
+                    ADD TO CART
+                    </button>
+                    </div>
+                    </div> -->
+            </div>
+        </section>
+        <section class="container content-section">
+            <h2 class="section-header">CART</h2>
+            <div class="cart-row">
+                <span class="cart-item cart-header cart-column">ITEM</span>
+                <span class="cart-price cart-header cart-column">PRICE</span>
+                <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+            </div>
+            <div class="cart-items">
+                <!-- <div class="cart-row">
+                    <div class="cart-item cart-column">
+                    <img
+                    class="cart-item-image"
+                    src="Images/Shirt.png"
+                    width="100"
+                    height="100"
+                    />
+                    <span class="cart-item-title">T-Shirt</span>
+                    </div>
+                    <span class="cart-price cart-column">$19.99</span>
+                    <div class="cart-quantity cart-column">
+                    <input class="cart-quantity-input" type="number" value="1" />
+                    <button class="btn btn-danger" type="button">REMOVE</button>
+                    </div>
+                    </div> -->
+                    <!-- <div class="cart-row">
+                        <div class="cart-item cart-column">
+                        <img
+                        class="cart-item-image"
+                        src="..img/Album 3.png"
+                        width="100"
+                        height="100"
+                        />
+                        <span class="cart-item-title">Album 3</span>
+                        </div>
+                        <span class="cart-price cart-column">$9.99</span>
+                        <div class="cart-quantity cart-column">
+                        <input class="cart-quantity-input" type="number" value="2" />
+                        <button class="btn btn-danger" type="button">REMOVE</button>
+                        </div>
+                        </div> -->
+            </div>
+            <div class="cart-total">
+                <strong class="cart-total-title">Total</strong>
+                <span class="cart-total-price">$0</span>
+            </div>
+            <button class="btn btn-primary btn-purchase" type="button">
+                <a href="../PayPal/public/index.html"> PURCHASE </a>
+            </button>
+
+        </section>
+
+        <footer>
+            <img src="../../../img/top_logo.png" class="logo_footer" alt="logo">
+            <img src="../../../img/bottom_logo.png" class="logo_name_footer" alt="logo">
+            <nav>
+                <ul class="footer_links">
+                    <li>
+                        <image class="profile" id="dropbtn" src="../../../img/profile.jpg" referrerpolicy="no-referrer">
+                        </image>
+                    </li>
+                    <li class="text"><a href="#">Medicines</a></li>
+                    <li class="text"><a href="#">Delivery</a></li>
+                    <li class="text"><a href="#">Our Service</a></li>
+                    <li class="text"><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </footer>
+        <div class="white_transparent_box"></div>
+        <section class="low_footer">
+            <li class="email"><a href="">
+                    <h1>rr1133@scarletmail.rutgers.edu</h1>
+                </a></li>
+                <ul class="social">
+                    <li class="social_title">
+                        <h1>Follow us on:</h1>
+                    </li>
+                    <li><a href="#"><img src="../../../img/facebook.png"></a></li>
+                    <li><a href="#"><img src="../../../img/link.png"></a></li>
+                    <li><a href="#"><img src="../../../img/twitter.png"></a></li>
+                    <li><a class="last" href="#"><img src="../../../img/insta.png"></a></li>
+                </ul>
+        </section>
+    </body>
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle("dark");
+        }
+    </script>
+
 </html>
