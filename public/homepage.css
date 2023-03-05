@@ -26,13 +26,15 @@ body {
   justify-content: flex-start;
   background-color: var(--secondary);
   padding-top: 150px;
+  height: 100%;
+  padding-bottom: 40px;
 }
 
 .left_main {
   padding-left: 40px;
   padding-top: 20px;
   width: 100%;
-  height: 600px;
+  height: 100%;
   color: var(--primary);
 }
 
