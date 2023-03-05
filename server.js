@@ -1,5 +1,5 @@
 //Import Libraries to start up Node.js Server
-const https = require("https");
+const http = require("http");
 const url = require("url");
 const fs = require("fs");
 const lookup = require("mime-types").lookup;
@@ -257,7 +257,7 @@ function knowledgeBaseSearch(request, response){
     })
 }
 
-const server = https.createServer((request, response) => {
+const server = http.createServer((request, response) => {
     //Handle client requests and issue server response here 
     let path = url.parse(request.url, true).path;
     console.log(`Requested Path: ${path}`);
