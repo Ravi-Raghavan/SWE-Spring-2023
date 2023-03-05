@@ -275,7 +275,7 @@ const server = http.createServer((request, response) => {
         file = __dirname + "/public" + path;
     }
     else if (path.includes("/OrderProcessing")){
-        file = __dirname + path;
+        file = __dirname + "/public" + path;
     }
 
     if (file == ""){
