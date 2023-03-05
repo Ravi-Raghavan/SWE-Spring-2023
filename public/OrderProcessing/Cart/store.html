@@ -3,7 +3,7 @@
   <head>
     <title>Drug Hub | Cart</title>
     <meta name="description" content="This is the description" />
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="store.js" async></script>
     
     <link rel="stylesheet" href="style.css" />
@@ -194,11 +194,22 @@
         <strong class="cart-total-title">Total</strong>
         <span class="cart-total-price">$0</span>
       </div>
-      <!--<a href="./PayPal/public/index.html"> --> 
-        <div id="paypal-button-container" style="display:none;"></div>
-        <script src="../PayPal/public/script.js"></script>
-      </a><button class="btn btn-primary btn-purchase" type="button">
+      <a href="../PayPal/public/index.html">
+        
+      <!-- <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+
+      Set up a container element for the button 
+      <script type="text/javascript">
+          function showDiv(id){
+              document.getElementById(id).style.display = "block";
+          }
+      </script>
+
+      <input type="button" name="show" value="Purchase" onclick="showDiv('paypal-button-container')"></input> -->
+
+      </a><button class="btn btn-primary btn-purchase" type="button"><a href="../PayPal/public/index.html">
         PURCHASE
+      </a>
       </button>
 
     </section>
