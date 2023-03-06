@@ -1,3 +1,17 @@
+var order = [
+
+    {
+        "item-name" : "tylenol",
+        "price" : 10.99,
+        "quantity" : 2
+    },
+    {
+        "item-name" : "ibuprophen",
+        "price" : 11.99,
+        "quantity" : 1
+    }
+
+]
 
 if(document.readyState == 'loading') {
     //wait for webpage to be loaded
@@ -10,8 +24,18 @@ else
 }
 
 function ready() {
-    var removeCartItemButtons = document.getElementsByClassName('btn-danger')
-    console.log(removeCartItemButtons)
+
+var removeCartItemButtons = document.getElementsByClassName('btn-danger')
+console.log(removeCartItemButtons)
+
+var cartItems = document.getElementsByClassName('cart-items')[0]
+    while (cartItems.hasChildNodes()) {
+        cartItems.removeChild(cartItems.firstChild)
+    }
+updateCartTotal()
+
+//upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc)
+
 
 for (var i = 0; i <removeCartItemButtons.length; i++)
 {
@@ -35,7 +59,9 @@ document.getElementsByClassName('btn-purchase')[0].addEventListener('click', pur
 }
 
 function purchaseClicked() {
-    alert('Thank you for your purchase')                                // Insert HTTP request here to transfer to payment page.
+    // alert('Thank you for your purchase')                                // Insert HTTP request here to transfer to payment page.
+                                                                        // Each time an order is changed the product is added to User/Orders/ in Firebase
+
     var cartItems = document.getElementsByClassName('cart-items')[0]
     while (cartItems.hasChildNodes()) {
         cartItems.removeChild(cartItems.firstChild)
@@ -63,11 +89,17 @@ function addToCartClicked(event) {
     var shopItem = button.parentElement.parentElement
     var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
     var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
+    var priceVal = parseFloat(shopItem.getElementsByClassName('shop-item-price')[0].innerText.replace('$',''))
+
     var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
-    console.log(title, price, imageSrc)
+    console.log(title, price)
+    //Add item to order JSON.
+    order.push({"item-name" : title, "price" : priceVal , "quantity" : 1})
+    console.log(order)
+
     addItemToCart(title, price,imageSrc)
     updateCartTotal()
-}   
+}
 
 function addItemToCart(title, price, imageSrc) {
     var cartRow = document.createElement('div')
@@ -75,8 +107,8 @@ function addItemToCart(title, price, imageSrc) {
     cartRow.innerText = title
     var cartItems = document.getElementsByClassName('cart-items')[0]
     var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
-    
-    for (var i = 0; i < cartItems.length; i++)
+
+    for (var i = 0; i < cartItemNames.length; i++)
     {
         if(cartItemNames[i].innerText == title) {
             alert('This item is already added to the cart')
@@ -100,7 +132,7 @@ cartRow.innerHTML = cartRowContents
     cartItems.append(cartRow)
     cartRow.getElementsByClassName('btn-danger')[0].addEventListener('click', removeCartItem)
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
-}   
+}
 
 
 function updateCartTotal() {
