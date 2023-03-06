@@ -92,15 +92,15 @@
         id="orderOption"
         class=""
         href="#"
-        onclick='swapDisplay("order-info", "orderOption")'
-        >Order History</a
+        onclick='swapDisplay("order-AND-prescription-info", "orderOption")'
+        >Order/Prescription History</a
       >
       <a
-        id="prescriptionOption"
+        id="paymentOption"
         class=""
         href="#"
-        onclick='swapDisplay("prescription-info", "prescriptionOption")'
-        >Prescriptions</a
+        onclick='swapDisplay("payment-info", "prescriptionOption")'
+        >Payment Information</a
       >
       <a
         id="settingsOption"
@@ -143,19 +143,6 @@
             <p>666-420-6666</p>
           </div>
 
-          <h2>Recent Orders:</h2>
-          <div class="col">
-            <h3>Order #69420</h3>
-            <h4>Name</h4>
-            <p>Tylenol</p>
-            <h4>Ordered:</h4>
-            <p>6/9/12</p>
-            <h4>Prescribed By:</h4>
-            <p>Doctor DicBud</p>
-
-            <h4>Order Status:</h4>
-            <p>Up the states of Uranus</p>
-          </div>
         </div>
       </section>
     </div>
@@ -163,7 +150,7 @@
 
 
     <!---ORDER INFORMATION-->
-    <div id="order-info" class="info-container">
+    <div id="order-AND-prescription-info" class="info-container">
       <section id="info" class="DrugFo">
         <div class="row">
           <h2>Recent Orders:</h2>
@@ -195,15 +182,50 @@
             </table>
           </div>
     </div>
+
+    <div class="row">
+      <h2>Recent Prescriptions:</h2>
+     
+      <div class="OrderTable">
+        <table id="prescriptionList">
+          <tr style = "color:white; background-color:#8fc0e3;">
+            <th>Prescription ID</th>
+            <th width = "150%">Items</th>
+            <th>Prescriber</th>
+            <th>Approval Status</th>
+           
+          </tr>
+          <tr>
+            <td>42069</td>
+            <td>Tylenol x1 <br> Iburprofen x2 <br> Rubbing Alcohol x3</td>
+            <td>Dr. Ravi</td>
+            <td>Approved</td>
+            
+          </tr>
+          <tr>
+            <td>42070</td>
+            <td>Iburprofen x1</td>
+            <td>Dr. Jeff</td>
+            <td>Pending</td>
+          </tr>
+          <tr>
+            <td>42071</td>
+            <td>Viagra x1</td>
+            <td>Dr. Mayank</td>
+            <td>Denied</td>
+          </tr>
+        </table>
+      </div>
+</div>
       </section>
     </div>
 
 
-    <!---PRESCRIPTION INFORMATION-->
-    <div id="prescription-info" class="info-container">
+    <!---PAYMENT INFORMATION-->
+    <div id="payment-info" class="info-container">
       <section id="info" class="DrugFo">
         <div class="row">
-          <h2>Placeholder: You're look at the prescription menu.</h2>
+          <h2>Placeholder: You're look at the payment menu.</h2>
         </div>
       </section>
     </div>
@@ -291,6 +313,33 @@
       
     }
   
+    //HELPER FUNCTION TO ADD PRESCRIPTIONS TO PRESCRIPTION TABLE
+    //Params: Integer (Prescription Number), Array of Strings (List of Items and Quanitity), String (Name of Prescriber), String (Approval Status)
+    //Usage Example: addOrder(599212, ["Drug1 x2", "Drug2 x3"], "Dr. Doctor","Delivered");
+    function addPrescription(PrescriptionNumber, ItemList, PrescriberName, Approval){
+      if(PrescriptionNumber == null || ItemList == null || ItemList.length == 0||PrescriberName == null || Approval == null)
+        return;
+      
+      else{
+        var rows = '<tr><td>'+ String(PrescriptionNumber) +'</td><td>';
+          size = ItemList.length;
+          for(i = 0; i < size; i++){
+            rows = rows+(ItemList[i]);
+            
+            if(i != (size-1))
+            rows= rows+ ( "<br>");
+          }
+          rows= rows +( '</td><td>'+PrescriberName+'</td><td>'+Approval+'</td></tr>');
+          var table = document.getElementById('prescriptionList');
+          var template = document.createElement('template');
+          template.innerHTML = rows;
+          console.log(rows);
+          table.append(template.content);
+          
+          return;
+      }
+    }
     addOrder(69423, ["Viagra x1", "Iburprofen x2"], "Delivered");
+    addPrescription(42072, ["Rubbing Alchohol x3", "CBD x7"],"Dr. DicBud", "Denied");
   </script>
 </html>
