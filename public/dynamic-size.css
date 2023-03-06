@@ -102,6 +102,47 @@ footer
   }
 }
 
+@media screen and (max-width:1450px){
+   .service_grid {
+    flex-direction: column;
+  }
+
+  .arrow_img {
+    margin-bottom: -20px;
+  }
+
+  .service_grid .main_box {
+    margin-left: auto;
+    margin-right: auto;
+    width: 450px;
+    margin-top: 40px;
+  }
+
+   .review_box {
+    padding-left: -30px;
+    padding-right: -30px;
+    width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .under_review_box {
+    margin-left: auto;
+    margin-right: auto;
+    width: 860px;
+  }
+}
+
+@media screen and (max-width: 1190px) {
+  .main_body_title,
+  .table_plans {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+}
+
 @media screen and (max-width: 925px) {
   .second {
     max-width: 600px;

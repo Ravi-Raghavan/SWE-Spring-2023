@@ -278,3 +278,6 @@
     font-size: 1.75em;
 }
 
+.btn-purchase a:visited{
+    color: var(--primary)
+}
