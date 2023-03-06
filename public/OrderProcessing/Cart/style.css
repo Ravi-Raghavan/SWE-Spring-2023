@@ -5,7 +5,7 @@
 
 }
 
-html{
+html, body{
     scroll-behavior: smooth;
 }
 
