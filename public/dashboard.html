@@ -169,8 +169,8 @@
           <h2>Recent Orders:</h2>
          
           <div class="OrderTable">
-            <table>
-              <tr>
+            <table id="ordersList">
+              <tr style = "color:white; background-color:#2c2c2c;">
                 <th>Order Number</th>
                 <th width = "150%">Items</th>
                 <th>Status</th>
@@ -220,6 +220,7 @@
   </body>
 
   <script>
+    
     function toggleDarkMode() {
       const body = document.body;
       body.classList.toggle("dark");
@@ -231,6 +232,7 @@
     }
 
     window.onload = function () {
+      
       document.getElementById("interface").innerHTML =
         document.getElementById("profile-info").innerHTML;
       if (localStorage.getItem("User Record") == null) {
@@ -238,6 +240,7 @@
       } else {
         var user_record = JSON.parse(localStorage.getItem("User Record"));
         var profilePicture = user_record.photoURL;
+        
         document.getElementById("profile-pic").src = profilePicture;
         document.getElementById("profile").src = profilePicture;
         document.getElementById("welcome-text").innerHTML =
@@ -246,6 +249,7 @@
           user_record.displayName;
         document.getElementById("email").innerHTML = user_record.email;
       }
+      
     };
 
     function swapDisplay(location, menuOption) {
@@ -257,5 +261,36 @@
         document.getElementById(location).innerHTML;
       document.getElementById(menuOption).className = "active";
     }
+
+    //HELPER FUNCTION TO ADD ORDERS TO ORDER TABLE
+    //Params: Integer (Order Number), Array of Strings (List of Items and Quanitity), String (Order Status)
+    //Usage Example: addOrder(599212, ["Drug1 x2", "Drug2 x3"], "Delivered");
+    function addOrder(OrderNumber, ItemList, Status){
+      if(OrderNumber == null || ItemList == null || ItemList.length == 0||Status == null)
+        return;
+      
+      else{
+        var rows = '<tr><td>'+ String(OrderNumber) +'</td><td>';
+          size = ItemList.length;
+          for(i = 0; i < size; i++){
+            rows = rows+(ItemList[i]);
+            
+            if(i != (size-1))
+            rows= rows+ ( "<br>");
+          }
+          rows= rows +( '</td><td>'+Status+'</td></tr>');
+          var table = document.getElementById('ordersList');
+          var template = document.createElement('template');
+          template.innerHTML = rows;
+          console.log(rows);
+          table.append(template.content);
+          
+          return;
+      }
+      
+      
+    }
+  
+    addOrder(69423, ["Viagra x1", "Iburprofen x2"], "Delivered");
   </script>
 </html>
