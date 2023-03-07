@@ -154,7 +154,7 @@
     <div id="order-AND-prescription-info" class="info-container">
       <section id="info" class="DrugFo">
         <div class="row">
-          <h2>Recent Orders:</h2>
+          <h2 style="margin-bottom: 15px;">Recent Orders:</h2>
          
           <div class="OrderTable">
             <table id="ordersList">
@@ -185,7 +185,7 @@
     </div>
 
     <div class="row">
-      <h2>Recent Prescriptions:</h2>
+      <h2 style="margin-bottom: 15px;">Recent Prescriptions:</h2>
      
       <div class="OrderTable">
         <table id="prescriptionList">
@@ -226,22 +226,20 @@
     <div id="payment-info" class="info-container">
       <section id="info" class="DrugFo">
         <div class="row">
-          <h2>Saved Card Info:</h2>
+          <h2 style="margin-bottom: 15px;">Saved Card Info:</h2>
          
           <div class="OrderTable">
             <table id="paymentList">
               <tr style = "color:white; background-color:#4b7a5b;">
-                <th>Name on Card</th>
-                <th>Card Number</th>
-                <th>Billing Address</th>
-                <th>Shipping Address</th>
-                <th>Expiration Date</th>
+                <th style="width: 20%;">Name on Card</th>
+                <th style="width: 30%;">Card Number</th>
+                <th style="width: 40%;">Billing Address</th>
+                <th style="width: 10%;">Expiration Date</th>
                
               </tr>
               <tr>
                 <td>Ravi Ragahavan</td>
                 <td>---- ---- ---- 4201</td>
-                <td>Some Random Obscure Address</td>
                 <td>Some Random Obscure Address</td>
                 <td>09/26</td>
                 
@@ -324,7 +322,45 @@
     <div id="settings-info" class="info-container">
       <section id="info" class="DrugFo">
         <div class="row">
-          <h2>Placeholder: You're look at the settings menu.</h2>
+          <div class="row">
+            <h2 style="margin-bottom: 15px;">Settings:</h2>
+            <div class="settingsCol">
+              
+              <div class="settingRow">
+                <h3>Dark Mode</h3>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+
+              <hr />
+              
+              <div class="settingRow">
+                <h3>Send Emails</h3>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"></span>
+                </label>
+              </div> 
+
+              <hr /> 
+
+              <div class="settingRow">
+                <h3>Add Email Address</h3>
+                <button class="log-btn" ><body>Add!</body></button>
+              </div>
+              
+              <hr />
+
+              <div class="settingRow">
+                <h3>Delete Account</h3>
+                <button class="log-btn"><body>Delete!</body></button>
+             </div>
+
+            </div>
+  
+          </div>
         </div>
       </section>
     </div>
