@@ -380,6 +380,11 @@
 
     window.onload = function () {
       
+      loadProfile();
+      
+    };
+
+    function loadProfile(){
       document.getElementById("interface").innerHTML =
         document.getElementById("profile-info").innerHTML;
       if (localStorage.getItem("User Record") == null) {
@@ -389,15 +394,13 @@
         var profilePicture = user_record.photoURL;
         
         document.getElementById("profile-pic").src = profilePicture;
-        document.getElementById("profile").src = profilePicture;
         document.getElementById("welcome-text").innerHTML =
           user_record.displayName;
         document.getElementById("full-name").innerHTML =
           user_record.displayName;
         document.getElementById("email").innerHTML = user_record.email;
       }
-      
-    };
+    }
 
     function swapDisplay(location, menuOption) {
       var links = document.getElementById("sideMenu").getElementsByTagName("a");
@@ -407,6 +410,9 @@
       document.getElementById("interface").innerHTML =
         document.getElementById(location).innerHTML;
       document.getElementById(menuOption).className = "active";
+
+      if(menuOption == "infoOption")
+        loadProfile();
     }
 
     //HELPER FUNCTION TO ADD ORDERS TO ORDER TABLE
