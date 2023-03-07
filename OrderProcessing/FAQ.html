@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="with=device-width, initial-scale=1.0">
+        <title>DrugHub!</title>
+        <link rel ="stylesheet" href="./FAQ.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="./homepage-nav.css" >
+    <link rel="stylesheet" type="text/css" href="./homepage.css" >
+    <link rel="stylesheet" type="text/css" href="./homepage-footer.css" >
+    <link rel="stylesheet" type="text/css" href="./darkmode.css" >
+    <link rel="stylesheet" type="text/css" href="./dynamic-size.css" >
+    </head>
+
+    <body>
+
+        <header>
+        <a href = "../homepage.html"><img src="../img/top_logo.png" class="logo" alt="logo"></a>
+        <img src="../img/bottom_logo.png" class="logo_name" alt="logo">
+        <nav>
+            <ul class="nav_links">
+                <li>
+                    <img onclick="toggleDarkMode()" class="moon" src="../img/moon.png" alt="picture of moon">
+                </li>
+                <li>
+                <div class="dropdown">
+                    <image class="profile" id ="dropbtn" src = "../img/profile.jpg" referrerpolicy="no-referrer"></image>
+                    <div class="dropdown-content">
+                        <a href="./dashboard.html" class="drop_link">Manage Account</a>
+                        <a href="./PrescriptionRequest.html" class="drop_link">Request Prescriptions</a>
+                        <a href="#" class="drop_link">View Orders</a>
+                        <a href="#" id = "Link6" onclick = 'logout()' class="drop_link">Log Out</a>
+                    </div>
+                </div>
+                </li>
+                <li>
+                    <div class = "dropdown">
+                        <a href="#" class="header_link">Medicines</a>
+                        <div class = "dropdown-content">
+                            <a href="../knowledge-base.html" class="drop_link">Knowledge Base</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#" class="header_link">Delivery</a></li>
+                <li>
+                    <div class = "dropdown">
+                        <a href="#" class="header_link">Our Service</a>
+                        <div class = "dropdown-content">
+                            <a href="./FAQ.html" class="drop_link">FAQ</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li>
+                    <div class = "dropdown">
+                        <a href="#" class="header_link">Contact</a>
+                        <div class = "dropdown-content">
+                            <a href="./contact-us.html" class="drop_link">Contact Us!</a>
+                        </div>
+                    </div>
+                </li>
+
+
+                <li><a href="./Cart/store.html"><button class="cart">Cart</button></a></li>
+            </ul>
+            
+        </nav>
+        
+    </header>
+
+        <div class="white_space">
+
+
+        </div>
+
+        <section class="header">
+  
+            <div class ="text-box">
+                <h1>Curious about DrugHub?</h1>
+                <p> We won't bite! Ask Away! <br> </p>
+                <input id = "searchField" type="text" placeholder="Tell me..."></a>
+                <a href="#info" onclick = 'NLPResults()' class="log-btn">Ask.</a>
+            </div>
+        </section>
+
+        <section id="info" class="DrugFo">
+            <h1>Frequently Asked Questions</h1>
+            <p> Learn all about us:</p>
+
+            <div class="row">
+                <div >
+                    <img class="left" onclick = "previousResults()" src="../img/leftArrow.png">
+                </div>
+                
+                <div class="col" id = "el1"  onClick="showPopup(5)">
+                    <a  href="#popup1">
+                        <h3 id = "col1">What is DrugHub?</h3>
+                    </a>
+                    
+                </div>
+                
+
+                <div class="col"  id="el2" onClick="showPopup(4)">
+                    <a  href="#popup1">
+                    <h3 id = "col2">What is the subscription plan?</h3>
+                    </a>
+                </div>
+
+                <div class="col"  id = "el3" onClick="showPopup(3)">
+                    <a  href="#popup1">
+                        <h3 id= "col3">Why should I buy prescriptions from this site instead of at a pharmacy?</h3>
+                    </a>
+                </div>
+
+                <div class="col" id = "el4" onClick="showPopup(2)">
+                    <a  href="#popup1">
+                        <h3 id = "col4">Who are the creators of Drughub?</h3>
+                    </a>
+                </div>
+
+                <div class="col"  id = "el5" onClick="showPopup(1)">
+                    <a  href="#popup1">
+                        <h3 id = "col5">Is Abid the best damn coder out there?</h3>
+                    </a>
+                </div>
+                <div >
+                    <img class="right" onclick = "nextResults()" src="../img/rightArrow.png">
+                </div>
+            </div>
+
+            <div id="popup1" class="overlay">
+                <div class="popup">
+                    <h2 id="articleTitle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat nihil rerum omnis nulla non odit esse quasi eius maiores fuga ducimus quod, optio repudiandae porro recusandae laudantium animi adipisci rem!</h2>
+                    <div id="articleContent" class="content">
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa ad exercitationem nobis voluptates corporis quae amet incidunt sunt. Aliquam, vel. Quae tempore explicabo qui ea ut officia veniam aspernatur adipisci?
+                    </div>
+                    <a  onclick="exit()" class="close" >Got it!</a>
+                </div>
+            </div>
+
+        </section>
+
+
+
+
+        <section class="another thing">
+            <h1> </h1>
+        </section>
+
+        <footer>
+        <img src="../img/top_logo.png" class="logo_footer" alt="logo">
+        <img src="../img/bottom_logo.png" class="logo_name_footer" alt="logo">
+        <nav>
+            <ul class="footer_links">
+                <li>
+                   <image class="profile" id ="dropbtn" src = "../img/profile.jpg" referrerpolicy="no-referrer"></image>
+                    </li>
+                <li class="text"><a href="#">Medicines</a></li>
+                <li class="text"><a href="#">Delivery</a></li>
+                <li class="text"><a href="#">Our Service</a></li>
+                <li class="text"><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </footer>
+    <div class="white_transparent_box"></div>
+    <section class="low_footer">
+        <ul class="social">
+            <li class="email"><a href=""><h1>rr1133@scarletmail.rutgers.edu</h1></a></li>
+            <li class="social_title">Follow us on:</li>
+            <li><a href="#"><img src="../img/facebook.png"></a></li>
+            <li><a href="#"><img src="../img/link.png"></a></li>
+            <li><a href="#"><img src="../img/twitter.png"></a></li>
+            <li><a href="#"><img src="../img/insta.png"></a></li>
+        </ul>
+    </section>
+
+        
+        <script>
+            function toggleDarkMode() {
+        const body = document.body;
+        body.classList.toggle("dark");
+            }
+
+            //THIS IS ONLY A TEST VARIABLE. WE WILL LIKELY SWAP THIS WITH FETCH DATA FROM FIREBASE.
+            var Articles = [
+            {
+			"position": 1,
+			"title": "What is Drughub?",
+			"content": "There was a time and a place for Stephanie to use her magic. The problem was that she had a difficult time determining this. She wished she could simply use it when the desire hit and there wouldn't be any unforeseen consequences. Unfortunately, that's not how it worked and the consequences could be devastating if she accidentally used her magic at the wrong time."
+            },
+            {
+                "position": 2,
+                "title": "Where is DrugHub Located?",
+                "content": "It was the best compliment that he'd ever received although the person who gave it likely never knew. It had been an off-hand observation on his ability to hold a conversation and actually add pertinent information to it on practically any topic. Although he hadn't consciously strived to be able to do so, he'd started to voraciously read the news when he couldn't keep up on topics his friends discussed because their conversations went above his head. The fact that someone had noticed enough to compliment him that he could talk intelligently about many topics meant that he had succeeded in his quest to be better informed."
+            },
+            {
+                "position": 3,
+                "title": "What is the subscription plan?",
+                "content": "She put the pen to paper but she couldn't bring herself to actually write anything. She just stared at the blank card and wondered what words she could write that would help in even a small way. She thought of a dozen ways to begin but none seemed to do justice to the situation. There were no words that could help and she knew it."
+            },
+            {
+                "position": 4,
+                "title": "What are some available drugs I can order?",
+                "content": "It wasn't quite yet time to panic. There was still time to salvage the situation. At least that is what she was telling himself. The reality was that it was time to panic and there wasn't time to salvage the situation, but he continued to delude himself into believing there was."
+            },
+            {
+                "position": 5,
+                "title": "Are the doctors on the site real doctors?",
+                "content": "It had been a late night. To be more correct, it had been an early morning. It was now 3:00 AM and George was just getting home. He wasn't sure if it had been worth it. He was supposed to have been finished by 10:00 PM, but his boss had implored him to stay and help when it was clear they weren't going to meet the 10:00 PM target time. So, he had stayed an extra 5 hours and lost a good night's sleep for something he didn't really believe in, but he did anyway because he was afraid if he refused he might lose his job."
+            },
+            {
+                "position": 6,
+                "title": "Who Created Drughub?",
+                "content": "He was supposed to have been finished by 10:00 PM, but his boss had implored him to stay and help when it was clear they weren't going to meet the 10:00 PM target time. So, he had stayed an extra 5 hours and lost a good night's sleep for something he didn't really believe in, but he did anyway because he was afraid if he refused he might lose his job."
+            },
+            {
+                "position": 7,
+                "title": "What is the knowledge place?",
+                "content": "He stepped away from the mic. This was the best take he had done so far, but something seemed missing. Then it struck him all at once. Visuals ran in front of his eyes and music rang in his ears. His eager fingers went to work in an attempt to capture his thoughts hoping the results would produce something that was at least half their glory."
+            },
+            {
+                "position": 8,
+                "title": "When can I expect my drugs?",
+                "content": "It was difficult to explain to them how the diagnosis of certain death had actually given him life. While everyone around him was in tears and upset, he actually felt more at ease. The doctor said it would be less than a year. That gave him a year to live, something he'd failed to do with his daily drudgery of a routine that had passed as life until then."
+            },
+            {
+                "position": 9,
+                "title": "How is this site managed?",
+                "content": "What have you noticed today? I noticed that if you outline the eyes, nose, and mouth on your face with your finger, you make an I  which makes perfect sense, but is something I never noticed before. What have you noticed today?"
+            },
+            {
+                "position": 10,
+                "title": "What is the best video game? ",
+                "content": "There was a leak in the boat. Nobody had yet noticed it, and nobody would for the next couple of hours. This was a problem since the boat was heading out to sea and while the leak was quite small at the moment, it would be much larger when it was ultimately discovered. John had planned it exactly this way."
+            },
+            {
+                "position": 11,
+                "title": "Are you running out of question Ideas? ",
+                "content": "Hopes and dreams were dashed that day. It should have been expected, but it still came as a shock. The warning signs had been ignored in favor of the possibility, however remote, that it could actually happen. That possibility had grown from hope to an undeniable belief it must be destiny. That was until it wasn't and the hopes and dreams came crashing down."
+            },
+            {
+                "position": 12,
+                "title": "Are you still working on this? ",
+                "content": "Sleeping in his car was never the plan but sometimes things don't work out as planned. This had been his life for the last three months and he was just beginning to get used to it. He didn't actually enjoy it, but he had accepted it and come to terms with it. Or at least he thought he had. All that changed when he put the key into the ignition, turned it and the engine didn't make a sound."
+            },
+            {
+                "position": 13,
+                "title": "This is the final question?",
+                "content": "Sleeping in his car was never the plan but sometimes things don't work out as planned. This had been his life for the last three months and he was just beginning to get used to it. He didn't actually enjoy it, but he had accepted it and come to terms with it. Or at least he thought he had. All that changed when he put the key into the ignition, turned it and the engine didn't make a sound."
+            }
+
+            ];
+         ///////////////////////////////////////////////////////////////////////////////////////
+        var globalindex = 0;
+
+        nextResults();
+        function NLPResults(){
+            var searchQuery = document.getElementById("searchField").value
+            
+            fetch("/faq/search", {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: searchQuery // body data type must match "Content-Type" header
+            })
+            .then((response) => {
+                if (response.status == 200){
+                    response.json().then((json) => {
+                        for(let i = 0; i < json.length; i ++){
+                            console.log(json[i]);
+                        }
+                        Articles=json;
+                        globalindex = 0;
+                        nextResults();
+                        hideLeft();
+                    })
+                }
+            })
+         }
+            
+   
+            var navLinks = document.getElementById("navLinks");
+            function showMenu(){
+                navLinks.style.right="0";
+            }
+
+            function hideMenu(){
+                navLinks.style.right="-200px";
+            }
+
+            function showPopup(x){
+                result = Articles[globalindex - x];
+                document.getElementById("articleTitle").innerText = result["title"]; 
+                document.getElementById("articleContent").innerText = result["content"]; 
+                document.querySelector('.overlay').style.opacity = 1;
+                document.querySelector('.overlay').style.visibility = "visible";
+            }
+
+            function exit(){
+            document.querySelector('.overlay').style.opacity = 0;
+            document.querySelector('.overlay').style.visibility = "hidden";
+            }
+
+            function hideLeft(){
+                document.querySelector('.left').style.opacity = 0;
+                document.querySelector('.left').style.pointerEvents = "none";
+            }
+            function showLeft(){
+                document.querySelector('.left').style.opacity = 1;
+                document.querySelector('.left').style.pointerEvents = "auto";
+            }
+
+            function hideRight(){
+                document.querySelector('.right').style.opacity = 0;
+                document.querySelector('.right').style.pointerEvents = "none";
+            }
+            function showRight(){
+                document.querySelector('.right').style.opacity = 1;
+                document.querySelector('.right').style.pointerEvents = "auto";
+            }
+            
+            function nextResults(){
+                var count = 1;
+                var max = globalindex +5;
+                for(let i = globalindex; i< Object.keys(Articles).length && i < max; i++){
+                    result = Articles[i];  
+                    let column  = "col";
+                    let temp = column.concat(String(count));
+                    document.getElementById(temp).innerText = result["title"];
+                    
+                    column  = "el";
+                    temp = column.concat(String(count));
+                    document.getElementById(temp).style.opacity = 1;
+                    document.getElementById(temp).style.pointerEvents = "auto";
+                    count++;
+                 }
+                 globalindex +=5;
+                 if(count != 6){
+                    while(count != 6){
+                        let column  = "el";
+                        let temp = column.concat(String(count));
+                        document.getElementById(temp).style.opacity = 0;
+                        document.getElementById(temp).style.pointerEvents = "none";
+                        count++;
+                    }
+                 }
+
+                
+                if(Object.keys(Articles).length - max < 0)
+                    hideRight();
+
+                if(globalindex-5 != 0)
+                    showLeft();
+            }
+
+            function previousResults(){
+
+                globalindex -= 10;
+                nextResults();
+
+                showRight();
+                if(globalindex - 5 == 0)
+                    hideLeft();
+            }
+        
+        </script>
+
+    </body>
+
+</html>

@@ -10,18 +10,20 @@ var db = admin.database();
 var ref = db.ref("/users/");
 var FAQ_ref = db.ref("/FAQ/");
 
+const paypal = require("./public/OrderProcessing/PayPal/paypal.js");
+
 const SERP = require("./public/SERP");
 const SMTP = require("./public/SMTP");
 const GoogleAuth = require("./public/GoogleAuth")
 const firebaseAPI = require("./public/FirebaseAPI");
 const public_paths = ["/homepage.html", "/homepage.css", "/homepage-nav.css", "/homepage-footer.css", "/user-registration-form.html",  "/user-registration-form.css", "/user-auth-form.css", "/dashboard.css",
                     "/waiting-for-validation.html", "/waiting-for-validation.css", "/email-validated.css", "/user-auth-form.html", "/email-validated.html", "/SMTP.js",
-                    "/knowledge-base.html", "/knowledge-base.css", "/FAQ.html", "/FAQ.css", "/PrescriptionRequest.html", "/logoutPage.html", "/darkpan-1.0.0/index.html", "/OrderProcessing/Cart/store.html", "/dashboard.html",
-                    "/OrderProcessing/Cart/store.js", "/OrderProcessing/Cart/style.css", "/dynamic-size.css"]
+                    "/knowledge-base.html", "/knowledge-base.css", "/FAQ.html", "/FAQ.css", "/PrescriptionRequest.html", "/Prescription.css", "/logoutPage.html", "/darkpan-1.0.0/index.html", "/OrderProcessing/Cart/store.html", "/dashboard.html",
+                    "/OrderProcessing/Cart/store.js", "/OrderProcessing/Cart/style.css", "/dynamic-size.css", "/contact-us.html", "/contact-us.css", "/deliverypage.html", "/deliverypage.css"]
 const img_paths = ["/img/protien_powder_2.png", "/img/top_logo.png", "/img/tablets.png", "/img/tablets_3.png", "/img/tablets_2.png", "/img/protein_powder.png",
                     "/img/protein_powder_2.png", "/img/mayank_profile.png", "/img/logo.png", "/img/jeff_profile.png", "/img/insulin_meter.png", "/img/bottom_logo.png",
                     "/img/pharmacy.jpg","/img/DHTransparentPill.png", "/img/favicon.ico", "/img/profile.png", "/img/profile.png", "/img/background.jpg", "/img/img_avatar.png",
-                    "/img/no_thumbnail.jpg", "/img/Codeine.jpg", "/img/Ibuprophen.jpg", "/img/Oxycotin.jpg"];
+                    "/img/no_thumbnail.jpg", "/img/Codeine.jpg", "/img/Ibuprophen.jpg", "/img/Oxycotin.jpg", "/img/Map_Place_Holder.png"];
 
 const { createProduct } = require("./OrderProcessing/Products/productController");
 const OrderModel = require("./OrderProcessing/orderModel");
@@ -47,7 +49,7 @@ function binarySearch(list, target){
 
     if (lo < 0){lo = 0;}
     else if (lo > list.length - 1){lo = list.length - 1;}
-    
+
     if (lo > 0 && lo < list.length - 1){
         let distanceA = natural.LevenshteinDistance(list[lo - 1], target);
         let distanceB = natural.LevenshteinDistance(list[lo], target);
@@ -97,7 +99,7 @@ function binarySearch(list, target){
 
 function FAQ(request, response){
     var searchQuery = "";
-        
+
     request.on('data', (data) => {
         searchQuery += data;
     });
@@ -117,7 +119,7 @@ function FAQ(request, response){
                   var articleTitle = childData.title;
 
                   if (topicList.includes(category)){
-                    var stemmedTokensArticle = natural.PorterStemmer.tokenizeAndStem(articleTitle).sort(); 
+                    var stemmedTokensArticle = natural.PorterStemmer.tokenizeAndStem(articleTitle).sort();
                     console.log("Stemmed Tokens for Query: " + stemmedTokensSearchQuery);
                     console.log("Stemmed Tokens for Article: " + stemmedTokensArticle);
                     var similarity = 0;
@@ -148,7 +150,7 @@ function FAQ(request, response){
 
 function login(request, response){
     var credentials = "";
-        
+
     request.on('data', (data) => {
         credentials += data;
     });
@@ -159,15 +161,15 @@ function login(request, response){
         var email = credentials["email"];
         var userParameters = {email: email};
         await firebaseAPI.login(userParameters, response);
-    }) 
+    })
 }
 function register(request, response){
     var credentials = "";
-    
+
     request.on('data', (data) => {
         credentials += data;
     });
-    
+
     request.on('end', async () => {
         credentials = JSON.parse(credentials);
         var email = credentials.email
@@ -210,7 +212,7 @@ function serveFileContent(file, response){
 
 function completeValidation(request, response){
     var credentials = "";
-    
+
     request.on('data', (data) => {
         credentials += data;
     });
@@ -225,12 +227,12 @@ function completeValidation(request, response){
         response.writeHead(200, { "Content-type": "text/plain" });
         response.write("Done!");
         response.end();
-    })    
+    })
 }
 
 function checkValidation(request, response){
     var credentials = "";
-    
+
     request.on('data', (data) => {
         credentials += data;
     });
@@ -259,7 +261,7 @@ function knowledgeBaseSearch(request, response){
 }
 
 const server = http.createServer((request, response) => {
-    //Handle client requests and issue server response here 
+    //Handle client requests and issue server response here
     let path = url.parse(request.url, true).path;
     console.log(`Requested Path: ${path}`);
     var file = "";
@@ -276,7 +278,7 @@ const server = http.createServer((request, response) => {
         file = __dirname + "/public" + path;
     }
     else if (path.includes("/OrderProcessing")){
-        file = __dirname + path;
+        file = __dirname + "/public" + path;
     }
 
     if (file == ""){
@@ -285,39 +287,39 @@ const server = http.createServer((request, response) => {
             case "/credentials/google":
                GoogleAuth.retrieveClientCredentials(response);
                break;
-            
+
             case "/register":
                 register(request, response);
                 break;
-            
+
             case "/register/google":
                 GoogleAuth.register(request, response);
                 break;
-            
+
             case "/login":
                 login(request, response);
                 break;
-            
+
             case "/login/google":
                 GoogleAuth.login(request, response);
                 break;
-            
+
             case "/validate/user":
                 completeValidation(request, response);
                 break;
-            
+
             case "/fetch/user/validation":
                 checkValidation(request, response);
-                break;  
-            
+                break;
+
             case "/send/email":
                 sendEmail(request, response);
                 break;
-            
+
             case "/knowledgebase/search":
                 knowledgeBaseSearch(request, response);
                 break;
-            
+
             case "/faq/search":
                 FAQ(request, response);
                 break;
@@ -335,8 +337,39 @@ const server = http.createServer((request, response) => {
     }
     else{
         //Client is requesting a file
-        console.log("Serving File Content");
+        console.log("Serving File Content: " + file);
         serveFileContent(file, response);
+    }
+
+    let reqUrl = url.parse(request.url).pathname == "/" ? "index.html" : url.parse(request.url).pathname;
+    let captureUrl = reqUrl.match(/^\/api\/orders\/([^\/]+)\/capture$/);
+
+    if (reqUrl === "/api/orders" && request.method == "POST") {
+        paypal.createOrder()
+            .then(order => {
+                response.statusCode = 200;
+                response.setHeader("Content-Type", "application/json");
+                response.end(JSON.stringify(order));
+            })
+            .catch(error => {
+                response.statusCode = 500;
+                response.setHeader("Content-Type", "text/plain");
+                response.end(`Error creating order: ${error}`);
+            });
+    } else if (captureUrl != null && reqUrl === captureUrl[0] && request.method == "POST") {
+        const orderId = captureUrl[1];
+        console.log(orderId);
+        paypal.capturePayment(orderId)
+            .then(data => {
+                response.statusCode = 200;
+                response.setHeader("Content-Type", "application/json");
+                response.end(JSON.stringify(data));
+            })
+            .catch(error => {
+                response.statusCode = 500;
+                response.setHeader("Content-Type", "text/plain");
+                response.end(`Error creating order: ${error}`);
+            });
     }
 })
 

@@ -1,33 +1,92 @@
-@import url("https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Noto+Serif:wght@700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700');
+@import url("https://fonts.googleapis.com/css?family=Metal+Mania");
+
+@font-face {
+    font-family: "Booter - Zero Zero";
+    src: url("Fonts/Booter - Zero Zero.woff") format("woff"),
+         url("Fonts/Booter - Zero Zero.woff2") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
 
 * {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  text-decoration: none;
-  box-sizing: border-box;
-  user-select: none;
-  font-family: "Didact Gothic", sans-serif;
+    box-sizing: border-box;
+    font-family: Raleway;
+    color: #777;
 }
 
-:root {
-  --primary: #fff;
-  --secondary: #8fc0e3;
-  --tertiary: #4b7a5b;
-  --fourth: #707173;
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
 
+.nav ul {
+    margin: 0;
+}
+
+.nav li {
+    display: inline;
+}
+
+.nav a {
+    display: inline-block;
+    padding: .5em;
+    color: white;
+    text-decoration: none;
+}
+
+.main-nav {
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: lighter;
+    border-bottom: 1px solid rgba(255, 255, 255, .3)
+}
+
+.main-nav li {
+    padding: 0 5%;
+}
+
+.nav a:hover {
+    background-color: rgba(255, 255, 255, .3)
+}
+
+.main-header {
+    background-color: rgba(0, 0, 0, .6);
+    background-image: url("Images/Header Background.jpg");
+    background-blend-mode: multiply;
+    background-size: cover;
+    padding-bottom: 30px;
+}
+
+.band-name {
+    text-align: center;
+    margin: 0;
+    font-size: 4em;
+    font-family: "Booter - Zero Zero";
+    font-weight: normal;
+    color: white;
+}
+
+.band-name-large {
+    font-size: 8em;
+}
+
+.content-section {
+    margin: 1em;
+}
 
 .container {
-    padding-top: 150px;
     max-width: 900px;
     margin: 0 auto;
+    padding: 0 1.5em;
 }
 .section-header {
-    font-weight: 700;
-    color: var(--tertiary);
+    font-family: "Metal Mania";
+    font-weight: normal;
+    color: #333;
     text-align: center;
-    font-size: 4.5em;
+    font-size: 2.5em;
 }
 
 .about-band-image {
@@ -38,7 +97,11 @@
     border-radius: 50%;
 }
 
-
+.main-footer {
+    background-color: #56CCF2;
+    color: white;
+    padding: .25em 0;
+}
 
 .main-footer-container {
     display: flex;
@@ -95,16 +158,15 @@
 }
 
 .btn-primary {
-    color: var(--primary);
-    background-color: var(--tertiary);
+    color: white;
+    background-color: #56CCF2;
     border: none;
     border-radius: .3em;
     font-weight: bold;
-    transition: all 0.5s ease-out;
 }
 
 .btn-primary:hover {
-    background-color: var(--secondary);
+    background-color: #2D9CDB;
 }
 
 .tour-row {
@@ -149,8 +211,8 @@
     width: 100%;
     text-align: center;
     font-weight: bold;
-    font-size: 2.5em;
-    color: var(--secondary);
+    font-size: 1.5em;
+    color: #333;
     margin-bottom: 15px;
 }
 
@@ -166,8 +228,7 @@
 
 .shop-item-price {
     flex-grow: 1;
-    color: var(--fourth);
-    font-size: 17px;
+    color: #333;
 }
 
 .shop-items {
@@ -179,13 +240,13 @@
 .cart-header {
     font-weight: bold;
     font-size: 1.25em;
-    color: var(--fourth);
+    color: #333;
 }
 
 .cart-column {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--fourth);
+    border-bottom: 1px solid black;
     margin-right: 1.5em;
     padding-bottom: 10px;
     margin-top: 10px;
@@ -202,7 +263,7 @@
 .cart-price {
     width: 20%;
     font-size: 1.2em;
-    color: var(--fourth);
+    color: #333;
 }
 
 .cart-quantity {
@@ -210,7 +271,7 @@
 }
 
 .cart-item-title {
-    color: var(--fourth);
+    color: #333;
     margin-left: .5em;
     font-size: 1.2em;
 }
@@ -222,7 +283,7 @@
 }
 
 .btn-danger {
-    color: var(--primary);
+    color: white;
     background-color: #EB5757;
     border: none;
     border-radius: .3em;
@@ -237,9 +298,9 @@
     height: 34px;
     width: 50px;
     border-radius: 5px;
-    border: 1px solid var(--fourth);
-    background-color: var(--primary);
-    color: var(--fourth);
+    border: 1px solid #56CCF2;
+    background-color: #eee;
+    color: #333;
     padding: 0;
     text-align: center;
     font-size: 1.2em;
@@ -247,7 +308,7 @@
 }
 
 .cart-row:last-child {
-    border-bottom: 1px solid var(--fourth);
+    border-bottom: 1px solid black;
 }
 
 .cart-row:last-child .cart-column {
@@ -258,17 +319,17 @@
     text-align: end;
     margin-top: 10px;
     margin-right: 10px;
-    margin-left: 10px;
 }
 
 .cart-total-title {
     font-weight: bold;
     font-size: 1.5em;
-    color: var(--fourth);
+    color: black;
+    margin-right: 20px;
 }
 
 .cart-total-price {
-    color: var(--fourth);
+    color: #333;
     font-size: 1.1em;
 }
 
@@ -278,6 +339,3 @@
     font-size: 1.75em;
 }
 
-.btn-purchase a:visited{
-    color: var(--primary)
-}

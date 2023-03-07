@@ -26,13 +26,15 @@ body {
   justify-content: flex-start;
   background-color: var(--secondary);
   padding-top: 150px;
+  height: 100%;
+  padding-bottom: 40px;
 }
 
 .left_main {
   padding-left: 40px;
   padding-top: 20px;
   width: 100%;
-  height: 600px;
+  height: 100%;
   color: var(--primary);
 }
 
@@ -231,7 +233,11 @@ body {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease 0s;
+  transition: all 0.5s ease-out 0s;
+}
+
+.service_grid button:hover  {
+  transform: translateY(-5px);
 }
 
 .lower_main_body .main_body_title {
@@ -246,6 +252,7 @@ body {
   height: 100%;
   justify-content: center;
   text-align: center;
+  transition: all 0.5s ease-out;
 }
 
 .table_plans .plan_name {
@@ -291,7 +298,9 @@ body {
 
 .table_plans .plan_name:hover {
   background-color: var(--secondary);
-  transition: all 0.3s ease 0s;
+  transform: translateY(-2px);
+  transition: background-color 0.5s ease-out 0s,
+              transform 0.5s ease-in-out 0s;
 }
 
 .table_for_items .item_name_prt {
@@ -326,7 +335,7 @@ body {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease 0s;
+  transition: all 0.3s ease-out 0s;
 }
 
 .visit_button:hover {
