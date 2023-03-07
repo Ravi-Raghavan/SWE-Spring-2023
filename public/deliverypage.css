@@ -15,6 +15,7 @@ html{
 }
 
 .imagecontainer {
+    
     padding-top: 100px;
     width: 30%;
     height: 100%;
@@ -28,7 +29,56 @@ html{
 
 .delivery-info {
     width: 800px;
-    margin-top: -500px;
+    margin-top: -475px;
     padding-left: 60px;
+   /* background-color: bisque;*/
 
 }
+
+.delivery-info h1{
+font-size: 50px;
+}
+
+.delivery-info p{
+    font-size: 30px;
+    }
+
+.driver-info{
+    padding-left: 1100px;
+    padding-top: 125px;
+    /*background-color: aqua;*/
+    width: -200px;
+    }
+    .driver-info p{
+       
+    }
+
+.need-help p{
+    padding-left: 1100px;
+}
+
+.current-order {
+    width: 400px;
+    margin-top: -15px;
+    padding-left: 60px;
+}
+
+.shopitem1{
+    /*background-color:aqua;*/
+    margin-top: 20px;
+    }
+
+.shopitem2{
+width: 275px;
+margin-left: 550px; 
+margin-top: -210px;
+}
+
+.shopitem3 img{
+    height: 250px;
+    width: 180px;
+    margin-left: 1200px; 
+    margin-top: -300px;
+    }
+
+
