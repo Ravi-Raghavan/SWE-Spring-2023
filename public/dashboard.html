@@ -137,11 +137,11 @@
             <hr />
 
             <h3>Address</h3>
-            <p>220 Poopoo Pl, Kailua, HI 96734</p>
+            <p><a id="address">220 Poopoo Pl, Kailua, HI 96734</a> <i onclick ="addressChange()" class="fa fa-pencil fa-lg" style="margin-left: 10px; cursor:pointer;" ></i></p> 
             <hr />
 
             <h3>Phone</h3>
-            <p>666-420-6666</p>
+            <p ><a id="phone">666-420-6666</a><i onclick="phoneNumberChange()" class="fa fa-pencil fa-lg" style="margin-left: 10px; cursor: pointer;"></i></p>
           </div>
 
         </div>
@@ -468,6 +468,22 @@
           table.append(template.content);
           
           return;
+      }
+    }
+    function addressChange(){
+      var text = prompt("Address: ", document.getElementById("address").innerText);
+      if(text)
+        document.getElementById("address").innerText = text;
+      else{
+
+      }
+    }
+    function phoneNumberChange(){
+      let text = prompt("Phone: ", document.getElementById("phone").innerText);
+      if(text)
+        document.getElementById("phone").innerText = text;
+      else{
+        
       }
     }
     addOrder(69423, ["Viagra x1", "Iburprofen x2"], "Delivered");
