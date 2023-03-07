@@ -49,9 +49,7 @@ font-size: 50px;
     /*background-color: aqua;*/
     width: -200px;
     }
-    .driver-info p{
-       
-    }
+   
 
 .need-help p{
     padding-left: 1100px;
@@ -68,6 +66,19 @@ font-size: 50px;
     margin-top: 20px;
     }
 
+    .shopitem1 p{
+        padding-left: 40px;
+    }
+
+    .shopitem2 p{
+        padding-left: 40px;
+    }
+
+    .shopitem3 p{
+       margin-left: 1210px;
+       margin-top:-13px;
+    }
+
 .shopitem2{
 width: 275px;
 margin-left: 550px; 
@@ -80,5 +91,16 @@ margin-top: -210px;
     margin-left: 1200px; 
     margin-top: -300px;
     }
+
+.shopitem3{
+    margin-top: -30px;
+}
+
+.order-total{
+    margin-top: 5%;
+    margin-left: 2%;
+}
+
+
 
 
