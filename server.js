@@ -26,7 +26,7 @@ const img_paths = ["/img/protien_powder_2.png", "/img/top_logo.png", "/img/table
                     "/img/no_thumbnail.jpg", "/img/Codeine.jpg", "/img/Ibuprophen.jpg", "/img/Oxycotin.jpg", "/img/Map_Place_Holder.png"];
 
 const { createProduct } = require("./OrderProcessing/Products/productController");
-const OrderModel = require("./OrderProcessing/orderModel");
+const { testCreateOrder } = require("./OrderProcessing/orderController");
 
 function binarySearch(list, target){
     var lo = 0;
@@ -329,9 +329,7 @@ const server = http.createServer((request, response) => {
                 break;
 
             case "/test/createOrder":
-                OrderModel.createOrder(`E7HdqBvDWEbDsk9m1gnDBoMOpXj2`, 50.0, ["Drug1, Drug2"], 3);
-                response.writeHead(201, {'Content-Type': 'application/json'});
-                response.end(`{'bruh': 'moment}`);
+                testCreateOrder(request, response);
                 break;
         }
     }

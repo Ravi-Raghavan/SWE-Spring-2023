@@ -22,14 +22,24 @@ async function createProduct(req, res) {
     }
 }
 
-async function createOrder(req, res) {
+
+// When our client wants to add an order (FOR TESTING ONLY)
+// @route POST /test/createOrder/
+async function testCreateOrder(req, res) {
     try {
+        let body = await getPostData(req);
+
+        const newOrder = await Order.create(`E7HdqBvDWEbDsk9m1gnDBoMOpXj2`, 50.0, ["Equate Ibuprofen (250mg/50)"], 3);
+        const data = {id: newOrder.key};
+
+        res.writeHead(201, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(data));
         
     } catch (err) {
-
+        console.log(err);
     }
 }
 
 module.exports = {
-    createProduct,
+    testCreateOrder
 }
