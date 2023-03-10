@@ -4,10 +4,13 @@
   --tertiary: #4b7a5b;
   --fourth: #707173;
 
-  --primary-dark: #121212;
+  --primary-dark: #3d3d3d;
+  --secondary-dark: #5e5d5d;
 }
 
-body.dark,
+body.dark {
+  background-color: var(--secondary-dark);
+}
 body.dark header,
 body.dark .low_footer {
   background-color: var(--primary-dark);
