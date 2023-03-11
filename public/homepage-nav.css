@@ -19,20 +19,20 @@ body {
   --secondary: #8fc0e3;
   --tertiary: #4b7a5b;
   --fourth: #707173;
-
-  --primary-dark: #121212;
-  --fourth: #fff;
+  --header: #f7fffe;
 }
 
 header {
   display: flex;
   align-items: center;
   padding: 30px 40px;
-  background-color: var(--primary);
+  background-color: var(--header);
+  border-bottom: 4px solid var(--secondary);
   font-size: 30px;
   position: fixed;
   width: 100%;
   z-index: 10;
+  opacity: 0.98;
 }
 
 .logo {
@@ -51,8 +51,8 @@ header {
 
 .nav_links {
   list-style: none;
-  margin-left: auto; 
-margin-right: 0;
+  margin-left: auto;
+  margin-right: 0;
 }
 
 .nav_links li {
@@ -69,7 +69,6 @@ margin-right: 0;
 .nav_links li image {
   border: 2px solid var(--primary);
   border-radius: 100%;
-
 }
 
 .nav_links li .header_link:hover,
@@ -83,14 +82,14 @@ margin-right: 0;
   width: 30px;
   height: 30px;
   border: 2px solid var(--primary);
-filter: opacity(0.4) drop-shadow(0 0 0 var(--secondary)); 
-transition: all 0.5s ease-out;
+  filter: opacity(0.4) drop-shadow(0 0 0 var(--secondary));
+  transition: all 0.5s ease-out;
 }
 
 .nav_links li:hover .profile {
   border-radius: 100%;
-  filter: opacity(0.4) drop-shadow(0 0 0 var(--tertiary)); 
-  transform:  translateY(-2.5px);
+  filter: opacity(0.4) drop-shadow(0 0 0 var(--tertiary));
+  transform: translateY(-2.5px);
 }
 
 .cart {
@@ -106,12 +105,12 @@ transition: all 0.5s ease-out;
   font-weight: 600;
   letter-spacing: 1px;
   justify-content: calc(20);
-  transition:  0.5s transform ease-out;;
+  transition: 0.5s transform ease-out;
 }
 
 .cart:hover {
   background-color: var(--secondary);
-  transform:  translateY(-2.5px);
+  transform: translateY(-2.5px);
 }
 
 .nav_links .dropdown {
@@ -152,14 +151,13 @@ transition: all 0.5s ease-out;
   display: block;
 }
 
-.nav_links .moon  {
+.nav_links .moon {
   height: 30px;
   transition: 0.5s transform ease-out;
   transform: translateY(2px);
   filter: opacity(0.4) drop-shadow(0 0 0 var(--tertiary));
 }
 
-.nav_links .moon:hover{
-  transform:  translateY(-2.5px);
+.nav_links .moon:hover {
+  transform: translateY(-2.5px);
 }
-
