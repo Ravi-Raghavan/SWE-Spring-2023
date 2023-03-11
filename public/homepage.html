@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/css" href="./homepage-footer.css" >
     <link rel="stylesheet" type="text/css" href="./darkmode.css" >
     <link rel="stylesheet" type="text/css" href="./dynamic-size.css" >
+
+    <script src="./darkmode.js"></script>
     <title>Home Page</title>
 </head>
 
@@ -318,10 +320,7 @@ function getUniqueID(){
     
       var deviceID = getUniqueID();
 
-function toggleDarkMode() {
-    const body = document.body;
-    body.classList.toggle("dark");
-  }
+
 function logout(){
     var innerText = document.getElementById("Link6").innerHTML
     if (innerText == "Log Out"){
