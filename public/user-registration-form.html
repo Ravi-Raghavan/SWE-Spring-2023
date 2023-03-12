@@ -12,156 +12,118 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyAD8RODlLg_BCHxy3ghN91W5XxIvPLbAp4",
-      authDomain: "swe-spring-2023.firebaseapp.com",
-      databaseURL: "https://swe-spring-2023-default-rtdb.firebaseio.com",
-      projectId: "swe-spring-2023",
-      storageBucket: "swe-spring-2023.appspot.com",
-      messagingSenderId: "600915655715",
-      appId: "1:600915655715:web:966a0affd54b6df2478596",
-      measurementId: "G-EW7N8BG805"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-
-    import{getDatabase,ref,get,set,child,update,remove} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
-    const db = getDatabase();
-
       document
-        .getElementById("register-button")
-        .addEventListener("click", function () {
-          var accountSelector = document.getElementById("account-selection");
-          var accountType = accountSelector.value;
-          var email = document.getElementById("email").value;
-
-          var data = {
-            email: email,
-            accountType: accountType,
-          };
-          console.log(data);
-          fetch("/register", {
-            method: "POST",
-            cache: "no-cache",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          }).then((response) => {
-            if (response.status == 200) {
-              response.text().then((text) => {
-                var originalText = CryptoJS.AES.decrypt(
-                  text,
-                  "UserRecord"
-                ).toString(CryptoJS.enc.Utf8);
-                var userRecord = JSON.parse(originalText);
-                if (typeof Storage != "undefined") {
-                  localStorage.setItem(
-                    "User Record",
-                    JSON.stringify(userRecord)
-                  );
-                  window.location.href = "./waiting-for-validation.html";
-                } else {
-                  console.log(
-                    "This Browser doesn't support local client side storage"
-                  );
-                }
-              });
-            }
-          });
-        });
-
-      function handleCredentialResponse(response) {
-        var accountSelector = document.getElementById("account-selection");
-        var accountType = accountSelector.value;
-        var data = {
-          JWT: response.credential,
-          accountType: accountType,
-        };
-
-        fetch("/register/google", {
-          method: "POST", // *GET, POST, PUT, DELETE, etc.
-          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data), // body data type must match "Content-Type" header
-        }).then((response) => {
-          if (response.status == 200) {
-            response.text().then((text) => {
-              var originalText = CryptoJS.AES.decrypt(
-                text,
-                "UserRecord"
-              ).toString(CryptoJS.enc.Utf8);
-              var userRecord = JSON.parse(originalText);
-              if (typeof Storage != "undefined") {
-                localStorage.setItem("User Record", JSON.stringify(userRecord));
-                window.location.href = "./homepage.html";
-              } else {
-                console.log(
-                  "This Browser doesn't support local client side storage"
-                );
-              }
-            });
+  .getElementById("register-button")
+  .addEventListener("click", function () {
+    var accountSelector = document.getElementById("account-selection");
+    var accountType = accountSelector.value;
+    var email = document.getElementById("email").value;
+    var data = {
+      email: email,
+      accountType: accountType,
+    };
+    console.log(data);
+    fetch("/register", {
+      method: "POST",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }).then((response) => {
+      if (response.status == 200) {
+        response.text().then((text) => {
+          var originalText = CryptoJS.AES.decrypt(
+            text,
+            "UserRecord"
+          ).toString(CryptoJS.enc.Utf8);
+          var userRecord = JSON.parse(originalText);
+          if (typeof Storage != "undefined") {
+            localStorage.setItem(
+              "User Record",
+              JSON.stringify(userRecord)
+            );
+            window.location.href = "./waiting-for-validation.html";
+          } else {
+            console.log(
+              "This Browser doesn't support local client side storage"
+            );
           }
         });
       }
+    });
+  });
 
-      window.onload = function () {
-        var client_id = "";
-        fetch("/credentials/google", {
-          method: "GET",
-          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }).then((response) => {
-          if (response.status == 200) {
-            response.json().then((json) => {
-              client_id = CryptoJS.AES.decrypt(
-                json.client_id,
-                "SWE-Spring-2023"
-              ).toString(CryptoJS.enc.Utf8);
-              google.accounts.id.initialize({
-                client_id: `${client_id}`,
-                callback: handleCredentialResponse,
-              });
-              google.accounts.id.renderButton(
-                document.getElementById("google-login"),
-                {
-                  theme: "outline",
-                  size: "large",
-                  shape: "pill",
-                  width: 350,
-                  theme: "filled_blue",
-                } // customization attributes
-              );
-              google.accounts.id.prompt(); // also display the One Tap dialog
-            });
-          }
-        });
-      };
+function handleCredentialResponse(response) {
+  var accountSelector = document.getElementById("account-selection");
+  var accountType = accountSelector.value;
+  var data = {
+    JWT: response.credential,
+    accountType: accountType,
+  };
 
-      var firstName = document.getElementById("firstName").value;
-      var lastName = document.getElementById("lastName").value;
-      var displayName = firstName + " "+lastName;
-      const dbref = ref(db);
-      get(child(dbref,"users/")).then((snapshot)=>{
-        if(snapshot.exits()){
-          console.log("jo");
+  fetch("/register/google", {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  }).then((response) => {
+    if (response.status == 200) {
+      response.text().then((text) => {
+        var originalText = CryptoJS.AES.decrypt(
+          text,
+          "UserRecord"
+        ).toString(CryptoJS.enc.Utf8);
+        var userRecord = JSON.parse(originalText);
+        if (typeof Storage != "undefined") {
+          localStorage.setItem("User Record", JSON.stringify(userRecord));
+          window.location.href = "./homepage.html";
+        } else {
+          console.log(
+            "This Browser doesn't support local client side storage"
+          );
         }
-      })
+      });
+    }
+  });
+}
 
+window.onload = function () {
+  var client_id = "";
+  fetch("/credentials/google", {
+    method: "GET",
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.status == 200) {
+      response.json().then((json) => {
+        client_id = CryptoJS.AES.decrypt(
+          json.client_id,
+          "SWE-Spring-2023"
+        ).toString(CryptoJS.enc.Utf8);
+        google.accounts.id.initialize({
+          client_id: `${client_id}`,
+          callback: handleCredentialResponse,
+        });
+        google.accounts.id.renderButton(
+          document.getElementById("google-login"),
+          {
+            theme: "outline",
+            size: "large",
+            shape: "pill",
+            width: 350,
+            theme: "filled_blue",
+          } // customization attributes
+        );
+        google.accounts.id.prompt(); // also display the One Tap dialog
+      });
+    }
+  });
+};
     </script>
     <div class="bg-img"></div>
 

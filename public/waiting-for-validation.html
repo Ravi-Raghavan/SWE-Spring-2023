@@ -119,7 +119,34 @@
 </div>
     </body>
     <script type = "module">
-        window.onload = function(){
+        // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAD8RODlLg_BCHxy3ghN91W5XxIvPLbAp4",
+    authDomain: "swe-spring-2023.firebaseapp.com",
+    databaseURL: "https://swe-spring-2023-default-rtdb.firebaseio.com",
+    projectId: "swe-spring-2023",
+    storageBucket: "swe-spring-2023.appspot.com",
+    messagingSenderId: "600915655715",
+    appId: "1:600915655715:web:966a0affd54b6df2478596",
+    measurementId: "G-EW7N8BG805"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  import {getDatabase,ref,set,child,update,remove} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+            
+  const db = getDatabase();
+  
+  
+  window.onload = function(){
             var user_record = JSON.parse(localStorage.getItem("User Record"));
             var email = user_record.email;
             var data = {
@@ -165,9 +192,20 @@
                 }
             })
 
-            setTimeout(isUserVerified, 1000);
+            setTimeout(isUserVerified, 1);
         }
         isUserVerified();
-       
+
+        function printDataBase(){
+            const dbref = ref(db);
+            get(child(dbref,"orders/")).then((snapshot)=>{
+                if(snapshot.exists()){
+                    console.log(snapshot);
+                }else{
+                    
+                }
+            })
+        }
+        printDataBase();
     </script>
 </html>
