@@ -6,34 +6,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="./../css/homepage.css" >
-    <link rel="stylesheet" type="text/css" href="./../css/homepage-nav.css" >
-    <link rel="stylesheet" type="text/css" href="./../css/homepage-footer.css" >
-    <link rel="stylesheet" type="text/css" href="./../css/darkmode.css" >
-    <link rel="stylesheet" type="text/css" href="./../css/dynamic-size.css" >
+    <link rel="stylesheet" type="text/css" href="../css/homepage.css" >
+    <link rel="stylesheet" type="text/css" href="../css/homepage-nav.css" >
+    <link rel="stylesheet" type="text/css" href="../css/homepage-footer.css" >
+    <link rel="stylesheet" type="text/css" href="../css/darkmode.css" >
+    <link rel="stylesheet" type="text/css" href="../css/dynamic-size.css" >
     <title>DrugHub | Home</title>
 </head>
 
 <body> 
     <!-- screen size for demo 2560 x 1600-->
-    <script src="./../js/darkmode.js"></script>
+    <script src="../js/darkmode.js"></script>
     <header>
-        <a href = "./homepage.html"><img src="./../images/top_logo.png" class="logo" alt="logo"></a>
-        <img src="./../images/bottom_logo.png" class="logo_name" alt="logo">
+        <a href = "./homepage.html"><img src="../images/top_logo.png" class="logo" alt="logo"></a>
+        <img src="../images/bottom_logo.png" class="logo_name" alt="logo">
         <nav>
             <ul class="nav_links">
                 <li>
-                    <img onclick="toggleDarkMode()" class="moon" src="./../images/moon.png" alt="picture of moon">
+                    <img onclick="toggleDarkMode()" class="moon" src="../images/moon.png" alt="picture of moon">
                 </li>
                 <li>
                     <div class="dropdown">
-                        <image class="profile" id ="dropbtn" src = "./../images/profile.jpg" referrerpolicy="no-referrer"></image>
+                        <image class="profile" id ="dropbtn" src = "../images/profile.jpg" referrerpolicy="no-referrer"></image>
                         <div class="dropdown-content">
                             <a href="/html/dashboard.html" onclick = 'handleUserManagingAccount()' class="drop_link">Manage Account</a>
                             <a href="/html/PrescriptionRequest.html" class="drop_link">Request Prescriptions</a>
                             <a href="/html/deliverypage.html"  class="drop_link">View Orders</a>
-                            <!--<a href="/html/logoutPage.html" id = "Link6" onclick = 'logout()' class="drop_link">Log Out</a>-->
-                            <a href="/html/user-auth-form.html" id = "Link6" class="drop_link">Log In</a>
+                            <a id = "Link6" onclick = 'login_logout()' class="drop_link">Log Out</a>
                         </div>
                     </div>
                 </li>
@@ -323,7 +322,8 @@ function getUniqueID(){
       }
     
       var deviceID = getUniqueID();
-function logout(){
+      
+function login_logout(){
     var innerText = document.getElementById("Link6").innerHTML
     if (innerText == "Log Out"){
         localStorage.removeItem("User Record");
