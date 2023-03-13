@@ -1,0 +1,152 @@
+/* 
+header 
+footer
+*/
+@media screen and (max-width: 1700px) {
+  header {
+    height: 100px;
+  }
+
+  .logo {
+    height: 66.6px;
+    width: 100px;
+    margin: 12px 10px 0 0;
+  }
+
+  .logo_name {
+    height: 40px;
+    margin-top: -5px;
+  }
+
+  header .nav_links li {
+    margin-left: 15px;
+    margin-right: 0px;
+    padding: 0;
+  }
+
+  header .nav_links .moon,
+  header .nav_links .profile {
+    height: 22px;
+    width: 22px;
+  }
+
+  header .nav_links li {
+    font-size: 22px;
+  }
+
+  header .nav_links .dropdown-content {
+    margin-top: 1px;
+    box-shadow: 0px;
+  }
+
+  header .nav_links .dropdown-content a {
+    padding-top: 8px;
+    padding-bottom: 6px;
+    box-shadow: 0px;
+    font-size: 18px;
+  }
+
+  header .cart {
+    font-size: 22px;
+    padding: 4px 10px;
+  }
+}
+
+@media screen and (max-width: 1130px) {
+  .logo_name {
+    height: 0px;
+    margin-top: -7px;
+  }
+
+  .center_footer h1 {
+    font-size: 30px;
+  }
+
+  .center_footer li,
+  .center_footer .email {
+    font-size: 14px;
+  }
+}
+
+/* home page */
+@media screen and (max-width: 1750px) {
+  .main {
+    padding-top: 140px;
+  }
+
+  .table_for_items {
+    width: 800px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin: auto;
+  }
+
+  .table_for_items .item_list {
+    margin-top: 20px;
+  }
+
+  .second {
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .second .item_list {
+    height: 180px;
+    width: 180px;
+    padding: 0;
+  }
+
+  .second img {
+    height: 170px;
+    width: 170px;
+    border-radius: 5px;
+  }
+}
+
+@media screen and (max-width: 1450px) {
+  .service_grid {
+    flex-direction: column;
+  }
+
+  .arrow_img {
+    margin-bottom: -20px;
+  }
+
+  .service_grid .main_box {
+    margin-left: auto;
+    margin-right: auto;
+    width: 450px;
+    margin-top: 40px;
+  }
+
+  .review_box {
+    padding-left: -30px;
+    padding-right: -30px;
+    width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .under_review_box {
+    margin-left: auto;
+    margin-right: auto;
+    width: 860px;
+  }
+}
+
+@media screen and (max-width: 1190px) {
+  .main_body_title,
+  .table_plans {
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 925px) {
+  .second {
+    max-width: 600px;
+  }
+}

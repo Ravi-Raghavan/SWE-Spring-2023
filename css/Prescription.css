@@ -1,0 +1,217 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  user-select: none;
+  outline: none;
+}
+
+:root {
+  --primary: #fff;
+  --secondary: #8fc0e3;
+  --tertiary: #4b7a5b;
+  --fourth: #707173;
+
+  --soft: Arial, Helvetica, sans-serif;
+  --strong: Georgia, 'Times New Roman', Times, serif;
+}
+
+body{
+    background-image: url('../images/medicine_wallpaper.jpg');
+    
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  padding-bottom: 100px;
+}
+
+.main-box {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  width: 90%;
+  max-width: 1000px;
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  border: 5px solid var(--tertiary);
+  border-radius: 50px;
+  background-color: var(--primary);
+  opacity: 0.96;
+}
+
+.main-box .logo {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.main-box img {
+  height: 150px;
+}
+
+.main-box .title {
+  background-color: var(--secondary);
+  color: var(--primary);
+  height: 60px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-family: var(--soft);
+  border-radius: 50px;
+  text-overflow: clip;
+}
+
+
+.main-box .form-outline .form-box {
+  display: flex;
+  flex-direction: row;
+}
+
+.main-box .form-box {
+  color: var(--primary);
+  font-family: var(--strong);
+  letter-spacing: 1px;
+  font-size: 20px;
+  text-align: center;
+  padding-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.main-box .form-box .left-side {
+  margin-right: 2px;
+  width: 100%;
+  text-align: left;
+}
+
+.main-box .form-box .left-side label:hover,
+.main-box .form-box .right-side label:hover {
+  background-color: var(--secondary);
+  transition: 0.5s ease-in-out;
+}
+
+.main-box .form-box .left-side input:hover,
+.main-box .form-box .right-side input:hover {
+  border-color: var(--secondary);
+  transition: 0.5s ease-in-out;
+}
+
+.main-box .form-box .right-side {
+  margin-left: 2px;
+  width: 100%;
+  text-align: left;
+}
+
+.main-box .form-box label {
+  background-color: var(--tertiary);
+  border-radius: 20px;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+.main-box .form-box .Age {
+    width: 10px;
+}
+
+.main-box .form-box input {
+  border: 3px solid var(--tertiary);
+  color: var(--tertiary);
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 17px;
+  height: 45px;
+  width: 60%;
+}
+
+.main-box .form-box .Age {
+    width: 15%;
+}
+
+.main-box .submit-box {
+margin-left: auto;
+  margin-right: auto;
+  margin-top: 40px;
+  justify-content: center;
+  text-align: center;
+  width: 50%;
+}
+
+.main-box .submit{
+background-color: var(--tertiary);
+  color: var(--primary);
+  border-radius: 15px;
+  padding: 12.5px;
+  font-size: 20px;
+  height: 45px;
+  border: none;
+  width: 100%;
+  
+  font-family: var(--soft);
+
+}
+
+.main-box .submit:hover{
+    background-color: var(--secondary);
+    transition: 0.5s ease-out;
+}
+
+.main-box .warning{
+    font-weight: 200;
+    color: var(--fourth);
+    font-size: 15px;
+    text-align: center;
+    margin-top: 20px;
+    font-family: var(--soft)
+}
+
+.main-box .warning span{
+    color: red;
+}
+
+@media screen and (max-width: 1100px) {
+  
+  .main-box{
+    width: 600px;
+  }
+
+  .main-box .title {
+    font-size: 16px;
+    padding: 14px;
+    text-align: center;;
+  }
+  .main-box .form-box {
+    flex-direction: column;
+    font-size: 16px;
+  }
+
+  .main-box .form-box input{
+    margin-top: 10px;
+    height: 20px;
+    width: 30%;
+    font-size: 16px;
+  }
+
+  .main-box .form-box label {
+    padding: 8px 14px;
+  }
+
+  .main-box .submit {
+    height: 100%;
+    padding: 10px 20px;
+  }
+
+  .main-box .warning {
+    font-size: 14px;
+  }
+
+}

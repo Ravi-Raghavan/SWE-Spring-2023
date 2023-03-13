@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../css/waiting-for-validation.css">
+    
+    <title>Email Verification</title>
+    </head>
+    <body>
+        <div class = "modal"></div>
+    <form class = "modal-content animate">
+    <div class = "main">
+        
+                <div class="imagecontainer">
+
+                 <img src="../images/DHLogo2Transp.png" / class = "avatar" /> 
+            </div>
+            <div class = "container"> 
+                <h1> Verify Your Email </h1> 
+                <p> &nbsp </p>
+                <p> &nbsp </p>
+                <p id = "emailText">We sent an email to testemail@dweebmail.com</p>
+                <p> &nbsp </p>
+                <p>Click on the link to complete your signup. If you don't see it, you may need to check your spam folder</p>
+                <p> &nbsp </p>
+                <p>Still can't find it?<p>
+                    <p> &nbsp </p>
+                <button id = "resendButton"> Resend Email </button>
+                <label>
+                    <p>Need Help?<a href = "/html/contact-us.html" class="contact">Contact Us</a></p>
+                </label>
+            </div>
+        
+</div>
+    
+    </form>
+</div>
+    </body>
+    <script type = "module">
+        window.onload = function(){
+            var user_record = JSON.parse(localStorage.getItem("User Record"));
+            var email = user_record.email;
+            var data = {
+                email: email
+            }
+            document.getElementById("emailText").innerHTML = `We have sent an email to ${email}`
+            document.getElementById("resendButton").addEventListener('click', function(){
+                
+                fetch("/send/email", {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                
+            })
+        }
+        function isUserVerified(){
+            var user_record = JSON.parse(localStorage.getItem("User Record"));
+            var uid = user_record.uid;
+            var email = user_record.email;
+            var data = {
+                uid: uid
+            }
+
+            fetch("/fetch/user/validation", {
+                method: 'POST', 
+                cache: 'no-cache', 
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                 body: JSON.stringify(data)
+            })
+            .then((response ) => {
+                if (response.status == 200){
+                    response.text().then(text => {
+                        if (text == "true"){
+                            window.location.href = "./homepage.html";
+                        }
+                    })
+                }
+            })
+
+            setTimeout(isUserVerified, 1000);
+        }
+        isUserVerified();
+       
+    </script>
+</html>

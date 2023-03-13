@@ -1,0 +1,129 @@
+
+.bg-img {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-image: url(../images/pharmacy.jpg);
+}
+
+:root {
+  --primary: #fff;
+  --secondary: #8fc0e3;
+  --tertiary: #4b7a5b;
+  --fourth: #707173;
+
+  --soft: Arial, Helvetica, sans-serif;
+  --strong: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+  font-family: var(--soft);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+form {
+  width: 350px;
+  position: relative;
+}
+
+form .user-auth-form-field::before {
+  font-size: 20px;
+  position: absolute;
+  left: 15px;
+  top: 17px;
+  color: var(--fourth);
+  content: " ";
+  display: block;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+form .user-auth-form-field:nth-child(1)::before {
+  width: 20px;
+  height: 20px;
+  top: 15px;
+}
+form .user-auth-form-field:nth-child(2)::before {
+  width: 16px;
+  height: 16px;
+}
+
+form .user-auth-form-field {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: relative;
+}
+form input {
+  font-family: inherit;
+  width: 100%;
+  outline: none;
+  background-color: var(--primary);
+  border-radius: 4px;
+  border: 2px solid var(--fourth);
+  border-radius: 50px;
+  display: block;
+  padding: 0.9rem 0.7rem;
+  font-size: 17px;
+  color: var(--secondary);
+  text-indent: 40px;
+}
+
+form .register-button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 1rem 3rem;
+  text-align: center;
+  background-color: var(--tertiary);
+  color: var(--primary);
+  border-radius: 8px;
+  font-size: 20px;
+  transition: 0.2s ease-in-out;
+  width: 350px;
+  border-radius: 50px;
+}
+
+form .register-button:hover {
+  background-color: var(--secondary);
+}
+
+form .login-button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 auto;
+  padding: 1rem 3rem;
+  text-align: center;
+  background-color: var(--tertiary);
+  color: var(--primary);
+  border-radius: 8px;
+  font-size: 20px;
+  width: 350px;
+  transition: 0.2s ease-in-out;
+  border-radius: 50px;
+}
+
+form .login-button:hover {
+  background-color: var(--secondary);
+}

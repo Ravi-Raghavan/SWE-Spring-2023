@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../css/homepage-nav.css" >
+    <link rel="stylesheet" type="text/css" href="../css/homepage-footer.css" >
+    <link rel="stylesheet" type="text/css" href="../css/dynamic-size.css" >
+    <link rel="stylesheet" type="text/css" href="../css/darkmode.css" >
+
+    <title>DrugHub | Dashboard</title>
+  </head>
+
+  <body>
+    <script src="../js/darkmode.js"></script>
+    <header>
+        <a href = "./homepage.html"><img src="../images/top_logo.png" class="logo" alt="logo"></a>
+        <img src="../images/bottom_logo.png" class="logo_name" alt="logo">
+        <nav>
+            <ul class="nav_links">
+                <li>
+                    <img onclick="toggleDarkMode()" class="moon" src="../images/moon.png" alt="picture of moon">
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <image class="profile" id ="dropbtn" src = "../images/profile.jpg" referrerpolicy="no-referrer"></image>
+                        <div class="dropdown-content">
+                            <a href="dashboard.html" onclick = 'handleUserManagingAccount()' class="drop_link">Manage Account</a>
+                            <a href="PrescriptionRequest.html" class="drop_link">Request Prescriptions</a>
+                            <a href="deliverypage.html"  class="drop_link">View Orders</a>
+                            <a href="logoutPage.html" id = "Link6" onclick = 'logout()' class="drop_link">Log Out</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class = "dropdown">
+                        <a class="header_link">Medicines</a>
+                        <div class = "dropdown-content">
+                            <a href="knowledge-base.html" class="drop_link">Knowledge Base</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a class="header_link">Delivery</li>
+                <li>
+                    <div class = "dropdown">
+                        <a class="header_link">Our Service</a>
+                        <div class = "dropdown-content">
+                            <a href="FAQ.html" class="drop_link">FAQ</a>
+                        </div>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class = "dropdown">
+                        <a class="header_link">Contact</a>
+                        <div class = "dropdown-content">
+                            <a href="contact-us.html" class="drop_link">Contact Us</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li><a href="store.html"><button class="cart">Cart</button></a></li>
+            </ul>
+            
+        </nav>
+        
+    </header>
+
+    <div class="container">
+      <div id="sideMenu" class="sidebar">
+        <a
+          id="infoOption"
+          class="active"
+          href="#"
+          onclick='swapDisplay("profile-info", "infoOption")'
+          >Profile Information</a
+        >
+        <a id="orderOption"
+          class=""
+          href="#"
+          onclick='swapDisplay("order-AND-prescription-info", "orderOption")'
+          >Order/Prescription History</a>
+
+        <a id="paymentOption"
+          class=""
+          href="#"
+          onclick='swapDisplay("payment-info", "prescriptionOption")'
+          >Payment Information</a>
+
+        <a id="settingsOption"
+          class=""
+          href="#"
+          onclick='swapDisplay("settings-info", "settingsOption")'
+          >Settings</a>
+
+        <a onclick="logout()">Logout</a>
+      </div>
+
+      <div id="interface" class="interface-container"></div>
+
+      <!---PROFILE INFORMATION-->
+      <div id="profile-info" class="info-container">
+        <section id="info" class="DrugFo">
+          <image
+            id="profile-pic"
+            class="profile-pic"
+            src="../images/profile.png"
+          ></image>
+          <h1 id="welcome-text">Welcome, Anonymous!</h1>
+
+          <div class="row">
+            <h2>Personal Information:</h2>
+            <div class="col">
+              <h3>Full Name</h3>
+              <p id="full-name">Some Random Full Name</p>
+              <hr />
+
+              <h3>Email</h3>
+              <p id="email">randomassemail@random.com</p>
+              <hr />
+
+              <h3>Address</h3>
+              <p><a id="address">220 Poopoo Pl, Kailua, HI 96734</a> <i onclick ="addressChange()" class="fa fa-pencil fa-lg" style="margin-left: 10px; cursor:pointer;" ></i></p> 
+              <hr />
+
+              <h3>Phone</h3>
+              <p ><a id="phone">666-420-6666</a><i onclick="phoneNumberChange()" class="fa fa-pencil fa-lg" style="margin-left: 10px; cursor: pointer;"></i></p>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+
+
+      <!---ORDER INFORMATION-->
+      <div id="order-AND-prescription-info" class="info-container">
+        <section id="info" class="DrugFo">
+          <div class="row">
+            <h2>Recent Orders:</h2>
+          
+            <div class="OrderTable">
+              <table id="ordersList">
+                <tr class="table_header">
+                  <th>Order Number</th>
+                  <th width = "150%">Items</th>
+                  <th>Status</th>
+                
+                </tr>
+                <tr>
+                  <td>69420</td>
+                  <td>Tylenol x1 <br> Iburprofen x2 <br> Rubbing Alcohol x3</td>
+                  <td>Not Delivered</td>
+                  
+                </tr>
+                <tr>
+                  <td>69421</td>
+                  <td>Iburprofen x1</td>
+                  <td>Processing</td>
+                </tr>
+                <tr>
+                  <td>69422</td>
+                  <td>Viagra x1</td>
+                  <td>Delivered</td>
+                </tr>
+              </table>
+            </div>
+      </div>
+
+      <div class="row">
+        <h2>Recent Prescriptions:</h2>
+      
+        <div class="OrderTable">
+          <table id="prescriptionList">
+            <tr class="table_header second">
+              <th>Prescription ID</th>
+              <th width = "150%">Items</th>
+              <th>Prescriber</th>
+              <th>Approval Status</th>
+            
+            </tr>
+            <tr>
+              <td>42069</td>
+              <td>Tylenol x1 <br> Iburprofen x2 <br> Rubbing Alcohol x3</td>
+              <td>Dr. Ravi</td>
+              <td>Approved</td>
+              
+            </tr>
+            <tr>
+              <td>42070</td>
+              <td>Iburprofen x1</td>
+              <td>Dr. Jeff</td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td>42071</td>
+              <td>Viagra x1</td>
+              <td>Dr. Mayank</td>
+              <td>Denied</td>
+            </tr>
+          </table>
+        </div>
+  </div>
+        </section>
+      </div>
+
+
+      <!---PAYMENT INFORMATION-->
+      <div id="payment-info" class="info-container">
+        <section id="info" class="DrugFo">
+          <div class="row">
+            <h2>Saved Card Info:</h2>
+          
+            <div class="OrderTable">
+              <table id="paymentList">
+                <tr class="table_header">
+                  <th style="width: 20%;">Name on Card</th>
+                  <th style="width: 30%;">Card Number</th>
+                  <th style="width: 40%;">Billing Address</th>
+                  <th style="width: 10%;">Expiration Date</th>
+                
+                </tr>
+                <tr>
+                  <td>Ravi Ragahavan</td>
+                  <td>---- ---- ---- 4201</td>
+                  <td>Some Random Obscure Address</td>
+                  <td>09/26</td>
+                  
+                </tr>
+              </table>
+            </div>
+      </div>
+          <div class="paymentRow">
+            <div class="row">
+              <div class="col-75">
+                <div class="container">
+                  <form action="/action_page.php">
+            
+                    <div class="row">
+                      <div class="col-50">
+                        <h3>Billing Address</h3>
+                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                        <input type="text" id="email" name="email" placeholder="john@example.com">
+                        <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+                        <label for="city"><i class="fa fa-institution"></i> City</label>
+                        <input type="text" id="city" name="city" placeholder="New York">
+            
+                        <div class="row">
+                          <div class="col-50">
+                            <label for="state">State</label>
+                            <input type="text" id="state" name="state" placeholder="NY">
+                          </div>
+                          <div class="col-50">
+                            <label for="zip">Zip</label>
+                            <input type="text" id="zip" name="zip" placeholder="10001">
+                          </div>
+                        </div>
+                      </div>
+            
+                      <div class="col-50">
+                        <h3>Payment</h3>
+                        <label for="fname">Accepted Cards</label>
+                        <div class="icon-container">
+                          <i class="fa fa-cc-visa" style="color:navy;"></i>
+                          <i class="fa fa-cc-amex" style="color:blue;"></i>
+                          <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                          <i class="fa fa-cc-discover" style="color:orange;"></i>
+                        </div>
+                        <label for="cname">Name on Card</label>
+                        <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+                        <label for="ccnum">Credit card number</label>
+                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                        <label for="expmonth">Exp Month</label>
+                        <input type="text" id="expmonth" name="expmonth" placeholder="September">
+            
+                        <div class="row">
+                          <div class="col-50">
+                            <label for="expyear">Exp Year</label>
+                            <input type="text" id="expyear" name="expyear" placeholder="2018">
+                          </div>
+                          <div class="col-50">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv" placeholder="352">
+                          </div>
+                        </div>
+                      </div>
+            
+                    </div>
+                    <label>
+                      <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+                    </label>
+                    <input type="submit" value="Add Card Information" class="btn">
+                  </form>
+                </div>
+              </div>
+          </div>
+        </section>
+      </div>
+
+      
+      <!---SETTINGS INFORMATION-->
+      <div id="settings-info" class="info-container">
+        <section id="info" class="DrugFo">
+          
+            <div class="row">
+              <h2>Settings:</h2>
+              <div class="settingsCol">
+                
+                <div class="settingRow">
+                  <h3>Dark Mode</h3>
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                <hr />
+                
+                <div class="settingRow">
+                  <h3>Send Emails</h3>
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                </div> 
+
+                <hr /> 
+
+                <div class="settingRow">
+                  <h3>Add Email Address</h3>
+                  <button class="log-btn" ><body>Add</body></button>
+                </div>
+                
+                <hr />
+
+                <div class="settingRow">
+                  <h3>Delete Account</h3>
+                  <button class="log-btn delete"><body>Delete</body></button>
+              </div>
+
+              </div>
+    
+            </div>
+          
+        </section>
+      </div>
+
+    </div>
+  </body>
+
+  <script>
+    function logout() {
+      localStorage.removeItem("User Record");
+      window.location.href = "./logoutPage.html";
+    }
+
+    window.onload = function () {
+      
+      loadProfile();
+      
+    };
+
+    function loadProfile(){
+      document.getElementById("interface").innerHTML =
+        document.getElementById("profile-info").innerHTML;
+      if (localStorage.getItem("User Record") == null) {
+        //
+      } else {
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        var profilePicture = user_record.photoURL;
+        
+        document.getElementById("profile-pic").src = profilePicture;
+        document.getElementById("welcome-text").innerHTML =
+          user_record.displayName;
+        document.getElementById("full-name").innerHTML =
+          user_record.displayName;
+        document.getElementById("email").innerHTML = user_record.email;
+      }
+    }
+
+    function swapDisplay(location, menuOption) {
+      var links = document.getElementById("sideMenu").getElementsByTagName("a");
+      for (i = 0; i < links.length; i++) {
+        links[i].className = "";
+      }
+      document.getElementById("interface").innerHTML =
+        document.getElementById(location).innerHTML;
+      document.getElementById(menuOption).className = "active";
+
+      if(menuOption == "infoOption")
+        loadProfile();
+    }
+
+    //HELPER FUNCTION TO ADD ORDERS TO ORDER TABLE
+    //Params: Integer (Order Number), Array of Strings (List of Items and Quanitity), String (Order Status)
+    //Usage Example: addOrder(599212, ["Drug1 x2", "Drug2 x3"], "Delivered");
+    function addOrder(OrderNumber, ItemList, Status){
+      if(OrderNumber == null || ItemList == null || ItemList.length == 0||Status == null)
+        return;
+      
+      else{
+        var rows = '<tr><td>'+ String(OrderNumber) +'</td><td>';
+          size = ItemList.length;
+          for(i = 0; i < size; i++){
+            rows = rows+(ItemList[i]);
+            
+            if(i != (size-1))
+            rows= rows+ ( "<br>");
+          }
+          rows= rows +( '</td><td>'+Status+'</td></tr>');
+          var table = document.getElementById('ordersList');
+          var template = document.createElement('template');
+          template.innerHTML = rows;
+          console.log(rows);
+          table.append(template.content);
+          
+          return;
+      }
+      
+      
+    }
+  
+    //HELPER FUNCTION TO ADD PRESCRIPTIONS TO PRESCRIPTION TABLE
+    //Params: Integer (Prescription Number), Array of Strings (List of Items and Quanitity), String (Name of Prescriber), String (Approval Status)
+    //Usage Example: addOrder(599212, ["Drug1 x2", "Drug2 x3"], "Dr. Doctor","Delivered");
+    function addPrescription(PrescriptionNumber, ItemList, PrescriberName, Approval){
+      if(PrescriptionNumber == null || ItemList == null || ItemList.length == 0||PrescriberName == null || Approval == null)
+        return;
+      
+      else{
+        var rows = '<tr><td>'+ String(PrescriptionNumber) +'</td><td>';
+          size = ItemList.length;
+          for(i = 0; i < size; i++){
+            rows = rows+(ItemList[i]);
+            
+            if(i != (size-1))
+            rows= rows+ ( "<br>");
+          }
+          rows= rows +( '</td><td>'+PrescriberName+'</td><td>'+Approval+'</td></tr>');
+          var table = document.getElementById('prescriptionList');
+          var template = document.createElement('template');
+          template.innerHTML = rows;
+          console.log(rows);
+          table.append(template.content);
+          
+          return;
+      }
+    }
+    function addressChange(){
+      var text = prompt("Address: ", document.getElementById("address").innerText);
+      if(text)
+        document.getElementById("address").innerText = text;
+      else{
+
+      }
+    }
+    function phoneNumberChange(){
+      let text = prompt("Phone: ", document.getElementById("phone").innerText);
+      if(text)
+        document.getElementById("phone").innerText = text;
+      else{
+        
+      }
+    }
+    addOrder(69423, ["Viagra x1", "Iburprofen x2"], "Delivered");
+    addPrescription(42072, ["Rubbing Alchohol x3", "CBD x7"],"Dr. DicBud", "Denied");
+  </script>
+</html>

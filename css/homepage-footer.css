@@ -1,0 +1,112 @@
+@import url("/css/homepage-nav.css");
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+footer {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.upper_footer {
+  background-color: var(--secondary);
+  padding-top: 30px;
+  padding-bottom: 20px ;
+}
+
+.lower_footer {
+  text-align: center;
+  font-size: 18px;
+  background-color: var(--tertiary);
+  color: var(--primary);
+  font-family: var(--strong);
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+.center_footer {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  color: var(--primary);
+  font-family: var(--soft);
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.center_footer img {
+  height: 112.5px;
+  width: 150px;
+  cursor: pointer; 
+  margin-bottom: -20px;
+  filter: brightness(0) invert(1);
+}
+
+.center_footer h1 {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.center_footer ul{
+  font-size: 18px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.center_footer ul li {
+  cursor: pointer;
+  margin-left: 7px;
+  margin-right: 7px;
+}
+
+.center_footer ul li a:visited{
+  color:var(--primary);
+}
+
+.center_footer ul li:hover{
+  transform: translateY(-2.5px);
+  transition: 0.5s ease;
+}
+
+.center_footer .social li {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.center_footer .social li img {
+  height: 25px;
+  width: 25px;
+  transition: all 0.3s ease;
+  filter: brightness(0) invert(42%) sepia(34%) saturate(447%) hue-rotate(88deg) contrast(84%);
+}
+
+.center_footer .social li img:hover {
+  transform: translateY(-2.5);
+  transition: 0.5s ease;
+}
+
+.center_footer .email {
+  font-size: 18px;
+  margin-top: 30px;
+}
+
+.center_footer a:visited .email{
+  color: var(--primary);
+}
+
+.center_footer .email:hover{
+  text-decoration: underline;
+  transition: 0.5s ease;
+}

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="../css/Prescription.css" />
+
+    <title>DrugHub | Prescription</title>
+  </head>
+  <body>
+    
+      <section class="main-box">
+        <section class="logo">
+          <a href="homepage.html"><img src="../images/top_logo.png"></a>
+        </section>
+
+        <section class="title">
+          <h1>The prescription that you requested should be available within 24
+        hours</h1>
+        </section>
+
+            <section class="form-box">
+
+              <div class="left-side">
+                <label for="fname">First name</label>
+                  <input type="text" id="fname" name="fname"  placeholder="First Name"/>
+              </div>
+            
+              <div class="right-side">
+                <label for="lname">Last name</label>
+                  <input type="text" id="lname" name="lname" placeholder="Last Name" />
+              </div>  
+            </section>
+
+            <section class="form-box">
+
+              <div class="left-side">
+                
+          <label for="dob">Account email</label>
+                  <input type="text" id="email" name="Date of Birth" placeholder="ex@gmail.com"/>
+              </div>
+              
+              <div class="right-side">
+                <label for="rd">Issue Date</label>
+          <input type="text" id="rd" name="Request Date" placeholder="MM/DD/YYYY"/>
+                </div>  
+              
+            </section>
+
+            <section class="form-box">
+
+            <div class="left-side">
+              
+        <label for="dob">Date Of Birth</label>
+                <input type="text" id="dob" name="Date of Birth" placeholder="MM/DD/YYYY"/>
+            </div>
+            
+              
+
+              <div class="right-side">
+                
+                  <label for="dob">Age</label>
+                  <input type="text" id="age" name="Age" placeholder="Ex: 29"/>
+                </div>  
+            
+          </section>
+
+          <section class="form-box">
+
+            <div class="left-side">
+              <label for="dob">Prescription #</label>
+                  <input type="text" id="DOB" name="Date of Birth" placeholder="Ex: XXX-XXXX-XXX"/>
+        
+            </div>
+
+            <div class="right-side">
+              
+            </div> 
+            
+          </section>
+
+          
+
+          
+
+        
+
+        <div class="submit-box" id="submit-to-press">
+            <input class="submit" type="submit" value="Submit" />
+        </div>
+        <h1 class="warning">
+          <span>Notice: </span> You must be a registered user to request a prescription.
+           Please make sure all form credentials are accurate prior to submission.
+        </h1>
+        
+
+      </section>
+      <script type="module">
+        // Import the functions you need from the SDKs you need
+        
+          import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
+        
+          import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js";
+        
+
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyAD8RODlLg_BCHxy3ghN91W5XxIvPLbAp4",
+  authDomain: "swe-spring-2023.firebaseapp.com",
+  databaseURL: "https://swe-spring-2023-default-rtdb.firebaseio.com",
+  projectId: "swe-spring-2023",
+  storageBucket: "swe-spring-2023.appspot.com",
+  messagingSenderId: "600915655715",
+  appId: "1:600915655715:web:966a0affd54b6df2478596",
+  measurementId: "G-EW7N8BG805"
+};
+
+// Initialize Firebase
+try{
+  const app = initializeApp(firebaseConfig);
+}catch{
+  alert("hi1");
+}
+try{
+  const analytics = getAnalytics(app);
+}catch{
+  console.log("error getting analytics");
+}
+
+
+import{getDatabase,ref,get,set,child,update,remove} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
+
+const db = getDatabase();
+
+function getUID(){
+  if(localStorage.getItem("User Record")==null){
+    alert("Please create an account / log in, to add a prescription. Thank You!");
+  }else{
+    var user_record = JSON.parse(localStorage.getItem("User Record"));
+    var uid = user_record.uid;
+    return uid;
+  }
+}
+
+document.querySelector(".submit-box").addEventListener("click", () =>{
+  var currentUID = getUID();
+  var firstName = document.getElementById("fname").value;
+  if(!checkName(firstName)){
+    return;
+  }
+  var lastName = document.getElementById("lname").value;
+  if(!checkName(lastName)){
+    //return;
+  }
+  var email = document.getElementById("email").value;
+  if(!checkEmail(email)){
+    return;
+  }
+  var issueDate = document.getElementById("rd").value;
+  if(!checkDate(issueDate)){
+    return;
+  }
+  var dateOfBirth = document.getElementById("dob").value;
+  if(!checkDate(dateOfBirth)){
+      return;
+  }
+  var prescriptionNumber = document.getElementById("DOB").value;
+  let fullName = firstName+" "+lastName;
+  console.log(fullName.toUpperCase());
+
+  var age = document.getElementById("age").value;
+  if(!checkAge(age)){
+    return;
+  }
+  
+    
+  
+  const dbref = ref(db);
+  get(child(dbref,"users/")).then((snapshot)=>{
+                if(snapshot.exists()){
+                    let userIDS = Object.keys(snapshot.val());
+                    let unkown = Object.values(snapshot.val());
+                    let setHappened = false;
+                    for(let i = 0;i<userIDS.length;i++){
+                        let grabName = unkown[i].displayName.toUpperCase();
+                        let grabEmail = unkown[i].email;
+                        //console.log(currName);
+                        if(grabName == fullName.toUpperCase() && grabEmail == email){
+                          let foundUSERID = userIDS[i];
+                          console.log(foundUSERID);
+                          if(foundUSERID!=currentUID){
+                            alert("Make sure all form credentials are correct. Users may only request a prescription for their own accounts. Thank You!");
+                            return;
+                          }
+                          set(ref(db,"patientPrescriptions/"+foundUSERID+"/"),{
+                            firstName: firstName,
+                            lastName: lastName,
+                            email:email,
+                            issueDate: issueDate,
+                            DOB: dateOfBirth,
+                            Age: age,
+                            prescriptionNumber:prescriptionNumber
+                          })
+                          setHappened = true;
+                          window.location.href = "./submitted-prescription.html";
+                        }
+                    }
+                    if(setHappened==false){
+                      alert("Credentials do not match any registered account. Thank You!");
+                    }
+                }else{
+                   alert("Please create an account / log in, to add a prescription. Thank You!");
+                }
+    })
+  
+})
+
+function checkAge(age){
+  var numSet = new Set(["1","2","3","4","5","6","7","8","9","0"]);
+  for(let i = 0;i<age.length;i++){
+    if(!numSet.has(age.charAt(i))){
+      alert("Age must be a valid number");
+      return false;
+    }
+  }
+  return true;
+}
+
+function checkEmail(email){
+  let foundAt = 0;
+  let foundPeriod = 0;
+  for(let i = 0;i<email.length;i++){
+    if(email.charAt(i)=="@"){
+      foundAt++;
+    }
+    if(email.charAt(i)=="."){
+      foundPeriod++;
+    }
+  }
+  if(foundPeriod>=1 && foundAt==1){
+    return true;
+  }else{
+    alert("invalid email format");
+    return false;
+  }
+}
+
+function checkName(name){
+  for(let i = 0;i<name.length;i++){
+    if(name.charAt(i)==" "){
+      alert("There must not be any spaces in the name");
+      return false;
+    }
+  }
+  return true;
+}
+
+function checkDate(date){
+  if(date.length<10){
+    alert("Date must be in the correct format: MM/DD/YYYY");
+    return false;
+  }
+  if(date.charAt(2)!="/"){
+    alert("Date must be in the correct format: MM/DD/YYYY");
+    return false;
+  }
+  if(date.charAt(5)!="/"){
+    alert("Date must be in the correct format: MM/DD/YYYY");
+    return false;
+  }
+  
+  var numSet = new Set(["1","2","3","4","5","6","7","8","9","0"]);
+  for(let i = 0;i<date.length;i++){
+    if(i!=2 && i!=5){
+      if(!numSet.has(date.charAt(i))){
+        alert("Date must only contain numbers and slashes: MM/DD/YYYY");
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+      </script>
+  </body>
+
+</html>
