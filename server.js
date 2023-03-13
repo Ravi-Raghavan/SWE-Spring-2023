@@ -32,6 +32,7 @@ const public_paths_html = [
   "/html/user-registration-form.html",
   "/html/waiting-for-validation.html",
   "/html/store.html",
+  "/html/submitted-prescription.html",
 ];
 
 const public_paths_css = [
