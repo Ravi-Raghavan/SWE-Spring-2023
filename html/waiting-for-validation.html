@@ -80,7 +80,7 @@
                 if (response.status == 200){
                     response.text().then(text => {
                         if (text == "true"){
-                            window.history.go(-2);
+                            window.location.href = "./homepage.html";
                         }
                     })
                 }

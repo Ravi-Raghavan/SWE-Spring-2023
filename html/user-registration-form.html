@@ -82,7 +82,7 @@
               var userRecord = JSON.parse(originalText);
               if (typeof Storage != "undefined") {
                 localStorage.setItem("User Record", JSON.stringify(userRecord));
-                window.history.back()
+                window.location = document.referrer;
               } else {
                 console.log(
                   "This Browser doesn't support local client side storage"
