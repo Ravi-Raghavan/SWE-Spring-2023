@@ -36,32 +36,54 @@
 
             <section class="form-box">
 
+              <div class="left-side">
+                
+          <label for="dob">Account email</label>
+                  <input type="text" id="email" name="Date of Birth" placeholder="ex@gmail.com"/>
+              </div>
+              
+              <div class="right-side">
+                <label for="rd">Issue Date</label>
+          <input type="text" id="rd" name="Request Date" placeholder="MM/DD/YYYY"/>
+                </div>  
+              
+            </section>
+
+            <section class="form-box">
+
             <div class="left-side">
               
         <label for="dob">Date Of Birth</label>
                 <input type="text" id="dob" name="Date of Birth" placeholder="MM/DD/YYYY"/>
             </div>
             
-            <div class="right-side">
-              <label for="rd">Issue Date</label>
-        <input type="text" id="rd" name="Request Date" placeholder="MM/DD/YYYY"/>
-              </div>  
+              
+
+              <div class="right-side">
+                
+                  <label for="dob">Age</label>
+                  <input type="text" id="age" name="Age" placeholder="Ex: 29"/>
+                </div>  
             
           </section>
 
           <section class="form-box">
 
             <div class="left-side">
-              <label  for="age">Age</label>
-        <input class="Age" type="text" id="age" name="age" placeholder="Age"/>
-            </div>
-            
-            <div class="right-side">
               <label for="dob">Prescription #</label>
-                <input type="text" id="DOB" name="Date of Birth" placeholder="Ex: XXX-XXXX-XXX"/>
-            </div>  
+                  <input type="text" id="DOB" name="Date of Birth" placeholder="Ex: XXX-XXXX-XXX"/>
+        
+            </div>
+
+            <div class="right-side">
+              
+            </div> 
             
           </section>
+
+          
+
+          
 
         
 
@@ -69,8 +91,8 @@
             <input class="submit" type="submit" value="Submit" />
         </div>
         <h1 class="warning">
-          Click the <span>"Submit"</span> button and the form-data will be sent to a page on
-        the server.
+          <span>Notice: </span> You must be a registered user to request a prescription.
+           Please make sure all form credentials are accurate prior to submission.
         </h1>
         
 
@@ -116,39 +138,50 @@ try{
 import{getDatabase,ref,get,set,child,update,remove} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
 
 const db = getDatabase();
-            
+
+function getUID(){
+  if(localStorage.getItem("User Record")==null){
+    alert("Please create an account / log in, to add a prescription. Thank You!");
+  }else{
+    var user_record = JSON.parse(localStorage.getItem("User Record"));
+    var uid = user_record.uid;
+    return uid;
+  }
+}
+
 document.querySelector(".submit-box").addEventListener("click", () =>{
+  var currentUID = getUID();
   var firstName = document.getElementById("fname").value;
   if(!checkName(firstName)){
     return;
   }
   var lastName = document.getElementById("lname").value;
   if(!checkName(lastName)){
+    //return;
+  }
+  var email = document.getElementById("email").value;
+  if(!checkEmail(email)){
+    return;
+  }
+  var issueDate = document.getElementById("rd").value;
+  if(!checkDate(issueDate)){
     return;
   }
   var dateOfBirth = document.getElementById("dob").value;
   if(!checkDate(dateOfBirth)){
       return;
   }
-  var issueDate = document.getElementById("rd").value;
-  if(!checkDate(issueDate)){
-    return;
-  }
+  var prescriptionNumber = document.getElementById("DOB").value;
+  let fullName = firstName+" "+lastName;
+  console.log(fullName.toUpperCase());
+
   var age = document.getElementById("age").value;
   if(!checkAge(age)){
     return;
   }
-  var prescriptionNumber = document.getElementById("DOB").value;
-  let fullName = firstName+" "+lastName;
-  console.log(fullName.toUpperCase());
-  var prescriptionObject = {
-    firstName: firstName,
-    lastName: lastName,
-    DoB: dateOfBirth,
-    issueDate: issueDate,
-    Age: age,
-    prescriptionNumber:prescriptionNumber
-  };
+  
+    
+  
   const dbref = ref(db);
   get(child(dbref,"users/")).then((snapshot)=>{
                 if(snapshot.exists()){
@@ -156,43 +189,73 @@ document.querySelector(".submit-box").addEventListener("click", () =>{
                     let unkown = Object.values(snapshot.val());
                     let setHappened = false;
                     for(let i = 0;i<userIDS.length;i++){
-                        let currName = unkown[i].displayName.toUpperCase();
+                        let grabName = unkown[i].displayName.toUpperCase();
+                        let grabEmail = unkown[i].email;
                         //console.log(currName);
-                        if(currName == fullName.toUpperCase()){
+                        if(grabName == fullName.toUpperCase() && grabEmail == email){
                           let foundUSERID = userIDS[i];
                           console.log(foundUSERID);
+                          if(foundUSERID!=currentUID){
+                            alert("Make sure all form credentials are correct. Users may only request a prescription for their own accounts. Thank You!");
+                            return;
+                          }
                           set(ref(db,"patientPrescriptions/"+foundUSERID+"/"),{
-                                prescriptionObject
+                            firstName: firstName,
+                            lastName: lastName,
+                            email:email,
+                            issueDate: issueDate,
+                            DOB: dateOfBirth,
+                            Age: age,
+                            prescriptionNumber:prescriptionNumber
                           })
                           setHappened = true;
                           window.location.href = "./submitted-prescription.html";
                         }
                     }
                     if(setHappened==false){
-                      alert("Please create an account to add a prescription. Thank You!");
+                      alert("Credentials do not match any registered account. Thank You!");
                     }
                 }else{
-                   alert("Please create an account to add a prescription. Thank You!");
+                   alert("Please create an account / log in, to add a prescription. Thank You!");
                 }
     })
   
 })
-
-function checkName(name){
-  for(let i = 0;i<name.length;i++){
-    if(name.charAt(i)==" "){
-      alert("There must not be any spaces in the name");
-      return false;
-    }
-  }
-  return true;
-}
 
 function checkAge(age){
   var numSet = new Set(["1","2","3","4","5","6","7","8","9","0"]);
   for(let i = 0;i<age.length;i++){
     if(!numSet.has(age.charAt(i))){
       alert("Age must be a valid number");
+      return false;
+    }
+  }
+  return true;
+}
+
+function checkEmail(email){
+  let foundAt = 0;
+  let foundPeriod = 0;
+  for(let i = 0;i<email.length;i++){
+    if(email.charAt(i)=="@"){
+      foundAt++;
+    }
+    if(email.charAt(i)=="."){
+      foundPeriod++;
+    }
+  }
+  if(foundPeriod>=1 && foundAt==1){
+    return true;
+  }else{
+    alert("invalid email format");
+    return false;
+  }
+}
+
+function checkName(name){
+  for(let i = 0;i<name.length;i++){
+    if(name.charAt(i)==" "){
+      alert("There must not be any spaces in the name");
       return false;
     }
   }
