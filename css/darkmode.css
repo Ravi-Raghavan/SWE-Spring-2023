@@ -1,0 +1,88 @@
+:root {
+  --primary: #fff;
+  --secondary: #8fc0e3;
+  --tertiary: #4b7a5b;
+  --fourth: #707173;
+
+  --primary-dark: #181818;
+  --secondary-dark: #242424;
+}
+
+body.dark {
+  background-color: var(--secondary-dark);
+}
+body.dark header,
+body.dark .low_footer {
+  background-color: var(--primary-dark);
+}
+
+body.dark header {
+  border-bottom: 4px solid var(--tertiary);
+}
+
+body.dark .item_price,
+body.dark .social,
+body.dark p,
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4 {
+  color: var(--primary);
+}
+
+body.dark .moon {
+  background-color: var(--primary);
+  border-radius: 50%;
+}
+
+body.dark .col {
+  border-color: var(--primary);
+}
+
+/* cart styles */
+body.dark .cart-total strong,
+body.dark .cart-total span,
+body.dark .cart-row span,
+body.dark .shop-item-price{
+  color: var(--primary);
+}
+
+body.dark .low_footer  h1{
+  color:var(--tertiary);
+}
+
+body.dark .low_footer a:hover{
+  text-decoration-color: var(--tertiary);
+}
+
+/* dashboards */
+body.dark .sidebar{
+  background-color: var(--tertiary);
+}
+
+body.dark .sidebar a.active {
+    background-color: var(--secondary);
+  }
+
+body.dark .OrderTable tr:nth-child(even){background-color: var(--fourth)}
+body.dark .OrderTable tr:nth-child(odd){background-color: var(--secondary-dark)}
+
+
+body.dark .OrderTable{
+  border: 1px solid var(--primary);
+}
+
+body.dark td ,
+body.dark .OrderTable tr.table_header th{
+  border-color: var(--secondary-dark);
+  color:var(--primary);
+}
+
+body.dark .settingsCol{
+  border-color: var(--primary);
+}
+
+/* FAQ */
+body.dark .popup{
+  background-color: var(--secondary-dark);
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="./../css/email-validated.css">
+    
+    <title>Email Verification</title>
+    </head>
+    <body>
+        <script type = "module">
+            var user_record = localStorage.getItem("User Record");
+            user_record = JSON.parse(user_record);
+            document.getElementById("emailVerification").innerHTML = `${user_record["email"]} has been verified!`
+            var uid = user_record.uid;
+
+            var data = {
+                uid: uid
+            }
+            fetch("/validate/user", {
+                method: 'POST', 
+                cache: 'no-cache', 
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            
+
+        </script>
+        <div class = "modal"></div>
+    <form class = "modal-content animate">
+    <div class = "main">
+        <div class = "navbar">
+            <div class = "icon">
+                <div class="imagecontainer">
+
+                 <img src="../images/DHLogo2Transp.png" / class = "avatar" /> 
+            </div>
+            <div class = "container"> 
+                <h1> Email has been verified! </h1> 
+                <p> &nbsp </p>
+                <p> &nbsp </p>
+                <p id = "emailVerification"></p>
+                <p> &nbsp </p>
+            </div>
+        </div>
+    </div>
+</div>
+    
+    </form>
+</div>
+    </body>
+</html>
