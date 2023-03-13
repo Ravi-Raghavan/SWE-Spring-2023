@@ -377,7 +377,28 @@ const server = http.createServer((request, response) => {
     public_paths_images.includes(path)
   ) {
     file = __dirname + path;
-  } else {
+  } 
+  else if (
+    public_paths_html.includes("/html" + path)
+  ) {
+    file = __dirname + "/html" + path;
+  }
+  else if (
+    public_paths_html.includes("/css" + path)
+  ) {
+    file = __dirname + "/css" + path;
+  }
+  else if (
+    public_paths_html.includes("/js" + path)
+  ) {
+    file = __dirname + "/js" + path;
+  }
+  else if (
+    public_paths_html.includes("/images" + path)
+  ) {
+    file = __dirname + "/images" + path;
+  }
+  else {
     console.log(path);
     console.log(file);
   }
