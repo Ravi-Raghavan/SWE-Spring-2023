@@ -1,20 +1,11 @@
-:root {
-  --primary: #fff;
-  --secondary: #8fc0e3;
-  --tertiary: #4b7a5b;
-  --fourth: #707173;
-
-  --primary-dark: #181818;
-  --secondary-dark: #242424;
-}
+@import url("../css/homepage-nav.css");
 
 
 body.dark {
   background-color: var(--secondary-dark);
   transition: background-color 0.4s ease-out;
 }
-body.dark header,
-body.dark .low_footer {
+body.dark header{
   background-color: var(--primary-dark);
 }
 
@@ -45,6 +36,20 @@ body.dark .social li img:hover {
   filter: brightness(0) invert(100%) sepia(100%) saturate(0%) hue-rotate(320deg) contrast(101%);
 }
 
+body.dark .upper_footer {
+  background-color: var(--tertiary);
+}
+
+body.dark .upper_footer h1, 
+body.dark .upper_footer ul li a{
+  color: var(--secondary-dark);
+}
+
+body.dark .lower_footer {
+  background-color: var(--secondary);
+  color:var(--primary-dark);
+}
+
 /* cart styles */
 body.dark .cart-total strong,
 body.dark .cart-total span,
@@ -53,13 +58,7 @@ body.dark .shop-item-price{
   color: var(--primary);
 }
 
-body.dark .low_footer  h1{
-  color:var(--tertiary);
-}
 
-body.dark .low_footer a:hover{
-  text-decoration-color: var(--tertiary);
-}
 
 /* FAQ */
 body.dark .log-btnFAQ {

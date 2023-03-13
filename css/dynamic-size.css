@@ -18,26 +18,19 @@ footer
     margin-top: -5px;
   }
 
-  header .nav_links li,
-  footer .footer_links li {
+  header .nav_links li {
     margin-left: 15px;
     margin-right: 0px;
     padding: 0;
   }
 
-  footer .footer_links {
-    margin-top: -10px;
-  }
-
   header .nav_links .moon,
-  header .nav_links .profile,
-  footer .footer_links .profile {
+  header .nav_links .profile {
     height: 22px;
     width: 22px;
   }
 
-  header .nav_links li,
-  footer .footer_links li {
+  header .nav_links li {
     font-size: 22px;
   }
 
@@ -57,21 +50,21 @@ footer
     font-size: 22px;
     padding: 4px 10px;
   }
-
-  .white_transparent_box {
-    transform: translateY(8px);
-  }
-
-
-  .low_footer h1 {
-    font-size: 18px;
-  }
 }
 
 @media screen and (max-width: 1130px) {
   .logo_name {
     height: 0px;
     margin-top: -7px;
+  }
+
+  .center_footer h1 {
+    font-size: 30px;
+  }
+
+  .center_footer li,
+  .center_footer .email {
+    font-size: 14px;
   }
 }
 
@@ -112,8 +105,8 @@ footer
   }
 }
 
-@media screen and (max-width:1450px){
-   .service_grid {
+@media screen and (max-width: 1450px) {
+  .service_grid {
     flex-direction: column;
   }
 
@@ -128,7 +121,7 @@ footer
     margin-top: 40px;
   }
 
-   .review_box {
+  .review_box {
     padding-left: -30px;
     padding-right: -30px;
     width: 850px;
@@ -150,7 +143,6 @@ footer
     margin-left: auto;
     margin-right: auto;
   }
-
 }
 
 @media screen and (max-width: 925px) {

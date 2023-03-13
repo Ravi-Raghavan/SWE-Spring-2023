@@ -1,3 +1,4 @@
+@import url("/css/homepage-nav.css");
 
 * {
   margin: 0;
@@ -6,151 +7,106 @@
   text-decoration: none;
   box-sizing: border-box;
   user-select: none;
-  
-}
-
-:root {
-  --primary: #fff;
-  --secondary: #8fc0e3;
-  --tertiary: #4b7a5b;
-  --fourth: #707173;
-
-  --soft: Arial, Helvetica, sans-serif;
-  --strong: Georgia, 'Times New Roman', Times, serif;
 }
 
 footer {
+  margin-top: 40px;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 30px 40px;
-  padding-bottom: 20px;
-  font-size: 30px;
+  flex-direction: column;
+}
+
+.upper_footer {
+  background-color: var(--secondary);
+  padding-top: 30px;
+  padding-bottom: 20px ;
+}
+
+.lower_footer {
+  text-align: center;
+  font-size: 18px;
   background-color: var(--tertiary);
-  margin-top: 50px;
+  color: var(--primary);
   font-family: var(--strong);
+  padding-top: 10px;
+  padding-bottom: 5px;
 }
 
-.logo_footer {
-  height: 50px;
-  width: 75px;
-  margin: -20px;
-  cursor: pointer;
-  position: relative;
-  margin-right: 10px;
-  margin-left: 0px;
-  z-index: 4;
-  cursor: pointer;
-}
-
-.logo_name_footer {
-  height: 20px;
-  margin: -15px;
+.center_footer {
+  margin-left: auto;
   margin-right: auto;
-  z-index: 5;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  color: var(--primary);
+  font-family: var(--soft);
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-.footer_links {
-  list-style: none;
-  padding: 0;
+.center_footer img {
+  height: 112.5px;
+  width: 150px;
+  cursor: pointer; 
+  margin-bottom: -20px;
+  filter: brightness(0) invert(1);
+}
+
+.center_footer h1 {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.center_footer ul{
+  font-size: 18px;
+  margin-top: 5px;
   display: flex;
   flex-direction: row;
-}
-
-.footer_links li {
-  padding-left: 20px;
-  color: var(--primary);
-  transition: transform 0.5s ease-out;
-  cursor: pointer;
-}
-
-.footer_links li .profile {
-  margin-bottom: -4px;
-  width: 30px;
-  height: 30px;
-  border: 2px solid var(--primary);
-  border-radius: 50%;
-  filter: opacity(0.4) drop-shadow(0 0 0 var(--primary));
-}
-
-.footer_links li .profile:hover {
-  filter: opacity(0.4) drop-shadow(0 0 0 var(--secondary));
-}
-
-.footer_links li:hover {
-  transform: translateY(-2px);
-}
-
-.footer_links li a:hover .profile {
-  border-radius: 100%;
-  transition: all 0s ease-out;
-}
-
-.low_footer {
-  display: flex;
-  background-color: var(--secondary);
-  font-family: var(--soft);
-  padding-left: 40px;
-  padding-right: 50px;
-  padding-top: 2px;
-  padding-bottom: 10px;
-  height: 40px;
-}
-
-.low_footer .email {
-  margin-right: auto;
-  cursor: pointer;
-}
-
-.low_footer h1 {
-  color: var(--primary);
-  font-size: 20px;
-  margin-right: auto;
-  padding-top: 5px;
   justify-content: center;
-  transition: all 0s ease-out;
+  align-items: center;
 }
 
-.low_footer a:hover {
-  font-style: italic;
-  text-decoration: underline;
-  text-decoration-color: var(--primary);
-}
-
-.white_transparent_box {
-  width: 195px;
-  height: 50px;
-  position: absolute;
-  margin-left: 40px;
-  margin-top: -65px;
-  background-color: var(--primary);
-  border-radius: 10px;
-  z-index: 1;
-}
-
-.social {
-  list-style: none;
-  margin-left: auto;
-  margin-right: 0;
-}
-
-.social li {
-  display: inline-block;
-  padding-left: 10px;
-  color: var(--fourth);
+.center_footer ul li {
   cursor: pointer;
+  margin-left: 7px;
+  margin-right: 7px;
 }
 
-.social li img {
+.center_footer ul li a:visited{
+  color:var(--primary);
+}
+
+.center_footer ul li:hover{
+  transform: translateY(-2.5px);
+  transition: 0.5s ease;
+}
+
+.center_footer .social li {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.center_footer .social li img {
   height: 25px;
-  transform: translateY(5px);
+  width: 25px;
   transition: all 0.3s ease;
-  background-color: none;
-  filter: brightness(0) invert(100%) sepia(100%) saturate(0%) hue-rotate(320deg) contrast(101%);
-
+  filter: brightness(0) invert(42%) sepia(34%) saturate(447%) hue-rotate(88deg) contrast(84%);
 }
 
-.social li img:hover {
-  filter: brightness(0) invert(42%) sepia(34%) saturate(447%) hue-rotate(88deg) contrast(84%);
+.center_footer .social li img:hover {
+  transform: translateY(-2.5);
+  transition: 0.5s ease;
+}
+
+.center_footer .email {
+  font-size: 18px;
+  margin-top: 30px;
+}
+
+.center_footer a:visited .email{
+  color: var(--primary);
+}
+
+.center_footer .email:hover{
+  text-decoration: underline;
+  transition: 0.5s ease;
 }
