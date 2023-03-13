@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     
-    <link rel="stylesheet" href="./../css/user-registration-form.css" />
+    <link rel="stylesheet" href="../css/user-registration-form.css" />
   
   <title>DrugHub | Login</title>
   </head>
@@ -82,7 +82,7 @@
               var userRecord = JSON.parse(originalText);
               if (typeof Storage != "undefined") {
                 localStorage.setItem("User Record", JSON.stringify(userRecord));
-                window.location.href = "./homepage.html";
+                window.location = document.referrer;
               } else {
                 console.log(
                   "This Browser doesn't support local client side storage"

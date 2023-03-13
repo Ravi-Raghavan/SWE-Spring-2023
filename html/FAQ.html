@@ -3,29 +3,29 @@
     <head>
         <meta name="viewport" content="with=device-width, initial-scale=1.0">
         
-        <link rel ="stylesheet" href="./../css/FAQ.css">
+        <link rel ="stylesheet" href="../css/FAQ.css">
         
-        <link rel="stylesheet" type="text/css" href="./../css/homepage-nav.css" >
-    <link rel="stylesheet" type="text/css" href="./../css/homepage-footer.css" >
-    <link rel="stylesheet" type="text/css" href="./../css/darkmode.css" >
-        <link rel="stylesheet" type="text/css" href="./../css/dynamic-size.css" >
+        <link rel="stylesheet" type="text/css" href="../css/homepage-nav.css" >
+    <link rel="stylesheet" type="text/css" href="../css/homepage-footer.css" >
+    <link rel="stylesheet" type="text/css" href="../css/darkmode.css" >
+        <link rel="stylesheet" type="text/css" href="../css/dynamic-size.css" >
 
     <title>DrugHub | FAQ</title>
     </head>
 
     <body>
-    <script src="./../js/darkmode.js"></script>
+    <script src="../js/darkmode.js"></script>
     <header>
-        <a href = "./homepage.html"><img src="./../images/top_logo.png" class="logo" alt="logo"></a>
-        <img src="./../images/bottom_logo.png" class="logo_name" alt="logo">
+        <a href = "./homepage.html"><img src="../images/top_logo.png" class="logo" alt="logo"></a>
+        <img src="../images/bottom_logo.png" class="logo_name" alt="logo">
         <nav>
             <ul class="nav_links">
                 <li>
-                    <img onclick="toggleDarkMode()" class="moon" src="./../images/moon.png" alt="picture of moon">
+                    <img onclick="toggleDarkMode()" class="moon" src="../images/moon.png" alt="picture of moon">
                 </li>
                 <li>
                     <div class="dropdown">
-                        <image class="profile" id ="dropbtn" src = "./../images/profile.jpg" referrerpolicy="no-referrer"></image>
+                        <image class="profile" id ="dropbtn" src = "../images/profile.jpg" referrerpolicy="no-referrer"></image>
                         <div class="dropdown-content">
                             <a href="dashboard.html" onclick = 'handleUserManagingAccount()' class="drop_link">Manage Account</a>
                             <a href="PrescriptionRequest.html" class="drop_link">Request Prescriptions</a>
@@ -89,7 +89,7 @@
 
             <div class="row">
                 <div >
-                    <img class="left" onclick = "previousResults()" src="./../images/leftArrow.png">
+                    <img class="left" onclick = "previousResults()" src="../images/leftArrow.png">
                 </div>
                 
                 <div class="col" id = "el1"  onClick="showPopup(5)">
@@ -253,7 +253,7 @@
         function NLPResults(){
             var searchQuery = document.getElementById("searchField").value
             
-            fetch("/search", {
+            fetch("/faq/search", {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
                 cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
                 headers: {
