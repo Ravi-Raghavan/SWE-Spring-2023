@@ -15,7 +15,7 @@
     <header>
         <a href = "./homepage.html"><img src="./../images/top_logo.png" class="logo" alt="logo"></a>
         <img src="./../images/bottom_logo.png" class="logo_name" alt="logo">
-        <nav>
+        <nav> 
             <ul class="nav_links">
                 <li>
                     <img onclick="toggleDarkMode()" class="moon" src="./../images/moon.png" alt="picture of moon">
@@ -69,7 +69,7 @@
             
             <div class ="text-box">
                 <h1>Welcome to the Drug Database</h1>
-                <p> Got Questions? We got answers.<br> </p>
+                <p> Got Questions? We got answers<br> </p>
                 <input id = "search_field" type="text" placeholder="Search..."></a>
                 <button  id = "search_box"  class="log-btn">Find Out</button>
             </div>
@@ -85,7 +85,7 @@
                 <div class = "tableContainer">
                     <table id="tableArticles" class = "table">                      
                         <thead>
-                            <tr ><th> Articles</th></tr>
+                            <tr ><th class="title"> Articles</th></tr>
                         </thead>
                         
                         <tbody id = "body">
@@ -191,7 +191,7 @@
                             
 
                             //$('#tableArticle').append('<tr> <td> <a style="display: block;" href="#popup1">'+'THE TEST HAS WORKED!'+' </a> </td></tr>');
-                            var rows= '<tr onclick="rowListen(this)"> <td><a style="display: block;" href="#popup1">'+result["title"]+'</a></td></tr>';
+                            var rows= '<tr onclick="rowListen(this)" class="article_row"> <td><a style="display: block;" href="#popup1">'+result["title"]+'</a></td></tr>';
                             var table = document.getElementById('tableArticles');
                             var template = document.createElement('template');
                             template.innerHTML = rows;

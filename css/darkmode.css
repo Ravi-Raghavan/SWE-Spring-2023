@@ -82,7 +82,52 @@ body.dark .settingsCol{
   border-color: var(--primary);
 }
 
+body.dark .col-50 h3 {
+  color:black;
+}
+
 /* FAQ */
+body.dark .log-btn{
+  background-color: var(--tertiary);
+}
+
+body.dark .log-btn:hover {
+  background-color: var(--secondary);
+}
+
+body.dark #search_field:focus {
+  color: var(--tertiary);
+}
+
 body.dark .popup{
   background-color: var(--secondary-dark);
+}
+
+body.dark .table .title{
+  background-color: var(--tertiary);
+}
+
+body.dark .article_row a {
+  color:var(--primary);
+}
+
+body.dark .article_row:nth-child(even) {
+  background-color: var(--primary-dark);
+}
+
+body.dark .article_row:hover,
+body.dark .article_row:hover a{
+  background-color: var(--secondary);
+}
+
+body.dark .content {
+  color:var(--primary);
+}
+
+body.dark .close{
+  background-color: var(--tertiary);
+}
+
+body.dark .close:hover{
+  background-color: var(--secondary);
 }
