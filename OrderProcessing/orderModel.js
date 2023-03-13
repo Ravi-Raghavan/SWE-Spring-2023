@@ -2,6 +2,19 @@ const admin = require("../firebase").admin;
 var db = admin.database();
 var ref = db.ref(`/orders/`);
 
+/* Given a status (string), are we able to cancel the order? Return a boolean. */
+function canCancel(status) {
+    switch(status) {
+        case 'placed':
+            var cancellable = true;
+            break;
+        default:
+            var cancellable = false;
+    }
+
+    return cancellable
+}
+
 /* Create an order for a specific user ID */
 // OwnerID - Some user's ID
 // Costs - TOTAL cost of drugs as a floating point vlaue
@@ -38,8 +51,15 @@ async function create(ownerID, costs, drugs, quantity) {
 /* Given a user who requests an order cancellation, attempt an order cancel. */
 // RequesterID: The ID of the user who wants to request order cancellation
 // OrderID: the ID of the order to be cancelled
-async function cancelOrder(requesterID, orderID) {
-    
+async function cancel(requesterID, orderID) {
+    // We need to refer to the order via the child of orders reference
+    // ref.child(orderID).ex
+    const uid = await new Promise((resolve, reject) => {
+        ref.child(orderID).once('value', (snapshot) => {
+            const userInfo = snapshot.val();
+            
+        }) 
+    })
 }
 
 module.exports = {
