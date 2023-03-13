@@ -61,6 +61,7 @@ header {
   display: inline-block;
   padding: 0px 10px;
   font-family: var(--strong);
+  
 }
 
 .nav_links li a,
@@ -125,8 +126,7 @@ header {
   display: none;
   position: absolute;
   background-color: var(--tertiary);
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px var(--fourth);
+  min-width: 70px;
   z-index: 1;
   border-radius: 10px;
   z-index: 12;
@@ -152,15 +152,17 @@ header {
 
 .nav_links .dropdown:hover .dropdown-content {
   display: block;
+  opacity: 1;
 }
 
 .nav_links .moon {
   height: 30px;
   transition: 0.5s transform ease-out;
   transform: translateY(2px);
-  filter: opacity(0.4) drop-shadow(0 0 0 var(--tertiary));
+  filter: brightness(0) invert(74%) sepia(44%) saturate(400%) hue-rotate(176deg) contrast(93%);
 }
 
 .nav_links .moon:hover {
   transform: translateY(-2.5px);
+  filter: brightness(0)  invert(43%) sepia(21%) saturate(632%) hue-rotate(88deg) contrast(92%);
 }

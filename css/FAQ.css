@@ -1,6 +1,7 @@
 *{
     margin: 0;
     padding: 0;
+    outline: 0;
 }
 :root {
   --primary: #fff;
@@ -23,9 +24,17 @@
 
 }
 
+#searchField {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  border: none;
+  height: 41px;
+}
+
+
 .text-box{
     width: 90%;
-    color: var(--primary);
+    color: var(--fourth);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -50,7 +59,12 @@
     border: none;
     margin-top: 8px;
     font-size: 25px;
+    color: var(--fourth);
   }
+
+  #searchField:focus {
+  color:var(--secondary);
+}
 .log-btn{
     padding: 6px;
     margin-top: 8px;
@@ -61,6 +75,10 @@
     border: 1px solid var(--secondary);
     color:var(--primary);
     cursor: pointer;
+    height: 44px;
+    font-family: var(--soft);
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
 }
 
 .log-btn:hover{
@@ -100,12 +118,12 @@ nav .fa{
 h1{
     font-size: 36px;
     font-weight: 600;
-    color: var(--tertiary);
+    color: var(--fourth);
 }
 
 p{
-    color: var(--tertiary);
-    font-size: 18px;
+    color: var(--fourth);
+    font-size: 20px;
     font-weight: 300;
     line-height: 22px;
     padding: 10px;
@@ -123,7 +141,7 @@ p{
 .col{
     height: 150px;
     flex-basis: 31%;
-    background: var(--tertiary);
+    background: var(--secondary);
     border-radius: 15px;
     margin-bottom: 5%;
     padding: 20px 12px;
@@ -155,6 +173,7 @@ h3{
     cursor: pointer;
     pointer-events: none;
     transition: all 0.5s ease;
+    
 }
 
 .left:hover{
@@ -166,6 +185,11 @@ h3{
     width: auto;
     cursor: pointer;
     transition: all 0.5s ease;
+    
+  }
+
+.left, .right{
+  filter: brightness(0%) invert(44%) sepia(8%) saturate(1950%) hue-rotate(88deg) contrast(78%);
 }
 
 .right:hover{
@@ -174,7 +198,7 @@ h3{
 
 
 .col:hover{
-    background-color: var(--secondary);
+    background-color: var(--tertiary);
     transform: translateY(-5px);
 }
 @media(max-width: 1130px){
@@ -244,7 +268,7 @@ h3{
     cursor: pointer;
     color:var(--primary);
     font-family: var(--soft);
-    border-radius: 10px;
+    border-radius: 6px;
 
   }
   .popup .close:hover {

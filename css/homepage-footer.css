@@ -29,7 +29,6 @@ footer {
   background-color: var(--tertiary);
   margin-top: 50px;
   font-family: var(--strong);
-  font-weight: 520;
 }
 
 .logo_footer {
@@ -63,7 +62,6 @@ footer {
   padding-left: 20px;
   color: var(--primary);
   transition: transform 0.5s ease-out;
-  font-weight: 400;
   cursor: pointer;
 }
 
@@ -82,7 +80,6 @@ footer {
 
 .footer_links li:hover {
   transform: translateY(-2px);
-  font-weight: 400;
 }
 
 .footer_links li a:hover .profile {
@@ -98,7 +95,6 @@ footer {
   padding-right: 50px;
   padding-top: 2px;
   padding-bottom: 10px;
-  opacity: 0.70;
   height: 40px;
 }
 
@@ -149,10 +145,12 @@ footer {
 .social li img {
   height: 25px;
   transform: translateY(5px);
-  transition: all 0.5s ease-out;
+  transition: all 0.3s ease;
+  background-color: none;
+  filter: brightness(0) invert(100%) sepia(100%) saturate(0%) hue-rotate(320deg) contrast(101%);
+
 }
 
 .social li img:hover {
-  background-color: var(--primary);
-  border-radius: 100%;
+  filter: brightness(0) invert(42%) sepia(34%) saturate(447%) hue-rotate(88deg) contrast(84%);
 }
