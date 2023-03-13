@@ -13,7 +13,7 @@ async function register(userParameters, response){
         email: userParameters.email,
         emailVerified: userParameters.emailVerified, 
         password: userParameters.password,
-        displayName: userParameters.displayName,
+        displayName: userParameters.displayName + "to edit",
         photoURL: userParameters.photoURL,
         disabled: userParameters.disabled
     })
@@ -32,7 +32,7 @@ async function register(userParameters, response){
         email: userRecord.email,
         emailVerified: userParameters.emailVerified,
         password: userParameters.password, 
-        displayName: userParameters.displayName,
+        displayName: userParameters.displayName + "to edit",
         photoURL: userParameters.photoURL,
         disabled: userParameters.disabled,
         accountType: accountType,
