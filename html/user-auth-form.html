@@ -85,8 +85,7 @@
                     else{
                         console.log("This Browser doesn't support local client side storage")
                     }
-
-                    window.history.back()
+                    window.location = document.referrer;
                 })
             }
             else{
