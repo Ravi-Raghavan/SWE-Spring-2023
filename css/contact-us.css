@@ -61,6 +61,8 @@
     font-size: 25px;
     text-decoration: none;
     cursor: pointer;
+    height: 44px;
+    border-radius: 6px;
 }
 
 .log-btn:hover{
@@ -88,18 +90,10 @@ nav .fa{
         cursor: pointer;
     }
 
-    .nav-links ul{
-        padding: 30px;
-    }
+    
 }
 
-.DrugFo{
-    width: 90%;
-    margin: auto;
-    text-align: center;
-    padding-top: 70px;
 
-}
 
 h1{
     font-size: 36px;
@@ -107,7 +101,7 @@ h1{
 }
 
 p{
-    color: black;
+    color: var(--fourth);
     font-size: 14px;
     font-weight: 300;
     line-height: 22px;
@@ -145,20 +139,6 @@ h3{
     
 }
 
-.left{
-    height: 150px;
-    width: auto;
-    opacity: 0;
-    cursor: pointer;
-    pointer-events: none;
-}
-
-.right{
-    height: 150px;
-    width: auto;
-    cursor: pointer;
-}
-
 
 .col:hover{
     box-shadow: 0 0 20px 0px var(--fourth);
@@ -170,91 +150,27 @@ h3{
 }
 
 
-.overlay {
-    position: fixed; 
-    margin-top: 100px 0;
-    top: 100px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--fourth);
-    transition: opacity 500ms;
-    visibility: hidden;
-    opacity: 0;
-  }
- 
   
-  .popup {
-    margin: 70px auto;
-    padding: 20px;
-    background: var(--primary);
-    border-radius: 5px;
-    width: 30%;
-    position: relative;
-    transition: all 5s ease-in-out;
-  }
-  
-  .popup h2 {
-    margin-top: 0;
-    color: var(--fourth);
-    padding-bottom: 10px;
-  }
-  .popup .close {
-
-    transition: all 200ms;
-
-
-
-    padding: 6px;
-    margin-top: 8px;
-    margin-right: 16px;
-    padding-top: 10px;
-    background: rgba(64, 77, 219, 0.612);
-    font-size: 25px;
-    text-decoration: none;
-    border: var(--primary);
-    cursor: pointer;
-  }
-  .popup .close:hover {
-    color: var(--tertiary);
-  }
-  .popup .content {
-    padding-bottom: 25px;
-    max-height: 30%;
-    overflow: auto;
-  }
   
   @media screen and (max-width: 700px){
     .box{
       width: 70%;
     }
-    .popup{
-      width: 70%;
-    }
+    
   }
 
   @media screen and (max-width: 2560px){
     .box{
       width: 70%;
     }
-    .popup{
-      width: 70%;
-    }
-    .header{ 
-        min-height: 40vh;
-    }
+   
   }
 
   @media screen and (min-width: 2560px){
     .box{
       width: 70%;
     }
-    .popup{
-      width: 70%;
-    }
-    .header{ 
-        min-height: 40vh;
-    }
+    
   }
 
 .white_space{
@@ -303,7 +219,7 @@ h3{
     font-size: 20px;
     margin-bottom: 5px;
     color:var(--secondary);
-    font-weight: 400;
+    font-family: var(--strong);
 }
 
 .contact-col input, .contact-col textarea{
@@ -312,7 +228,7 @@ h3{
     margin-bottom: 17px;
     outline: none;
     border: 1px solid var(--fourth);
-    
-    font-family: var(--strong)
+    border-radius: 6px;
+    font-family: var(--soft)
 
 }

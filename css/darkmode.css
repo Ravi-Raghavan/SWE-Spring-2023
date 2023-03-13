@@ -8,8 +8,10 @@
   --secondary-dark: #242424;
 }
 
+
 body.dark {
   background-color: var(--secondary-dark);
+  transition: background-color 0.4s ease-out;
 }
 body.dark header,
 body.dark .low_footer {
@@ -30,13 +32,17 @@ body.dark h4 {
   color: var(--primary);
 }
 
-body.dark .moon {
-  background-color: var(--primary);
-  border-radius: 50%;
-}
 
 body.dark .col {
   border-color: var(--primary);
+}
+
+body.dark .social li img{
+  filter: brightness(0) invert(42%) sepia(34%) saturate(447%) hue-rotate(88deg) contrast(84%);
+} 
+
+body.dark .social li img:hover {
+  filter: brightness(0) invert(100%) sepia(100%) saturate(0%) hue-rotate(320deg) contrast(101%);
 }
 
 /* cart styles */
@@ -54,6 +60,25 @@ body.dark .low_footer  h1{
 body.dark .low_footer a:hover{
   text-decoration-color: var(--tertiary);
 }
+
+/* FAQ */
+body.dark .log-btnFAQ {
+  border: 1px solid var(--tertiary);
+}
+
+body.dark .col {
+  background-color: var(--tertiary);
+}
+
+body.dark .col:hover {
+  background-color: var(--secondary);
+}
+
+body.dark .left,
+body.dark .right{
+  filter: brightness(0) invert(79%) sepia(10%) saturate(1197%) hue-rotate(166deg)  contrast(93%);
+}
+
 
 /* dashboards */
 body.dark .sidebar{
@@ -86,7 +111,13 @@ body.dark .col-50 h3 {
   color:black;
 }
 
-/* FAQ */
+/* knowledge base */
+body.dark .loader{
+  border: 16px solid var(--tertiary);
+  border-top: 16px solid var(--secondary);
+}
+
+
 body.dark .log-btn{
   background-color: var(--tertiary);
 }
@@ -105,6 +136,7 @@ body.dark .popup{
 
 body.dark .table .title{
   background-color: var(--tertiary);
+  transition: 0.3s ease-out;
 }
 
 body.dark .article_row a {
@@ -130,4 +162,38 @@ body.dark .close{
 
 body.dark .close:hover{
   background-color: var(--secondary);
+}
+
+/* contact */
+body.dark .contact-col input:not(:focus), 
+body.dark .contact-col input:focus,
+body.dark .contact-col textarea:not(:focus),
+body.dark .contact-col textarea:focus{
+  background-color: var(--secondary-dark);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+body.dark .contact-col input::placeholder,
+body.dark .contact-col textarea::placeholder{
+  color:var(--primary);
+}
+
+body.dark .log-btnContact{
+  border: var(--tertiary);
+}
+
+body.dark .contact-col div .fa{
+  color: var(--secondary);
+}
+
+body.dark .contact-col div h5{
+  color:var(--tertiary);
+}
+
+/* dark mode for the google map */
+body.dark .dark-mode-map {
+  filter: invert(1) hue-rotate(180deg);
+  filter: invert(1) hue-rotate(180deg) brightness(85%) contrast(120%) saturate(150%);
+  filter: invert(1) hue-rotate(180deg) brightness(100%) saturate(60%);
 }

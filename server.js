@@ -112,6 +112,7 @@ const public_paths_images = [
   "/images/medicine_wallpaper.jpg",
   "/images/Map_Place_Holder.png",
   "/images/bbbg.jpg",
+  "/images/pharmacy.jpg",
 ];
 
 const { createProduct } = require("./js/productController");
