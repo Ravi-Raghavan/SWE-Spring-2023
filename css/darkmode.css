@@ -164,3 +164,36 @@ body.dark .close:hover{
   background-color: var(--secondary);
 }
 
+/* contact */
+body.dark .contact-col input:not(:focus), 
+body.dark .contact-col input:focus,
+body.dark .contact-col textarea:not(:focus),
+body.dark .contact-col textarea:focus{
+  background-color: var(--secondary-dark);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+body.dark .contact-col input::placeholder,
+body.dark .contact-col textarea::placeholder{
+  color:var(--primary);
+}
+
+body.dark .log-btnContact{
+  border: var(--tertiary);
+}
+
+body.dark .contact-col div .fa{
+  color: var(--secondary);
+}
+
+body.dark .contact-col div h5{
+  color:var(--tertiary);
+}
+
+/* dark mode for the google map */
+body.dark .dark-mode-map {
+  filter: invert(1) hue-rotate(180deg);
+  filter: invert(1) hue-rotate(180deg) brightness(85%) contrast(120%) saturate(150%);
+  filter: invert(1) hue-rotate(180deg) brightness(100%) saturate(60%);
+}
