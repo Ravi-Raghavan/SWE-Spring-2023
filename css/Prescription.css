@@ -48,6 +48,23 @@ body{
   height: 150px;
 }
 
+.main-box .title-next {
+  
+  color: black ;
+  height: 60px;
+  width: 100%;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-family: var(--soft);
+  border-radius: 50px;
+  text-overflow: clip;
+}
+
 .main-box .title {
   background-color: var(--secondary);
   color: var(--primary);
@@ -62,6 +79,7 @@ body{
   font-family: var(--soft);
   border-radius: 50px;
   text-overflow: clip;
+
 }
 
 

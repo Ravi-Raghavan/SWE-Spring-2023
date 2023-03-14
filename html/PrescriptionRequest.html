@@ -20,60 +20,43 @@
           <h1>The prescription that you requested should be available within 24
         hours</h1>
         </section>
+        <section class="title-next">
+          <h1>Patient Form</h1>
+        </section>
 
-            <section class="form-box">
+        <section class="form-box">
+          <div class="left-side">
+            <label for="fname">Patient first name</label>
+            <input type="text" id="fname" name="fname"  placeholder="First Name"/>
+          </div>  
+          <div class="right-side">
+            <label for="lname">Patient last name</label>
+            <input type="text" id="lname" name="lname" placeholder="Last Name" />
+          </div>  
+        </section>
 
-              <div class="left-side">
-                <label for="fname">First name</label>
-                  <input type="text" id="fname" name="fname"  placeholder="First Name"/>
-              </div>
-            
-              <div class="right-side">
-                <label for="lname">Last name</label>
-                  <input type="text" id="lname" name="lname" placeholder="Last Name" />
-              </div>  
-            </section>
+        <section class="form-box">
+          <div class="left-side">                
+            <label for="dob">Patient account email</label>
+            <input type="text" id="email" name="Date of Birth" placeholder="ex@gmail.com"/>
+          </div>              
+          <div class="right-side">
+            <label for="rd">Issue Date</label>
+            <input type="text" id="rd" name="Request Date" placeholder="MM/DD/YYYY"/>
+          </div>                
+        </section>
 
-            <section class="form-box">
-
-              <div class="left-side">
-                
-          <label for="dob">Account email</label>
-                  <input type="text" id="email" name="Date of Birth" placeholder="ex@gmail.com"/>
-              </div>
-              
-              <div class="right-side">
-                <label for="rd">Issue Date</label>
-          <input type="text" id="rd" name="Request Date" placeholder="MM/DD/YYYY"/>
-                </div>  
-              
-            </section>
-
-            <section class="form-box">
-
-            <div class="left-side">
-              
-        <label for="dob">Date Of Birth</label>
-                <input type="text" id="dob" name="Date of Birth" placeholder="MM/DD/YYYY"/>
-            </div>
-            
-              
-
-              <div class="right-side">
-                
-                <label for="dob">Prescription #</label>
-                <input type="text" id="DOB" name="Date of Birth" placeholder="Ex: XXX-XXXX-XXX"/>
-      
-                </div>  
-            
-          </section>
-
-          
-
-          
-
+        <section class="form-box">
+          <div class="left-side"> 
+            <label for="dob">Date Of Birth</label>
+            <input type="text" id="dob" name="Date of Birth" placeholder="MM/DD/YYYY"/>
+          </div>
+          <div class="right-side">
+            <label for="dob">Prescription #</label>
+            <input type="text" id="DOB" name="Date of Birth" placeholder="Ex: XXX-XXXX-XXX"/>
+          </div>  
+        </section>
         
-
         <div class="submit-box" id="submit-to-press">
             <input class="submit" type="submit" value="Submit" />
         </div>
@@ -84,9 +67,107 @@
         <h1 class="warning">
           <span>Notice: </span> First Name and Last Name must match name on your prescription.
         </h1>
-        
-
       </section>
+
+
+      <section class="main-box">
+        <section class="logo">
+          <a href="homepage.html"><img src="../images/top_logo.png"></a>
+        </section>
+
+        <section class="title">
+          <h1>Doctors may submit prescriptions via this form</h1>
+        </section>
+        <section class="title-next">
+          <h1>Doctor Form</h1>
+        </section>
+
+        <section class="form-box">
+          <div class="left-side">
+            <label for="fname">Patient first name</label>
+            <input type="text" id="dpfname" name="fname"  placeholder="First Name"/>
+          </div>
+          <div class="right-side">
+            <label for="lname">Patient last name</label>
+            <input type="text" id="dplname" name="lname" placeholder="Last Name" />
+          </div>  
+        </section>
+
+        <section class="form-box">              
+          <label for="dob">Patient Date of Birth </label>
+          <input type="text" id="dpatientDateOfBirth" name="Date of Birth" placeholder="MM/DD/YYYY"/>
+        </section>
+
+        <section class="form-box">
+          <div class="left-side">
+            <label for="fname">Doctor first name</label>
+            <input type="text" id="dfname" name="fname"  placeholder="First Name"/>
+          </div>
+          <div class="right-side">
+            <label for="lname">Doctor last name</label>
+            <input type="text" id="dlname" name="lname" placeholder="Last Name" />
+          </div>  
+        </section>
+
+        <section class="form-box">
+          <div class="left-side">    
+            <label for="dob">Doctor's account email</label>
+            <input type="text" id="demail" name="Date of Birth" placeholder="ex@gmail.com"/>
+          </div> 
+          <div class="right-side">
+            <label for="dob">Doctor's office address</label>
+            <input type="text" id="daddress" name="Date of Birth" placeholder="Ex: 50g , 100mg, 10ml"/>
+          </div> 
+        </section>
+
+        <section class="form-box">
+          <div class="left-side">  
+            <label for="dob">Issue Date</label>
+            <input type="text" id="dDOB" name="Date of Birth" placeholder="MM/DD/YYYY"/>
+          </div>           
+          <div class="right-side">                               
+            <label for="rd">Expire Date</label>
+            <input type="text" id="drd" name="Request Date" placeholder="MM/DD/YYYY"/>
+          </div>  
+        </section>
+
+        <section class="form-box">
+          <div class="left-side">
+            <label for="dob">Medication</label>
+            <input type="text" id="dmedication" name="Date of Birth" placeholder="Ex: Oxycotin"/>
+          </div>
+          <div class="right-side">
+            <label for="dob">Dosage</label>
+            <input type="text" id="ddosage" name="Date of Birth" placeholder="Ex: 50g, 100mg, 10ml"/>
+          </div>  
+        </section>
+        <section class="form-box">
+          <div class="left-side">
+              <label for="dob">Refills</label>
+              <input type="text" id="drefills" name="Date of Birth" placeholder="Ex: 0"/>
+          </div>
+          <div class="right-side">
+            <label for="dob">Prescription #</label>
+            <input type="text" id="dprescriptionNumber" name="Date of Birth" placeholder="Ex: XXX-XXXX-XXX"/>
+          </div>  
+        </section>
+        <section class="form-box">
+          <label for="dob">Instructions</label>
+          <input type="text" id="dinstructions" name="Date of Birth" placeholder="Ex: Take 1 pill every 12 hours"/>
+        </section>
+
+        <div class="submit-box" id="submit-to-press">
+            <input class="submit" type="submit" value="Submit" />
+        </div>
+        <h1 class="warning">
+          <span>Notice: </span> You must be a registered Doctor user to fill a prescription.
+           Please make sure all form credentials are accurate prior to submission.
+        </h1>
+        <h1 class="warning">
+          <span>Notice: </span> Please make sure Patient's name is accurate as written on prescription.
+        </h1>
+      </section>
+      
       <script type="module">
           import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-app.js";
           import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.2/firebase-analytics.js";
@@ -124,6 +205,7 @@ function getUID(){
 }
 
 document.querySelector(".submit-box").addEventListener("click", () =>{
+  
   var currentUID = getUID();
   var firstName = document.getElementById("fname").value;
   if(!checkName(firstName)){
@@ -147,13 +229,13 @@ document.querySelector(".submit-box").addEventListener("click", () =>{
   }
   var prescriptionNumber = document.getElementById("DOB").value;
   let fullName = firstName+" "+lastName;
-  console.log(fullName.toUpperCase());
+  //console.log(fullName.toUpperCase());
   
     
   
   const dbref = ref(db);
   get(child(dbref,"users/")).then((snapshot)=>{
-                if(snapshot.exists()){
+      if(snapshot.exists()){
                     let userIDS = Object.keys(snapshot.val());
                     let userObject = Object.values(snapshot.val());
                     let setHappened = false;
@@ -161,15 +243,15 @@ document.querySelector(".submit-box").addEventListener("click", () =>{
                         let grabName = userObject[i].displayName.toUpperCase();
                         let grabEmail = userObject[i].email;
                         let grabType = userObject[i].accountType.toUpperCase();
-                        console.log(grabType);
+                        //console.log(grabType);
                         if(grabEmail == email){
                           let foundType = grabType;
                           if(grabType=="DOCTOR"){
-                            alert("You are registered as a doctor, Please fill out the Docotor Prescription Form");
+                            alert("You are registered as a doctor, Please fill out the Doctor Prescription Form");
                             return;
                           }
                           let foundUSERID = userIDS[i];
-                          console.log(foundUSERID);
+                          //console.log(foundUSERID);
                           if(foundUSERID!=currentUID){
                             alert("Make sure all form credentials are correct. Users may only request a prescription for their own accounts.");
                             return;
@@ -197,6 +279,10 @@ document.querySelector(".submit-box").addEventListener("click", () =>{
 })
 
 function checkAge(age){
+  if(age==""){
+    alert("Age: is empty.")
+    return false;
+  }
   var numSet = new Set(["1","2","3","4","5","6","7","8","9","0"]);
   for(let i = 0;i<age.length;i++){
     if(!numSet.has(age.charAt(i))){
@@ -208,6 +294,10 @@ function checkAge(age){
 }
 
 function checkEmail(email){
+  if(email==""){
+    alert("Account email: is empty.")
+    return false;
+  }
   let foundAt = 0;
   let foundPeriod = 0;
   for(let i = 0;i<email.length;i++){
@@ -227,6 +317,10 @@ function checkEmail(email){
 }
 
 function checkName(name){
+  if(name==""){
+    alert("Name Box: is empty.")
+    return false;
+  }
   for(let i = 0;i<name.length;i++){
     if(name.charAt(i)==" "){
       alert("There must not be any spaces in the name");
@@ -237,6 +331,10 @@ function checkName(name){
 }
 
 function checkDate(date){
+  if(date==""){
+    alert("Date Box: is empty.")
+    return false;
+  }
   if(date.length<10){
     alert("Date must be in the correct format: MM/DD/YYYY");
     return false;
@@ -261,6 +359,7 @@ function checkDate(date){
   }
   return true;
 }
+
 
       </script>
   </body>
