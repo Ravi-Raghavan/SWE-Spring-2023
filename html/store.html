@@ -18,6 +18,7 @@
   <body>
     <script src="../js/store.js" async></script>
     <script src="../js/darkmode.js"></script>
+    
     <header>
         <a href = "./homepage.html"><img src="../images/top_logo.png" class="logo" alt="logo"></a>
         <img src="../images/bottom_logo.png" class="logo_name" alt="logo">
@@ -28,48 +29,25 @@
                 </li>
                 <li>
                     <div class="dropdown">
-                        <image class="profile" id ="dropbtn" src = "../images/profile.jpg" referrerpolicy="no-referrer"></image>
+                        <image class="profile" id ="dropbtn" src = "./../images/profile.png" referrerpolicy="no-referrer"></image>
                         <div class="dropdown-content">
-                            <a href="dashboard.html" onclick = 'handleUserManagingAccount()' class="drop_link">Manage Account</a>
-                            <a href="PrescriptionRequest.html" class="drop_link">Request Prescriptions</a>
-                            <a href="deliverypage.html"  class="drop_link">View Orders</a>
-                            <a href="logoutPage.html" id = "Link6" onclick = 'logout()' class="drop_link">Log Out</a>
+                            <a href="/html/dashboard.html" onclick = 'handleUserManagingAccount()' class="drop_link drop_first">Manage Account</a>
+                            <a href="/html/PrescriptionRequest.html" class="drop_link">Request Prescriptions</a>
+                            <a href="/html/deliverypage.html"  class="drop_link">View Orders</a>
+                            <a id = "Link6" onclick = 'login_logout()' class="drop_link">Log Out</a>
                         </div>
                     </div>
                 </li>
-                <li>
-                    <div class = "dropdown">
-                        <a class="header_link">Medicines</a>
-                        <div class = "dropdown-content">
-                            <a href="knowledge-base.html" class="drop_link">Knowledge Base</a>
-                        </div>
-                    </div>
-                </li>
-                <li><a class="header_link">Delivery</li>
-                <li>
-                    <div class = "dropdown">
-                        <a class="header_link">Our Service</a>
-                        <div class = "dropdown-content">
-                            <a href="FAQ.html" class="drop_link">FAQ</a>
-                        </div>
-                    </div>
-                </li>
-                
-                <li>
-                    <div class = "dropdown">
-                        <a class="header_link">Contact</a>
-                        <div class = "dropdown-content">
-                            <a href="contact-us.html" class="drop_link">Contact Us</a>
-                        </div>
-                    </div>
-                </li>
-
-                <li><a href="store.html"><button class="cart">Cart</button></a></li>
+                <li><a class="header_link" href="/html/knowledge-base.html">Knowledge Base</a></li>
+                <li><a  class="header_link" href="FAQ.html">FAQs</a></li>
+                <li><a class="header_link" href="contact-us.html">Contact Us</a></li>
+                <li><a href="/html/store.html"><button class="cart">Cart</button></a></li>
             </ul>
             
         </nav>
         
     </header>
+
 
     <section class="container content-section">
       <h2 class="section-header">Over-The-Counter</h2>
@@ -194,31 +172,46 @@
       </a>
     </section>
 
+    
     <footer>
-        <img src="../images/top_logo.png" class="logo_footer" alt="logo">
-        <img src="../images/bottom_logo.png" class="logo_name_footer" alt="logo">
-        <nav>
-            <ul class="footer_links">
-                
-                <li class="text"><a>Medicines</a></li>
-                <li class="text"><a>Delivery</a></li>
-                <li class="text"><a>Our Service</a></li>
-                <li class="text"><a>Contact</a></li>
-            </ul>
-        </nav>
-    </footer>
-    <div class="white_transparent_box"></div>
+        <section class="upper_footer">
+             
+           <div class="center_footer">
 
-    <section class="low_footer">
-        <li class="email"><a><h1>rr1133@scarletmail.rutgers.edu</h1></a></li>
-        <ul class="social">
-            <li class="social_title"><h1>Follow us on:</h1></li>
-            <li><a ><img src="../images/facebook.png"></a></li>
-            <li><a ><img src="../images/link.png"></a></li>
-            <li><a ><img src="../images/twitter.png"></a></li>
-            <li><a  class="last" ><img src="../images/insta.png"></a></li>
-        </ul>
-    </section>
+            <a href="/html/homepage.html"><img src="../images/top_logo.png"></a>
+
+            <h1>We're the only drug dealers your mom approves of</h1>
+
+            <ul>
+                <li><a href="/html/PrescriptionRequest.html" class="drop_link">Request Prescriptions</a></li>
+                <li><a href="/html/knowledge-base.html">Knowledge Base</a></li>
+                <li><a href="FAQ.html">FAQs</a></li>
+                <li><a href="/html/store.html">Cart</a></li>
+                <li><a href="">Careers</a></li>
+                <li><a href="">Privacy Policy</a></li>
+                <li><a href="">Terms of Use</a></li>
+            </ul>
+
+            <!-- adding socials -->
+            <ul class="social">
+            <li><a><img src="../images/facebook.png"></a></li>
+            <li><a><img src="../images/insta.png"></a></li>
+            <li><a><img src="../images/twitter.png"></a></li>
+            <li><a><img src="../images/link.png"></a></li> 
+            <li><a><img src="../images/snapchat.png"></a></li>
+            <li><a><img src="../images/reddit.png"></a></li>
+            </ul>
+                
+            <a><h1 class="email">rr1133@scarletmail.rutgers.edu</h1></a>
+            </div>
+        </section>
+
+        <section class="lower_footer">
+                Copyright © 2023 DrugHub. All rights reserved
+        </section>
+
+    </footer>
+
   </body>
   <script>
     function toggleDarkMode() {

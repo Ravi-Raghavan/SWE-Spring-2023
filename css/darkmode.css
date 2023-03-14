@@ -188,16 +188,31 @@ body.dark .shop-item-price{
 
 
 /* FAQ */
-body.dark .log-btnFAQ {
-  border: 1px solid var(--tertiary);
+
+/* search box for both FAQs and knowledge base */
+body.dark .text-box #searchField,
+body.dark .text-box #search_field{
+  background-color: var(--secondary-dark);
+  color: var(--fourth);
 }
 
-body.dark .col {
+body.dark .text-box #searchField:focus,
+body.dark .text-box #search_field:focus{
+  color: var(--secondary);
+}
+
+
+body.dark .colFAQ {
   background-color: var(--tertiary);
 }
 
-body.dark .col:hover {
+body.dark .colFAQ:hover {
   background-color: var(--secondary);
+} 
+
+body.dark .colFAQ:hover h3
+ {
+ color:var(--secondary-dark); 
 }
 
 body.dark .left,
@@ -207,12 +222,23 @@ body.dark .right{
 
 
 /* dashboards */
-body.dark .sidebar{
+body.dark .sidebar,
+body.dark .delete{
   background-color: var(--tertiary);
+ 
+}
+
+body.dark .delete {
+  border: var(--tertiary);
+}
+
+body.dark .sidebar a{
+ color:var(--primary);
 }
 
 body.dark .sidebar a.active {
     background-color: var(--secondary);
+    color:var(--secondary-dark);
   }
 
 body.dark .OrderTable tr:nth-child(even){background-color: var(--fourth)}
@@ -223,18 +249,23 @@ body.dark .OrderTable{
   border: 1px solid var(--primary);
 }
 
+body.dark .colDash{
+  border-color: var(--fourth);
+}
+
 body.dark td ,
 body.dark .OrderTable tr.table_header th{
   border-color: var(--secondary-dark);
   color:var(--primary);
 }
 
-body.dark .settingsCol{
-  border-color: var(--primary);
+body.dark .delete:hover {
+  border: none;
+  background-color: red;
 }
 
 body.dark .col-50 h3 {
-  color:black;
+  color:red;
 }
 
 /* knowledge base */
@@ -244,16 +275,13 @@ body.dark .loader{
 }
 
 
-body.dark .log-btn{
-  background-color: var(--tertiary);
-}
-
-body.dark .log-btn:hover {
+body.dark .log-btn-know{
   background-color: var(--secondary);
+  color:var(--secondary-dark);
 }
 
-body.dark #search_field:focus {
-  color: var(--tertiary);
+body.dark .log-btn-know:hover {
+  background-color: var(--tertiary);
 }
 
 body.dark .popup{
@@ -276,6 +304,7 @@ body.dark .article_row:nth-child(even) {
 body.dark .article_row:hover,
 body.dark .article_row:hover a{
   background-color: var(--secondary);
+  color:var(--secondary-dark);
 }
 
 body.dark .content {
@@ -288,6 +317,7 @@ body.dark .close{
 
 body.dark .close:hover{
   background-color: var(--secondary);
+  color:var(--secondary-dark);
 }
 
 /* contact */
@@ -297,7 +327,7 @@ body.dark .contact-col textarea:not(:focus),
 body.dark .contact-col textarea:focus{
   background-color: var(--secondary-dark);
   color: var(--primary);
-  border: 1px solid var(--primary);
+  border: 1px solid var(--fourth);
 }
 
 body.dark .contact-col input::placeholder,

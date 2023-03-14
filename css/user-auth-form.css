@@ -1,3 +1,4 @@
+@import url("/css/homepage-nav.css");
 
 .bg-img {
   position: fixed;
@@ -7,16 +8,6 @@
   height: 100%;
   background-size: cover;
   background-image: url(../images/pharmacy.jpg);
-}
-
-:root {
-  --primary: #fff;
-  --secondary: #8fc0e3;
-  --tertiary: #4b7a5b;
-  --fourth: #707173;
-
-  --soft: Arial, Helvetica, sans-serif;
-  --strong: Georgia, 'Times New Roman', Times, serif;
 }
 
 body {

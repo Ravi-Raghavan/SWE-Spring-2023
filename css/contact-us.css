@@ -1,16 +1,12 @@
+@import url("/css/homepage-nav.css");
+
 *{
     margin: 0;
     padding: 0;
+    outline: 0;
 }
-:root {
-    --primary: #fff;
-    --secondary: #8fc0e3;
-    --tertiary: #4b7a5b;
-    --fourth: #707173;
 
-    --soft: Arial, Helvetica, sans-serif;
-  --strong: Georgia, 'Times New Roman', Times, serif;
-    }
+
 
 .header{
     min-height: 100vh;
@@ -62,7 +58,7 @@
     text-decoration: none;
     cursor: pointer;
     height: 44px;
-    border-radius: 6px;
+    border-radius: 10px;
 }
 
 .log-btn:hover{
