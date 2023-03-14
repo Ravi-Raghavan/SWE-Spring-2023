@@ -81,6 +81,9 @@
           <span>Notice: </span> You must be a registered user to request a prescription.
            Please make sure all form credentials are accurate prior to submission.
         </h1>
+        <h1 class="warning">
+          <span>Notice: </span> First Name and Last Name must match name on your prescription.
+        </h1>
         
 
       </section>
@@ -128,7 +131,7 @@ document.querySelector(".submit-box").addEventListener("click", () =>{
   }
   var lastName = document.getElementById("lname").value;
   if(!checkName(lastName)){
-    //return;
+    return;
   }
   var email = document.getElementById("email").value;
   if(!checkEmail(email)){
@@ -157,17 +160,23 @@ document.querySelector(".submit-box").addEventListener("click", () =>{
                     for(let i = 0;i<userIDS.length;i++){
                         let grabName = userObject[i].displayName.toUpperCase();
                         let grabEmail = userObject[i].email;
-                        //console.log(currName);
-                        if(grabName == fullName.toUpperCase() && grabEmail == email){
+                        let grabType = userObject[i].accountType.toUpperCase();
+                        console.log(grabType);
+                        if(grabEmail == email){
+                          let foundType = grabType;
+                          if(grabType=="DOCTOR"){
+                            alert("You are registered as a doctor, Please fill out the Docotor Prescription Form");
+                            return;
+                          }
                           let foundUSERID = userIDS[i];
                           console.log(foundUSERID);
                           if(foundUSERID!=currentUID){
-                            alert("Make sure all form credentials are correct. Users may only request a prescription for their own accounts. Thank You!");
+                            alert("Make sure all form credentials are correct. Users may only request a prescription for their own accounts.");
                             return;
                           }
                           set(ref(db,"patientPrescriptions/"+foundUSERID+"/"),{
-                            firstName: firstName,
-                            lastName: lastName,
+                            firstName: firstName.toUpperCase(),
+                            lastName: lastName.toUpperCase(),
                             email:email,
                             issueDate: issueDate,
                             DOB: dateOfBirth,
