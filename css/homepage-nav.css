@@ -14,10 +14,11 @@
   --secondary: #8fc0e3;
   --tertiary: #4b7a5b;
   --fourth: #707173;
+  --suppliment: #f0f0f0;
   
   /*  dark mode colors */
   --primary-dark: #181818;
-  --secondary-dark: #242424;
+  --secondary-dark: #313131;
 
   /* only fonts used */
   --soft: Arial, Helvetica, sans-serif;
@@ -103,7 +104,7 @@ header {
   font-weight: 600;
   letter-spacing: 1px;
   justify-content: calc(20);
-  transition: 0.5s transform ease-out;
+  transition: 0.5s  ease-out;
 }
 
 .cart:hover {
@@ -177,7 +178,7 @@ header {
 .nav_links li:hover .profile {
   border-radius: 100%;
   filter: invert(41%) sepia(26%) saturate(541%) hue-rotate(88deg) brightness(97%) contrast(88%);
-  /* filter: opacity(0.4) drop-shadow(0 0 0 var(--tertiary)); */
+  
   transform: translateY(-2.5px);
   outline: 2px solid var(--tertiary);
 }
