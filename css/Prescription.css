@@ -148,7 +148,7 @@ body{
     width: 15%;
 }
 
-.main-box .submit-box {
+.main-box .submit-box1 {
 margin-left: auto;
   margin-right: auto;
   margin-top: 40px;
@@ -156,6 +156,15 @@ margin-left: auto;
   text-align: center;
   width: 50%;
 }
+
+.main-box .submit-box2 {
+  margin-left: auto;
+    margin-right: auto;
+    margin-top: 40px;
+    justify-content: center;
+    text-align: center;
+    width: 50%;
+  }
 
 .main-box .submit{
 background-color: var(--tertiary);
