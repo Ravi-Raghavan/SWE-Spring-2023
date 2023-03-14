@@ -65,6 +65,13 @@ body{
   text-overflow: clip;
 }
 
+.main-box .title-next-next {
+  font-size: 16px;
+  color: black ;
+  margin-top: 30px;
+}
+
+
 .main-box .title {
   background-color: var(--secondary);
   color: var(--primary);
@@ -155,6 +162,7 @@ margin-left: auto;
   justify-content: center;
   text-align: center;
   width: 50%;
+  cursor: pointer;
 }
 
 .main-box .submit-box2 {
@@ -164,6 +172,7 @@ margin-left: auto;
     justify-content: center;
     text-align: center;
     width: 50%;
+    cursor: pointer;
   }
 
 .main-box .submit{
@@ -177,13 +186,57 @@ background-color: var(--tertiary);
   width: 100%;
   
   font-family: var(--soft);
-
+  cursor: pointer;
+  transition: 0.5s ease-out;
 }
+
+
+  .main-box .ack{
+    
+    margin-left: auto;
+    margin-right: auto;
+    align-self: center;
+    margin-top: 5px;
+    background-color: rgb(202, 202, 202);
+    outline-color: black;
+    outline-width: 5px;
+      color: black;
+      border-radius: 15px;
+      padding: 12.5px;
+      font-size: 20px;
+      height: 45px;
+      border: none;
+      width: 30%;
+      
+      font-family: var(--soft);
+      cursor: pointer;
+      transition: 0.5s ease-in-out;
+    }
+
+  .main-box .acknowledgement-box span{
+      font-size: 2rem;
+      color: rgb(179, 8, 8);
+      transition: 0.5s ease-in-out;
+    }
+
+  .main-box .acknowledgement-box.clicked span{
+      font-size: 2rem;
+      color: rgb(17, 182, 17);
+      transition: 0.5s ease-in-out;
+  }
+  
 
 .main-box .submit:hover{
     background-color: var(--secondary);
     transition: 0.5s ease-out;
 }
+
+.main-box .ack:hover{
+  background-color: rgb(160, 160, 160);
+  transition: 0.5s ease-in-out;
+}
+
+
 
 .main-box .warning{
     font-weight: 200;
@@ -226,6 +279,11 @@ background-color: var(--tertiary);
   }
 
   .main-box .submit {
+    height: 100%;
+    padding: 10px 20px;
+  }
+
+  .main-box .ack {
     height: 100%;
     padding: 10px 20px;
   }
