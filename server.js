@@ -73,6 +73,8 @@ const public_paths_js = [
   "/js/SMTP.js",
   "/js/store.js",
   "/js/util.js",
+  "/js/patientPrescriptionController.js",
+  "/js/patientPrescriptionModel.js",
 ];
 
 const public_paths_images = [
@@ -119,6 +121,7 @@ const public_paths_images = [
 
 const { createProduct } = require("./js/productController");
 const { testCreateOrder } = require("./js/orderController");
+const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
 function binarySearch(list, target) {
   var lo = 0;
@@ -454,6 +457,10 @@ const server = http.createServer((request, response) => {
 
       case "/test/createOrder":
         testCreateOrder(request, response);
+        break;
+
+      case "/patientPrescription":
+        createPatientPrescription(request, response);
         break;
     }
   } else {
