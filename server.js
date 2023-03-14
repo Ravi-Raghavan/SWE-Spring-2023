@@ -73,6 +73,7 @@ const public_paths_js = [
   "/js/SMTP.js",
   "/js/store.js",
   "/js/util.js",
+  "/js/prescription.js",
 ];
 
 const public_paths_images = [
