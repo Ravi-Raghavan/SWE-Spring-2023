@@ -14,7 +14,10 @@
   --secondary: #8fc0e3;
   --tertiary: #4b7a5b;
   --fourth: #707173;
-  --suppliment: #f0f0f0;
+  --suppliment: #e6e6e6;
+
+  /* color to show warning */
+  --warning : red;
   
   /*  dark mode colors */
   --primary-dark: #181818;

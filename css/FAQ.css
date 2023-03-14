@@ -63,10 +63,10 @@
     padding: 6px;
     margin-top: 8px;
     margin-right: 16px;
-    background: var(--secondary);
+    background: var(--tertiary);
     font-size: 25px;
     text-decoration: none;
-    border: 1px solid var(--secondary);
+    /* border: 1px solid var(--secondary); */
     color:var(--primary);
     cursor: pointer;
     height: 44px;
@@ -76,8 +76,8 @@
 }
 
 .log-btn:hover{
-    border: 1px solid var(--tertiary);
-    background: var(--tertiary);
+    /* border: 1px solid var(--primary); */
+    background: var(--secondary);
     transition: all 0.3s ease;
 }
 nav .fa{

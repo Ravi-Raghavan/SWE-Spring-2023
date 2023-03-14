@@ -118,7 +118,7 @@ header {
   margin-top: 8px;
   margin-right: 16px;
   margin-left: -4px;
-  background: var(--secondary);
+  background: var(--tertiary);
   font-size: 25px;
   text-decoration: none;
   border: var(--secondary);
@@ -132,8 +132,8 @@ header {
 }
 
 .log-btn:hover {
-  border: var(--tertiary);
-  background: var(--tertiary);
+  /* border: var(--tertiary); */
+  background: var(--secondary);
   transition: 1s;
 }
 
