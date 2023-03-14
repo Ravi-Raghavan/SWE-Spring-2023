@@ -3,6 +3,7 @@
 * {
   margin: 0;
   padding: 0;
+  outline: 0;
   list-style: none;
   text-decoration: none;
   box-sizing: border-box;
@@ -61,6 +62,9 @@ body {
   color: var(--tertiary);
 }
 
+.left_main .search_box {
+  padding-left: 40px;
+}
 .search {
   margin-top: 32.5px;
   margin-bottom: 10px;
@@ -100,7 +104,7 @@ body {
 
 .main_body_title {
   text-align: center;
-  color: var(--tertiary);
+  color: var(--fourth);
   margin-bottom: 30px;
   font-size: 60px;
 }
@@ -119,7 +123,7 @@ body {
 .table_for_items .item_list {
   display: inline-block;
   background-color: var(--primary);
-  border: 5px solid var(--tertiary);
+  border: 5px solid var(--secondary);
   width: 220px;
   height: 220px;
   margin-left: 20px;
@@ -133,7 +137,8 @@ body {
 }
 
 .table_for_items .item_list:hover {
-  border-color: var(--secondary);
+  border-color: var(--tertiary);
+  transition: 0.5s ease-out;
 }
 
 .table_for_items .item_name {
@@ -205,7 +210,7 @@ body {
   text-align: left;
   font-family: var(--soft);
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 550;
 }
 
 .service_grid .right_side {
@@ -223,6 +228,7 @@ body {
   display: block;
   margin-top: 14px;
   font-size: 20px;
+  font-weight: 700;
   color: var(--primary);
 }
 
@@ -237,6 +243,15 @@ body {
 
 .service_grid button:hover {
   transform: translateY(-5px);
+}
+
+.lower_main_body{
+  margin-top: 100px;
+}
+
+.lower_main_body_container {
+  background-color: var(--secondary);
+  padding: 20px 10px 40px 10px;
 }
 
 .lower_main_body .main_body_title {
@@ -256,7 +271,7 @@ body {
 
 .table_plans .plan_name {
   display: inline-block;
-  background-color: var(--tertiary);
+  background-color: var(--primary);
   padding-top: 5px;
   width: fit-content;
   height: 40px;
@@ -265,7 +280,7 @@ body {
   border-radius: 10px;
   margin-bottom: 20px;
   font-size: 20px;
-  color: var(--primary);
+  color: var(--secondary);
   letter-spacing: 1.5px;
   cursor: pointer;
 }
@@ -281,8 +296,18 @@ body {
   height: 25px;
   width: 25px;
   margin-bottom: -5px;
-  filter: invert(1);
+  filter: brightness(0) invert(76%) sepia(32%) saturate(613%) hue-rotate(177deg) contrast(88%);
   margin-left: 10px;
+}
+
+.lower_main_body .table_for_items .item_list {
+  border-color: var(--fourth);
+  transition: 0.5s ease-out;
+}
+
+.lower_main_body .table_for_items .item_list:hover{
+  border-color: var(--tertiary);
+  transition: 0.5s ease-out;
 }
 
 .second {
@@ -296,17 +321,22 @@ body {
 }
 
 .table_plans .plan_name:hover {
-  background-color: var(--secondary);
+  background-color: var(--tertiary);
+  color:var(--primary);
   transform: translateY(-2px);
   transition: background-color 0.5s ease-out 0s, transform 0.5s ease-in-out 0s;
 }
 
+.table_plans .plan_name:hover img{
+  filter: invert(1);
+}
+
 .table_for_items .item_name_prt {
   margin-top: 10px;
-  text-align: center;
+  text-align: left;
   max-width: 220px;
   overflow-wrap: break-word;
-  color: var(--tertiary);
+  color: var(--primary);
   font-family: var(--soft);
   font-weight: 600;
   font-size: 20px;
@@ -315,7 +345,7 @@ body {
 .table_for_items .item_price_prt {
   margin-top: 0px;
   text-align: center;
-  color: var(--secondary);
+  color: var(--fourth);
   font-size: 25px;
   margin-bottom: 10px;
 }
@@ -328,17 +358,18 @@ body {
   width: 200px;
   height: 40px;
   text-align: center;
-  background-color: var(--tertiary);
-  color: var(--primary);
+  background-color: var(--primary);
+  color: var(--secondary);
   border: none;
   border-radius: 10px;
   cursor: pointer;
   padding-top: 4px;
-  transition: all 0.3s ease-out 0s;
+  transition: all 0.5s ease-out 0s;
 }
 
 .visit_button:hover {
-  background-color: var(--secondary);
+  background-color: var(--tertiary);
+  color: var(--primary);
 }
 
 .visit_button h1 {
@@ -351,7 +382,7 @@ body {
 
 .review_box {
   background-color: var(--secondary);
-  height: 100%px;
+  height: 100%;
   width: 50%;
   max-width: 800px;
   margin-left: auto;
@@ -405,12 +436,13 @@ body {
   max-width: 1000px;
   margin-right: auto;
   margin-left: auto;
+  margin-bottom: 100px;
   z-index: 1;
   background-color: var(--tertiary);
   z-index: 1;
-  margin-top: -200px;
+  margin-top: -150px;
   text-align: center;
-  padding-top: 70px;
+  padding-top: 120px;
   font-size: 80px;
   color: var(--primary);
 }

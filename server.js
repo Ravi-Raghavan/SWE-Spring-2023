@@ -119,7 +119,11 @@ const public_paths_images = [
 
 const { createProduct } = require("./js/productController");
 const { testCreateOrder } = require("./js/orderController");
+<<<<<<< HEAD
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
+=======
+// const { createPatientPrescription } = require("./js/patientPrescriptionController");
+>>>>>>> 69759cda859cd9b402745edbf8ab8606e3a7f4b0
 
 function binarySearch(list, target) {
   var lo = 0;
