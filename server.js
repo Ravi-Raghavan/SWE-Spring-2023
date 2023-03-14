@@ -121,7 +121,7 @@ const public_paths_images = [
 
 const { createProduct } = require("./js/productController");
 const { testCreateOrder } = require("./js/orderController");
-const { createPatientPrescription } = require("./js/patientPrescriptionController");
+// const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
 function binarySearch(list, target) {
   var lo = 0;
