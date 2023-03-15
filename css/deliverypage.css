@@ -30,7 +30,7 @@ font-size: 50px;
 
 .driver-info{
     padding-left: 1100px;
-    padding-top: 125px;
+    padding-top: 180px;
     /*background-color: aqua;*/
     width: -200px;
     }
@@ -42,49 +42,75 @@ font-size: 50px;
 
 .current-order {
     width: 400px;
-    margin-top: -15px;
-    padding-left: 60px;
+    margin-top: -2px;
+    margin-left: 50px;
+}
+
+.order-total{
+    margin-top: 2%;
+    margin-left: 72%;
+}
+
+.payment-info{
+    margin-top: 2%;
+    margin-left: 72%; 
+}
+
+.bill-to{
+    margin-top: 2%;
+    margin-left: 72%; 
+}
+
+.prev-orders{
+    margin-top: -50px;
+    margin-left: 50px;
 }
 
 .shopitem1{
     /*background-color:aqua;*/
-    margin-top: 20px;
+    margin-top: -340px;
     }
 
     .shopitem1 p{
-        padding-left: 40px;
+        padding-left: 10px;
     }
 
     .shopitem2 p{
-        padding-left: 40px;
+        padding-left: 0px;
     }
 
     .shopitem3 p{
-       margin-left: 1210px;
-       margin-top:-13px;
+       margin-left: 10px;
+       margin-top: 0px;
     }
+
+    .shopitem3 p1{
+        margin-left: 10px;
+        margin-top:300px;
+     }
+
+   
 
 .shopitem2{
 width: 275px;
-margin-left: 550px; 
+margin-left: 400px; 
 margin-top: -210px;
 }
 
 .shopitem3 img{
     height: 250px;
     width: 180px;
-    margin-left: 1200px; 
-    margin-top: -300px;
+    margin-left: 20px; 
+    margin-top: -5000px;
     }
 
 .shopitem3{
-    margin-top: -30px;
+    margin-top: 300px;
 }
 
-.order-total{
-    margin-top: 5%;
-    margin-left: 2%;
-}
+
+
+
 
 
 
