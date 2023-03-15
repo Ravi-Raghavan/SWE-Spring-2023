@@ -6,11 +6,9 @@ body.dark {
 }
 body.dark header {
   background-color: var(--primary-dark);
-}
-
-body.dark header {
   border-bottom: 4px solid var(--tertiary);
 }
+
 
 body.dark .item_price,
 body.dark .social,
@@ -42,9 +40,11 @@ body.dark .nav_links .dropdown-content {
   background-color: var(--tertiary);
 }
 
+/* header links base green before hover */
 body.dark .header_link {
   color: var(--tertiary);
 }
+
 
 body.dark .upper_footer h1,
 body.dark .upper_footer ul li a,
@@ -52,6 +52,10 @@ body.dark .left_main h1,
 body.dark .left_main h2,
 body.dark .nav_links .dropdown-content a {
   color: var(--secondary-dark);
+}
+
+body.dark li .header_link:hover{
+  color:var(--secondary);
 }
 
 body.dark .lower_footer,
@@ -114,7 +118,6 @@ body.dark .visit_button:hover {
 }
 
 body.dark .search_box:focus,
-body.dark .header_link:hover,
 body.dark .left_main input[type="text"] {
   color: var(--secondary);
 }
@@ -193,11 +196,13 @@ body.dark .text-box #search_field:focus {
   color: var(--secondary);
 }
 
-body.dark .colFAQ {
+body.dark .colFAQ,
+body.dark .btnDash:hover{
   background-color: var(--tertiary);
 }
 
-body.dark .colFAQ:hover {
+body.dark .colFAQ:hover ,
+body.dark .btnDash{
   background-color: var(--secondary);
 }
 
@@ -211,37 +216,57 @@ body.dark .right {
     hue-rotate(166deg) contrast(93%);
 }
 
-body.dark .log-btnFAQ {
+body.dark .log-btnFAQ,
+body.dark .delete,
+body.dark .btnDash {
   color: var(--secondary-dark);
 }
 
 /* dashboards */
 body.dark .sidebar,
-body.dark .delete {
+body.dark .delete,
+body.dark .settingRow .add:hover,
+/* slider */
+body.dark input:checked + .slider {
   background-color: var(--tertiary);
 }
 
-body.dark .delete {
+body.dark .delete,
+body.dark .settingRow .add:hover {
   border: var(--tertiary);
 }
 
-body.dark .sidebar a {
+body.dark .sidebar a,
+body.dark .col-75 .container,
+body.dark .col-50 h3 {
   color: var(--primary);
 }
 
-body.dark .sidebar a.active {
+body.dark .sidebar a.active,
+body.dark .settingRow .add  {
   background-color: var(--secondary);
   color: var(--secondary-dark);
 }
 
-body.dark .OrderTable tr:nth-child(even) {
+body.dark .OrderTable tr:nth-child(even),
+body.dark .col-75 .container {
   background-color: var(--fourth);
 }
-body.dark .OrderTable tr:nth-child(odd) {
+body.dark .OrderTable tr:nth-child(odd),
+/* slider dot */
+body.dark .slider:before,
+body.dark .col-50 input
+{
   background-color: var(--secondary-dark);
 }
 
-body.dark .OrderTable {
+body.dark .slider {
+  background-color: var(--primary-dark);
+}
+
+body.dark .OrderTable,
+body.dark .col-75 .container,
+body.dark .col-50 input {
   border: 1px solid var(--primary);
 }
 
@@ -260,8 +285,9 @@ body.dark .delete:hover {
   background-color: var(--warning);
 }
 
-body.dark .col-50 h3 {
-  color: var(--warning);
+body.dark .col-50 input:focus,
+body.dark .col-50 input::placeholder {
+  color:var(--fourth);
 }
 
 body.dark .profile-pic {
@@ -357,3 +383,4 @@ body.dark .dark-mode-map {
     saturate(150%);
   filter: invert(1) hue-rotate(180deg) brightness(100%) saturate(60%);
 }
+
