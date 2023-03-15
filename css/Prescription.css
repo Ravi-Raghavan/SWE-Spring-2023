@@ -225,6 +225,17 @@ background-color: var(--tertiary);
       transition: 0.5s ease-in-out;
   }
   
+  .main-box .acknowledgement-box-doctor span{
+    font-size: 2rem;
+    color: rgb(179, 8, 8);
+    transition: 0.5s ease-in-out;
+  }
+
+.main-box .acknowledgement-box-doctor.clicked span{
+    font-size: 2rem;
+    color: rgb(17, 182, 17);
+    transition: 0.5s ease-in-out;
+}
 
 .main-box .submit:hover{
     background-color: var(--secondary);

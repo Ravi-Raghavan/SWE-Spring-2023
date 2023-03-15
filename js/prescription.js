@@ -50,6 +50,10 @@ document.querySelector(".acknowledgement-box").addEventListener("click",() =>{
   document.querySelector(".acknowledgement-box").classList.toggle("clicked");
 })
 
+document.querySelector(".acknowledgement-box-doctor").addEventListener("click",() =>{
+  document.querySelector(".acknowledgement-box-doctor").classList.toggle("clicked");
+})
+
 
 document.querySelector(".submit-box1").addEventListener("click", () =>{
   let classNameLabel = document.querySelector(".acknowledgement-box").className;
@@ -126,6 +130,11 @@ document.querySelector(".submit-box1").addEventListener("click", () =>{
 })
 
 document.querySelector(".submit-box2").addEventListener("click",()=>{
+  let classNameLabel = document.querySelector(".acknowledgement-box-doctor").className;
+  if(classNameLabel.charAt(classNameLabel.length-1)!="d"){
+    alert("Please click the button above to acknowledge that all boxes are accurately filled");
+    return;
+  }
   var currentUID = getUID();
   var patientFirstName = document.getElementById("dpfname").value;
   var patientLastName = document.getElementById("dplname").value;
