@@ -1,21 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-  outline: none;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-:root {
-  --primary: #fff;
-  --secondary: #8fc0e3;
-  --tertiary: #4b7a5b;
-  --fourth: #707173;
-  --soft: Arial, Helvetica, sans-serif;
-  --strong: Georgia, "Times New Roman", Times, serif;
-}
+@import url("/css/static.css");
 
 .loader {
   border: 16px solid var(--secondary);
@@ -123,7 +106,7 @@ header {
   margin-top: 8px;
   margin-right: 16px;
   margin-left: -4px;
-  background: var(--secondary);
+  background: var(--tertiary);
   font-size: 25px;
   text-decoration: none;
   border: var(--secondary);
@@ -137,8 +120,8 @@ header {
 }
 
 .log-btn:hover {
-  border: var(--tertiary);
-  background: var(--tertiary);
+  /* border: var(--tertiary); */
+  background: var(--secondary);
   transition: 1s;
 }
 

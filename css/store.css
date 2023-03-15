@@ -1,22 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  text-decoration: none;
-  box-sizing: border-box;
-  user-select: none;
-}
-
-:root {
-  --primary: #fff;
-  --secondary: #8fc0e3;
-  --tertiary: #4b7a5b;
-  --fourth: #707173;
-
-  --soft: Arial, Helvetica, sans-serif;
-  --strong: Georgia, 'Times New Roman', Times, serif;
-}
-
+@import url("/css/static.css");
 
 .container {
     padding-top: 150px;

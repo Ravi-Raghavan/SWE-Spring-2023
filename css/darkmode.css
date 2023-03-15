@@ -1,17 +1,14 @@
-@import url("../css/homepage-nav.css");
-
+@import url("/css/static.css");
 
 body.dark {
   background-color: var(--secondary-dark);
-  transition: background-color 0.4s ease-out;
+  transition: background-color 0.5s ease-out;
 }
-body.dark header{
-  background-color: var(--primary-dark);
-}
-
 body.dark header {
+  background-color: var(--primary-dark);
   border-bottom: 4px solid var(--tertiary);
 }
+
 
 body.dark .item_price,
 body.dark .social,
@@ -23,123 +20,308 @@ body.dark h4 {
   color: var(--primary);
 }
 
-
 body.dark .col {
   border-color: var(--primary);
 }
 
-body.dark .social li img{
-  filter: brightness(0) invert(42%) sepia(34%) saturate(447%) hue-rotate(88deg) contrast(84%);
-} 
-
-body.dark .social li img:hover {
-  filter: brightness(0) invert(100%) sepia(100%) saturate(0%) hue-rotate(320deg) contrast(101%);
+body.dark .center_footer img {
+  filter: brightness(0) invert(22%) sepia(76%) saturate(0%) hue-rotate(214deg)
+    contrast(97%);
 }
 
-body.dark .upper_footer {
+body.dark .social li img {
+  filter: brightness(0%) invert(88%) sepia(25%) saturate(2215%)
+    hue-rotate(177deg) contrast(91%);
+}
+
+body.dark .upper_footer,
+body.dark .cart:hover,
+body.dark .nav_links .dropdown-content {
   background-color: var(--tertiary);
 }
 
-body.dark .upper_footer h1, 
-body.dark .upper_footer ul li a{
+/* header links base green before hover */
+body.dark .header_link {
+  color: var(--tertiary);
+}
+
+
+body.dark .upper_footer h1,
+body.dark .upper_footer ul li a,
+body.dark .left_main h1,
+body.dark .left_main h2,
+body.dark .nav_links .dropdown-content a {
   color: var(--secondary-dark);
 }
 
-body.dark .lower_footer {
+body.dark li .header_link:hover{
+  color:var(--secondary);
+}
+
+body.dark .lower_footer,
+body.dark .cart,
+body.dark .dropdown-content .drop_link:hover {
   background-color: var(--secondary);
-  color:var(--primary-dark);
+  /* color:var(--primary-dark); */
+  /* color:red; */
+  color: var(--secondary-dark);
+}
+
+body.dark .dropdown-content {
+  box-shadow: 0px 5px 10px var(--primary-dark);
+}
+
+/* profile and moon green in dark mode */
+body.dark .moon {
+  filter: invert(41%) sepia(10%) saturate(1462%) hue-rotate(88deg)
+    brightness(100%) contrast(84%);
+}
+body.dark .nav_links li:hover .profile {
+  filter: brightness(0) invert(89%) sepia(34%) saturate(2466%)
+    hue-rotate(175deg) contrast(82%);
+}
+
+body.dark .nav_links li .profile {
+  filter: invert(42%) sepia(55%) saturate(283%) hue-rotate(88deg)
+    brightness(89%) contrast(86%);
+  outline: 2px solid var(--tertiary);
+}
+
+/* profile and moon blue in dark mode after hovering */
+body.dark .moon:hover {
+  filter: invert(88%) sepia(25%) saturate(2215%) hue-rotate(177deg)
+    brightness(96%) contrast(91%);
+}
+
+/* homepage */
+body.dark .main,
+body.dark .lower_main_body_container {
+  background-color: var(--tertiary);
+  color: var(--fourth);
+}
+
+body.dark .second .item_price,
+body.dark .review_right_box,
+body.dark .left_side {
+  color: var(--secondary-dark);
+}
+
+body.dark .search,
+body.dark .arrow_img,
+body.dark .main_box .call_doctor,
+body.dark .main_box .order,
+body.dark .plan_name:hover,
+body.dark .under_review_box,
+body.dark .visit_button:hover {
+  color: var(--secondary-dark);
+  background-color: var(--secondary);
+}
+
+body.dark .search_box:focus,
+body.dark .left_main input[type="text"] {
+  color: var(--secondary);
+}
+
+body.dark .main_body_title,
+body.dark .item_name,
+body.dark .visit_button h1 {
+  color: var(--tertiary);
+}
+
+body.dark .plan_name img {
+  filter: brightness(0) invert(41%) sepia(10%) saturate(1462%) hue-rotate(88deg)
+    contrast(84%);
+}
+
+body.dark .arrow_img:hover,
+body.dark .service_grid .main_box,
+body.dark .review_box {
+  background-color: var(--tertiary);
+}
+
+body.dark .plan_name,
+body.dark .visit_button,
+body.dark .search_box {
+  background-color: var(--secondary-dark);
+  color: var(--tertiary);
+}
+
+body.dark .main_body_title,
+body.dark .item_name_prt {
+  color: var(--primary);
+}
+
+body.dark .visit_button:hover h1,
+body.dark .search_icon {
+  color: var(--secondary-dark);
+}
+
+body.dark .item_list {
+  border-color: var(--tertiary);
+}
+
+body.dark .second .item_list {
+  border-color: var(--secondary-dark);
+}
+
+body.dark .item_list:hover,
+body.dark .second .item_list:hover {
+  border-color: var(--secondary);
+}
+
+body.dark .review_box .review_right_box .quotation {
+  background-color: var(--tertiary);
+  color: var(--secondary-dark);
 }
 
 /* cart styles */
 body.dark .cart-total strong,
 body.dark .cart-total span,
 body.dark .cart-row span,
-body.dark .shop-item-price{
+body.dark .shop-item-price {
   color: var(--primary);
 }
 
-
-
 /* FAQ */
-body.dark .log-btnFAQ {
-  border: 1px solid var(--tertiary);
+
+/* search box for both FAQs and knowledge base */
+body.dark .text-box #searchField,
+body.dark .text-box #search_field {
+  background-color: var(--secondary-dark);
+  color: var(--fourth);
 }
 
-body.dark .col {
+body.dark .text-box #searchField:focus,
+body.dark .text-box #search_field:focus {
+  color: var(--secondary);
+}
+
+body.dark .colFAQ,
+body.dark .btnDash:hover{
   background-color: var(--tertiary);
 }
 
-body.dark .col:hover {
+body.dark .colFAQ:hover ,
+body.dark .btnDash{
   background-color: var(--secondary);
 }
 
-body.dark .left,
-body.dark .right{
-  filter: brightness(0) invert(79%) sepia(10%) saturate(1197%) hue-rotate(166deg)  contrast(93%);
+body.dark .colFAQ:hover h3 {
+  color: var(--secondary-dark);
 }
 
+body.dark .left,
+body.dark .right {
+  filter: brightness(0) invert(79%) sepia(10%) saturate(1197%)
+    hue-rotate(166deg) contrast(93%);
+}
+
+body.dark .log-btnFAQ,
+body.dark .delete,
+body.dark .btnDash {
+  color: var(--secondary-dark);
+}
 
 /* dashboards */
-body.dark .sidebar{
+body.dark .sidebar,
+body.dark .delete,
+body.dark .settingRow .add:hover,
+/* slider */
+body.dark input:checked + .slider {
   background-color: var(--tertiary);
 }
 
-body.dark .sidebar a.active {
-    background-color: var(--secondary);
-  }
+body.dark .delete,
+body.dark .settingRow .add:hover {
+  border: var(--tertiary);
+}
 
-body.dark .OrderTable tr:nth-child(even){background-color: var(--fourth)}
-body.dark .OrderTable tr:nth-child(odd){background-color: var(--secondary-dark)}
+body.dark .sidebar a,
+body.dark .col-75 .container,
+body.dark .col-50 h3 {
+  color: var(--primary);
+}
 
+body.dark .sidebar a.active,
+body.dark .settingRow .add  {
+  background-color: var(--secondary);
+  color: var(--secondary-dark);
+}
 
-body.dark .OrderTable{
+body.dark .OrderTable tr:nth-child(even),
+body.dark .col-75 .container {
+  background-color: var(--fourth);
+}
+body.dark .OrderTable tr:nth-child(odd),
+/* slider dot */
+body.dark .slider:before,
+body.dark .col-50 input
+{
+  background-color: var(--secondary-dark);
+}
+
+body.dark .slider {
+  background-color: var(--primary-dark);
+}
+
+body.dark .OrderTable,
+body.dark .col-75 .container,
+body.dark .col-50 input {
   border: 1px solid var(--primary);
 }
 
-body.dark td ,
-body.dark .OrderTable tr.table_header th{
+body.dark .colDash {
+  border-color: var(--fourth);
+}
+
+body.dark td,
+body.dark .OrderTable tr.table_header th {
   border-color: var(--secondary-dark);
-  color:var(--primary);
+  color: var(--primary);
 }
 
-body.dark .settingsCol{
-  border-color: var(--primary);
+body.dark .delete:hover {
+  border: none;
+  background-color: var(--warning);
 }
 
-body.dark .col-50 h3 {
-  color:black;
+body.dark .col-50 input:focus,
+body.dark .col-50 input::placeholder {
+  color:var(--fourth);
 }
+
+body.dark .profile-pic {
+  filter:invert(1);
+}
+
 
 /* knowledge base */
-body.dark .loader{
+body.dark .loader {
   border: 16px solid var(--tertiary);
   border-top: 16px solid var(--secondary);
 }
 
+body.dark .log-btn-know {
+  background-color: var(--secondary);
+  color: var(--secondary-dark);
+}
 
-body.dark .log-btn{
+body.dark .log-btn-know:hover {
   background-color: var(--tertiary);
 }
 
-body.dark .log-btn:hover {
-  background-color: var(--secondary);
-}
-
-body.dark #search_field:focus {
-  color: var(--tertiary);
-}
-
-body.dark .popup{
+body.dark .popup {
   background-color: var(--secondary-dark);
 }
 
-body.dark .table .title{
+body.dark .table .title {
   background-color: var(--tertiary);
+  color: var(--secondary-dark);
   transition: 0.3s ease-out;
 }
 
 body.dark .article_row a {
-  color:var(--primary);
+  color: var(--primary);
 }
 
 body.dark .article_row:nth-child(even) {
@@ -147,52 +329,58 @@ body.dark .article_row:nth-child(even) {
 }
 
 body.dark .article_row:hover,
-body.dark .article_row:hover a{
+body.dark .article_row:hover a {
   background-color: var(--secondary);
+  color: var(--secondary-dark);
 }
 
 body.dark .content {
-  color:var(--primary);
+  color: var(--primary);
 }
 
-body.dark .close{
+body.dark .close {
   background-color: var(--tertiary);
 }
 
-body.dark .close:hover{
+body.dark .close:hover {
   background-color: var(--secondary);
+  color: var(--secondary-dark);
 }
 
+
 /* contact */
-body.dark .contact-col input:not(:focus), 
+body.dark .contact-col input:not(:focus),
 body.dark .contact-col input:focus,
 body.dark .contact-col textarea:not(:focus),
-body.dark .contact-col textarea:focus{
+body.dark .contact-col textarea:focus {
   background-color: var(--secondary-dark);
   color: var(--primary);
-  border: 1px solid var(--primary);
+  border: 1px solid var(--fourth);
 }
 
 body.dark .contact-col input::placeholder,
-body.dark .contact-col textarea::placeholder{
-  color:var(--primary);
+body.dark .contact-col textarea::placeholder {
+  color: var(--primary);
 }
 
-body.dark .log-btnContact{
+body.dark .log-btnContact {
   border: var(--tertiary);
+  color: var(--secondary-dark);
 }
 
-body.dark .contact-col div .fa{
+body.dark .contact-col div .fa {
   color: var(--secondary);
 }
 
-body.dark .contact-col div h5{
-  color:var(--tertiary);
+body.dark .contact-col div h5 {
+  color: var(--tertiary);
 }
 
 /* dark mode for the google map */
 body.dark .dark-mode-map {
   filter: invert(1) hue-rotate(180deg);
-  filter: invert(1) hue-rotate(180deg) brightness(85%) contrast(120%) saturate(150%);
+  filter: invert(1) hue-rotate(180deg) brightness(85%) contrast(120%)
+    saturate(150%);
   filter: invert(1) hue-rotate(180deg) brightness(100%) saturate(60%);
 }
+

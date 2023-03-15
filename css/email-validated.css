@@ -1,57 +1,43 @@
-*{
-    margin: 0;
-    padding: 0;
+@import url("/css/static.css");
+
+body {
+  font-family: var(--soft);
+  /* font-family: 'Merriweather', serif; */
 }
 
-:root {
-  --primary: #fff;
-  --secondary: #8fc0e3;
-  --tertiary: #4b7a5b;
-  --fourth: #707173;
-
-  --soft: Arial, Helvetica, sans-serif;
-  --strong: Georgia, "Times New Roman", Times, serif;
+button {
+  background-color: var(--tertiary); /* #4b7a5b; */
+  color: var(--primary);
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
 }
-
-body{
-             font-family: var(--soft) 
-            /* font-family: 'Merriweather', serif; */
+button:hover {
+  opacity: 0.8;
 }
-    
-button{
-         background-color: var(--tertiary);  /* #4b7a5b; */
-            color: var(--primary);
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            cursor: pointer;
-            width: 100%;
-        }
-        button:hover{
-            opacity: 0.8;
-        }
-        .imagecontainer{
-            text-align: center;
-              width: 800px;
-            height: 609px; 
-            /* overflow: hidden;   */
-             /* text-align: center;  */
-             margin: 24px 0 12px 0; 
-            display: block;
-            position: relative;
-             margin-bottom: -462px; 
-            /* top: 10%;
+.imagecontainer {
+  text-align: center;
+  width: 800px;
+  height: 609px;
+  /* overflow: hidden;   */
+  /* text-align: center;  */
+  margin: 24px 0 12px 0;
+  display: block;
+  position: relative;
+  margin-bottom: -462px;
+  /* top: 10%;
             left: 50%; */
-            /* transform: translate(-50%, -50%); */
-             margin-left: auto;
-            margin-right: auto; 
-
-        }
-        img.avatar{
-            width:50%;
-            border-radius: 40%;
-        }
-         /* .modal{
+  /* transform: translate(-50%, -50%); */
+  margin-left: auto;
+  margin-right: auto;
+}
+img.avatar {
+  width: 50%;
+  border-radius: 40%;
+}
+/* .modal{
             background-color: white;
             overflow: auto;
             padding-top: 60px;
@@ -63,28 +49,25 @@ button{
             position: fixed;
             
         }  */
-        .modal-content{
-            background-color: white;
-            margin: 5% auto 15% auto;
-            border: 1px solid white;
-            width: 80%;
-        }
+.modal-content {
+  background-color: white;
+  margin: 5% auto 15% auto;
+  border: 1px solid white;
+  width: 80%;
+}
 
-        .container{
-            padding:16px;
-            
-        }
+.container {
+  padding: 16px;
+}
 
-        .container h1{
-            text-align: center;
-        }
-        .container p{
-            text-align: center;
-        }
-        
+.container h1 {
+  text-align: center;
+}
+.container p {
+  text-align: center;
+}
 
-
-        span.psw{
-            float: center;
-            padding-top: 16px;
-        }
+span.psw {
+  float: center;
+  padding-top: 16px;
+}

@@ -1,17 +1,5 @@
-* {
-  margin: 0;
-  padding: 0;
-}
+@import url("/css/static.css");
 
-:root {
-  --primary: #fff;
-  --secondary: #8fc0e3;
-  --tertiary: #4b7a5b;
-  --fourth: #707173;
-
-  --soft: Arial, Helvetica, sans-serif;
-  --strong: Georgia, "Times New Roman", Times, serif;
-}
 
 .main {
   width: 100%;

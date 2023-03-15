@@ -1,17 +1,4 @@
-*{
-    margin: 0;
-    padding: 0;
-    outline: 0;
-}
-:root {
-  --primary: #fff;
-  --secondary: #8fc0e3;
-  --tertiary: #4b7a5b;
-  --fourth: #707173;
-
-  --soft: Arial, Helvetica, sans-serif;
-  --strong: Georgia, "Times New Roman", Times, serif;
-}
+@import url("/css/static.css");
 
 .header{
     min-height: 30vh;
@@ -69,10 +56,10 @@
     padding: 6px;
     margin-top: 8px;
     margin-right: 16px;
-    background: var(--secondary);
+    background: var(--tertiary);
     font-size: 25px;
     text-decoration: none;
-    border: 1px solid var(--secondary);
+    /* border: 1px solid var(--secondary); */
     color:var(--primary);
     cursor: pointer;
     height: 44px;
@@ -82,8 +69,8 @@
 }
 
 .log-btn:hover{
-    border: 1px solid var(--tertiary);
-    background: var(--tertiary);
+    /* border: 1px solid var(--primary); */
+    background: var(--secondary);
     transition: all 0.3s ease;
 }
 nav .fa{

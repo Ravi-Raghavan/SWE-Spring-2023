@@ -1,21 +1,4 @@
-*{
-    margin: 0;
-    padding: 0;    
-}
-:root {
-  --primary: #fff;
-  --secondary: #8fc0e3;
-  --tertiary: #4b7a5b;
-  --fourth: #707173;
-
-  --soft: Arial, Helvetica, sans-serif;
-  --strong: Georgia, "Times New Roman", Times, serif;
-}
-
-
-html{ 
-    scroll-behavior: smooth;
-}
+@import url("/css/static.css");
 
 .container {
   padding-top: 100px;
@@ -26,7 +9,7 @@ html{
     margin-bottom: 10px;
     border-style:groove;
     border-color: var(--fourth);
-    background-color: var(--primary);
+    background-color: var(--suppliment);
 }
 
 .info-container{
@@ -210,7 +193,7 @@ p{
 }
 
 
-.OrderTable tr:nth-child(even){background-color: var(--header)}
+.OrderTable tr:nth-child(even){background-color: var(--suppliment)}
 
 
 .paymentRow{
@@ -326,25 +309,35 @@ p{
     text-align: center; 
     vertical-align: middle;
     cursor: pointer;
+    outline: 0;
 
 }
 
-.log-btn{
+.settingRow .add{
+  background-color: var(--tertiary);
+  border: var(--tertiary);
   text-align: center;
-  border: 1px solid var(--secondary);
-  background-color: var(--secondary);
   color: var(--primary);
   font-family: var(--soft);
   transition: 0.5s ease-out;
 }
-.log-btn:hover{
-    border: 1px solid var(--tertiary);
-    background: var(--tertiary);
+.settingRow .add:hover{
+    border:  var(--secondary);
+    background: var(--secondary);
 }
 
-.delete:hover{
-  border: 1px solid red;
-    background: red;
+.settingRow .delete{
+  background-color: var(--secondary);
+  border: var(--secondary);
+  text-align: center;
+  color: var(--primary);
+  font-family: var(--soft);
+  transition: 0.5s ease-out;
+}
+
+.settingRow .delete:hover{
+  border: var(--warning);
+    background: var(--warning);
 }
 .settingRow{
   display: flex;
@@ -377,7 +370,7 @@ p{
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: var(--suppliment);
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -389,7 +382,7 @@ p{
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: var(--primary);
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -398,9 +391,9 @@ input:checked + .slider {
   background-color: var(--secondary);
 }
 
-input:focus + .slider {
+/* input:focus + .slider {
   box-shadow: 0 0 1px var(--secondary);
-}
+} */
 
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);

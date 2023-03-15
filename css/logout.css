@@ -1,18 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
-:root {
-  --primary: #fff;
-  --secondary: #8fc0e3;
-  --tertiary: #4b7a5b;
-  --fourth: #707173;
-  --header: whitesmoke;
-
-  --soft: Arial, Helvetica, sans-serif;
-  --strong: Georgia, "Times New Roman", Times, serif;
-}
+@import url("/css/static.css");
 
 table {
   background-color: var(--secondary);

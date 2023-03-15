@@ -145,8 +145,41 @@ footer
   }
 }
 
-@media screen and (max-width: 925px) {
+@media screen and (max-width: 950px) {
   .second {
     max-width: 600px;
   }
+
+  .review_box {
+    width: 500px;
+    height: 100%;
+    padding: 5px 10px;
+  }
+
+  .under_review_box {
+    width: 525px;
+    height: 200px;
+    padding-top: 100px;
+  }
+
+.review_box .review_left_box,
+.review_left_box img{
+  width: 150px;
+  height: 150px;
+}
+
+.review_box .review_right_box {
+  font-size: 14px;
+}
+
+.table_for_items {
+  margin-right:auto;
+  margin-left: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+}
+
+
+
 }
