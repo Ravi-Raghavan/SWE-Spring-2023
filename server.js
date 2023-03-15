@@ -124,6 +124,7 @@ const public_paths_images = [
   "/images/pharmacy.jpg",
   "/images/snapchat.png",
   "/images/reddit.png",
+  "/images/redx.png",
 ];
 
 const { createProduct } = require("./js/productController");

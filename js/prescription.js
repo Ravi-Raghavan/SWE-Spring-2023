@@ -13,15 +13,16 @@ const firebaseConfig = {
 try{
   const app = initializeApp(firebaseConfig);
 }catch{
-  alert("hi1");
+  console.log("error getting firebaseConfig");
 }
 try{
   const analytics = getAnalytics(app);
 }catch{
-  console.log("error getting analytics");
+  //console.log("error getting analytics");
 }
 import{getDatabase,ref,get,set,child,update,remove} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
 const db = getDatabase();
+
 function getUID(){
   if(localStorage.getItem("User Record")==null){
     alert("Please create an account / log in, to add a prescription. Thank You!");
@@ -32,8 +33,34 @@ function getUID(){
   }
 }
 
+function getEmail(){
+  if(localStorage.getItem("User Record")==null){
+    alert("Please create an account / log in, to add a prescription. Thank You!");
+  }else{
+    var user_record = JSON.parse(localStorage.getItem("User Record"));
+    var email = user_record.email;
+    return email;
+  }
+}
+
+console.log(getUID());
+console.log(getEmail());
+
+document.querySelector(".acknowledgement-box").addEventListener("click",() =>{
+  document.querySelector(".acknowledgement-box").classList.toggle("clicked");
+})
+
+document.querySelector(".acknowledgement-box-doctor").addEventListener("click",() =>{
+  document.querySelector(".acknowledgement-box-doctor").classList.toggle("clicked");
+})
+
+
 document.querySelector(".submit-box1").addEventListener("click", () =>{
-  
+  let classNameLabel = document.querySelector(".acknowledgement-box").className;
+  if(classNameLabel.charAt(classNameLabel.length-1)!="d"){
+    alert("Please click the button above to acknowledge that all boxes are accurately filled");
+    return;
+  }
   var currentUID = getUID();
   var firstName = document.getElementById("fname").value;
   if(!checkName(firstName)){
@@ -66,12 +93,10 @@ document.querySelector(".submit-box1").addEventListener("click", () =>{
                     let userObject = Object.values(snapshot.val());
                     let setHappened = false;
                     for(let i = 0;i<userIDS.length;i++){
-                        let grabName = userObject[i].displayName.toUpperCase();
                         let grabEmail = userObject[i].email;
                         let grabType = userObject[i].accountType.toUpperCase();
                         //console.log(grabType);
                         if(grabEmail == email){
-                          let foundType = grabType;
                           if(grabType=="DOCTOR"){
                             alert("The email provided is registered as a doctor, Please fill out the Doctor Prescription Form");
                             return;
@@ -105,6 +130,11 @@ document.querySelector(".submit-box1").addEventListener("click", () =>{
 })
 
 document.querySelector(".submit-box2").addEventListener("click",()=>{
+  let classNameLabel = document.querySelector(".acknowledgement-box-doctor").className;
+  if(classNameLabel.charAt(classNameLabel.length-1)!="d"){
+    alert("Please click the button above to acknowledge that all boxes are accurately filled");
+    return;
+  }
   var currentUID = getUID();
   var patientFirstName = document.getElementById("dpfname").value;
   var patientLastName = document.getElementById("dplname").value;
@@ -161,11 +191,9 @@ document.querySelector(".submit-box2").addEventListener("click",()=>{
     let userObject = Object.values(snapshot.val());
     let setHappened = false;
     for(let i = 0;i<userIDS.length;i++){
-      let grabName = userObject[i].displayName.toUpperCase();
       let grabEmail = userObject[i].email;
       let grabType = userObject[i].accountType.toUpperCase();
       if(grabEmail == doctorAccountEmail){
-        let foundType = grabType;
           if(grabType=="PATIENT"){
             alert("You are registered as a patient, Please fill out the Patient Prescription Form");
             return;

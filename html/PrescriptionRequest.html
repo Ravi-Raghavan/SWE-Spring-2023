@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <link rel="stylesheet" type="text/css" href="../css/Prescription.css" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>DrugHub | Prescription</title>
     
   </head>
@@ -57,7 +57,13 @@
             <input type="text" id="DOB" name="Date of Birth" placeholder="Ex: XXX-XXXX-XXX"/>
           </div>  
         </section>
-        
+        <section class="title-next-next">
+          <h1>Please click the button below to acknowledge that all boxes are accurately filled:</h1>
+        </section>
+        <div class="acknowledgement-box" id="ack-to-press">
+          <input class="ack" type="submit" value="I've checked all of my entries" />
+          <span><i class="fa-regular fa-square-check"></i></span>
+        </div>
         <div class="submit-box1" id="submit-to-press">
             <input class="submit" type="submit" value="Submit" />
         </div>
@@ -153,7 +159,13 @@
           <label for="dob">Instructions</label>
           <input type="text" id="dinstructions" name="Date of Birth" placeholder="Ex: Take 1 pill every 12 hours"/>
         </section>
-
+        <section class="title-next-next">
+          <h1>Please click the button below to acknowledge that all boxes are accurately filled:</h1>
+        </section>
+        <div class="acknowledgement-box-doctor" id="ack-to-press">
+          <input class="ack" type="submit" value="I've checked all of my entries" />
+          <span><i class="fa-regular fa-square-check"></i></span>
+        </div>
         <div class="submit-box2" id="submit-to-press">
             <input class="submit" type="submit" value="Submit" />
         </div>
