@@ -1,14 +1,4 @@
-@import url("/css/homepage-nav.css");
-
-* {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  text-decoration: none;
-  box-sizing: border-box;
-  user-select: none;
-  outline: none;
-}
+@import url("/css/static.css");
 
 body{
     background-image: url('../images/medicine_wallpaper.jpg');

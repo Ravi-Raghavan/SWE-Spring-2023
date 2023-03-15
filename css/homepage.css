@@ -1,14 +1,5 @@
-@import url("/css/homepage-nav.css");
+@import url("/css/static.css");
 
-* {
-  margin: 0;
-  padding: 0;
-  outline: 0;
-  list-style: none;
-  text-decoration: none;
-  box-sizing: border-box;
-  user-select: none;
-}
 
 body {
   margin-left: auto;

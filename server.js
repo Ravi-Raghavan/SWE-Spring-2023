@@ -33,9 +33,16 @@ const public_paths_html = [
   "/html/waiting-for-validation.html",
   "/html/store.html",
   "/html/submitted-prescription-patient.html",
+  "/html/header.html",
+  "/html/footer.html",
 ];
 
+// const public_paths_php = [
+//   "/html/header.php"
+// ]
+
 const public_paths_css = [
+  "/css/static.css",
   "/css/contact-us.css",
   "/css/darkmode.css",
   "/css/dashboard.css",
@@ -74,6 +81,7 @@ const public_paths_js = [
   "/js/store.js",
   "/js/util.js",
   "/js/prescription.js",
+  "/js/dynamicHeaderFooter.js"
 ];
 
 const public_paths_images = [
@@ -115,15 +123,13 @@ const public_paths_images = [
   "/images/bbbg.jpg",
   "/images/pharmacy.jpg",
   "/images/snapchat.png",
-  "/images/reddit.png"
+  "/images/reddit.png",
 ];
 
 const { createProduct } = require("./js/productController");
 const { testCreateOrder } = require("./js/orderController");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
-
-
 
 function binarySearch(list, target) {
   var lo = 0;
@@ -384,28 +390,15 @@ const server = http.createServer((request, response) => {
     public_paths_images.includes(path)
   ) {
     file = __dirname + path;
-  } 
-  else if (
-    public_paths_html.includes("/html" + path)
-  ) {
+  } else if (public_paths_html.includes("/html" + path)) {
     file = __dirname + "/html" + path;
-  }
-  else if (
-    public_paths_html.includes("/css" + path)
-  ) {
+  } else if (public_paths_html.includes("/css" + path)) {
     file = __dirname + "/css" + path;
-  }
-  else if (
-    public_paths_html.includes("/js" + path)
-  ) {
+  } else if (public_paths_html.includes("/js" + path)) {
     file = __dirname + "/js" + path;
-  }
-  else if (
-    public_paths_html.includes("/images" + path)
-  ) {
+  } else if (public_paths_html.includes("/images" + path)) {
     file = __dirname + "/images" + path;
-  }
-  else {
+  } else {
     console.log(path);
     console.log(file);
   }
@@ -460,8 +453,6 @@ const server = http.createServer((request, response) => {
       case "/test/createOrder":
         testCreateOrder(request, response);
         break;
-
-      
     }
   } else {
     //Client is requesting a file
