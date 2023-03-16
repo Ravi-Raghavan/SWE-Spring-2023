@@ -109,12 +109,19 @@ body {
 }
 
 /* invisible frames */
-#box-container-2,
+#box-container-2, 
 #box-container-3,
 #box-container-4,
 #box-container-5 {
   display: none;
   /* position: absolute; */
+}
+
+#box-container-2 .item_list,
+#box-container-3 .item_list,
+#box-container-4 .item_list,
+#box-container-5 .item_list{
+  opacity: 0;
 }
 
 .table_for_items .item_list {

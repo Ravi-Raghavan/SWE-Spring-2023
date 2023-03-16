@@ -1,6 +1,6 @@
 function rightscrolling(iter, count, fname, box) {
   // ? iteration number of container
-//  ? count number of boxes for each container
+  //  ? count number of boxes for each container
   // ? fname - container ID name
   //  ? box - each class name (inside container)
 
@@ -10,10 +10,9 @@ function rightscrolling(iter, count, fname, box) {
   for (let j = 1; j <= iter; j++) {
     boxBlueContainer = document.getElementById(`${fname}${j}`);
     num = j;
-    
+
     // ? checks if the current frame is visible
     if (
-      
       window.getComputedStyle(boxBlueContainer).getPropertyValue("display") ===
       "flex"
     ) {
@@ -22,7 +21,6 @@ function rightscrolling(iter, count, fname, box) {
       break;
     }
   }
-  
 
   console.log(`${fname}${1}`);
   // gets the green box
@@ -50,7 +48,7 @@ function rightscrolling(iter, count, fname, box) {
     for (let i = 0; i < count; i++) {
       setTimeout(() => {
         boxes[i].style.opacity = "0";
-      }, i * 100);
+      }, i * 70);
     }
   }
 
@@ -62,11 +60,11 @@ function rightscrolling(iter, count, fname, box) {
     for (let i = 0; i < count; i++) {
       setTimeout(() => {
         replacementBox[i].style.opacity = "1";
-      }, i * 170);
+      }, i * 70);
     }
   }
   blueDisp();
-  setTimeout(greenApr, 1200);
+  setTimeout(greenApr, 590);
 }
 
 // left shift
@@ -100,36 +98,37 @@ function leftscrolling(iter, count, fname, box) {
     boxGreenContainer = document.getElementById(`${fname}${num - 1}`);
   }
 
-
   // gets inside blue box
   boxes = boxBlueContainer.getElementsByClassName(`${box}`);
 
   // gets green box
   replacementBox = boxGreenContainer.getElementsByClassName(`${box}`);
 
-   console.log(boxes);
-   console.log(replacementBox);
+  console.log(boxes);
+  console.log(replacementBox);
 
   // make blue box dissapper
   function blueDisp() {
     for (let i = count - 1; i >= 0; i--) {
       setTimeout(() => {
         boxes[i].style.opacity = "0";
-      }, (count - i) * 100 * (count - i));
+      }, (count -1 - i) * 70);
     }
   }
 
   //  makes green appear
   function greenApr() {
-    // swtiching diplays
+    // switch display
     boxBlueContainer.style.display = "none";
     boxGreenContainer.style.display = "flex";
-    for (let i = count- 1; i >= 0; i--) {
+
+    for (let i = count - 1; i >= 0; i--) {
       setTimeout(() => {
         replacementBox[i].style.opacity = "1";
-      }, (count - i) * 100);
+      }, (count - i) * 70);
     }
   }
   blueDisp();
-  setTimeout(greenApr, 1200);
+  // setTimeout(switchDisp, 1200);
+  setTimeout(greenApr, 590);
 }

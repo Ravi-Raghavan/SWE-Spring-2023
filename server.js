@@ -84,6 +84,7 @@ const public_paths_js = [
   "/js/dynamicHeaderFooter.js",
   "/js/scroller.js",
   "/js/homepage.js",
+  "/js/imagePreloader.js",
 ];
 
 const public_paths_images = [
