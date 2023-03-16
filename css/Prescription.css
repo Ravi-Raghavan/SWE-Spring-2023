@@ -120,6 +120,14 @@ body{
   text-align: left;
 }
 
+.main-boxone{
+  display: none;
+}
+
+.main-boxtwo{
+  display:none;
+}
+
 .main-box .form-box label {
   background-color: var(--tertiary);
   border-radius: 20px;

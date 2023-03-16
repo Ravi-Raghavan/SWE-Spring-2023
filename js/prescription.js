@@ -23,6 +23,24 @@ try{
 import{getDatabase,ref,get,set,child,update,remove} from "https://www.gstatic.com/firebasejs/9.17.2/firebase-database.js";
 const db = getDatabase();
 
+window.onload = startType();
+
+function startType(){
+  const dbref = ref(db);
+  get(child(dbref,"users/"+getUID()+"/")).then((snapshot)=>{
+    if(snapshot.exists()){
+      var accountStartType = snapshot.val().accountType;
+      if(accountStartType.toUpperCase()=="DOCTOR"){
+        document.querySelector(".main-boxtwo").className = document.querySelector(".main-boxtwo").className.substring(0,8);
+      }else{
+        document.querySelector(".main-boxone").className = document.querySelector(".main-boxone").className.substring(0,8);
+      }
+    }else{
+      alert("No User Data Found :(");
+    }
+  })
+}
+
 function getUID(){
   if(localStorage.getItem("User Record")==null){
     alert("Please create an account / log in, to add a prescription. Thank You!");
