@@ -107,17 +107,18 @@ body.dark .left_side {
 }
 
 body.dark .search,
-body.dark .arrow_img,
 body.dark .main_box .call_doctor,
 body.dark .main_box .order,
 body.dark .plan_name:hover,
 body.dark .under_review_box,
-body.dark .visit_button:hover {
+body.dark .visit_button:hover,
+body.dark .arrow_img svg {
   color: var(--secondary-dark);
   background-color: var(--secondary);
 }
 
 body.dark .search_box:focus,
+body.dark .table_for_items .item_list:hover .item_name,
 body.dark .left_main input[type="text"] {
   color: var(--secondary);
 }
@@ -133,9 +134,9 @@ body.dark .plan_name img {
     contrast(84%);
 }
 
-body.dark .arrow_img:hover,
 body.dark .service_grid .main_box,
-body.dark .review_box {
+body.dark .review_box,
+body.dark .arrow_img svg:hover {
   background-color: var(--tertiary);
 }
 
@@ -146,25 +147,25 @@ body.dark .search_box {
   color: var(--tertiary);
 }
 
-body.dark .main_body_title,
-body.dark .item_name_prt {
+body.dark .main_body_title {
   color: var(--primary);
 }
 
 body.dark .visit_button:hover h1,
-body.dark .search_icon {
+body.dark .search_icon,
+body.dark .second .item_name {
   color: var(--secondary-dark);
 }
 
-body.dark .item_list {
+body.dark .table_for_items .item_list img  {
   border-color: var(--tertiary);
 }
-
-body.dark .second .item_list {
+ 
+body.dark .second .item_list img {
   border-color: var(--secondary-dark);
 }
 
-body.dark .item_list:hover,
+body.dark .table_for_items .item_list:hover img ,
 body.dark .second .item_list:hover {
   border-color: var(--secondary);
 }
@@ -173,6 +174,19 @@ body.dark .review_box .review_right_box .quotation {
   background-color: var(--tertiary);
   color: var(--secondary-dark);
 }
+
+/* body.dark .table_for_items .item_list:hover{
+  background-color: var(--primary-dark);
+} */
+
+/* body.dark .second .item_list:hover{
+  background-color: var(--tertiary);
+} */
+
+body.dark .second .item_list .item_price {
+  color:var(--suppliment);
+}
+
 
 /* cart styles */
 body.dark .cart-total strong,

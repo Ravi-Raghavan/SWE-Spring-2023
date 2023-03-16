@@ -147,18 +147,12 @@ body {
 }
 
 .table_for_items .item_list:hover {
-  background-color: var(--suppliment);
+  /* background-color: var(--suppliment); */
   /* margin-bottom: 20px; */
   border-radius: 10px;
   transition: border-color 0.5s ease-out, transform 0.5s ease-out;
   transform: translateY(-5px);
 }
-
-.item_list-fix:hover {
-  transition: border-color 0.5s ease-out, transform 0.5s ease-out;
-  transform: translateY(-5px);
-}
-
 
 .table_for_items .item_list:hover img {
   border: 4.5px solid var(--tertiary);
@@ -217,12 +211,12 @@ body {
 }
 
 /* seperate direciton for arrows */
-.arrow .left svg:hover{
+.arrow .leftHome svg:hover{
   transform: translateX(-5px);
   transition: transform 0.5s ease-out;
 }
 
-.arrow .right svg:hover{
+.arrow .rightHome svg:hover{
   transform: translateX(5px);
   transition: transform 0.5s ease-out;
 }
@@ -379,10 +373,10 @@ body {
   border-color: var(--fourth);
 }
 
-.second .item_list:hover {
+/* .second .item_list:hover {
   background-color: var(--secorondary);
   transition: 0.5s ease-out;
-}
+} */
 
 
 .second .item_name{

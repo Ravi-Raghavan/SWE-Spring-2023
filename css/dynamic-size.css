@@ -27,7 +27,6 @@ footer
   header .nav_links .moon,
   header .nav_links .profile {
     height: 22px;
-    width: 22px;
   }
 
   header .nav_links li {
@@ -77,7 +76,6 @@ footer
   /* homepage title */
   .left_main h1 {
     font-size: 100px;
-    background-color: aqua;
   }
 
   .left_main h2 {
@@ -213,7 +211,6 @@ footer
   /* homepage title */
   .left_main h1 {
     font-size: 70px;
-    background-color: rgb(58, 22, 46);
   }
 
   .left_main h2 {
