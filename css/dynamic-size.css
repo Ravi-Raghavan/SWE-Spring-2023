@@ -75,25 +75,48 @@ footer
     padding-top: 140px;
   }
 
-  .table_for_items {
+  /* sizing for the first set of items */
+  .table_for_items .item_list {
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+
+  .table_for_items ul div {
+    /* justify-content: space-between; */
+    flex-wrap: wrap;
+    /* padding-left: 350px; */
+    /* padding-right: 350px; */
     width: 800px;
+    height: 620px;
+    margin-left: auto;
+    margin-right: auto;
+    /* gap: 30px; */
+  }
+/* 
+  .table_for_items {
+    width: 1400px;
     padding-left: 0px;
     padding-right: 0px;
-    margin: auto;
+    height: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    background-color: aqua;
   }
 
   .table_for_items .item_list {
     margin-top: 20px;
-  }
+  } */
 
-  .second {
+  /* .second {
     padding-left: 0px;
     padding-right: 0px;
     width: 100%;
     max-width: 900px;
-  }
+  } */
 
-  .second .item_list {
+  /* .second .item_list {
     height: 180px;
     width: 180px;
     padding: 0;
@@ -103,7 +126,7 @@ footer
     height: 170px;
     width: 170px;
     border-radius: 5px;
-  }
+  } */
 }
 
 @media screen and (max-width: 1450px) {
@@ -122,6 +145,7 @@ footer
     margin-top: 40px;
   }
 
+  /* reivew box sizing */
   .review_box {
     padding-left: -30px;
     padding-right: -30px;
@@ -138,19 +162,53 @@ footer
 }
 
 @media screen and (max-width: 1190px) {
-  .main_body_title,
-  .table_plans {
+  .main_body_title {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
   }
+
+  
+
+
 }
 
 @media screen and (max-width: 950px) {
-  .second {
+  /* .second {
     max-width: 600px;
+  } */
+
+  /* sizing for the first set of items */
+  .table_for_items ul div {
+    width: 600px;
+    height: 500px;
   }
 
+  .table_for_items .item_list {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .table_for_items .item img {
+    height: 150px;
+    width: 150px;
+  }
+
+  .table_for_items .item_name,
+  .table_for_items .item_price{
+    max-width: 150px;
+  }
+
+   .table_for_items .item_name{
+    font-size: 16px;
+
+   }
+
+   .table_for_items .item_price {
+    font-size: 16px;
+   }
+
+   /* review box sizing */
   .review_box {
     width: 500px;
     height: 100%;
@@ -173,13 +231,13 @@ footer
   font-size: 14px;
 }
 
-.table_for_items {
+/* .table_for_items {
   margin-right:auto;
   margin-left: auto;
   padding-left: 20px;
   padding-right: 20px;
   width: 100%;
-}
+} */
 
 
 
