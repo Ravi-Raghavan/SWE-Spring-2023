@@ -1,5 +1,6 @@
-function rightscrolling(iter, fname, box) {
-  // ? iteration number of boxes in each
+function rightscrolling(iter, count, fname, box) {
+  // ? iteration number of container
+//  ? count number of boxes for each container
   // ? fname - container ID name
   //  ? box - each class name (inside container)
 
@@ -9,19 +10,24 @@ function rightscrolling(iter, fname, box) {
   for (let j = 1; j <= iter; j++) {
     boxBlueContainer = document.getElementById(`${fname}${j}`);
     num = j;
+    
     // ? checks if the current frame is visible
     if (
+      
       window.getComputedStyle(boxBlueContainer).getPropertyValue("display") ===
       "flex"
     ) {
+      console.log(num);
       console.log("1st box attained");
       break;
     }
   }
+  
 
+  console.log(`${fname}${1}`);
   // gets the green box
   if (num === iter) {
-    boxGreenContainer = document.getElementById(`${fname}1`);
+    boxGreenContainer = document.getElementById(`${fname}${1}`);
     console.log("last box reached");
   } else {
     boxGreenContainer = document.getElementById(`${fname}${num + 1}`);
@@ -34,9 +40,14 @@ function rightscrolling(iter, fname, box) {
   // gets green box
   replacementBox = boxGreenContainer.getElementsByClassName(`${box}`);
 
+  console.log(boxes);
+  console.log(replacementBox);
+  console.log(boxBlueContainer);
+  console.log(boxGreenContainer);
+
   // make blue box dissapper
   function blueDisp() {
-    for (let i = 0; i < iter; i++) {
+    for (let i = 0; i < count; i++) {
       setTimeout(() => {
         boxes[i].style.opacity = "0";
       }, i * 100);
@@ -48,7 +59,7 @@ function rightscrolling(iter, fname, box) {
     // swtiching diplays
     boxBlueContainer.style.display = "none";
     boxGreenContainer.style.display = "flex";
-    for (let i = 0; i < iter; i++) {
+    for (let i = 0; i < count; i++) {
       setTimeout(() => {
         replacementBox[i].style.opacity = "1";
       }, i * 170);
@@ -59,8 +70,9 @@ function rightscrolling(iter, fname, box) {
 }
 
 // left shift
-function leftscrolling(iter, fname, box) {
+function leftscrolling(iter, count, fname, box) {
   // ? iteration number of boxes in each
+  // ? count number of boxes in each container
   // ? fname - container ID name
   //  ? box - each class name (inside container)
 
@@ -88,18 +100,22 @@ function leftscrolling(iter, fname, box) {
     boxGreenContainer = document.getElementById(`${fname}${num - 1}`);
   }
 
+
   // gets inside blue box
   boxes = boxBlueContainer.getElementsByClassName(`${box}`);
 
   // gets green box
   replacementBox = boxGreenContainer.getElementsByClassName(`${box}`);
 
+   console.log(boxes);
+   console.log(replacementBox);
+
   // make blue box dissapper
   function blueDisp() {
-    for (let i = iter - 1; i >= 0; i--) {
+    for (let i = count - 1; i >= 0; i--) {
       setTimeout(() => {
         boxes[i].style.opacity = "0";
-      }, (iter - i) * 100);
+      }, (count - i) * 100 * (count - i));
     }
   }
 
@@ -108,10 +124,10 @@ function leftscrolling(iter, fname, box) {
     // swtiching diplays
     boxBlueContainer.style.display = "none";
     boxGreenContainer.style.display = "flex";
-    for (let i = iter - 1; i >= 0; i--) {
+    for (let i = count- 1; i >= 0; i--) {
       setTimeout(() => {
         replacementBox[i].style.opacity = "1";
-      }, (iter - i) * 100);
+      }, (count - i) * 100);
     }
   }
   blueDisp();
