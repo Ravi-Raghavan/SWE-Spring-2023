@@ -41,34 +41,60 @@ font-size: 50px;
 }
 
 .current-order {
-    width: 400px;
-    margin-top: -2px;
-    margin-left: 50px;
+    background-color: #8fc0e3;
+    margin-top: 20px;
+    padding-left: 50px;
+    color: white;
+}
+
+.box-1-Outline{
+    width: 300px;
+    height: 200px;
+    padding-left: 5px;
+    border: 5px solid #8fc0e3;
+    margin-top: 1%;
+    margin-left: 72%;
+    
+    
 }
 
 .order-total{
-    margin-top: 2%;
+    padding-left: 13px;
+    margin-top: -10%;
     margin-left: 72%;
 }
 
 .payment-info{
+    width: 300px;
+    border: 5px solid #8fc0e3;
+    padding-left: 5px;
     margin-top: 2%;
     margin-left: 72%; 
 }
 
 .bill-to{
+    width: 300px;
+    border: 5px solid #8fc0e3;
+    padding-left: 5px;
     margin-top: 2%;
     margin-left: 72%; 
 }
 
 .prev-orders{
-    margin-top: -50px;
+    margin-top: -20px;
     margin-left: 50px;
+    text-decoration: underline white;
+    
+}
+
+.prev-orders a{
+    font-size: 15px;
+    color: white;
 }
 
 .shopitem1{
     /*background-color:aqua;*/
-    margin-top: -340px;
+    margin-top: -430px;
     }
 
     .shopitem1 p{
@@ -94,7 +120,7 @@ font-size: 50px;
 .shopitem2{
 width: 275px;
 margin-left: 400px; 
-margin-top: -210px;
+margin-top: -225px;
 }
 
 .shopitem3 img{
