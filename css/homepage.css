@@ -114,7 +114,7 @@ body {
 #box-container-4,
 #box-container-5 {
   display: none;
-  position: absolute;
+  /* position: absolute; */
 }
 
 .table_for_items .item_list {
