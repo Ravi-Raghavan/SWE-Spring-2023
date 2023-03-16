@@ -1,6 +1,5 @@
 @import url("/css/static.css");
 
-
 body {
   margin-left: auto;
   margin-right: auto;
@@ -81,7 +80,7 @@ body {
 }
 
 .astrick {
-  color: red;
+  color: var(--warning);
   margin-right: 3px;
 }
 
@@ -102,11 +101,10 @@ body {
   text-align: center;
 }
 
-
 .table_for_items ul div {
   justify-content: center;
   display: flex;
-  flex-direction: row ;
+  flex-direction: row;
   align-items: center;
 }
 
@@ -130,7 +128,7 @@ body {
 }
 
 .table_for_items .item img {
-   background-color: var(--primary-dark);
+  background-color: var(--primary-dark);
   border: 4.5px solid var(--secondary);
   border-radius: 6px;
   width: 200px;
@@ -138,29 +136,29 @@ body {
   align-items: center;
 }
 
-.table_for_items .item_list:hover  {
+.table_for_items .item_list:hover {
   background-color: var(--suppliment);
   /* margin-bottom: 20px; */
   border-radius: 6px;
-  transition: border-color 0.5s ease-out, transform 0.5s ease-out;  
+  transition: border-color 0.5s ease-out, transform 0.5s ease-out;
   transform: translateY(-5px);
 }
 
 .item_list-fix:hover {
-  transition: border-color 0.5s ease-out, transform 0.5s ease-out;  
+  transition: border-color 0.5s ease-out, transform 0.5s ease-out;
   transform: translateY(-5px);
 }
+
 
 .table_for_items .item_list:hover img {
   border: 4.5px solid var(--tertiary);
   transition: border-color 0.5s ease-out;
 }
 
-.table_for_items .item_list:hover .item_name{
+.table_for_items .item_list:hover .item_name {
   transition: color 0.5s ease-out;
-  color:var(--tertiary);
+  color: var(--tertiary);
 }
-
 
 .table_for_items .item_name {
   margin-top: 10px;
@@ -269,7 +267,7 @@ body {
   transform: translateY(-5px);
 }
 
-.lower_main_body{
+.lower_main_body {
   margin-top: 100px;
 }
 
@@ -320,7 +318,8 @@ body {
   height: 25px;
   width: 25px;
   margin-bottom: -5px;
-  filter: brightness(0) invert(76%) sepia(32%) saturate(613%) hue-rotate(177deg) contrast(88%);
+  filter: brightness(0) invert(76%) sepia(32%) saturate(613%) hue-rotate(177deg)
+    contrast(88%);
   margin-left: 10px;
 }
 
@@ -329,7 +328,7 @@ body {
   transition: 0.5s ease-out;
 }
 
-.lower_main_body .table_for_items .item_list:hover{
+.lower_main_body .table_for_items .item_list:hover {
   border-color: var(--tertiary);
   transition: 0.5s ease-out;
 }
@@ -346,12 +345,12 @@ body {
 
 .table_plans .plan_name:hover {
   background-color: var(--tertiary);
-  color:var(--primary);
+  color: var(--primary);
   transform: translateY(-2px);
   transition: background-color 0.5s ease-out 0s, transform 0.5s ease-in-out 0s;
 }
 
-.table_plans .plan_name:hover img{
+.table_plans .plan_name:hover img {
   filter: invert(1);
 }
 
