@@ -60,11 +60,11 @@ function purchaseClicked() {
     // alert('Thank you for your purchase')                                // Insert HTTP request here to transfer to payment page.
     // Each time an order is changed the product is added to User/Orders/ in Firebase
 
-    var cartItems = document.getElementsByClassName('cart-items')[0]
-    while (cartItems.hasChildNodes()) {
-        cartItems.removeChild(cartItems.firstChild)
-    }
-    updateCartTotal()
+    // var cartItems = document.getElementsByClassName('cart-items')[0]
+    // while (cartItems.hasChildNodes()) {
+    //     cartItems.removeChild(cartItems.firstChild)
+    // }
+    document.getElementById("paypal-button-container").style.display = "block";
 }
 
 function removeCartItem(event) {
