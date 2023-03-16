@@ -98,6 +98,34 @@ body {
   font-size: 70px;
 }
 
+/* scroll for the filter */
+#filter-container-1,
+#filter-container-2,
+#filter-container-3,
+#filter-container-4{
+  display: flex;
+  justify-content: center;
+  font-family: var(--soft);
+  color:var(--secondary);
+  font-size: 25px;
+  font-style: italic;
+  letter-spacing: 1.5px;
+  margin-bottom: -5px;
+}
+
+#filter-container-2,
+#filter-container-3,
+#filter-container-4 {
+  display: none;
+}
+
+#filter-container-2 .filter,
+#filter-container-3 .filter,
+#filter-container-4 .filter{
+  opacity: 0;
+}
+
+
 .table_for_items {
   text-align: center; 
 }

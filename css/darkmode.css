@@ -125,7 +125,9 @@ body.dark .left_main input[type="text"] {
 
 body.dark .main_body_title,
 body.dark .item_name,
-body.dark .visit_button h1 {
+body.dark .visit_button h1,
+  /* scroll for the filter */
+body.dark [id^="filter-container-"] h4 {
   color: var(--tertiary);
 }
 

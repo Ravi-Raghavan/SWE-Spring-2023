@@ -68,8 +68,6 @@ footer
   }
 }
 
-
-
 /* home page */
 
 @media screen and (max-width: 1700px) {
@@ -85,8 +83,15 @@ footer
   .main_body_title {
     font-size: 60px;
   }
-}
 
+  /* scroll for the filter */
+  #filter-container-1,
+  #filter-container-2,
+  #filter-container-3,
+  #filter-container-4 {
+    font-size: 22px;
+  }
+}
 
 @media screen and (max-width: 1750px) {
   .main {
@@ -136,7 +141,6 @@ footer
 }
 
 @media screen and (max-width: 1600px) {
-
   /* second set of items on display */
   .second ul {
     width: 1000px;
@@ -144,12 +148,12 @@ footer
     gap: 5px;
   }
 
-  .second ul .item_list{
+  .second ul .item_list {
     padding: 10px;
   }
 
   .second ul .item_list:nth-child(9),
-  .second ul .item_list:last-child{
+  .second ul .item_list:last-child {
     display: none;
   }
 
@@ -164,10 +168,7 @@ footer
 }
 
 @media screen and (max-width: 1000px) {
-  
 }
-
-
 
 @media screen and (max-width: 1450px) {
   .table_plans {
@@ -175,9 +176,8 @@ footer
     justify-content: center;
     flex-wrap: wrap;
     align-content: center;
-}
-  
-  
+  }
+
   .service_grid {
     flex-direction: column;
     margin-top: -60px;
@@ -216,7 +216,7 @@ footer
   .left_main h2 {
     font-size: 18px;
   }
-  
+
   .main_body_title {
     max-width: 700px;
     margin-left: auto;
@@ -224,32 +224,40 @@ footer
     font-size: 50px;
   }
 
+  /* scroll for the filter */
+#filter-container-1,
+#filter-container-2,
+#filter-container-3,
+#filter-container-4{
+  font-size: 19px;
+}
+
   /* small service buttons */
   .table_plans,
   .second ul {
     width: 700px;
   }
 
-  .second ul .item_list:nth-child(9){
+  .second ul .item_list:nth-child(9) {
     display: block;
   }
 
   /* second item table */
-}  
+}
 
 @media screen and (max-width: 950px) {
   /* sizing for the first set of items */
-.table_for_items:not(.second) {
-  margin-left: auto;
-  margin-right: auto;;
-}
+  .table_for_items:not(.second) {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
   .table_for_items:not(.second),
-.table_for_items:not(.second) ul {
-  width: 700px;
-  display: flex;
-  justify-content: center;
-}
+  .table_for_items:not(.second) ul {
+    width: 700px;
+    display: flex;
+    justify-content: center;
+  }
 
   .table_for_items ul div {
     width: 600px;
@@ -261,7 +269,6 @@ footer
 
   .table_for_items .item_list {
     height: 250px;
-    
   }
 
   .table_for_items .item img {
@@ -311,5 +318,4 @@ footer
   .review_box .review_right_box {
     font-size: 14px;
   }
-
 }
