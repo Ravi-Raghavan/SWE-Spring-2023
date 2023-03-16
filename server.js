@@ -82,7 +82,7 @@ const public_paths_js = [
   "/js/util.js",
   "/js/prescription.js",
   "/js/dynamicHeaderFooter.js",
-  "/js/scroller.js"
+  "/js/scroller.js",
 ];
 
 const public_paths_images = [
@@ -385,7 +385,14 @@ const server = http.createServer((request, response) => {
   var file = "";
   path = path == "/" ? "/html/homepage.html" : path;
 
-  if (public_paths_html.includes("/html" + path)) {
+  if (
+    public_paths_html.includes(path) ||
+    public_paths_css.includes(path) ||
+    public_paths_js.includes(path) ||
+    public_paths_images.includes(path)
+  ) {
+    file = __dirname + path;
+  } else if (public_paths_html.includes("/html" + path)) {
     file = __dirname + "/html" + path;
   } else if (public_paths_html.includes("/css" + path)) {
     file = __dirname + "/css" + path;
