@@ -66,10 +66,12 @@ console.log(getEmail());
 
 document.querySelector(".acknowledgement-box").addEventListener("click",() =>{
   document.querySelector(".acknowledgement-box").classList.toggle("clicked");
+  document.querySelector(".title-next-next").classList.toggle("next");
 })
 
 document.querySelector(".acknowledgement-box-doctor").addEventListener("click",() =>{
   document.querySelector(".acknowledgement-box-doctor").classList.toggle("clicked");
+  document.querySelector(".title-next-next-doctor").classList.toggle("next");
 })
 
 
