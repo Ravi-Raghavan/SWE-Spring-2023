@@ -130,6 +130,36 @@ const public_paths_images = [
   "/images/redx.png",
 ];
 
+const public_paths_product = [
+  "/product/2CB.jpeg",
+  "/product/Ashwagandha.jpg",
+  "/product/Aspirin.jpg",
+  "/product/DMT.webp",
+  "/product/cocaine.jpg",
+  "/product/creatine.webp",
+  "/product/Ecstasy.jpg",
+  "/product/Fentanyl.jpg",
+  "/product/GHB.png",
+  "/product/heroin.webp",
+  "/product/Ibuprofen.jpg",
+  "/product/ketaset.png",
+  "/product/Losartan.jpeg",
+  "/product/LSD.jpg",
+  "/product/Marijuana.jpg",
+  "/product/Meth.jpg",
+  "/product/Morphine.jpg",
+  "/product/Naproxen.jpg",
+  "/product/opium.jpeg",
+  "/product/Pantoprazole.jpeg",
+  "/product/PCP.jpg",
+  "/product/polyjuice.webp",
+  "/product/Rohypnol.jpg",
+  "/product/steroids.jpeg",
+  "/product/tigerBalm.jpg",
+  "/product/whey_protien.jpeg",
+  "/product/polyJuice.webp",
+];
+
 const { createProduct } = require("./js/productController");
 const { testCreateOrder } = require("./js/orderController");
 
@@ -391,7 +421,8 @@ const server = http.createServer((request, response) => {
     public_paths_html.includes(path) ||
     public_paths_css.includes(path) ||
     public_paths_js.includes(path) ||
-    public_paths_images.includes(path)
+    public_paths_images.includes(path) ||
+    public_paths_product.includes(path)
   ) {
     file = __dirname + path;
   } else if (public_paths_html.includes("/html" + path)) {
