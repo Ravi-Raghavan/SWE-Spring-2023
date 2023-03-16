@@ -69,73 +69,121 @@ footer
   }
 }
 
+
+
 /* home page */
+
+@media screen and (max-width: 1700px) {
+  /* homepage title */
+  .left_main h1 {
+    font-size: 100px;
+    background-color: aqua;
+  }
+
+  .left_main h2 {
+    font-size: 20px;
+  }
+
+  .main_body_title {
+    font-size: 60px;
+  }
+}
+
+
 @media screen and (max-width: 1750px) {
   .main {
     padding-top: 140px;
   }
 
   /* sizing for the first set of items */
-  .table_for_items .item_list {
+  .table_for_items:not(.second) .item_list {
     padding: 10px;
     margin-left: 10px;
     margin-right: 10px;
     margin-top: 10px;
   }
 
-  .table_for_items ul div {
-    /* justify-content: space-between; */
+  .table_for_items:not(.second) {
+    display: flex;
+    justify-content: center;
+  }
+
+  .table_for_items:not(.second) ul div {
     flex-wrap: wrap;
-    /* padding-left: 350px; */
-    /* padding-right: 350px; */
     width: 800px;
     height: 620px;
-    margin-left: auto;
-    margin-right: auto;
-    /* gap: 30px; */
-  }
-/* 
-  .table_for_items {
-    width: 1400px;
-    padding-left: 0px;
-    padding-right: 0px;
-    height: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    background-color: aqua;
+    justify-content: center;
   }
 
-  .table_for_items .item_list {
-    margin-top: 20px;
-  } */
-
-  /* .second {
-    padding-left: 0px;
-    padding-right: 0px;
-    width: 100%;
-    max-width: 900px;
-  } */
-
-  /* .second .item_list {
-    height: 180px;
-    width: 180px;
-    padding: 0;
+  /* arrow button */
+  .arrow .arrow_img svg {
+    height: 50px;
+    width: 50px;
+    margin-top: 10px;
   }
 
-  .second img {
-    height: 170px;
-    width: 170px;
-    border-radius: 5px;
-  } */
+  /* service box */
+  .service_grid {
+    margin-top: -20px;
+    margin-bottom: -40px;
+  }
+
+  .service_grid .left_side {
+    font-size: 18px;
+  }
+
+  .service_grid button {
+    margin-top: 25px;
+  }
 }
 
-@media screen and (max-width: 1450px) {
-  .service_grid {
-    flex-direction: column;
+@media screen and (max-width: 1600px) {
+
+  /* second set of items on display */
+  .second ul {
+    width: 1000px;
+    height: 100%;
+    gap: 5px;
   }
 
-  .arrow_img {
-    margin-bottom: -20px;
+  .second ul .item_list{
+    padding: 10px;
+  }
+
+  .second ul .item_list:nth-child(9),
+  .second ul .item_list:last-child{
+    display: none;
+  }
+
+  .second ul .item_list img {
+    height: 170px;
+    width: 170px;
+  }
+
+  .second ul .item_name {
+    max-width: 170px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  
+}
+
+
+
+@media screen and (max-width: 1450px) {
+  .table_plans {
+    width: 1000px;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+}
+  
+  
+  .service_grid {
+    flex-direction: column;
+    margin-top: -60px;
+    margin-bottom: -40px;
   }
 
   .service_grid .main_box {
@@ -162,31 +210,61 @@ footer
 }
 
 @media screen and (max-width: 1190px) {
+  /* homepage title */
+  .left_main h1 {
+    font-size: 70px;
+    background-color: rgb(58, 22, 46);
+  }
+
+  .left_main h2 {
+    font-size: 18px;
+  }
+  
   .main_body_title {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    font-size: 50px;
   }
 
-  
+  /* small service buttons */
+  .table_plans,
+  .second ul {
+    width: 700px;
+  }
 
+  .second ul .item_list:nth-child(9){
+    display: block;
+  }
 
-}
+  /* second item table */
+}  
 
 @media screen and (max-width: 950px) {
-  /* .second {
-    max-width: 600px;
-  } */
-
   /* sizing for the first set of items */
+.table_for_items:not(.second) {
+  margin-left: auto;
+  margin-right: auto;;
+}
+
+  .table_for_items:not(.second),
+.table_for_items:not(.second) ul {
+  width: 700px;
+  display: flex;
+  justify-content: center;
+}
+
   .table_for_items ul div {
     width: 600px;
-    height: 500px;
+    /* height: 500px;   */
+    flex: wrap;
+    justify-content: center;
+    padding-bottom: 100px;
   }
 
   .table_for_items .item_list {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    height: 250px;
+    
   }
 
   .table_for_items .item img {
@@ -195,20 +273,26 @@ footer
   }
 
   .table_for_items .item_name,
-  .table_for_items .item_price{
+  .table_for_items .item_price {
     max-width: 150px;
   }
 
-   .table_for_items .item_name{
+  .table_for_items .item_name {
     font-size: 16px;
+  }
 
-   }
-
-   .table_for_items .item_price {
+  .table_for_items .item_price {
     font-size: 16px;
-   }
+  }
 
-   /* review box sizing */
+  /* arrow button  */
+  .arrow .arrow_img svg {
+    height: 45px;
+    width: 45px;
+    margin-top: -100px;
+  }
+
+  /* review box sizing */
   .review_box {
     width: 500px;
     height: 100%;
@@ -221,24 +305,14 @@ footer
     padding-top: 100px;
   }
 
-.review_box .review_left_box,
-.review_left_box img{
-  width: 150px;
-  height: 150px;
-}
+  .review_box .review_left_box,
+  .review_left_box img {
+    width: 150px;
+    height: 150px;
+  }
 
-.review_box .review_right_box {
-  font-size: 14px;
-}
-
-/* .table_for_items {
-  margin-right:auto;
-  margin-left: auto;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: 100%;
-} */
-
-
+  .review_box .review_right_box {
+    font-size: 14px;
+  }
 
 }
