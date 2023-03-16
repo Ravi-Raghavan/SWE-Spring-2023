@@ -81,7 +81,8 @@ const public_paths_js = [
   "/js/store.js",
   "/js/util.js",
   "/js/prescription.js",
-  "/js/dynamicHeaderFooter.js"
+  "/js/dynamicHeaderFooter.js",
+  "/js/scroller.js"
 ];
 
 const public_paths_images = [

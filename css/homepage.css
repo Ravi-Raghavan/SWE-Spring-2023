@@ -86,8 +86,6 @@ body {
 }
 
 .main_body {
-  height: 100%;
-  width: 100%;
   padding-left: 50px;
   padding-right: 50px;
   padding-top: 40px;
@@ -101,42 +99,76 @@ body {
 }
 
 .table_for_items {
-  display: flex;
-  padding: 0;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 20px;
-  height: 100%;
-  justify-content: center;
   text-align: center;
 }
 
+
+.table_for_items ul div {
+  justify-content: center;
+  display: flex;
+  flex-direction: row ;
+  align-items: center;
+}
+
+/* invisible frames */
+#box-container-2,
+#box-container-3,
+#box-container-4,
+#box-container-5 {
+  display: none;
+  position: absolute;
+}
+
 .table_for_items .item_list {
-  display: inline-block;
-  background-color: var(--primary);
-  border: 5px solid var(--secondary);
-  width: 220px;
-  height: 220px;
-  margin-left: 20px;
-  margin-right: 20px;
-  border-radius: 10px;
-  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 20px;
+  overflow: visible;
+  transition: transform 0.5s ease-out, opacity 0.6s ease-out;
 }
 
-.table_for_items img {
+.table_for_items .item img {
+   background-color: var(--primary-dark);
+  border: 4.5px solid var(--secondary);
+  border-radius: 6px;
+  width: 200px;
   height: 200px;
+  align-items: center;
 }
 
-.table_for_items .item_list:hover {
-  border-color: var(--tertiary);
-  transition: 0.5s ease-out;
+.table_for_items .item_list:hover  {
+  background-color: var(--suppliment);
+  /* margin-bottom: 20px; */
+  border-radius: 6px;
+  transition: border-color 0.5s ease-out, transform 0.5s ease-out;  
+  transform: translateY(-5px);
 }
+
+.item_list-fix:hover {
+  transition: border-color 0.5s ease-out, transform 0.5s ease-out;  
+  transform: translateY(-5px);
+}
+
+.table_for_items .item_list:hover img {
+  border: 4.5px solid var(--tertiary);
+  transition: border-color 0.5s ease-out;
+}
+
+.table_for_items .item_list:hover .item_name{
+  transition: color 0.5s ease-out;
+  color:var(--tertiary);
+}
+
 
 .table_for_items .item_name {
-  margin-top: 20px;
+  margin-top: 10px;
   text-align: left;
   max-width: 220px;
-  overflow-wrap: break-word;
+  min-height: 10px;
+  /* overflow: visible; */
+  /* overflow-wrap: break-word; */
   color: var(--secondary);
   font-family: var(--soft);
   font-weight: 600;
@@ -147,6 +179,7 @@ body {
   margin-top: 0px;
   text-align: left;
   color: var(--fourth);
+  text-align: left;
 }
 
 .arrow {

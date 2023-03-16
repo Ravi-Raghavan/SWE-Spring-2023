@@ -55,6 +55,7 @@ footer
 @media screen and (max-width: 1130px) {
   .logo_name {
     height: 0px;
+    width: 0px;
     margin-top: -7px;
   }
 
