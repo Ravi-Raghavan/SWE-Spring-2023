@@ -6,6 +6,7 @@ const base = "https://api-m.sandbox.paypal.com";
 async function createOrder() {
     const accessToken = await generateAccessToken();
     const url = `${base}/v2/checkout/orders`;
+    const purchaseAmount = 100.00;
     const response = await fetch(url, {
         method: "post",
         headers: {
@@ -18,7 +19,7 @@ async function createOrder() {
                 {
                     amount: {
                         currency_code: "USD",
-                        value: "100.00",
+                        value: purchaseAmount
                     },
                 },
             ],
