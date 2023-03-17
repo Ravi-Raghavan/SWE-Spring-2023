@@ -94,11 +94,27 @@ function addToCartClicked(event) {
     var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
     console.log(title, price)
     //Add item to order JSON.
-    order.push({"item-name" : title, "price" : priceVal , "quantity" : 1})
-    console.log(order)
 
     addItemToCart(title, price,imageSrc)
     updateCartTotal()
+    
+
+    //we can update quantity too if we add a variable to this javascript file that updates quantity aswell.
+    fetch('/api/updateCart', {
+            method : 'PATCH',
+            body : JSON.stringify({
+                costs : total,
+                quantity : 1
+            }),
+            headers: {
+                'Content-type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+
+    // order.push({"costs" : total+priceVal, "drugs" : title , "quantity" : 1})
+    // console.log(order)
 }
 
 function addItemToCart(title, price, imageSrc) {
