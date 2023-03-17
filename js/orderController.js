@@ -85,6 +85,15 @@ async function createOrder(req, res) {
 
 async function updateOrder(req, res) {
     try {
+        //Add method to check if order exists:
+        /*
+        if(!product)
+        {
+            res.writeHead(400, {'Content-Type': 'application/json'})
+            res.end(JSON.stringify({message: 'product not found'}))
+        }
+        */
+
         let body = await getPostData(req); //data must have orderID, costs, quantity, status, and drug
         const {orderID, costs, quantity, status, drug} = JSON.parse(body);
         const orderRef = await Order.updateOrder(orderID, costs, quantity, status, drug);

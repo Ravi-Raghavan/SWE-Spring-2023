@@ -98,13 +98,14 @@ function addToCartClicked(event) {
     addItemToCart(title, price,imageSrc)
     updateCartTotal()
     
-
+    //This fetch will request the uri path to update the cost of the cart and add drugs
     //we can update quantity too if we add a variable to this javascript file that updates quantity aswell.
-    fetch('/api/updateCart', {
+    fetch('http://localhost:8000/api/updateCart', {
             method : 'PATCH',
             body : JSON.stringify({
                 costs : total,
-                quantity : 1
+                quantity : 1,
+                drugs : title
             }),
             headers: {
                 'Content-type': 'application/json',

@@ -87,13 +87,17 @@ async function update(orderID, costs, quantity, status, drug){
     });
         //Write data to file
         
-        const orderID = ref.push({
+        const oID = ref.push({
             status: status || ref.status,
             quantity: quantity || ref.quantity,
             costs: costs || ref.costs,
             drugs: [ref.drugs, drug] || ref.drugs, //trying to append to list
+
+
         });
-    
+        
+        console.log('Order updated');
+        return oID;
 
 }
 

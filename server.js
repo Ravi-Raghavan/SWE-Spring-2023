@@ -128,7 +128,7 @@ const public_paths_images = [
 ];
 
 const { createProduct } = require("./js/productController");
-const { testCreateOrder } = require("./js/orderController");
+const { testCreateOrder, updateOrder, createOrder } = require("./js/orderController");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -454,6 +454,12 @@ const server = http.createServer((request, response) => {
       case "/test/createOrder":
         testCreateOrder(request, response);
         break;
+
+      case "/api/updateCart":
+        console.log("/api/updateCart");
+        updateOrder(request, response);
+        break;
+
     }
   } else {
     //Client is requesting a file
