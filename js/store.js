@@ -65,6 +65,7 @@ function purchaseClicked() {
     //     cartItems.removeChild(cartItems.firstChild)
     // }
     document.getElementById("paypal-button-container").style.display = "block";
+    addtodb();
 }
 
 function removeCartItem(event) {
@@ -139,12 +140,22 @@ function updateCartTotal() {
     for (var i = 0; i < cartRows.length; i++) {
         var cartRow = cartRows[i]
         var priceElement = cartRow.getElementsByClassName('cart-price')[0]
-        var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')
-        [0]
+        var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
         var price = parseFloat(priceElement.innerText.replace('$', ''))
         var quantity = quantityElement.value
         total = total + (price * quantity)
     }
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
+}
+
+function addtodb() {
+    const admin = require("./firebase").admin;
+    admin.database().ref("/total/").set(total)
+        .then(() => {
+            console.log("Variable sent to Firebase successfully");
+        })
+        .catch((error) => {
+            console.error("Error sending variable to Firebase:", error);
+        });
 }
