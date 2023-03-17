@@ -19,13 +19,36 @@ body {
   padding-left: 40px;
   padding-top: 20px;
   width: 100%;
-  height: 100%;
   color: var(--primary);
 }
 
+.left_main .title {
+  height: 350px;
+  padding-right: 200px;
+  overflow: hidden;
+} 
+
+/* ? adding animation of simple left scroll infinite */
+[id^="title-container-"]
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  opacity: 1;
+}
+
+/* invisible frames */
+[id^="title-container-"]:not(#title-container-1) {
+  display: none;
+}
+
+[id^="title-container-"]:not(#title-container-1) .title-box{
+  opacity: 0;
+}
+
 .left_main h1 {
-  font-size: 120px;
-  line-height: 1;
+  font-size: 100px;
+  /* line-height: 1; */
   text-align: left;
 }
 
@@ -35,27 +58,23 @@ body {
   word-spacing: 5px;
 }
 
-.right_main {
-  padding-right: 50px;
-  /* width: 40%; */
-}
 
 .left_main input[type="text"] {
   float: left;
   padding: 6px;
+  padding-left: 20px;
+  padding-right: 60px;
   border: none;
   margin-top: 30px;
   font-size: 17px;
-  border-radius: 6px;
+  border-radius: 10px;
   height: 50px;
   width: 450px;
   font-size: 30px;
   color: var(--tertiary);
 }
 
-.left_main .search_box {
-  padding-left: 40px;
-}
+
 .search {
   margin-top: 32.5px;
   margin-bottom: 10px;
@@ -63,7 +82,7 @@ body {
   width: 44px;
   border: none;
   transform: translate(-48px);
-  border-radius: 6px;
+  border-radius: 10px;
   background-color: var(--tertiary);
 }
 
@@ -99,10 +118,7 @@ body {
 }
 
 /* scroll for the filter */
-#filter-container-1,
-#filter-container-2,
-#filter-container-3,
-#filter-container-4{
+[id^=filter-container-]{
   display: flex;
   justify-content: center;
   font-family: var(--soft);
@@ -113,15 +129,11 @@ body {
   margin-bottom: -5px;
 }
 
-#filter-container-2,
-#filter-container-3,
-#filter-container-4 {
+[id^=filter-container-]:not(#filter-container-1) {
   display: none;
 }
 
-#filter-container-2 .filter,
-#filter-container-3 .filter,
-#filter-container-4 .filter{
+[id^=filter-container-]:not(#filter-container-1).filter{
   opacity: 0;
 }
 
