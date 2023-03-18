@@ -494,31 +494,6 @@
       localStorage.setItem("User Record", JSON.stringify(user_record));
     }
 
-    window.onbeforeunload = async function(){
-      console.log("Leaving the webpage");
-
-      if (localStorage.getItem("User Record") == null){
-        return "DONE";
-      }
-      
-      var user_record = JSON.parse(localStorage.getItem("User Record"));
-      
-      //Write updated User Record to Database
-      let response = await fetch('/update/user', {
-        method: 'PATCH',
-        body: JSON.stringify({
-          uid: user_record["uid"],
-          phoneNumber: user_record["Phone Number"],
-          address: user_record["Address"]
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      })
-
-      return await response.text();
-    }
-
     addOrder(69423, ["Viagra x1", "Iburprofen x2"], "Delivered");
     addPrescription(42072, ["Rubbing Alchohol x3", "CBD x7"],"Dr. DicBud", "Denied");
   </script>
