@@ -41,15 +41,20 @@
           if (response.status == 200){
             response.text().then(text => {
               var originalText = CryptoJS.AES.decrypt(text, "UserRecord").toString(CryptoJS.enc.Utf8);
-              var userRecord = JSON.parse(JSON.parse(originalText));
+              var userRecord = JSON.parse(originalText);
               if (typeof(Storage) != "undefined"){
                 localStorage.setItem("User Record", JSON.stringify(userRecord))
-                window.location.href = "./homepage.html";
+                if (document.referrer.search("/user-registration-form.html") != -1){
+                  window.location = "./homepage.html";
+                }
+                else{
+                  window.location = document.referrer;
+                }
               }
               else{
                   console.log("This Browser doesn't support local client side storage")
               }
-              window.location = document.referrer;
+              
             })
           }
           else{
@@ -85,11 +90,17 @@
                     var userRecord = JSON.parse(originalText);
                     if (typeof(Storage) != "undefined"){
                         localStorage.setItem("User Record", JSON.stringify(userRecord))
+                        if (document.referrer.search("/user-registration-form.html") != -1){
+                          window.location = "./homepage.html";
+                        }
+                        else{
+                          window.location = document.referrer;
+                        }
                     }
                     else{
                         console.log("This Browser doesn't support local client side storage")
                     }
-                    window.location = document.referrer;
+                    
                 })
             }
             else{

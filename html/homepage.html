@@ -14,76 +14,277 @@
     <title>DrugHub | Home</title>
 
     <script src="../js/dynamicHeaderFooter.js"></script>
+    <script src="../js/scroller.js" async></script>
+    
     
 </head>
 
 <body> 
     <!-- screen size for demo 2560 x 1600-->
     <script src="../js/darkmode.js"></script>
+    <!-- <script src="../js/imagePreloader.js"></script> -->
+   
 
     <div id="header"></div>
 
     <div class="main">
         <section class="left_main">
-            <h1>Reliable on time home delivery</h1>
+            <div class="title">
+                <div id="title-container-1">
+                    <div class="title-box"><h1>We'll be there for you when </h1></div>
+                    <div class="title-box"><h1>caffeine just won't cut it </h1></div>
+                    <div class="title-box"><h1>anymore</h1></div>
+                    </div>
+                    <div id="title-container-2">
+                    <div class="title-box"><h1>Our pharmacy's like tequila</h1></div>
+                    <div class="title-box"><h1>fixes you up and boosts</h1></div>
+                    <div class="title-box"><h1>your game</h1></div>
+                    </div>
+                    <div id="title-container-3">
+                    <div class="title-box"><h1>Better than a rebound</h1></div>
+                    <div class="title-box"><h1>we've got your health </h1></div>
+                    <div class="title-box"><h1>covered</h1></div>
+                    </div>
+                    <div id="title-container-4">
+                    <div class="title-box"><h1>Say goodbye to the days of </h1></div>
+                    <div class="title-box"><h1>looking like a zombie </h1></div>
+                    <div class="title-box"><h1>after an all-nighter</h1></div>
+                    </div>
+                    <div id="title-container-5">
+                    <div class="title-box"><h1>Medication faster than</h1></div>
+                    <div class="title-box"><h1>Starbucks</h1></div>
+                    <div class="title-box"><h1>baristas</h1></div>
+                    </div>
+                    <div id="title-container-6">
+                    <div class="title-box"><h1>Flu from your roommate? We've got you</h1></div>
+                    <div class="title-box"><h1>We've got </h1></div>
+                    <div class="title-box"><h1>you</h1></div>
+                    </div>
+            </div>
+            <!-- <h1>Better than a rebound, we've got your health covered</h1>
+            <h1>Our pharmacy is the ultimate wingman.</h1>
+            <h1>Don't worry, our pills won't ghost you like your ex</h1>
+            <h1>Get your glow on with our pharmacy's magic potions.</h1>
+            <h1>Pulling all-nighters just got healthier</h1> -->
+            
             <h2>Our in-house pharmacists ensure your medicines<br>
             reach you when you need them.</h2>
-            <input class="search_box" type="text" placeholder="Search...">
+            <div class="search-container">
+                <input class="search_box" type="text" placeholder="Search...">
                 <button class="search">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="search_icon" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                       </svg>
                 </button>
+            </div>
+            
             <br>
             <span class="warning"><span class="astrick">*</span>US Customers Only</span>
         </section>
-        <section class="right_main"></section>
+        <!-- <section class="right_main"></section> -->
     </div>
 
     <section class="main_body">
-        <h1 class="main_body_title">Most Popular Products</h1>
+        <h1 class="main_body_title">Top-Selling Tonics</h1>
+        <Section id="filter-container-1">
+            <h4 class="filter">Everyday Elixirs</h4>
+        </Section>
+        <Section id="filter-container-2">
+            <h4 class="filter">Nature's Ninja Spices</h4>
+        </Section>
+        <Section id="filter-container-3">
+            <h4 class="filter">Sorority Supplements</h4>
+        </Section>
+        <Section id="filter-container-4">
+            <h4 class="filter">Exclusive Extracts</h4>
+        </Section>
         <div class="table_for_items">
             <ul>
-                <li class="item_list"><section class="item">
-                    <img src="../images/tablets.png" alt="product 1"></section>
-                    <section class="item_name">Tamsul 0.4mg</section>
+                
+                <div id="box-container-1">
+                    <li class="item_list">
+                        <section class="item">
+                        <img src="../product/Aspirin.jpg" alt="product 1">
+                        </section>
+                        <section class="item_name">Granny's Aspirin</section>
                     <section class="item_price">$10.00</section>
                 </li>
+
                 <li class="item_list"><section class="item">
-                    <img src="../images/tablets_2.png" alt="product 2"></section>
-                    <section class="item_name">Munch Ease</section>
+                    <img src="../product/Ibuprofen.jpg" alt="product 2"></section>
+                    <section class="item_name">Ibuprofen Comfort Capsules</section>
                     <section class="item_price">$10.00</section>
                 </li>
+
                 <li class="item_list"><section class="item">
-                    <img src="../images/tablets_3.png" alt="product 3"></section>
-                    <section class="item_name">TVetpen Needles</section>
+                    <img src="../product/ketaset.png" alt="product 3"></section>
+                    <section class="item_name">Knockout Ketaset</section>
                     <section class="item_price">$10.00</section>
                 </li>
+
                 <li class="item_list"><section class="item">
-                    <img src="../images/protien_powder.png" alt="product 4"></section>
-                    <section class="item_name">Freak Show 500mg</section>
+                    <img src="../product/Losartan.jpeg" alt="product 4"></section>
+                    <section class="item_name">Gramps Losartan</section>
                     <section class="item_price">$10.00</section>
                 </li>
+
                 <li class="item_list"><section class="item">
-                    <img src="../images/protien_powder_2.png" alt="product 5"></section>
-                    <section class="item_name">ASN Ultrabolic Mass</section>
+                    <img src="../product/Naproxen.jpg" alt="product 5"></section>
+                    <section class="item_name">Naproxen Dreams</section>
                     <section class="item_price">$10.00</section>
                 </li>
+
                 <li class="item_list"><section class="item">
-                    <img src="../images/insulin_meter.png" alt="product 6"></section>
-                    <section class="item_name">Digital Insulin Meter</section>
+                    <img src="../product/Morphine.jpg" alt="product 6"></section>
+                    <section class="item_name">Hospital-grade Morphine</section>
                     <section class="item_price">$10.00</section>
                 </li>
+                </div>
+
             </ul>
+
+            <ul>
+
+                <div id="box-container-2">
+                    <li class="item_list">
+                    <section class="item">
+                    <img src="../product/Ashwagandha.jpg" alt="product 1">
+                    </section>
+                    <section class="item_name">Hippy Ashwagandha</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/opium.jpeg" alt="product 2"></section>
+                    <section class="item_name">Oriental Opium</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/Marijuana.jpg" alt="product 3"></section>
+                    <section class="item_name">Giggle Weed Marijuana</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/DMT.webp" alt="product 4"></section>
+                    <section class="item_name">The Daily DMT</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/salvia.jpg" alt="product 5"></section>
+                    <section class="item_name">Silly String Sprinkles</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/Tobacco.webp" alt="product 6"></section>
+                    <section class="item_name">Toxic Toucan Tobacco</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+                </div>
+
+            </ul>
+
+            <ul>
+                
+                <div id="box-container-3">
+                    <li class="item_list">
+                    <section class="item">
+                    <img src="../product/Ecstasy.jpg" alt="product 1">
+                    </section>
+                    <section class="item_name">Rave Ecstasy</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/LSD.jpg" alt="product 2"></section>
+                    <section class="item_name">Cosmic LSD</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/Rohypnol.jpg" alt="product 3"></section>
+                    <section class="item_name">Forgetful Rohypnol (Roofy)</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/PCP.jpg" alt="product 4"></section>
+                    <section class="item_name">Psycho PCP (Angel Dust)</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/GHB.jpg" alt="product 5"></section>
+                    <section class="item_name">Sleepy GHB</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/Adderall.jpg" alt="product 6"></section>
+                    <section class="item_name">Adderall Speedy Squirrel Sauce</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+                </div>
+
+            </ul>
+
+            <ul>
+
+                <div id="box-container-4">
+                    <li class="item_list">
+                    <section class="item">
+                    <img src="../product/cocaine.jpg" alt="product 1">
+                    </section>
+                    <section class="item_name">Booger Sugar Cocaine</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/heroin.webp" alt="product 2"></section>
+                    <section class="item_name">Junkie Heroin</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/Meth.jpg" alt="product 3"></section>
+                    <section class="item_name">Trailer Park Meth</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/Benzodiazepines.webp" alt="product 4"></section>
+                    <section class="item_name">Benzodiazepines Sedative Sloth</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/steroids.jpeg" alt="product 5"></section>
+                    <section class="item_name">Steroids Hulk-Smash Serum</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../product/creatine.webp" alt="product 6"></section>
+                    <section class="item_name">Creatine Mighty Moose Muscle Mix</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+                </div>
+
+            </ul>
+
+
         </div>
 
         <section class="arrow">
-            <section class="arrow_img">
+            <section class="arrow_img leftHome" id="arrow_img" onclick="diagScrollLeft( 4,'box-container-','item_list', 60); diagScrollLeft( 4,'filter-container-','filter', 37); disableBtn('arrow_img')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                   </svg>
             </section>
-            <section class="arrow_img">
+            <section class="arrow_img rightHome" id="arrow_img" onclick="diagScrollRight( 4,'box-container-','item_list', 40); diagScrollRight( 4,'filter-container-','filter', 37); disableBtn('arrow_img')">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                   </svg>
@@ -123,6 +324,7 @@
     </section>
         
     <section class="lower_main_body"> 
+        
         <div class="lower_main_body_container">
         <h1 class="main_body_title">Browse Medicine & Health Products</h1>
         <section class="table_plans">
@@ -149,51 +351,79 @@
         </section>
 
         <div class="table_for_items second">
+            
             <ul>
-                <li class="item_list"><section class="item">
-                    <img src="../images/tablets.png" alt="product 1"></section>
-                    <section class="item_name item_name_prt">Tamsul 0.4mg</section>
+                <li class="item_list">
+                    <section class="item">
+                    <img src="../images/tablets.png" alt="product 1">
+                    </section>
+                    <section class="item_name">Tamsul 0.4mg</section>
                     <section class="item_price">$10.00</section>
                 </li>
+
                 <li class="item_list"><section class="item">
-                    <img src="../images/tablets.png" alt="product 2"></section>
-                    <section class="item_name item_name_prt">Tamsul 0.4mg</section>
+                    <img src="../images/tablets_2.png" alt="product 2"></section>
+                    <section class="item_name">Munch Ease</section>
                     <section class="item_price">$10.00</section>
                 </li>
+
                 <li class="item_list"><section class="item">
-                    <img src="../images/tablets.png" alt="product 3"></section>
-                    <section class="item_name item_name_prt">Tamsul 0.4mg</section>
+                    <img src="../images/tablets_3.png" alt="product 3"></section>
+                    <section class="item_name">TVetpen Needles</section>
                     <section class="item_price">$10.00</section>
                 </li>
-                <li class="item_list"><section class="item">
-                    <img src="../images/tablets.png" alt="product 4"></section>
-                    <section class="item_name item_name_prt">Tamsul 0.4mg</section>
+
+                 <li class="item_list"><section class="item">
+                    <img src="../images/tablets_2.png" alt="product 2"></section>
+                    <section class="item_name">Munch Ease</section>
                     <section class="item_price">$10.00</section>
                 </li>
+
                 <li class="item_list"><section class="item">
-                    <img src="../images/tablets.png" alt="product 1"></section>
-                    <section class="item_name item_name_prt">Tamsul 0.4mg</section>
+                    <img src="../images/tablets_3.png" alt="product 3"></section>
+                    <section class="item_name">TVetpen Needles</section>
                     <section class="item_price">$10.00</section>
                 </li>
+
                 <li class="item_list"><section class="item">
-                    <img src="../images/tablets.png" alt="product 2"></section>
-                    <section class="item_name item_name_prt">Tamsul 0.4mg</section>
+                    <img src="../images/protien_powder.png" alt="product 4"></section>
+                    <section class="item_name">Freak Show 500mg</section>
                     <section class="item_price">$10.00</section>
                 </li>
+
                 <li class="item_list"><section class="item">
-                    <img src="../images/tablets.png" alt="product 3"></section>
-                    <section class="item_name item_name_prt">Tamsul 0.4mg</section>
+                    <img src="../images/protien_powder_2.png" alt="product 5"></section>
+                    <section class="item_name">ASN Ultrabolic Mass</section>
                     <section class="item_price">$10.00</section>
                 </li>
+
                 <li class="item_list"><section class="item">
-                    <img src="../images/tablets.png" alt="product 4"></section>
-                    <section class="item_name item_name_prt">Tamsul 0.4mg</section>
+                    <img src="../images/insulin_meter.png" alt="product 6"></section>
+                    <section class="item_name">DDDDigital Insulin Meter</section>
                     <section class="item_price">$10.00</section>
                 </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../images/protien_powder_2.png" alt="product 5"></section>
+                    <section class="item_name">ASN Ultrabolic Mass</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+
+                <li class="item_list"><section class="item">
+                    <img src="../images/insulin_meter.png" alt="product 6"></section>
+                    <section class="item_name">DDDDigital Insulin Meter</section>
+                    <section class="item_price">$10.00</section>
+                </li>
+                </div>
+
             </ul>
-        </div>
+
+
+        
         <a href=""><button class="visit_button"><h1>Visit Here</h1></button></a>
     </div>
+        </div>
+        
 
 
         <h1 class="main_body_title">Customer review & recommendation</h1>  
@@ -223,55 +453,6 @@
     </section>
 
     <div id="footer"></div> 
- 
 </body>
-
-<script>
-    function handleUserManagingAccount(){
-    if (localStorage.getItem("User Record") == null){
-        var url_stack = ['./user-auth-form.html', './dashboard.html']
-        var json_data = {url_stack: url_stack}
-        localStorage.setItem("URL Stack", JSON.stringify(json_data))
-        window.location.href = './user-auth-form.html'
-    }
-    else{
-        window.location.href = './dashboard.html'
-    }
-}
-function getUniqueID(){
-        var navigator_info = window.navigator;
-        var screen_info = window.screen;
-        var uid = navigator_info.mimeTypes.length;
-        uid += navigator_info.userAgent.replace(/\D+/g, '');
-        uid += navigator_info.plugins.length;
-        uid += screen_info.height  || '';
-        uid += screen_info.width || '';
-        uid += screen_info.pixelDepth || '';
-        return uid;
-      }
-    
-      var deviceID = getUniqueID();
-
-function login_logout(){
-    var innerText = document.getElementById("Link6").innerHTML
-    if (innerText == "Log Out"){
-        localStorage.removeItem("User Record");
-        window.location.href = "./logoutPage.html"
-    }
-    else{
-        window.location.href = "./user-auth-form.html";
-    }
-}
-window.onload = function(){
-    if (localStorage.getItem("User Record") == null){
-        document.getElementById("Link6").innerHTML = "Log In";
-    }
-    else{
-        var user_record = JSON.parse(localStorage.getItem("User Record"));
-        var profilePicture = user_record.photoURL
-        document.getElementById("dropbtn").src = profilePicture
-    }
-}
-</script>
-
+<script src="../js/homepage.js"></script>
 </html>

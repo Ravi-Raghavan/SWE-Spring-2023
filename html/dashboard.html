@@ -51,7 +51,9 @@
           onclick='swapDisplay("settings-info", "settingsOption")'
           >Settings</a>
 
-        <a onclick="logout()">Logout</a>
+          
+
+        <a id ="loggingOut" onclick="logout()">Logout</a>
       </div>
 
       <div id="interface" class="interface-container"></div>
@@ -306,6 +308,18 @@
         </section>
       </div>
 
+      <!---PRESCRIPTION APPROVAL INFORMATION-->
+      <div id="approval-info" class="info-container">
+        <section id="info" class="DrugFo">
+          
+            <div class="row">
+              <h2>This is the placeholder for the approval section.</h2>
+            </div>
+  
+        </section>
+      </div>
+
+
     </div>
   </body>
 
@@ -316,9 +330,38 @@
     }
 
     window.onload = function () {
+
       
       loadProfile();
-      
+      //PORTION TO ADD SPECIAL FUNCTIONS TO DOCTOR ACCOUNTS
+      if (localStorage.getItem("User Record") == null) {
+        //
+      } else {
+        
+        //USER RECORD DOES NOT HAVE AN ACCOUNT TYPE BEING LISTED IN THE JSON, FIX!!!!
+
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        console.log(user_record);
+        console.log("Account Type: " + user_record['Account Type']); 
+
+        //CURRENTLY APPLIES TO ALL ACCOUNTS. ONCE USER RECORD RETURNS ACCOUNT TYPE, REPLACE true WITH user_record.accountType == "Doctor"
+        if(user_record["Account Type"] == "Doctor")
+        {
+
+          document.getElementById("loggingOut").remove();
+
+          var rows = "<a id=\"approvalOption\"class=\"\"href=\"#\"onclick='swapDisplay(\"approval-info\", \"approvalOption\")'>Prescription Approval</a>";
+          var menu = document.getElementById("sideMenu");
+          var template = document.createElement('template');
+          template.innerHTML = rows;
+          
+          menu.appendChild(template.content);
+
+          rows = "<a id =\"loggingOut\" onclick=\"logout()\">Logout</a>";
+          template.innerHTML = rows;
+          menu.appendChild(template.content);
+        }
+      }
     };
 
     function loadProfile(){
@@ -335,8 +378,9 @@
           user_record.displayName;
         document.getElementById("full-name").innerHTML =
           user_record.displayName;
-        document.getElementById("email").innerHTML = user_record.email;
+        document.getElementById("email").innerHTML = user_record.email;        
       }
+
     }
 
     function swapDisplay(location, menuOption) {
@@ -408,21 +452,52 @@
       }
     }
     function addressChange(){
+      var user_record = JSON.parse(localStorage.getItem("User Record"));
       var text = prompt("Address: ", document.getElementById("address").innerText);
-      if(text)
+      if(text){
         document.getElementById("address").innerText = text;
+        user_record['Address'] = text;
+      }
       else{
 
       }
+
+      localStorage.setItem("User Record", JSON.stringify(user_record));
     }
     function phoneNumberChange(){
+      var user_record = JSON.parse(localStorage.getItem("User Record"));
       let text = prompt("Phone: ", document.getElementById("phone").innerText);
-      if(text)
+      if(text){
         document.getElementById("phone").innerText = text;
+        user_record['Phone Number'] = text;
+      }
       else{
         
       }
+
+      localStorage.setItem("User Record", JSON.stringify(user_record));
     }
+
+    window.onbeforeunload = async function(){
+      console.log("Leaving the webpage");
+      var user_record = JSON.parse(localStorage.getItem("User Record"));
+      
+      //Write updated User Record to Database
+      let response = await fetch('/update/user', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          uid: user_record["uid"],
+          phoneNumber: user_record["Phone Number"],
+          address: user_record["Address"]
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+
+      return await response.text();
+    }
+
     addOrder(69423, ["Viagra x1", "Iburprofen x2"], "Delivered");
     addPrescription(42072, ["Rubbing Alchohol x3", "CBD x7"],"Dr. DicBud", "Denied");
   </script>

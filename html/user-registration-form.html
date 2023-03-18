@@ -83,7 +83,12 @@
               var userRecord = JSON.parse(originalText);
               if (typeof Storage != "undefined") {
                 localStorage.setItem("User Record", JSON.stringify(userRecord));
-                window.location = document.referrer;
+                if (document.referrer.search("/user-auth-form.html") != -1){
+                  window.location = "./homepage.html";
+                }
+                else{
+                  window.location = document.referrer;
+                }
               } else {
                 console.log(
                   "This Browser doesn't support local client side storage"

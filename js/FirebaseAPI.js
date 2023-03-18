@@ -22,10 +22,20 @@ async function register(userParameters, response){
     var userRecord = userCredentials.toJSON();
     var accountType = userParameters.accountType;
 
-    userRecord["metadata"]["lastSignInTime"] = new Date().toString();
+    var currentDateTime = new Date().toString();
+    userRecord["metadata"]["lastSignInTime"] = currentDateTime;
+    userRecord["metadata"]["lastRefreshTime"] = currentDateTime;
+    userRecord["tokensValidAfterTime"] = currentDateTime;
     userRecord["Account Type"] = accountType;
     userRecord["Subscription Plan"] = "Free";
+    userRecord.phoneNumber = "N/A"
+    userRecord["Address"] = "N/A"
 
+    console.log("==========USER RECORD ==============");
+    console.log(userRecord);
+    console.log("=========================");
+
+    
     var uid = userRecord.uid;
     ref.child(`${uid}`).set({
         uid: uid,
@@ -36,7 +46,9 @@ async function register(userParameters, response){
         photoURL: userParameters.photoURL,
         disabled: userParameters.disabled,
         accountType: accountType,
-        subscriptionPlan: "Free"
+        subscriptionPlan: "Free",
+        phoneNumber: "N/A",
+        address: "N/A"
     })
 
     //Send Request
@@ -56,10 +68,13 @@ async function search(searchParameters){
             var uid = userRecord.uid;
             var accountType = await getAccountType(uid);
             var subscriptionPlan = await getSubscriptionPlan(uid);
+            var phoneNumber = await getPhoneNumber(uid);
+            var address = await getAddress(uid);
 
-            userRecord["metadata"]["lastSignInTime"] = new Date().toString();
             userRecord["Account Type"] = accountType;
-            userRecord["Subscription Plan"] = subscriptionPlan
+            userRecord["Subscription Plan"] = subscriptionPlan;
+            userRecord.phoneNumber = phoneNumber;
+            userRecord["Address"] = address;
 
             resolve(JSON.stringify(userRecord));
         })
@@ -134,20 +149,85 @@ async function getSubscriptionPlan(uid){
     return subscriptionPlan;
 }
 
+//get phone number for user based on uid
+async function getPhoneNumber(uid){
+    var phoneNumber = await new Promise((resolve, reject) => {
+        ref.child(`${uid}`).on('value', (snapshot) => {
+            var value = snapshot.val();
+            if (value == null){
+                resolve("N/A");
+            }
+            else{
+                var phoneNumber = value["phoneNumber"];
+                resolve(phoneNumber);
+            }
+        })
+    })
+
+    return phoneNumber;
+}
+
+//get address for user based on uid
+async function getAddress(uid){
+    var address = await new Promise((resolve, reject) => {
+        ref.child(`${uid}`).on('value', (snapshot) => {
+            var value = snapshot.val();
+            if (value == null){
+                resolve("N/A");
+            }
+            else{
+                var address = value["address"];
+                resolve(address);
+            }
+        })
+    })
+
+    return address;
+}
+
 //login user
 async function login(userParameters, response){
     var userRecord = await search(userParameters);
+
     if (userRecord == "N/A"){
         response.writeHead(404, { "Content-type": "text/plain" });
         response.write(`Account associated with ${userParameters.email} doesn't exist!`);
         response.end();
     }
     else{
+        userRecord = JSON.parse(userRecord);
+        var currentDateTime = new Date().toString();
+        userRecord["metadata"]["lastSignInTime"] = currentDateTime;
+        userRecord["metadata"]["lastRefreshTime"] = currentDateTime;
+        userRecord["tokensValidAfterTime"] = currentDateTime;
+
+        console.log("==========USER RECORD ==============");
+        console.log(userRecord);
+        console.log("=========================");
+
         response.writeHead(200, { "Content-type": "text/plain" });
         response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
         //response.write(userRecord);
         response.end();
     }
+}
+
+async function updateUser(userParameters, response){
+    var uid = userParameters.uid;
+    ref.child(`${uid}`).update({
+        phoneNumber: userParameters.phoneNumber,
+        address: userParameters.address
+    })
+    .then(() => {
+        response.writeHead(200, { "Content-type": "text/plain" });
+        response.write("Successfully Updated");
+        response.end();
+    })
+    .catch((err) => {
+        response.writeHead(404, { "Content-type": "text/plain" });
+        response.write("Failed to Update User");
+        response.end();
+    })
 }
 
 module.exports = {
@@ -156,5 +236,8 @@ module.exports = {
     isValidated: isValidated,
     getAccountType: getAccountType,
     getSubscriptionPlan: getSubscriptionPlan,
+    getPhoneNumber: getPhoneNumber,
+    getAddress: getAddress, 
+    updateUser: updateUser,
     login: login
 }

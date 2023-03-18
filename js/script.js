@@ -18,7 +18,6 @@ paypal.Buttons({
             })
                 .then((response) => response.json())
                 .then(function (orderData) {
-                    // Successful capture! For dev/demo purposes:
                     console.log(
                         "Capture result",
                         orderData,

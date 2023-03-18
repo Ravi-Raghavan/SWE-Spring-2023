@@ -27,7 +27,6 @@ footer
   header .nav_links .moon,
   header .nav_links .profile {
     height: 22px;
-    width: 22px;
   }
 
   header .nav_links li {
@@ -55,6 +54,7 @@ footer
 @media screen and (max-width: 1130px) {
   .logo_name {
     height: 0px;
+    width: 0px;
     margin-top: -7px;
   }
 
@@ -69,49 +69,118 @@ footer
 }
 
 /* home page */
+
+@media screen and (max-width: 1700px) {
+  /* homepage title */
+  .left_main .title {
+    padding-right: 120px;
+    height: 320px;
+  }
+
+  .left_main h1 {
+    font-size: 90px;
+  }
+
+  .left_main h2 {
+    font-size: 20px;
+  }
+
+  .main_body_title {
+    font-size: 60px;
+  }
+
+  /* scroll for the filter */
+  [id^="filter-container-"] {
+    font-size: 22px;
+  }
+}
+
 @media screen and (max-width: 1750px) {
   .main {
     padding-top: 140px;
   }
 
-  .table_for_items {
+  /* sizing for the first set of items */
+  .table_for_items:not(.second) .item_list {
+    padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+
+  .table_for_items:not(.second) {
+    display: flex;
+    justify-content: center;
+  }
+
+  .table_for_items:not(.second) ul div {
+    flex-wrap: wrap;
     width: 800px;
-    padding-left: 0px;
-    padding-right: 0px;
-    margin: auto;
+    height: 620px;
+    justify-content: center;
   }
 
-  .table_for_items .item_list {
-    margin-top: 20px;
+  /* arrow button */
+  .arrow .arrow_img svg {
+    height: 50px;
+    width: 50px;
+    margin-top: 10px;
   }
 
-  .second {
-    padding-left: 0px;
-    padding-right: 0px;
-    width: 100%;
-    max-width: 900px;
+  /* service box */
+  .service_grid {
+    margin-top: -20px;
+    margin-bottom: -40px;
   }
 
-  .second .item_list {
-    height: 180px;
-    width: 180px;
-    padding: 0;
+  .service_grid .left_side {
+    font-size: 18px;
   }
 
-  .second img {
+  .service_grid button {
+    margin-top: 25px;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  /* second set of items on display */
+  .second ul {
+    width: 1000px;
+    height: 100%;
+    gap: 5px;
+  }
+
+  .second ul .item_list {
+    padding: 10px;
+  }
+
+  .second ul .item_list:nth-child(9),
+  .second ul .item_list:last-child {
+    display: none;
+  }
+
+  .second ul .item_list img {
     height: 170px;
     width: 170px;
-    border-radius: 5px;
+  }
+
+  .second ul .item_name {
+    max-width: 170px;
   }
 }
 
 @media screen and (max-width: 1450px) {
-  .service_grid {
-    flex-direction: column;
+  .table_plans {
+    width: 1000px;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
   }
 
-  .arrow_img {
-    margin-bottom: -20px;
+  .service_grid {
+    flex-direction: column;
+    margin-top: -60px;
+    margin-bottom: -40px;
   }
 
   .service_grid .main_box {
@@ -121,6 +190,7 @@ footer
     margin-top: 40px;
   }
 
+  /* reivew box sizing */
   .review_box {
     padding-left: -30px;
     padding-right: -30px;
@@ -136,20 +206,155 @@ footer
   }
 }
 
-@media screen and (max-width: 1190px) {
-  .main_body_title,
-  .table_plans {
+@media screen and (max-width: 1500px) {
+  /* homepage title */
+  .left_main h1 {
+    font-size: 75px;
+  }
+
+  .left_main .title {
+    padding-right: 200px;
+    height: 260px;
+  }
+
+  .main_body_title {
     max-width: 700px;
     margin-left: auto;
     margin-right: auto;
+    font-size: 45px;
+  }
+}
+
+@media screen and (max-width: 1320px) {
+  /* homepage title */
+  .left_main .title {
+    padding-right: 75px;
+  }
+}
+
+@media screen and (max-width: 1190px) {
+  /* homepage title */
+  /* homepage title */
+  .left_main h1 {
+    font-size: 55px;
+  }
+
+  .left_main .title {
+    padding-right: 200px;
+    height: 190px;
+  }
+  .left_main h2 {
+    font-size: 16px;
+  }
+
+  /* edits the search box  homepage*/
+  .left_main .search-container {
+    margin-top: -20px;
+  }
+
+  .left_main input[type="text"] {
+    font-size: 15px;
+    height: 40px;
+    width: 350px;
+  }
+
+  .search {
+    height: 34px;
+    width: 34px;
+    transform: translate(-38px);
+  }
+
+  .main_body_title {
+    font-size: 35px;
+  }
+
+  /* scroll for the filter */
+  [id^="filter-container-"] {
+    font-size: 19px;
+  }
+
+  /* small service buttons */
+  .table_plans,
+  .second ul {
+    width: 700px;
+  }
+
+  .second ul .item_list:nth-child(9) {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  /* homepage title */
+  /* homepage title */
+  .left_main h1 {
+    font-size: 55px;
+  }
+
+  .left_main .title {
+    padding-right: 60px;
+  }
+  .left_main h2 {
+    font-size: 18px;
   }
 }
 
 @media screen and (max-width: 950px) {
-  .second {
-    max-width: 600px;
+  .main_body_title {
+    font-size: 30px;
   }
 
+  /* sizing for the first set of items */
+  .table_for_items:not(.second) {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .table_for_items:not(.second),
+  .table_for_items:not(.second) ul {
+    width: 700px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .table_for_items ul div {
+    width: 600px;
+    /* height: 500px;   */
+    flex: wrap;
+    justify-content: center;
+    padding-bottom: 100px;
+  }
+
+  .table_for_items .item_list {
+    height: 250px;
+  }
+
+  .table_for_items .item img {
+    height: 150px;
+    width: 150px;
+  }
+
+  .table_for_items .item_name,
+  .table_for_items .item_price {
+    max-width: 150px;
+  }
+
+  .table_for_items .item_name {
+    font-size: 16px;
+  }
+
+  .table_for_items .item_price {
+    font-size: 16px;
+  }
+
+  /* arrow button  */
+  .arrow .arrow_img svg {
+    height: 45px;
+    width: 45px;
+    margin-top: -100px;
+  }
+
+  /* review box sizing */
   .review_box {
     width: 500px;
     height: 100%;
@@ -162,24 +367,29 @@ footer
     padding-top: 100px;
   }
 
-.review_box .review_left_box,
-.review_left_box img{
-  width: 150px;
-  height: 150px;
+  .review_box .review_left_box,
+  .review_left_box img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .review_box .review_right_box {
+    font-size: 14px;
+  }
 }
 
-.review_box .review_right_box {
-  font-size: 14px;
-}
+@media screen and (max-width: 920px) {
+  /* homepage title */
+  /* homepage title */
+  .left_main h1 {
+    font-size: 45px;
+  }
 
-.table_for_items {
-  margin-right:auto;
-  margin-left: auto;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: 100%;
-}
-
-
-
+  .left_main .title {
+    padding-right: 100px;
+    height: 160px;
+  }
+  .left_main h2 {
+    font-size: 14px;
+  }
 }

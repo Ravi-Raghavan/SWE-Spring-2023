@@ -81,7 +81,12 @@ const public_paths_js = [
   "/js/store.js",
   "/js/util.js",
   "/js/prescription.js",
-  "/js/dynamicHeaderFooter.js"
+  "/js/dynamicHeaderFooter.js",
+  "/js/scroller.js",
+  "/js/homepage.js",
+  "/js/imagePreloader.js",
+  "/js/testModel.js",
+  "/js/testController.js",
 ];
 
 const public_paths_images = [
@@ -127,8 +132,43 @@ const public_paths_images = [
   "/images/redx.png",
 ];
 
+const public_paths_product = [
+  "/product/2CB.jpeg",
+  "/product/Ashwagandha.jpg",
+  "/product/Aspirin.jpg",
+  "/product/DMT.webp",
+  "/product/cocaine.jpg",
+  "/product/creatine.webp",
+  "/product/Ecstasy.jpg",
+  "/product/Fentanyl.jpg",
+  "/product/heroin.webp",
+  "/product/Ibuprofen.jpg",
+  "/product/ketaset.png",
+  "/product/Losartan.jpeg",
+  "/product/LSD.jpg",
+  "/product/Marijuana.jpg",
+  "/product/Meth.jpg",
+  "/product/Morphine.jpg",
+  "/product/Naproxen.jpg",
+  "/product/opium.jpeg",
+  "/product/Pantoprazole.jpeg",
+  "/product/PCP.jpg",
+  "/product/polyjuice.webp",
+  "/product/Rohypnol.jpg",
+  "/product/steroids.jpeg",
+  "/product/tigerBalm.jpg",
+  "/product/whey_protien.jpeg",
+  "/product/polyJuice.webp",
+  "/product/Benzodiazepines.webp",
+  "/product/Adderall.jpg",
+  "/product/GHB.jpg",
+  "/product/Tobacco.webp",
+  "/product/salvia.jpg",
+];
+
 const { createProduct } = require("./js/productController");
-const { testCreateOrder } = require("./js/orderController");
+const { testCreateOrder, updateOrder, createOrder, updateCost } = require("./js/orderController");
+const { createMyMessageProcess } = require("./js/testController");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -377,6 +417,18 @@ function knowledgeBaseSearch(request, response) {
   });
 }
 
+function updateUser(request, response){
+  var credentials = "";
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    await firebaseAPI.updateUser(credentials, response);
+  });
+}
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -388,7 +440,8 @@ const server = http.createServer((request, response) => {
     public_paths_html.includes(path) ||
     public_paths_css.includes(path) ||
     public_paths_js.includes(path) ||
-    public_paths_images.includes(path)
+    public_paths_images.includes(path) ||
+    public_paths_product.includes(path)
   ) {
     file = __dirname + path;
   } else if (public_paths_html.includes("/html" + path)) {
@@ -454,6 +507,25 @@ const server = http.createServer((request, response) => {
       case "/test/createOrder":
         testCreateOrder(request, response);
         break;
+
+      case "/api/updateCart":
+        console.log("/api/updateCart");
+        updateOrder(request, response);
+        break;
+      
+      case "/api/updateCost":
+        console.log("updating the total cost: /api/updateCost");
+        updateCost(request, response);
+        break;
+
+      case "/testMake":
+        createMyMessageProcess(request, response);
+        break;  
+      
+      case "/update/user":
+        updateUser(request, response);
+        break;
+
     }
   } else {
     //Client is requesting a file

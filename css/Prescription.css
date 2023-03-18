@@ -59,8 +59,28 @@ body{
   font-size: 16px;
   color: var(--warning);
   margin-top: 30px;
+  transition: 0.5s ease-in-out;
 }
 
+.main-box .title-next-next-doctor {
+  font-size: 16px;
+  color: var(--warning);
+  margin-top: 30px;
+  transition: 0.5s ease-in-out;
+}
+
+
+.main-box .title-next-next.next{
+  font-size: 15px;
+  color:var(--tertiary);
+  transition: 0.5s ease-in-out;
+}
+
+.main-box .title-next-next-doctor.next{
+  font-size:15px;
+  color:var(--tertiary);
+  transition: 0.5s ease-in-out;
+}
 
 .main-box .title {
   background-color: var(--secondary);
@@ -118,6 +138,14 @@ body{
   margin-left: 2px;
   width: 100%;
   text-align: left;
+}
+
+.main-boxone{
+  display: none;
+}
+
+.main-boxtwo{
+  display:none;
 }
 
 .main-box .form-box label {
@@ -212,7 +240,7 @@ background-color: var(--tertiary);
       color: var(--tertiary);
       transition: 0.5s ease-in-out;
   }
-  
+
   .main-box .acknowledgement-box-doctor span{
     font-size: 2rem;
     color: var(--warning);

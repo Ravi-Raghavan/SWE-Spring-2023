@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!-- Ensures optimal rendering on mobile devices -->
-    </head>
 
-    <body>
-        <!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
-        <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Ensures optimal rendering on mobile devices -->
+</head>
 
-        <!-- Set up a container element for the button -->
-        <script type="text/javascript">
-            function showDiv(id){
-                document.getElementById(id).style.display = "block";
-            }
-        </script>
+<body>
+    <!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&commit=false"></script>
 
-        <center>
-            
-            <div id="paypal-button-container"></div>
-            <script src="../js/script.js"></script>
-        </center>
-    </body>
+    <!-- Set up a container element for the button -->
+    <script type="text/javascript">
+        function showDiv(id) {
+            document.getElementById(id).style.display = "block";
+        }
+    </script>
+
+    <center>
+        <div id="paypal-button-container"></div>
+        <script src="../js/script.js"></script>
+    </center>
+</body>
+
 </html>
