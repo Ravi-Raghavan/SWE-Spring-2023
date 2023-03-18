@@ -96,13 +96,43 @@ async function updateOrder(req, res) {
 
         let body = await getPostData(req); //data must have orderID, costs, quantity, status, and drug
         const {orderID, costs, quantity, status, drug} = JSON.parse(body);
-        const orderRef = await Order.updateOrder(orderID, costs, quantity, status, drug);
+        const orderRef = await Order.testUpdate('-NPxNDaanq4hgBCvZPW-', costs, quantity, status, drug);
         const orderId = orderRef.key;
         
         const data = {
             id: orderId
         };
-        console.log(orderId)
+        //console.log(orderId)
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(data));
+    
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function updateCost(req, res) {
+    try {
+        //Add method to check if order exists:
+        /*
+        if(!product)
+        {
+            res.writeHead(400, {'Content-Type': 'application/json'})
+            res.end(JSON.stringify({message: 'product not found'}))
+        }
+        */
+
+        let body = await getPostData(req); //data must have orderID, costs, quantity, status, and drug
+        const {costs, quantity, drug} = JSON.parse(body);
+        //console.log('Body:',body)
+        //const orderRef = await Order.update('-NPxNDaanq4hgBCvZPW-', costs, quantity, status, drug)
+        const orderRef = await Order.costUpdate('-NPxNDaanq4hgBCvZPW-', costs, quantity, drug);
+        const orderId = orderRef.key;
+        
+        const data = {
+            id: orderId
+        };
+        //console.log("order id is: ",orderId)
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify(data));
     
@@ -114,5 +144,6 @@ async function updateOrder(req, res) {
 module.exports = {
     testCreateOrder,
     createOrder,
-    updateOrder
+    updateOrder,
+    updateCost
 }
