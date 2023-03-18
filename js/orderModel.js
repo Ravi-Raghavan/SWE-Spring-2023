@@ -62,6 +62,10 @@ async function cancel(requesterID, orderID) {
     })
 }
 
+async function createPrescription() {
+    
+}
+
 module.exports = {
     create
 };
