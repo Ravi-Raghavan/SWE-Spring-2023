@@ -235,8 +235,13 @@ body::-webkit-scrollbar {
   align-items: center;
 }
 
-.arrow .arrow_img svg{
+.arrow section {
   cursor: pointer;
+  /* pointer-events: none; */
+}
+
+.arrow .arrow_img svg{
+  
   margin-left: 15px;
   margin-right: 15px;
   margin-top: 20px;

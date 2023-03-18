@@ -222,3 +222,13 @@ function diagScrollLeft(iter, fname, box, transformLen) {
 
   setTimeout(nextBox, 530);
 }
+
+// ? disables the btn
+function disableBtn(name) {
+  var btn = document.getElementById(`${name}`);
+  btn.style.pointerEvents = "none";
+
+  setTimeout(function () {
+    btn.style.pointerEvents = "auto";
+  }, 2000);
+}
