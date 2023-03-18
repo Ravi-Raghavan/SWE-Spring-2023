@@ -489,12 +489,23 @@
       
       return false;
     }
-    function addressChange(){
+    async function addressChange(){
       var user_record = JSON.parse(localStorage.getItem("User Record"));
       var text = prompt("Address: ", document.getElementById("address").innerText);
       if(text){
         document.getElementById("address").innerText = text;
         user_record['Address'] = text;
+        let response = await fetch('/update/user', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            uid: user_record["uid"],
+            phoneNumber: user_record["Phone Number"],
+            address: user_record["Address"]
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
       }
       else{
 
@@ -502,12 +513,24 @@
 
       localStorage.setItem("User Record", JSON.stringify(user_record));
     }
-    function phoneNumberChange(){
+    async function phoneNumberChange(){
       var user_record = JSON.parse(localStorage.getItem("User Record"));
       let text = prompt("Phone: ", document.getElementById("phone").innerText);
       if(text){
         document.getElementById("phone").innerText = text;
         user_record['Phone Number'] = text;
+
+        let response = await fetch('/update/user', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            uid: user_record["uid"],
+            phoneNumber: user_record["Phone Number"],
+            address: user_record["Address"]
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
       }
       else{
         
