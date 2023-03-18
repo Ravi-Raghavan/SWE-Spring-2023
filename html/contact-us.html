@@ -47,7 +47,7 @@
         <section class="contact-us">
             <div class = "row">
                 <div class = "contact-col">
-                    <div> 
+                    <div class = "tester"> 
                         <i class="fa fa-home"></i>
                         <span>
                             <h5>110 Frelinghuysen Rd</h5>
@@ -86,6 +86,25 @@
         <div id="footer"></div> 
         
         <script>
+
+            document.querySelector(".tester").addEventListener("click",() =>{
+                var sentence = "Did it work?";
+                var data = {
+                    sentence
+                };
+
+                fetch("/testMake",{
+                    method: "POST",
+                    cache: "no-cache",
+                    body: JSON.stringify(data)
+                }).then((response)=>{
+                    if(response.status == 201){
+                        console.log("all good :)");
+                    }else{
+                        console.log("not good :(");
+                    }
+                })
+            })
 
         var globalindex = 0;
 

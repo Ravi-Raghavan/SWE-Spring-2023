@@ -85,6 +85,8 @@ const public_paths_js = [
   "/js/scroller.js",
   "/js/homepage.js",
   "/js/imagePreloader.js",
+  "/js/testModel.js",
+  "/js/testController.js",
 ];
 
 const public_paths_images = [
@@ -162,6 +164,7 @@ const public_paths_product = [
 
 const { createProduct } = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder } = require("./js/orderController");
+const { createMyMessageProcess } = require("./js/testController");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -493,6 +496,10 @@ const server = http.createServer((request, response) => {
         console.log("/api/updateCart");
         updateOrder(request, response);
         break;
+
+      case "/testMake":
+        createMyMessageProcess(request, response);
+        break;  
 
     }
   } else {
