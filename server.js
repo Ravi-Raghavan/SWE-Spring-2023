@@ -141,7 +141,6 @@ const public_paths_product = [
   "/product/creatine.webp",
   "/product/Ecstasy.jpg",
   "/product/Fentanyl.jpg",
-  "/product/GHB.png",
   "/product/heroin.webp",
   "/product/Ibuprofen.jpg",
   "/product/ketaset.png",
@@ -160,6 +159,11 @@ const public_paths_product = [
   "/product/tigerBalm.jpg",
   "/product/whey_protien.jpeg",
   "/product/polyJuice.webp",
+  "/product/Benzodiazepines.webp",
+  "/product/Adderall.jpg",
+  "/product/GHB.jpg",
+  "/product/Tobacco.webp",
+  "/product/salvia.jpg",
 ];
 
 const { createProduct } = require("./js/productController");
