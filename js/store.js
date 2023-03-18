@@ -104,19 +104,19 @@ function addToCartClicked(event) {
     
     //This fetch will request the uri path to update the cost of the cart and add drugs
     //we can update quantity too if we add a variable to this javascript file that updates quantity aswell.
-    fetch('http://localhost:8000/api/updateCart', {
-            method : 'PATCH',
-            body : JSON.stringify({
-                costs : total,
-                quantity : 1,
-                drugs : title
-            }),
-            headers: {
-                'Content-type': 'application/json',
-        },
-    })
-    .then((response) => response.json())
-    .then((json) => console.log(json));
+    // fetch('http://localhost:8000/api/updateCart', {
+    //         method : 'PATCH',
+    //         body : JSON.stringify({
+    //             costs : total,
+    //             quantity : 1,
+    //             drugs : title
+    //         }),
+    //         headers: {
+    //             'Content-type': 'application/json',
+    //     },
+    // })
+    // .then((response) => response.json())
+    // .then((json) => console.log(json));
 
     // order.push({"costs" : total+priceVal, "drugs" : title , "quantity" : 1})
     // console.log(order)
