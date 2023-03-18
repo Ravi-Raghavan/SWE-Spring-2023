@@ -41,7 +41,7 @@
           if (response.status == 200){
             response.text().then(text => {
               var originalText = CryptoJS.AES.decrypt(text, "UserRecord").toString(CryptoJS.enc.Utf8);
-              var userRecord = JSON.parse(JSON.parse(originalText));
+              var userRecord = JSON.parse(originalText);
               if (typeof(Storage) != "undefined"){
                 localStorage.setItem("User Record", JSON.stringify(userRecord))
                 window.location.href = "./homepage.html";

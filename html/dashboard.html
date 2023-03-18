@@ -330,6 +330,7 @@
     }
 
     window.onload = function () {
+
       
       loadProfile();
       //PORTION TO ADD SPECIAL FUNCTIONS TO DOCTOR ACCOUNTS
@@ -465,6 +466,11 @@
       else{
         
       }
+    }
+
+    window.onbeforeunload = function(){
+      console.log("Leaving the webpage");
+      return "Leaving";
     }
     addOrder(69423, ["Viagra x1", "Iburprofen x2"], "Delivered");
     addPrescription(42072, ["Rubbing Alchohol x3", "CBD x7"],"Dr. DicBud", "Denied");

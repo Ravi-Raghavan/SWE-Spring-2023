@@ -1,12 +1,10 @@
 function handleUserManagingAccount(){
+    //If user is not logged in, display alert and go back
     if (localStorage.getItem("User Record") == null){
-        var url_stack = ['./user-auth-form.html', './dashboard.html']
-        var json_data = {url_stack: url_stack}
-        localStorage.setItem("URL Stack", JSON.stringify(json_data))
-        window.location.href = './user-auth-form.html'
+        alert("Please Create an Account");
     }
     else{
-        window.location.href = './dashboard.html'
+        window.location.href = '../html/dashboard.html';
     }
 }
 function getUniqueID(){

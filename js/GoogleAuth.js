@@ -49,6 +49,7 @@ function login(request, response){
         var userParameters = {email: email};
         var userRecord = await firebaseAPI.search(userParameters);
         
+        userRecord = JSON.parse(userRecord);
         var currentDateTime = new Date().toString();
         userRecord["metadata"]["lastSignInTime"] = currentDateTime;
         userRecord["metadata"]["lastRefreshTime"] = currentDateTime;
@@ -60,7 +61,6 @@ function login(request, response){
 
 
         if (userRecord != "N/A"){
-            userRecord = JSON.parse(userRecord);
             response.writeHead(200, { "Content-type": "text/plain" });
             response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
             response.end();

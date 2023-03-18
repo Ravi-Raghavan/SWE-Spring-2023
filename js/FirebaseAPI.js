@@ -145,6 +145,7 @@ async function getSubscriptionPlan(uid){
 async function login(userParameters, response){
     var userRecord = await search(userParameters);
 
+    userRecord = JSON.parse(userRecord);
     var currentDateTime = new Date().toString();
     userRecord["metadata"]["lastSignInTime"] = currentDateTime;
     userRecord["metadata"]["lastRefreshTime"] = currentDateTime;
