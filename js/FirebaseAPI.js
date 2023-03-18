@@ -204,7 +204,7 @@ async function login(userParameters, response){
         console.log("==========USER RECORD ==============");
         console.log(userRecord);
         console.log("=========================");
-        
+
         response.writeHead(200, { "Content-type": "text/plain" });
         response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
         //response.write(userRecord);
@@ -213,6 +213,7 @@ async function login(userParameters, response){
 }
 
 async function updateUser(userParameters, response){
+    var uid = userParameters.uid;
     ref.child(`${uid}`).update({
         phoneNumber: userParameters.phoneNumber,
         address: userParameters.address
