@@ -14,7 +14,7 @@
     <title>DrugHub | Home</title>
 
     <script src="../js/dynamicHeaderFooter.js"></script>
-    <script src="../js/scroller.js"></script>
+    <script src="../js/scroller.js" async></script>
     
     
 </head>
@@ -87,10 +87,7 @@
     <section class="main_body">
         <h1 class="main_body_title">Most Popular Products</h1>
         <Section id="filter-container-1">
-            <h4 class="filter">Phar</h4>
-            <h4 class="filter">ma</h4>
-            <h4 class="filter">cu</h4>
-            <h4 class="filter">ticals</h4>
+            <h4 class="filter">Pharmacuticals</h4>
         </Section>
         <Section id="filter-container-2">
             <h4 class="filter">Posh</h4>
@@ -282,12 +279,12 @@
         </div>
 
         <section class="arrow">
-            <section class="arrow_img leftHome" onclick="leftscrolling( 4, 6,'box-container-','item_list')">
+            <section class="arrow_img leftHome" onclick="diagScrollLeft( 4,'box-container-','item_list', 60); ; diagScrollLeft( 4,'filter-container-','filter', 37)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                   </svg>
             </section>
-            <section class="arrow_img rightHome" onclick="rightscrolling( 4, 6,'box-container-','item_list'); rightscrolling( 4, 1,'filter-container-','filter')">
+            <section class="arrow_img rightHome" onclick="diagScrollRight( 4,'box-container-','item_list', 40); diagScrollRight( 4,'filter-container-','filter', 37)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                   </svg>
@@ -457,6 +454,5 @@
 
     <div id="footer"></div> 
 </body>
-
 <script src="../js/homepage.js"></script>
 </html>
