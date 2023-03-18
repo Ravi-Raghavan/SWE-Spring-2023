@@ -44,12 +44,17 @@
               var userRecord = JSON.parse(originalText);
               if (typeof(Storage) != "undefined"){
                 localStorage.setItem("User Record", JSON.stringify(userRecord))
-                window.location.href = "./homepage.html";
+                if (document.referrer.contains("/user-registration-form.html")){
+                  window.location = "./homepage.html";
+                }
+                else{
+                  window.location = document.referrer;
+                }
               }
               else{
                   console.log("This Browser doesn't support local client side storage")
               }
-              window.location = document.referrer;
+              
             })
           }
           else{
@@ -85,11 +90,17 @@
                     var userRecord = JSON.parse(originalText);
                     if (typeof(Storage) != "undefined"){
                         localStorage.setItem("User Record", JSON.stringify(userRecord))
+                        if (document.referrer.contains("/user-registration-form.html")){
+                          window.location = "./homepage.html";
+                        }
+                        else{
+                          window.location = document.referrer;
+                        }
                     }
                     else{
                         console.log("This Browser doesn't support local client side storage")
                     }
-                    window.location = document.referrer;
+                    
                 })
             }
             else{
