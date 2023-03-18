@@ -28,6 +28,8 @@ async function register(userParameters, response){
     userRecord["tokensValidAfterTime"] = currentDateTime;
     userRecord["Account Type"] = accountType;
     userRecord["Subscription Plan"] = "Free";
+    userRecord.phoneNumber = "N/A"
+    userRecord["Address"] = "N/A"
 
     console.log("==========USER RECORD ==============");
     console.log(userRecord);
@@ -45,8 +47,8 @@ async function register(userParameters, response){
         disabled: userParameters.disabled,
         accountType: accountType,
         subscriptionPlan: "Free",
-        phoneNumber: "",
-        address: ""
+        phoneNumber: "N/A",
+        address: "N/A"
     })
 
     //Send Request
@@ -71,7 +73,7 @@ async function search(searchParameters){
 
             userRecord["Account Type"] = accountType;
             userRecord["Subscription Plan"] = subscriptionPlan;
-            userRecord["Phone Number"] = phoneNumber;
+            userRecord.phoneNumber = phoneNumber;
             userRecord["Address"] = address;
 
             resolve(JSON.stringify(userRecord));
@@ -187,22 +189,22 @@ async function getAddress(uid){
 async function login(userParameters, response){
     var userRecord = await search(userParameters);
 
-    userRecord = JSON.parse(userRecord);
-    var currentDateTime = new Date().toString();
-    userRecord["metadata"]["lastSignInTime"] = currentDateTime;
-    userRecord["metadata"]["lastRefreshTime"] = currentDateTime;
-    userRecord["tokensValidAfterTime"] = currentDateTime;
-
-    console.log("==========USER RECORD ==============");
-    console.log(userRecord);
-    console.log("=========================");
-    
     if (userRecord == "N/A"){
         response.writeHead(404, { "Content-type": "text/plain" });
         response.write(`Account associated with ${userParameters.email} doesn't exist!`);
         response.end();
     }
     else{
+        userRecord = JSON.parse(userRecord);
+        var currentDateTime = new Date().toString();
+        userRecord["metadata"]["lastSignInTime"] = currentDateTime;
+        userRecord["metadata"]["lastRefreshTime"] = currentDateTime;
+        userRecord["tokensValidAfterTime"] = currentDateTime;
+
+        console.log("==========USER RECORD ==============");
+        console.log(userRecord);
+        console.log("=========================");
+        
         response.writeHead(200, { "Content-type": "text/plain" });
         response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
         //response.write(userRecord);

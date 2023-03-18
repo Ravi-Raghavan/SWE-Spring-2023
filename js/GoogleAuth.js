@@ -48,29 +48,28 @@ function login(request, response){
 
         var userParameters = {email: email};
         var userRecord = await firebaseAPI.search(userParameters);
-        
-        userRecord = JSON.parse(userRecord);
-        var currentDateTime = new Date().toString();
-        userRecord["metadata"]["lastSignInTime"] = currentDateTime;
-        userRecord["metadata"]["lastRefreshTime"] = currentDateTime;
-        userRecord["tokensValidAfterTime"] = currentDateTime;
 
-        console.log("==========USER RECORD ==============");
-        console.log(userRecord);
-        console.log("=========================");
-
-
-        if (userRecord != "N/A"){
-            response.writeHead(200, { "Content-type": "text/plain" });
-            response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
-            response.end();
-        }
-        else{
-            var responseContent = "false";
+        if (userRecord == "N/A"){
             response.writeHead(404, { "Content-type": "text/plain" });
             response.write(`Account associated with ${email} doesn't exist!`);
             response.end();
         }
+        else{
+            userRecord = JSON.parse(userRecord);
+            var currentDateTime = new Date().toString();
+            userRecord["metadata"]["lastSignInTime"] = currentDateTime;
+            userRecord["metadata"]["lastRefreshTime"] = currentDateTime;
+            userRecord["tokensValidAfterTime"] = currentDateTime;
+
+            console.log("==========USER RECORD ==============");
+            console.log(userRecord);
+            console.log("=========================");
+
+            response.writeHead(200, { "Content-type": "text/plain" });
+            response.write(CryptoJS.AES.encrypt(JSON.stringify(userRecord), "UserRecord").toString());
+            response.end();
+        }
+        
     })
 }
 
