@@ -164,5 +164,7 @@ async function testUpdate(orderID, title, quantity, price){
 module.exports = {
     create,
     update,
-    createOrder
+    createOrder,
+    testUpdate,
+    costUpdate
 };
