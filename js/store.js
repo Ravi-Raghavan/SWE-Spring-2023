@@ -155,10 +155,12 @@ function addItemToCart(title, price, imageSrc) {
 }
 
 var total = 0;
+var totalquantity = 0;
 function updateCartTotal() {
     var cartItemContainer = document.getElementsByClassName('cart-items')[0]
     var cartRows = cartItemContainer.getElementsByClassName('cart-row')
     total = 0
+    totalquantity = 0
     for (var i = 0; i < cartRows.length; i++) {
         var cartRow = cartRows[i]
         var priceElement = cartRow.getElementsByClassName('cart-price')[0]
@@ -166,9 +168,26 @@ function updateCartTotal() {
         var price = parseFloat(priceElement.innerText.replace('$', ''))
         var quantity = quantityElement.value
         total = total + (price * quantity)
+        totalquantity = parseFloat(totalquantity) + parseFloat(quantity)
     }
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
+    
+    fetch('http://localhost:8000/api/updateCost', {
+            method : 'PATCH',
+            body : JSON.stringify({
+                costs : total,
+                quantity : totalquantity++,
+
+            }),
+            headers: {
+                'Content-type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((json) => console.log("Success:", json))
+    .catch((error) => console.error("Error: ", error));
+
 }
 
 
