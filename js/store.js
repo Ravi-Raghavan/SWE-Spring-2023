@@ -1,3 +1,6 @@
+// import { initializeApp } from "firebase-admin/app";
+// import { getDatabase } from "firebase-admin/database";
+
 var order = [
 
     {
@@ -65,7 +68,7 @@ function purchaseClicked() {
     //     cartItems.removeChild(cartItems.firstChild)
     // }
     document.getElementById("paypal-button-container").style.display = "block";
-    addtodb();
+    // addtodb(total);
 }
 
 function removeCartItem(event) {
@@ -168,13 +171,28 @@ function updateCartTotal() {
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
 }
 
-function addtodb() {
-    const admin = require("./firebase").admin;
-    admin.database().ref("/total/").set(total)
-        .then(() => {
-            console.log("Variable sent to Firebase successfully");
-        })
-        .catch((error) => {
-            console.error("Error sending variable to Firebase:", error);
-        });
-}
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAD8RODlLg_BCHxy3ghN91W5XxIvPLbAp4",
+    authDomain: "swe-spring-2023.firebaseapp.com",
+    databaseURL: "https://swe-spring-2023-default-rtdb.firebaseio.com",
+    projectId: "swe-spring-2023",
+    storageBucket: "swe-spring-2023.appspot.com",
+    messagingSenderId: "600915655715",
+    appId: "1:600915655715:web:966a0affd54b6df2478596",
+    measurementId: "G-EW7N8BG805"
+};
+
+// initializeApp(firebaseConfig);
+
+// addtodb = function(price) {
+//     const database = getDatabase();
+//     const ref = database.ref("/total/");
+//     ref.set(price)
+//         .then(() => {
+//             console.log("Variable sent to Firebase successfully");
+//         })
+//         .catch((error) => {
+//             console.error("Error sending variable to Firebase:", error);
+//         });
+// }
