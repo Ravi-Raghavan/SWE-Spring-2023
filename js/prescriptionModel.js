@@ -1,7 +1,10 @@
+const FirebaseAPI = require("./FirebaseAPI");
+
 const admin = require("./firebase").admin;
 var db = admin.database();
 var ref = db.ref(`/patientPrescriptions/`);
-var dref = db.ref(`/doctorPrescriptions/`)
+var dref = db.ref(`/doctorPrescriptions/`);
+var uref = db.ref(`/users/`);
 
 async function createPatientPrescription(dateOfBirth, firstName, issueDate,lastName,patientEmail, patientUID,prescriptionNumber){
     var prescription = {
@@ -13,8 +16,6 @@ async function createPatientPrescription(dateOfBirth, firstName, issueDate,lastN
         patientUID: patientUID,
         prescriptionNumber: prescriptionNumber
     };
-
-    
     ref.set({
         [patientUID] : prescription
     });

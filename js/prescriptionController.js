@@ -29,7 +29,7 @@ async function createDoctorPrescriptionProcess(req,res){
 
                 const dprescriptionId = 7;
                 const data = {
-                    id: dprescriptionId
+                    id:dprescriptionId
                 };
                 res.writeHead(201, {'Content-Type':'application/json'});
                 res.end(JSON.stringify(data));
