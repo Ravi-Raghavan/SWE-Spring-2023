@@ -73,8 +73,7 @@ async function cancelOrder(requesterID, orderID) {
 
 async function update(orderID, costs, quantity, status, drug){
         
-    ref.
-        userRef = db.ref(`/users/`);
+    const userRef = db.ref(`/users/`);
 
     let exists = await new Promise((resolve, reject) => {
         userRef.child(orderID).on('value', (snapshot) => {
@@ -87,7 +86,7 @@ async function update(orderID, costs, quantity, status, drug){
     });
         //Write data to file
         
-        const oID = ref.push({
+        const oID = ref.child(orderID).update({
             status: status || ref.status,
             quantity: quantity || ref.quantity,
             costs: costs || ref.costs,
@@ -98,6 +97,66 @@ async function update(orderID, costs, quantity, status, drug){
         
         console.log('Order updated');
         return oID;
+
+}
+
+async function costUpdate(orderID, costs, quantity, drug){
+    const userRef = db.ref(`users`);
+
+    let exists = await new Promise((resolve, reject) => {
+        let curQuantity = 0;
+    try {
+       
+        var Ref = ref.child(orderID).once('value', (snapshot) => {
+                var orderInfo = snapshot.val();
+                console.log(orderInfo);
+                curQuantity += orderInfo.quantity;
+                //console.log("quantity: ",curQuantity)
+
+                resolve(orderInfo !== 'null');
+        });
+
+        //console.log("current quantity is: ", curQuantity)
+        ref.child(orderID).update(
+            {
+            'costs' : (costs),
+            'quantity' : (quantity)
+            }
+        );
+        
+    
+    } catch (err) {
+        reject(err)
+    }
+    });
+
+        
+        console.log('Order updated');
+        return ref.child(orderID);
+
+}
+
+async function testUpdate(orderID, title, quantity, price){
+    const userRef = db.ref(`users`);
+    var updateVal;
+
+    let exists = await new Promise((resolve, reject) => {
+    try { 
+            const drugRef = ref.child(orderID).child('drugs').push();
+            drugRef.set({
+                title,
+                quantity,
+                price,
+            
+            })
+    
+
+    } catch (err) {
+        reject(err)
+    }
+    });
+        console.log('Drug Added');
+        return ref.child(orderID);
 
 }
 
