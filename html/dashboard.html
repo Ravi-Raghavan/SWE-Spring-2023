@@ -51,7 +51,9 @@
           onclick='swapDisplay("settings-info", "settingsOption")'
           >Settings</a>
 
-        <a onclick="logout()">Logout</a>
+          
+
+        <a id ="loggingOut" onclick="logout()">Logout</a>
       </div>
 
       <div id="interface" class="interface-container"></div>
@@ -306,6 +308,18 @@
         </section>
       </div>
 
+      <!---PRESCRIPTION APPROVAL INFORMATION-->
+      <div id="approval-info" class="info-container">
+        <section id="info" class="DrugFo">
+          
+            <div class="row">
+              <h2>This is the placeholder for the approval section.</h2>
+            </div>
+  
+        </section>
+      </div>
+
+
     </div>
   </body>
 
@@ -318,7 +332,34 @@
     window.onload = function () {
       
       loadProfile();
-      
+      //PORTION TO ADD SPECIAL FUNCTIONS TO DOCTOR ACCOUNTS
+      if (localStorage.getItem("User Record") == null) {
+        //
+      } else {
+        
+        //USER RECORD DOES NOT HAVE AN ACCOUNT TYPE BEING LISTED IN THE JSON, FIX!!!!
+
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        console.log(user_record);
+
+        //CURRENTLY APPLIES TO ALL ACCOUNTS. ONCE USER RECORD RETURNS ACCOUNT TYPE, REPLACE true WITH user_record.accountType == "Doctor"
+        if(true)
+        {
+
+          document.getElementById("loggingOut").remove();
+
+          var rows = "<a id=\"approvalOption\"class=\"\"href=\"#\"onclick='swapDisplay(\"approval-info\", \"approvalOption\")'>Prescription Approval</a>";
+          var menu = document.getElementById("sideMenu");
+          var template = document.createElement('template');
+          template.innerHTML = rows;
+          
+          menu.appendChild(template.content);
+
+          rows = "<a id =\"loggingOut\" onclick=\"logout()\">Logout</a>";
+          template.innerHTML = rows;
+          menu.appendChild(template.content);
+        }
+      }
     };
 
     function loadProfile(){
@@ -335,8 +376,9 @@
           user_record.displayName;
         document.getElementById("full-name").innerHTML =
           user_record.displayName;
-        document.getElementById("email").innerHTML = user_record.email;
+        document.getElementById("email").innerHTML = user_record.email;        
       }
+
     }
 
     function swapDisplay(location, menuOption) {
