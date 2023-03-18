@@ -213,7 +213,7 @@ function diagScrollLeft(iter, fname, box, transformLen) {
       for (let i = 0; i < replacementBox.length; i++) {
         setTimeout(() => {
           replacementBox[i].style.transition =
-            "opacity 0.5s ease, , transform 0.5s ease-out";
+            "opacity 0.5s ease, transform 0.5s ease-out";
           replacementBox[i].style.opacity = 1;
         }, (replacementBox.length - 1 - i) * 50);
       }
