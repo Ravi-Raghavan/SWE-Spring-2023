@@ -48,6 +48,17 @@ function login(request, response){
 
         var userParameters = {email: email};
         var userRecord = await firebaseAPI.search(userParameters);
+        
+        var currentDateTime = new Date().toString();
+        userRecord["metadata"]["lastSignInTime"] = currentDateTime;
+        userRecord["metadata"]["lastRefreshTime"] = currentDateTime;
+        userRecord["tokensValidAfterTime"] = currentDateTime;
+
+        console.log("==========USER RECORD ==============");
+        console.log(userRecord);
+        console.log("=========================");
+
+
         if (userRecord != "N/A"){
             userRecord = JSON.parse(userRecord);
             response.writeHead(200, { "Content-type": "text/plain" });

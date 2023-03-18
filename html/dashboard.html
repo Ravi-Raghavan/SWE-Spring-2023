@@ -341,9 +341,10 @@
 
         var user_record = JSON.parse(localStorage.getItem("User Record"));
         console.log(user_record);
+        console.log("Account Type: " + user_record['Account Type']); 
 
         //CURRENTLY APPLIES TO ALL ACCOUNTS. ONCE USER RECORD RETURNS ACCOUNT TYPE, REPLACE true WITH user_record.accountType == "Doctor"
-        if(true)
+        if(user_record.accountType == "Doctor")
         {
 
           document.getElementById("loggingOut").remove();

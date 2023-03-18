@@ -22,10 +22,18 @@ async function register(userParameters, response){
     var userRecord = userCredentials.toJSON();
     var accountType = userParameters.accountType;
 
-    userRecord["metadata"]["lastSignInTime"] = new Date().toString();
+    var currentDateTime = new Date().toString();
+    userRecord["metadata"]["lastSignInTime"] = currentDateTime;
+    userRecord["metadata"]["lastRefreshTime"] = currentDateTime;
+    userRecord["tokensValidAfterTime"] = currentDateTime;
     userRecord["Account Type"] = accountType;
     userRecord["Subscription Plan"] = "Free";
 
+    console.log("==========USER RECORD ==============");
+    console.log(userRecord);
+    console.log("=========================");
+
+    
     var uid = userRecord.uid;
     ref.child(`${uid}`).set({
         uid: uid,
@@ -57,9 +65,8 @@ async function search(searchParameters){
             var accountType = await getAccountType(uid);
             var subscriptionPlan = await getSubscriptionPlan(uid);
 
-            userRecord["metadata"]["lastSignInTime"] = new Date().toString();
             userRecord["Account Type"] = accountType;
-            userRecord["Subscription Plan"] = subscriptionPlan
+            userRecord["Subscription Plan"] = subscriptionPlan;
 
             resolve(JSON.stringify(userRecord));
         })
@@ -137,6 +144,16 @@ async function getSubscriptionPlan(uid){
 //login user
 async function login(userParameters, response){
     var userRecord = await search(userParameters);
+
+    var currentDateTime = new Date().toString();
+    userRecord["metadata"]["lastSignInTime"] = currentDateTime;
+    userRecord["metadata"]["lastRefreshTime"] = currentDateTime;
+    userRecord["tokensValidAfterTime"] = currentDateTime;
+
+    console.log("==========USER RECORD ==============");
+    console.log(userRecord);
+    console.log("=========================");
+    
     if (userRecord == "N/A"){
         response.writeHead(404, { "Content-type": "text/plain" });
         response.write(`Account associated with ${userParameters.email} doesn't exist!`);
