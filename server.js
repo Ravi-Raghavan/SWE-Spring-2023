@@ -167,7 +167,7 @@ const public_paths_product = [
 ];
 
 const { createProduct } = require("./js/productController");
-const { testCreateOrder, updateOrder, createOrder } = require("./js/orderController");
+const { testCreateOrder, updateOrder, createOrder, updateCost } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
@@ -499,6 +499,11 @@ const server = http.createServer((request, response) => {
       case "/api/updateCart":
         console.log("/api/updateCart");
         updateOrder(request, response);
+        break;
+      
+      case "/api/updateCost":
+        console.log("updating the total cost: /api/updateCost");
+        updateCost(request, response);
         break;
 
       case "/testMake":
