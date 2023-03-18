@@ -6,22 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="../css/homepage.css" as>
-    <link rel="stylesheet" type="text/css" href="../css/darkmode.css" as>
-    <link rel="stylesheet" type="text/css" href="../css/dynamic-size.css"  as>
+    <link rel="stylesheet" type="text/css" href="../css/homepage.css">
+    <link rel="stylesheet" type="text/css" href="../css/darkmode.css">
+    <link rel="stylesheet" type="text/css" href="../css/dynamic-size.css">
 
 
     <title>DrugHub | Home</title>
 
-    <script src="../js/dynamicHeaderFooter.js"></script>
-    <script src="../js/scroller.js" async></script>
+    <script async src="../js/dynamicHeaderFooter.js"></script>
+    <script async src="../js/scroller.js" async></script>
     
     
 </head>
 
 <body> 
     <!-- screen size for demo 2560 x 1600-->
-    <script src="../js/darkmode.js"></script>
+    <script src="../js/darkmode.js" defer></script>
     <!-- <script src="../js/imagePreloader.js"></script> -->
    
 
@@ -30,32 +30,32 @@
     <div class="main">
         <section class="left_main">
             <div class="title">
-                <div id="title-container-1">
+                <div id="title-container-1" onmouseover="pauseHomePageTitle()" onmouseout="resumeHomePageTitle()">
                     <div class="title-box"><h1>We'll be there for you when </h1></div>
                     <div class="title-box"><h1>caffeine just won't cut it </h1></div>
                     <div class="title-box"><h1>anymore</h1></div>
                     </div>
-                    <div id="title-container-2">
+                    <div id="title-container-2" onmouseover="pauseHomePageTitle()" onmouseout="resumeHomePageTitle()">
                     <div class="title-box"><h1>Our pharmacy's like tequila</h1></div>
                     <div class="title-box"><h1>fixes you up and boosts</h1></div>
                     <div class="title-box"><h1>your game</h1></div>
                     </div>
-                    <div id="title-container-3">
+                    <div id="title-container-3" onmouseover="pauseHomePageTitle()" onmouseout="resumeHomePageTitle()">
                     <div class="title-box"><h1>Better than a rebound</h1></div>
                     <div class="title-box"><h1>we've got your health </h1></div>
                     <div class="title-box"><h1>covered</h1></div>
                     </div>
-                    <div id="title-container-4">
+                    <div id="title-container-4" onmouseover="pauseHomePageTitle()" onmouseout="resumeHomePageTitle()">
                     <div class="title-box"><h1>Say goodbye to the days of </h1></div>
                     <div class="title-box"><h1>looking like a zombie </h1></div>
                     <div class="title-box"><h1>after an all-nighter</h1></div>
                     </div>
-                    <div id="title-container-5">
+                    <div id="title-container-5" onmouseover="pauseHomePageTitle()" onmouseout="resumeHomePageTitle()">
                     <div class="title-box"><h1>Medication faster than</h1></div>
                     <div class="title-box"><h1>Starbucks</h1></div>
                     <div class="title-box"><h1>baristas</h1></div>
                     </div>
-                    <div id="title-container-6">
+                    <div id="title-container-6" onmouseover="pauseHomePageTitle()" onmouseout="resumeHomePageTitle()">
                     <div class="title-box"><h1>Flu from your roommate? We've got you</h1></div>
                     <div class="title-box"><h1>We've got </h1></div>
                     <div class="title-box"><h1>you</h1></div>
@@ -98,7 +98,7 @@
         <Section id="filter-container-4">
             <h4 class="filter">Exclusive Extracts</h4>
         </Section>
-        <div class="table_for_items">
+        <div class="table_for_items" onmouseover="pauseHomePageItem()" onmouseleave="resumeHomePageItem()">
             <ul>
                 
                 <div id="box-container-1">
@@ -279,18 +279,18 @@
         </div>
 
         <section class="arrow">
-            <section class="arrow_img leftHome" id="arrow_img" onclick="diagScrollLeft( 4,'box-container-','item_list', 60); diagScrollLeft( 4,'filter-container-','filter', 37); disableBtn('arrow_img')">
+            <section class="arrow_img leftHome" id="arrow_img" onclick="diagScrollLeft( 4,'box-container-','item_list', 60); diagScrollLeft( 4,'filter-container-','filter', 37); disableBtn('arrow_img'); pauseHomePageItem()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                   </svg>
             </section>
-            <section class="arrow_img rightHome" id="arrow_img" onclick="diagScrollRight( 4,'box-container-','item_list', 40); diagScrollRight( 4,'filter-container-','filter', 37); disableBtn('arrow_img')">
+            <section class="arrow_img rightHome" id="arrow_img" onclick="diagScrollRight( 4,'box-container-','item_list', 40);  diagScrollRight( 4,'filter-container-','filter', 37); disableBtn('arrow_img'); pauseHomePageItem()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                   </svg>
             </section>
         </section>
- 
+ <!-- pauseScroll( 4,'box-container-','item_list', 40); -->
         <div class="service_grid">
             <section class="main_box">
                 <section class="left_side">

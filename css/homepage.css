@@ -261,12 +261,12 @@ body::-webkit-scrollbar {
 
 /* seperate direciton for arrows */
 .arrow .leftHome svg:hover{
-  transform: translateX(-5px);
+  transform: translateX(-2.5px);
   transition: transform 0.5s ease-out;
 }
 
 .arrow .rightHome svg:hover{
-  transform: translateX(5px);
+  transform: translateX(2.5px);
   transition: transform 0.5s ease-out;
 }
 
@@ -488,6 +488,13 @@ body::-webkit-scrollbar {
   position: relative;
   z-index: 3;
   display: flex;
+}
+
+.review_box:hover {
+  transition: transform 1s ease, opacity 0.9s ease;
+  transform: perspective(1000px) rotateY(-20deg);
+  opacity: 0;
+  background-color: bisque;
 }
 
 .review_box .review_left_box {
