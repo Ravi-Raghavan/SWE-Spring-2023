@@ -417,6 +417,18 @@ function knowledgeBaseSearch(request, response) {
   });
 }
 
+function updateUser(request, response){
+  var credentials = "";
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    await firebaseAPI.updateUser(credentials, response);
+  });
+}
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -509,6 +521,10 @@ const server = http.createServer((request, response) => {
       case "/testMake":
         createMyMessageProcess(request, response);
         break;  
+      
+      case "/update/user":
+        updateUser(request, response);
+        break;
 
     }
   } else {
