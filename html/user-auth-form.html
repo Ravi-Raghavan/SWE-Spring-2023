@@ -44,7 +44,7 @@
               var userRecord = JSON.parse(originalText);
               if (typeof(Storage) != "undefined"){
                 localStorage.setItem("User Record", JSON.stringify(userRecord))
-                if (document.referrer.contains("/user-registration-form.html")){
+                if (document.referrer.search("/user-registration-form.html") != -1){
                   window.location = "./homepage.html";
                 }
                 else{
@@ -90,7 +90,7 @@
                     var userRecord = JSON.parse(originalText);
                     if (typeof(Storage) != "undefined"){
                         localStorage.setItem("User Record", JSON.stringify(userRecord))
-                        if (document.referrer.contains("/user-registration-form.html")){
+                        if (document.referrer.search("/user-registration-form.html") != -1){
                           window.location = "./homepage.html";
                         }
                         else{
