@@ -109,43 +109,63 @@ document.querySelector(".submit-box1").addEventListener("click", () =>{
   const dbref = ref(db);
   get(child(dbref,"users/")).then((snapshot)=>{
       if(snapshot.exists()){
-                    let userIDS = Object.keys(snapshot.val());
-                    let userObject = Object.values(snapshot.val());
-                    let setHappened = false;
-                    for(let i = 0;i<userIDS.length;i++){
-                        let grabEmail = userObject[i].email;
-                        let grabType = userObject[i].accountType.toUpperCase();
-                        //console.log(grabType);
-                        if(grabEmail == email){
-                          if(grabType=="DOCTOR"){
-                            alert("The email provided is registered as a doctor, Please fill out the Doctor Prescription Form");
-                            return;
-                          }
-                          let foundUSERID = userIDS[i];
-                          //console.log(foundUSERID);
-                          if(foundUSERID!=currentUID){
-                            alert("Make sure all form credentials are correct. Users may only request a prescription for their own accounts.");
-                            return;
-                          }
-                          set(ref(db,"patientPrescriptions/"+foundUSERID+"/"),{
-                            firstName: firstName.toUpperCase(),
-                            lastName: lastName.toUpperCase(),
-                            patientEmail:email,
-                            issueDate: issueDate,
-                            dateOfBirth: dateOfBirth,
-                            prescriptionNumber:prescriptionNumber,
-                            patientUID: currentUID
-                          })
-                          setHappened = true;
-                          window.location.href = "./submitted-prescription-patient.html";
-                        }
-                    }
-                    if(setHappened==false){
-                      alert("Credentials do not match any registered account. Thank You!");
-                    }
+        let userIDS = Object.keys(snapshot.val());
+        let userObject = Object.values(snapshot.val());
+        let setHappened = false;
+        for(let i = 0;i<userIDS.length;i++){
+            let grabEmail = userObject[i].email;
+            let grabType = userObject[i].accountType.toUpperCase();
+            //console.log(grabType);
+            if(grabEmail == email){
+              if(grabType=="DOCTOR"){
+                alert("The email provided is registered as a doctor, Please fill out the Doctor Prescription Form");
+                return;
+              }
+              let foundUSERID = userIDS[i];
+              //console.log(foundUSERID);
+              if(foundUSERID!=currentUID){
+                alert("Make sure all form credentials are correct. Users may only request a prescription for their own accounts.");
+                return;
+              }
+              var data = {
+                dateOfBirth: dateOfBirth,
+                firstName: firstName.toUpperCase(),
+                issueDate: issueDate,
+                lastName: lastName.toUpperCase(),
+                patientEmail:email,
+                patientUID: currentUID,
+                prescriptionNumber:prescriptionNumber,
+              }
+              fetch("/make/patientPrescription",{
+                method: "POST",
+                cache: "no-cache",
+                body: JSON.stringify(data)
+              }).then((response)=>{
+                if(response.status == 201){
+                  console.log("prescription added");
+                  window.location.href = "./submitted-prescription-patient.html";
                 }else{
-                   alert("Please create an account / log in, to add a prescription. Thank You!");
+                  console.log("prescription not added");
                 }
+              })
+              /*set(ref(db,"patientPrescriptions/"+foundUSERID+"/"),{
+                firstName: firstName.toUpperCase(),
+                lastName: lastName.toUpperCase(),
+                patientEmail:email,
+                issueDate: issueDate,
+                dateOfBirth: dateOfBirth,
+                prescriptionNumber:prescriptionNumber,
+                patientUID: currentUID
+              })*/
+              setHappened = true;
+            }
+        }
+        if(setHappened==false){
+          alert("Credentials do not match any registered account. Thank You!");
+        }
+        }else{
+           alert("Please create an account / log in, to add a prescription. Thank You!");
+        }
     })
 })
 
@@ -223,7 +243,36 @@ document.querySelector(".submit-box2").addEventListener("click",()=>{
           alert("Make sure all form credentials are correct. Doctors may only fill a prescription linked to their own accounts.");
           return;
         }
-        set(ref(db,"doctorPrescriptions/"+foundUSERID+"/"),{
+        var data = {
+          dateOfBirth: patientDOB,
+          doctorEmail: doctorAccountEmail,
+          doctorFirstName: doctorFirstName.toUpperCase(),
+          doctorLastName: doctorLastName.toUpperCase(),
+          doctorUID: currentUID,
+          dosage: dosage,
+          expireDate: expireDate,
+          instructions: instructions,
+          issueDate: issueDate,
+          medication: medication.toUpperCase(),
+          patientFirstName: patientFirstName.toUpperCase(),
+          patientLastName: patientLastName.toUpperCase(),
+          prescriptionNumber: prescriptionNumber,
+          refills: refills
+        }
+        fetch("/make/doctorPrescription",{
+          method: "POST",
+          cache: "no-cache",
+          body: JSON.stringify(data)
+        }).then((response) => {
+          if(response.status == 201){
+            console.log("all good :)");
+            window.location.href = "./submitted-prescription-patient.html";
+
+        }else{
+            console.log("not good :(");
+        }
+        })
+        /**set(ref(db,"doctorPrescriptions/"+foundUSERID+"/"),{
           patientFirstName: patientFirstName.toUpperCase(),
           patientLastName: patientLastName.toUpperCase(),
           dateOfBirth: patientDOB,
@@ -238,9 +287,8 @@ document.querySelector(".submit-box2").addEventListener("click",()=>{
           prescriptionNumber: prescriptionNumber,
           instructions: instructions,
           doctorUID: currentUID
-        })
+        })*/
         setHappened = true;
-        window.location.href = "./submitted-prescription-patient.html";
         }
         }
         if(setHappened==false){
