@@ -32,7 +32,7 @@ async function login_logout(){
             method: 'PATCH',
             body: JSON.stringify({
             uid: user_record["uid"],
-            phoneNumber: user_record["Phone Number"],
+            phoneNumber: user_record.phoneNumber,
             address: user_record["Address"]
             }),
             headers: {

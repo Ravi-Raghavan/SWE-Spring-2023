@@ -330,7 +330,7 @@
         method: 'PATCH',
         body: JSON.stringify({
           uid: user_record["uid"],
-          phoneNumber: user_record["Phone Number"],
+          phoneNumber: user_record.phoneNumber,
           address: user_record["Address"]
         }),
         headers: {
@@ -499,7 +499,7 @@
           method: 'PATCH',
           body: JSON.stringify({
             uid: user_record["uid"],
-            phoneNumber: user_record["Phone Number"],
+            phoneNumber: user_record.phoneNumber,
             address: user_record["Address"]
           }),
           headers: {
@@ -518,13 +518,13 @@
       let text = prompt("Phone: ", document.getElementById("phone").innerText);
       if(text){
         document.getElementById("phone").innerText = text;
-        user_record['Phone Number'] = text;
+        user_record.phoneNumber = text;
 
         let response = await fetch('/update/user', {
           method: 'PATCH',
           body: JSON.stringify({
             uid: user_record["uid"],
-            phoneNumber: user_record["Phone Number"],
+            phoneNumber: user_record.phoneNumber,
             address: user_record["Address"]
           }),
           headers: {
