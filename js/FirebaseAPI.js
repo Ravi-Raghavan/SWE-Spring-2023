@@ -219,6 +219,10 @@ async function updateUser(userParameters, response){
         userParameters.phoneNumber = "123-456-7890";
     }
 
+    if (userParameters.address == null){
+        userParameters.address = "110 Frelinghuysen Road, Piscataway, NJ, 08854";
+    }
+
     ref.child(`${uid}`).update({
         phoneNumber: userParameters.phoneNumber,
         address: userParameters.address
