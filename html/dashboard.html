@@ -324,7 +324,23 @@
   </body>
 
   <script>
-    function logout() {
+    async function logout() {
+      console.log("Leaving the webpage");
+      var user_record = JSON.parse(localStorage.getItem("User Record"));
+      
+      //Write updated User Record to Database
+      let response = await fetch('/update/user', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          uid: user_record["uid"],
+          phoneNumber: user_record["Phone Number"],
+          address: user_record["Address"]
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+
       localStorage.removeItem("User Record");
       window.location.href = "./logoutPage.html";
     }
@@ -480,6 +496,11 @@
 
     window.onbeforeunload = async function(){
       console.log("Leaving the webpage");
+
+      if (localStorage.getItem("User Record") == null){
+        return "DONE";
+      }
+      
       var user_record = JSON.parse(localStorage.getItem("User Record"));
       
       //Write updated User Record to Database
