@@ -9,7 +9,7 @@ var uref = db.ref(`/users/`);
 async function createPatientPrescription(dateOfBirth, firstName, issueDate,lastName,patientEmail, patientUID,prescriptionNumber){
         
     
-    var ref = db.ref(`/patientPrescriptions/${patientUID}`);
+    var ref = db.ref(`/patientPrescriptions/${patientUID}/${prescriptionNumber}`);
     ref.set({
         dateOfBirth:dateOfBirth,
         firstName: firstName,
@@ -27,7 +27,7 @@ async function createDoctorPrescription(dateOfBirth,doctorEmail,doctorFirstName,
     issueDate,medication,patientFirstName,patientLastName, 
     prescriptionNumber,refills){
 
-    var dref = db.ref(`/doctorPrescriptions/${doctorUID}`);
+    var dref = db.ref(`/doctorPrescriptions/${doctorUID}/${prescriptionNumber}`);
     
     dref.set({
         dateOfBirth:dateOfBirth,
