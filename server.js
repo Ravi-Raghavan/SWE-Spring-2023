@@ -176,6 +176,7 @@ const { testCreateOrder, updateOrder, createOrder, updateCost } = require("./js/
 const { createMyMessageProcess } = require("./js/testController");
 const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess } = require("./js/prescriptionController");
 const { createDoctorPrescription, createValidatedPrescription } = require("./js/prescriptionModel");
+const FirebaseAPI = require("./js/FirebaseAPI");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -453,6 +454,19 @@ function sendContactEmail(request, response){
   response.end();
 }
 
+function getPrescriptionsUser(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    await FirebaseAPI.getPrescriptionsUser(credentials.uid, response);
+  });
+}
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -572,6 +586,10 @@ const server = http.createServer((request, response) => {
       
       case "/make/validatedPrescription":
         createValidatedPrescriptionProcess(request,response);
+        break;
+      
+      case "/get/prescriptions/user":
+        getPrescriptionsUser(request, response);
         break;
     }
   } else {

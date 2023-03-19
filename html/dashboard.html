@@ -344,20 +344,39 @@
       window.location.href = "./logoutPage.html";
     }
 
-    window.onload = function () {
-
-      
+    window.onload = async function () {
       loadProfile();
       //PORTION TO ADD SPECIAL FUNCTIONS TO DOCTOR ACCOUNTS
       if (localStorage.getItem("User Record") == null) {
         //
       } else {
-        
         //USER RECORD DOES NOT HAVE AN ACCOUNT TYPE BEING LISTED IN THE JSON, FIX!!!!
 
         var user_record = JSON.parse(localStorage.getItem("User Record"));
         console.log(user_record);
         console.log("Account Type: " + user_record['Account Type']); 
+
+        let response = await fetch('/get/prescriptions/user', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            uid: user_record["uid"]
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
+  
+        let responseStatus = response.status;
+        let prescriptions = await response.json()
+        console.log("Response Status: " + responseStatus);
+        console.log("Prescription Data Fetched: " + JSON.stringify(prescriptions));
+
+        if (responseStatus == 200){
+          for (var prescriptionNumber in prescriptions){
+            var prescription = prescriptions[prescriptionNumber];
+            addPrescription(prescriptionNumber, [prescription.medication], prescription.doctorFirstName + " " + prescription.doctorLastName, "Valid");
+          }
+        }
 
         //CURRENTLY APPLIES TO ALL ACCOUNTS. ONCE USER RECORD RETURNS ACCOUNT TYPE, REPLACE true WITH user_record.accountType == "Doctor"
         if(user_record["Account Type"] == "Doctor")
@@ -546,6 +565,5 @@
     }
 
     addOrder(69423, ["Viagra x1", "Iburprofen x2"], "Delivered");
-    addPrescription(42072, ["Rubbing Alchohol x3", "CBD x7"],"Dr. DicBud", "Denied");
   </script>
 </html>
