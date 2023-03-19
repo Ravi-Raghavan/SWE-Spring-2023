@@ -18,6 +18,15 @@ function handleUserManagingPrescriptions(){
     }
 }
 
+function handleUserManagingDeliveries(){
+    if (localStorage.getItem("User Record") == null){
+        alert("Please Create an Account");
+    }
+    else{
+        window.location.href = '../html/deliverypage.html';
+    }
+}
+
 function getUniqueID(){
         var navigator_info = window.navigator;
         var screen_info = window.screen;
