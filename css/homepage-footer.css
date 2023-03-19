@@ -82,9 +82,10 @@ footer {
   filter: brightness(0) invert(42%) sepia(34%) saturate(447%) hue-rotate(88deg) contrast(84%);
 }
 
-.center_footer .social li img:hover {
-  transform: translateY(-2.5);
-  transition: 0.5s ease;
+.center_footer .social li:hover img {
+  transition: 0.8s ease;
+  transform: translateY(-2.5px);
+  
 }
 
 .center_footer .email {

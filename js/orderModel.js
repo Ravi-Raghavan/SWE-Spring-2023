@@ -25,7 +25,7 @@ async function create(ownerID, costs, drugs, quantity) {
     userRef = db.ref(`/users/`);
 
     let exists = await new Promise((resolve, reject) => {
-        userRef.child(ownerID).on('value', (snapshot) => {
+        userRef.child(ownerID).once('value', (snapshot) => {
             var userInfo = snapshot.val();
             // console.log(userInfo);
             resolve(userInfo !== "null");
@@ -53,7 +53,7 @@ async function createOrder(ownerID, costs, drugs, quantity, status) {
     userRef = db.ref(`/users/`);
 
     let exists = await new Promise((resolve, reject) => {
-        userRef.child(ownerID).on('value', (snapshot) => {
+        userRef.child(ownerID).once('value', (snapshot) => {
             var userInfo = snapshot.val();
             // console.log(userInfo);
             resolve(userInfo !== "null");
@@ -100,7 +100,7 @@ async function update(orderID, costs, quantity, status, drug){
     const userRef = db.ref(`/users/`);
 
     let exists = await new Promise((resolve, reject) => {
-        userRef.child(orderID).on('value', (snapshot) => {
+        userRef.child(orderID).once('value', (snapshot) => {
             var userInfo = snapshot.val();
             // console.log(userInfo);
             resolve(userInfo !== "null");

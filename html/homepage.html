@@ -6,22 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="../css/homepage.css" as>
-    <link rel="stylesheet" type="text/css" href="../css/darkmode.css" as>
-    <link rel="stylesheet" type="text/css" href="../css/dynamic-size.css"  as>
+    <link rel="stylesheet" type="text/css" href="../css/homepage.css">
+    <link rel="stylesheet" type="text/css" href="../css/darkmode.css">
+    <link rel="stylesheet" type="text/css" href="../css/dynamic-size.css">
 
 
     <title>DrugHub | Home</title>
 
-    <script src="../js/dynamicHeaderFooter.js"></script>
-    <script src="../js/scroller.js" async></script>
+    <script  src="../js/dynamicHeaderFooter.js"></script>
+    <script  src="../js/scroller.js"></script>
+    <script  src="../js/reviewScroller.js"></script>
     
     
 </head>
 
 <body> 
     <!-- screen size for demo 2560 x 1600-->
-    <script src="../js/darkmode.js"></script>
+    <script src="../js/darkmode.js" defer></script>
     <!-- <script src="../js/imagePreloader.js"></script> -->
    
 
@@ -30,32 +31,32 @@
     <div class="main">
         <section class="left_main">
             <div class="title">
-                <div id="title-container-1">
+                <div id="title-container-1" onmouseover="pauseHomePageTitle()" onmouseout="resumeHomePageTitle()">
                     <div class="title-box"><h1>We'll be there for you when </h1></div>
                     <div class="title-box"><h1>caffeine just won't cut it </h1></div>
                     <div class="title-box"><h1>anymore</h1></div>
                     </div>
-                    <div id="title-container-2">
+                    <div id="title-container-2" onmouseover="pauseHomePageTitle()" onmouseout="resumeHomePageTitle()">
                     <div class="title-box"><h1>Our pharmacy's like tequila</h1></div>
                     <div class="title-box"><h1>fixes you up and boosts</h1></div>
                     <div class="title-box"><h1>your game</h1></div>
                     </div>
-                    <div id="title-container-3">
+                    <div id="title-container-3" onmouseover="pauseHomePageTitle()" onmouseout="resumeHomePageTitle()">
                     <div class="title-box"><h1>Better than a rebound</h1></div>
                     <div class="title-box"><h1>we've got your health </h1></div>
                     <div class="title-box"><h1>covered</h1></div>
                     </div>
-                    <div id="title-container-4">
+                    <div id="title-container-4" onmouseover="pauseHomePageTitle()" onmouseout="resumeHomePageTitle()">
                     <div class="title-box"><h1>Say goodbye to the days of </h1></div>
                     <div class="title-box"><h1>looking like a zombie </h1></div>
                     <div class="title-box"><h1>after an all-nighter</h1></div>
                     </div>
-                    <div id="title-container-5">
+                    <div id="title-container-5" onmouseover="pauseHomePageTitle()" onmouseout="resumeHomePageTitle()">
                     <div class="title-box"><h1>Medication faster than</h1></div>
                     <div class="title-box"><h1>Starbucks</h1></div>
                     <div class="title-box"><h1>baristas</h1></div>
                     </div>
-                    <div id="title-container-6">
+                    <div id="title-container-6" onmouseover="pauseHomePageTitle()" onmouseout="resumeHomePageTitle()">
                     <div class="title-box"><h1>Flu from your roommate? We've got you</h1></div>
                     <div class="title-box"><h1>We've got </h1></div>
                     <div class="title-box"><h1>you</h1></div>
@@ -98,7 +99,7 @@
         <Section id="filter-container-4">
             <h4 class="filter">Exclusive Extracts</h4>
         </Section>
-        <div class="table_for_items">
+        <div class="table_for_items" onmouseover="pauseHomePageItem()" onmouseleave="resumeHomePageItem()">
             <ul>
                 
                 <div id="box-container-1">
@@ -279,18 +280,18 @@
         </div>
 
         <section class="arrow">
-            <section class="arrow_img leftHome" id="arrow_img" onclick="diagScrollLeft( 4,'box-container-','item_list', 60); diagScrollLeft( 4,'filter-container-','filter', 37); disableBtn('arrow_img')">
+            <section class="arrow_img leftHome" id="arrow_img" onclick="diagScrollLeft( 4,'box-container-','item_list', 60); diagScrollLeft( 4,'filter-container-','filter', 37); disableBtn('arrow_img'); pauseHomePageItem()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                   </svg>
             </section>
-            <section class="arrow_img rightHome" id="arrow_img" onclick="diagScrollRight( 4,'box-container-','item_list', 40); diagScrollRight( 4,'filter-container-','filter', 37); disableBtn('arrow_img')">
+            <section class="arrow_img rightHome" id="arrow_img" onclick="diagScrollRight( 4,'box-container-','item_list', 40);  diagScrollRight( 4,'filter-container-','filter', 37); disableBtn('arrow_img'); pauseHomePageItem()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                   </svg>
             </section>
         </section>
- 
+ <!-- pauseScroll( 4,'box-container-','item_list', 40); -->
         <div class="service_grid">
             <section class="main_box">
                 <section class="left_side">
@@ -428,7 +429,8 @@
 
         <h1 class="main_body_title">Customer review & recommendation</h1>  
 
-        <section class="review_box">
+        <div id="review-box-1" >
+            <section class="review_box" onmouseenter="pauseReview()" onmouseleave="resumeReview()">
             <section class="review_left_box">
                 <img src="../images/abid_img.png">
             </section>
@@ -447,8 +449,55 @@
                 <section class="author">Abid Azad - Rutgers Student</section>
             </section>
         </section>
+        </div>
+        <div id="review-box-2" >
+            <section class="review_box" onmouseenter="pauseReview()" onmouseleave="resumeReview()">
+            <section class="review_left_box">
+                <img src="../images/kristina_img.png">
+            </section>
+            <section class="review_right_box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="quotation" viewBox="0 0 16 16">
+                    <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z"/>
+                    </svg>
+                    <!-- <img src="../images/quotes.png" class="quotation" style="width:10; height: 10;"> -->
+                <section class="text">The e-commerce pharmacy website had affordable prices and a wide selection of over-the-counter medication. My order arrived quickly and the medication was good quality. 
+                </section>
+                
+                <section class="author">Kristina Jokic  - Rutgers Student</section>
+            </section>
+        </section>
+        </div>
+        <div id="review-box-3" >
+            <section class="review_box" onmouseenter="pauseReview()" onmouseleave="resumeReview()">
+            <section class="review_left_box">
+                <img src="../images/quadis_img.png">
+            </section>
+            <section class="review_right_box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="quotation" viewBox="0 0 16 16">
+                    <path d="M12 12a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1h-1.388c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 9 7.558V11a1 1 0 0 0 1 1h2Zm-6 0a1 1 0 0 0 1-1V8.558a1 1 0 0 0-1-1H4.612c0-.351.021-.703.062-1.054.062-.372.166-.703.31-.992.145-.29.331-.517.559-.683.227-.186.516-.279.868-.279V3c-.579 0-1.085.124-1.52.372a3.322 3.322 0 0 0-1.085.992 4.92 4.92 0 0 0-.62 1.458A7.712 7.712 0 0 0 3 7.558V11a1 1 0 0 0 1 1h2Z"/>
+                    </svg>
+                    <!-- <img src="../images/quotes.png" class="quotation" style="width:10; height: 10;"> -->
+                <section class="text">The e-commerce pharmacy website had a simple and user-friendly design that made it easy to find the medication I needed. My order arrived in just a few days, which was faster than expected. 
+                </section>
+                
+                <section class="author">Qadis Chaudhary - Rutgers Student</section>
+            </section>
+        </section>
+        </div>
+        
         <div class="under_review_box">
-          <span class="outer">.</span><span class="inside">.<span class="outer">.</span>
+            <section class="dots-container">
+                <div id="dot-box-1" onmouseenter="pauseReview()" onmouseleave="resumeReview()" onclick="switchReview('0')">
+                    .
+                </div>
+                <div id="dot-box-2" onmouseenter="pauseReview()" onmouseleave="resumeReview()" onclick="switchReview('1')">
+                    .
+                </div>
+                <div id="dot-box-3" onmouseenter="pauseReview()" onmouseleave="resumeReview()" onclick="switchReview('2')">
+                    .
+                </div>
+            </section>
+          <!-- <span class="outer">.</span><span class="inside" onclick="perspectiveRight(3, 'review-box-')">.<span class="outer">.</span> -->
         </div>
     </section>
 

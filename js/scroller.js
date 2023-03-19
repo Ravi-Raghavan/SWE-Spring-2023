@@ -72,21 +72,63 @@ function move(iter, fname, box, transformLen) {
 }
 
 // ? homepage title shuffle
-setInterval(() => {
+// ! infinite loop
+let homePageTitle = setInterval(() => {
   move(5, "title-container-", "title-box", 100);
 }, 5000);
 
+// at move over pause the loop
+function pauseHomePageTitle() {
+  clearInterval(homePageTitle);
+  homePageTitle = null;
+}
+
+// restart the interval after mouse is out
+function resumeHomePageTitle() {
+  homePageTitle = setInterval(() => {
+    move(5, "title-container-", "title-box", 100);
+  }, 5000);
+}
+
 // ? homepage item shuffle
+//  ! infinite loop
+let flag = true; // allows to scroll
+let intervalPropItem = setInterval(function () {
+  diagScrollRight(4, "box-container-", "item_list", 60);
+  diagScrollRight(4, "filter-container-", "filter", 37);
+}, 5000);
+
+// start the infinite loop again
+function startItemLoop() {
+  intervalPropItem = setInterval(function () {
+    diagScrollRight(4, "box-container-", "item_list", 60);
+    diagScrollRight(4, "filter-container-", "filter", 37);
+  }, 5000);
+}
+
+// * pauses interval when hovered
+function pauseHomePageItem() {
+  clearInterval(intervalPropItem);
+  intervalPropItem = null;
+}
+
+function resumeHomePageItem() {
+  intervalPropItem = setInterval(() => {
+    diagScrollRight(4, "box-container-", "item_list", 60);
+    diagScrollRight(4, "filter-container-", "filter", 37);
+  }, 5000);
+}
+
 // ? scrolls right and opacity changes linearly
 function diagScrollRight(iter, fname, box, transformLen) {
   //  * iter number of big boxes
   //  * ID of big box
   //  * class name of small box
   //   ? transformLen defines how much transformation of the left box
+
   var boxGreenContainer, boxes, replacementBox, boxBlueContainer;
   var num = 1;
-  var nterm = (iter * (iter - 1)) / 2;
-  for (let j = 1; j <= iter; j++) {
+ for (let j = 1; j <= iter; j++) {
     boxBlueContainer = document.getElementById(`${fname}${j}`);
     num = j;
     // ? checks if the current frame is visible
@@ -225,10 +267,15 @@ function diagScrollLeft(iter, fname, box, transformLen) {
 
 // ? disables the btn
 function disableBtn(name) {
-  var btn = document.getElementById(`${name}`);
-  btn.style.pointerEvents = "none";
+  // returns a node list iterat to get each element
+  var btn = document.querySelectorAll(`[id=${name}]`);
+  for (let i = 0; i < btn.length; i++) {
+    btn[i].style.pointerEvents = "none";
+  }
 
   setTimeout(function () {
-    btn.style.pointerEvents = "auto";
-  }, 2000);
+    for (let i = 0; i < btn.length; i++) {
+      btn[i].style.pointerEvents = "auto";
+    }
+  }, 1500);
 }

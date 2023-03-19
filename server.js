@@ -83,10 +83,13 @@ const public_paths_js = [
   "/js/prescription.js",
   "/js/dynamicHeaderFooter.js",
   "/js/scroller.js",
+  "/js/reviewScroller.js",
   "/js/homepage.js",
   "/js/imagePreloader.js",
   "/js/testModel.js",
   "/js/testController.js",
+  "/js/prescriptionModel.js",
+  "/js/prescriptonController.js",
 ];
 
 const public_paths_images = [
@@ -130,6 +133,8 @@ const public_paths_images = [
   "/images/snapchat.png",
   "/images/reddit.png",
   "/images/redx.png",
+  "/images/quadis_img.png",
+  "/images/kristina_img.png",
 ];
 
 const public_paths_product = [
@@ -169,6 +174,9 @@ const public_paths_product = [
 const { createProduct } = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCost } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
+const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess } = require("./js/prescriptionController");
+const { createDoctorPrescription, createValidatedPrescription } = require("./js/prescriptionModel");
+const FirebaseAPI = require("./js/FirebaseAPI");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -429,6 +437,96 @@ function updateUser(request, response){
   });
 }
 
+function sendContactEmail(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    await SMTP.sendContactEmail(credentials);
+  });
+
+  response.writeHead(200, { "Content-type": "text/plain" });
+  response.write("Done!");
+  response.end();
+}
+
+function getPrescriptionsUser(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    await FirebaseAPI.getPrescriptionsUser(credentials.uid, response);
+  });
+}
+
+function addPaymentCard(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    await FirebaseAPI.addPaymentCard(credentials, response);
+  });
+}
+
+function getPaymentCards(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.getPaymentCards(queryStringParameters, response);
+  });
+}
+
+function deletePaymentCard(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.deletePaymentCard(queryStringParameters, response);
+  });
+}
+
+function deleteAccount(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.deleteUserAccount(queryStringParameters, response);
+  });
+}
+
+function parseQueryStringParameters(queryString) {
+  var queryStringParameters = {};
+  var tokenizedQueryString = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
+
+  for (var i = 0; i < tokenizedQueryString.length; i++) {
+      var token = tokenizedQueryString[i].split('=');
+      queryStringParameters[decodeURIComponent(token[0])] = decodeURIComponent(token[1] || '');
+  }
+  return queryStringParameters;
+}
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -459,6 +557,18 @@ const server = http.createServer((request, response) => {
 
   if (file == "") {
     // If client is not requesting a file, they are simply requesting for data. Handle that HERE
+
+    //Strip Query String Parameteres
+    var questionMarkIndex = path.indexOf("?");
+    var queryStringParameters = "";
+
+    if (questionMarkIndex != -1){
+      queryStringParameters = parseQueryStringParameters(path.substring(questionMarkIndex));
+      console.log(JSON.stringify(queryStringParameters));
+      path = path.substring(0, questionMarkIndex);
+    }
+    
+
     switch (path) {
       case "/credentials/google":
         GoogleAuth.retrieveClientCredentials(response);
@@ -526,6 +636,49 @@ const server = http.createServer((request, response) => {
         updateUser(request, response);
         break;
 
+      case "/make/patientPrescription":
+        createPatientPrescriptionProcess(request,response);
+        break;  
+
+      case "/make/doctorPrescription":
+        createDoctorPrescriptionProcess(request,response);
+        break;
+
+      case "/prescription/accountType":
+        getAccountTypeForPPProcess(request,response);
+        break;  
+
+      case "/contact-us":
+        sendContactEmail(request, response);
+        break;
+
+      case "/prescriptions/getDoctorList":
+        getDoctorPrescriptionsProcess(request,response);
+        break;  
+      
+      case "/make/validatedPrescription":
+        createValidatedPrescriptionProcess(request,response);
+        break;
+      
+      case "/get/prescriptions/user":
+        getPrescriptionsUser(request, response);
+        break;
+      
+      case "/add/payment_card":
+        addPaymentCard(request, response);
+        break;
+      
+      case "/get/payment_cards":
+        getPaymentCards(request, response, queryStringParameters);
+        break;
+      
+      case "/delete/payment_card":
+        deletePaymentCard(request, response, queryStringParameters);
+        break;
+      
+      case "/delete/account":
+        deleteAccount(request, response, queryStringParameters);
+        break;
     }
   } else {
     //Client is requesting a file

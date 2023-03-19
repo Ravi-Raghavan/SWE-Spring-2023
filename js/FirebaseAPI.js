@@ -3,6 +3,7 @@ var CryptoJS = require("crypto-js");
 const admin = require("./firebase").admin;
 var db = admin.database();
 var ref = db.ref(`/users/`);
+var validatedPrescriptions = db.ref(`/validatedPrescriptions/`);
 
 //Function to create a user(i.e. registration!) in our database
 //userParameters: parameters for a particular user(i.e. name, email, etc)
@@ -28,8 +29,8 @@ async function register(userParameters, response){
     userRecord["tokensValidAfterTime"] = currentDateTime;
     userRecord["Account Type"] = accountType;
     userRecord["Subscription Plan"] = "Free";
-    userRecord.phoneNumber = "N/A"
-    userRecord["Address"] = "N/A"
+    userRecord.phoneNumber = "123-456-7890"
+    userRecord["Address"] = "10 Frelinghuysen Road, Piscataway, New Jersey, 08854"
 
     console.log("==========USER RECORD ==============");
     console.log(userRecord);
@@ -47,8 +48,8 @@ async function register(userParameters, response){
         disabled: userParameters.disabled,
         accountType: accountType,
         subscriptionPlan: "Free",
-        phoneNumber: "N/A",
-        address: "N/A"
+        phoneNumber: "123-456-7890",
+        address: "10 Frelinghuysen Road, Piscataway, New Jersey, 08854"
     })
 
     //Send Request
@@ -90,7 +91,7 @@ async function search(searchParameters){
 
 //function which checks if a user's email has been validated yet
 async function isValidated(uid, response){
-    ref.child(`${uid}`).on('value', (snapshot) => {
+    ref.child(`${uid}`).once('value', (snapshot) => {
         var value = snapshot.val();
         if (value == null){
             response.writeHead(200, { "Content-type": "text/plain" });
@@ -115,7 +116,7 @@ async function isValidated(uid, response){
 //get account type of user with given uid
 async function getAccountType(uid){
     var accountType = await new Promise((resolve, reject) => {
-        ref.child(`${uid}`).on('value', (snapshot) => {
+        ref.child(`${uid}`).once('value', (snapshot) => {
             var value = snapshot.val();
             if (value == null){
                 resolve("N/A");
@@ -126,15 +127,13 @@ async function getAccountType(uid){
             }
         })
     })
-
     return accountType;
-
 }
 
 //get subscription plan for user based on uid
 async function getSubscriptionPlan(uid){
     var subscriptionPlan = await new Promise((resolve, reject) => {
-        ref.child(`${uid}`).on('value', (snapshot) => {
+        ref.child(`${uid}`).once('value', (snapshot) => {
             var value = snapshot.val();
             if (value == null){
                 resolve("N/A");
@@ -152,7 +151,7 @@ async function getSubscriptionPlan(uid){
 //get phone number for user based on uid
 async function getPhoneNumber(uid){
     var phoneNumber = await new Promise((resolve, reject) => {
-        ref.child(`${uid}`).on('value', (snapshot) => {
+        ref.child(`${uid}`).once('value', (snapshot) => {
             var value = snapshot.val();
             if (value == null){
                 resolve("N/A");
@@ -170,7 +169,7 @@ async function getPhoneNumber(uid){
 //get address for user based on uid
 async function getAddress(uid){
     var address = await new Promise((resolve, reject) => {
-        ref.child(`${uid}`).on('value', (snapshot) => {
+        ref.child(`${uid}`).once('value', (snapshot) => {
             var value = snapshot.val();
             if (value == null){
                 resolve("N/A");
@@ -214,6 +213,15 @@ async function login(userParameters, response){
 
 async function updateUser(userParameters, response){
     var uid = userParameters.uid;
+    
+    if (userParameters.phoneNumber == null){
+        userParameters.phoneNumber = "123-456-7890";
+    }
+
+    if (userParameters.address == null){
+        userParameters.address = "110 Frelinghuysen Road, Piscataway, NJ, 08854";
+    }
+
     ref.child(`${uid}`).update({
         phoneNumber: userParameters.phoneNumber,
         address: userParameters.address
@@ -230,6 +238,129 @@ async function updateUser(userParameters, response){
     })
 }
 
+async function getPrescriptionsUser(uid, response){
+    validatedPrescriptions.child(`${uid}`).once('value', (snapshot) => {
+        var value = snapshot.val();
+        if (value == null){
+            var prescription_data = {"404 Error Message": "N/A"}
+            response.writeHead(404, { "Content-type": "application/json" });
+            response.write(JSON.stringify(prescription_data));
+            response.end();
+        }
+        else{
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(value));
+            response.end();
+        }
+    })
+}
+
+async function addPaymentCard(credentials, response){
+    var uid = credentials.uid;
+    var paymentsRef = ref.child(`${uid}/payment_cards`)
+
+    paymentsRef.push().set(credentials)
+    .then(() => {
+        response.writeHead(200, { "Content-type": "text/plain" });
+        response.write("Successfully Updated");
+        response.end();
+    })
+    .catch((err) => {
+        response.writeHead(404, { "Content-type": "text/plain" });
+        response.write("Failed to Update User");
+        response.end();
+    })
+}
+
+async function getPaymentCards(credentials, response){
+    var uid = credentials.uid;
+    var paymentsRef = ref.child(`${uid}/payment_cards`)
+
+    paymentsRef.once('value', (snapshot) => {
+        var value = snapshot.val();
+        if (value == null){
+            var payment_data = {"404 Error Message": "N/A"}
+            response.writeHead(404, { "Content-type": "application/json" });
+            response.write(JSON.stringify(payment_data));
+            response.end();
+        }
+        else{
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(value));
+            response.end();
+        }
+    })
+}
+
+async function deletePaymentCard(credentials, response){
+    var uid = credentials.uid;
+    var paymentsRef = ref.child(`${uid}/payment_cards`)
+
+    paymentsRef.once('value', (snapshot) => {
+        var value = snapshot.val();
+        console.log("Value: " + JSON.stringify(value));
+        if (value == null){
+            response.writeHead(404, { "Content-type": "text/plain" });
+            response.write("Failed to Delete Payment Card");
+            response.end();
+        }
+        else{
+            var paymentCardID = "";
+
+            for (var paymentCardKey in value){
+                var paymentCard = value[paymentCardKey]
+
+                if (paymentCard.cardNumber == credentials.cardNumber){
+                    paymentCardID = paymentCardKey;
+                }
+            }
+
+            console.log("HERE: " + paymentCardID);
+            ref.child(`${uid}/payment_cards/${paymentCardID}`).set(null)
+            .then(() => {
+                console.log("Success!");
+                response.writeHead(200, { "Content-type": "text/plain" });
+                response.write("Successfully Delete Payment Card");
+                response.end();
+            })
+            .catch((err) => {
+                console.log(err);
+                response.writeHead(404, { "Content-type": "text/plain" });
+                response.write("Failed to Delete Payment Card");
+                response.end();
+            })
+        }
+    })
+}
+
+async function deleteUserAccount(credentials, response){
+    var uid = credentials.uid;
+
+    admin.auth().deleteUser(uid)
+    .then(() => {
+
+        ref.child(`${uid}`).set(null)
+        .then(() => {
+            console.log("Success!");
+            response.writeHead(200, { "Content-type": "text/plain" });
+            response.write("Successfully Deleted User Account");
+            response.end();
+        })
+        .catch((err) => {
+            console.log(err);
+            response.writeHead(404, { "Content-type": "text/plain" });
+            response.write("Failed to Delete User Account");
+            response.end();
+        })
+    })
+    .catch((err) => {
+        console.log(err);
+        response.writeHead(404, { "Content-type": "text/plain" });
+        response.write("Failed to Delete User Account");
+        response.end();
+    })
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -239,5 +370,10 @@ module.exports = {
     getPhoneNumber: getPhoneNumber,
     getAddress: getAddress, 
     updateUser: updateUser,
+    getPrescriptionsUser: getPrescriptionsUser,
+    addPaymentCard: addPaymentCard, 
+    getPaymentCards: getPaymentCards, 
+    deletePaymentCard: deletePaymentCard,
+    deleteUserAccount: deleteUserAccount,
     login: login
 }

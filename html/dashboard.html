@@ -42,7 +42,7 @@
         <a id="paymentOption"
           class=""
           href="#"
-          onclick='swapDisplay("payment-info", "prescriptionOption")'
+          onclick='swapDisplay("payment-info", "paymentOption")'
           >Payment Information</a>
 
         <a id="settingsOption"
@@ -107,7 +107,7 @@
                   <th>Status</th>
                 
                 </tr>
-                <tr>
+                <!-- <tr>
                   <td>69420</td>
                   <td>Tylenol x1 <br> Iburprofen x2 <br> Rubbing Alcohol x3</td>
                   <td>Not Delivered</td>
@@ -122,7 +122,7 @@
                   <td>69422</td>
                   <td>Viagra x1</td>
                   <td>Delivered</td>
-                </tr>
+                </tr> -->
               </table>
             </div>
       </div>
@@ -139,7 +139,7 @@
               <th>Approval Status</th>
             
             </tr>
-            <tr>
+            <!-- <tr>
               <td>42069</td>
               <td>Tylenol x1 <br> Iburprofen x2 <br> Rubbing Alcohol x3</td>
               <td>Dr. Ravi</td>
@@ -157,7 +157,7 @@
               <td>Viagra x1</td>
               <td>Dr. Mayank</td>
               <td>Denied</td>
-            </tr>
+            </tr> -->
           </table>
         </div>
   </div>
@@ -178,15 +178,10 @@
                   <th style="width: 30%;">Card Number</th>
                   <th style="width: 40%;">Billing Address</th>
                   <th style="width: 10%;">Expiration Date</th>
+                  <th>Remove</th>
                 
                 </tr>
-                <tr>
-                  <td>Ravi Ragahavan</td>
-                  <td>---- ---- ---- 4201</td>
-                  <td>Some Random Obscure Address</td>
-                  <td>09/26</td>
-                  
-                </tr>
+                
               </table>
             </div>
       </div>
@@ -194,28 +189,28 @@
             <div class="row">
               <div class="col-75">
                 <div class="container">
-                  <form action="/action_page.php">
+                  <form onsubmit = "return false">
             
                     <div class="row">
                       <div class="col-50">
                         <h3>Billing Address</h3>
                         <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
+                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe" required>
                         <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="text" id="email" name="email" placeholder="john@example.com">
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
                         <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
-                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
+                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street" required>
                         <label for="city"><i class="fa fa-institution"></i> City</label>
-                        <input type="text" id="city" name="city" placeholder="New York">
+                        <input type="text" id="city" name="city" placeholder="New York" required>
             
                         <div class="row">
                           <div class="col-50">
                             <label for="state">State</label>
-                            <input type="text" id="state" name="state" placeholder="NY">
+                            <input type="text" id="state" name="state" placeholder="NY" required>
                           </div>
                           <div class="col-50">
                             <label for="zip">Zip</label>
-                            <input type="text" id="zip" name="zip" placeholder="10001">
+                            <input type="text" id="zip" name="zip" placeholder="10001" required>
                           </div>
                         </div>
                       </div>
@@ -230,29 +225,26 @@
                           <i class="fa fa-cc-discover" style="color:orange;"></i>
                         </div>
                         <label for="cname">Name on Card</label>
-                        <input type="text" id="cname" name="cardname" placeholder="John More Doe">
+                        <input type="text" id="cname" name="cardname" placeholder="John More Doe" required>
                         <label for="ccnum">Credit card number</label>
-                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444">
+                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111 2222 3333 4444" required>
                         <label for="expmonth">Exp Month</label>
-                        <input type="text" id="expmonth" name="expmonth" placeholder="September">
+                        <input type="text" id="expmonth" name="expmonth" placeholder="September" required>
             
                         <div class="row">
                           <div class="col-50">
                             <label for="expyear">Exp Year</label>
-                            <input type="text" id="expyear" name="expyear" placeholder="2018">
+                            <input type="text" id="expyear" name="expyear" placeholder="2018" required>
                           </div>
                           <div class="col-50">
                             <label for="cvv">CVV</label>
-                            <input type="text" id="cvv" name="cvv" placeholder="352">
+                            <input type="text" id="cvv" name="cvv" placeholder="352" minlength ="3" maxlength="4" required>
                           </div>
                         </div>
                       </div>
             
                     </div>
-                    <label>
-                      <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
-                    </label>
-                    <input type="submit" value="Add Card Information" class="btn btnDash">
+                    <button  class="btn btnDash" onclick = "addCard()"> Add Card Information </button>
                   </form>
                 </div>
               </div>
@@ -298,7 +290,7 @@
 
                 <div class="settingRow">
                   <h3>Delete Account</h3>
-                  <button class="log-btn delete"><body>Delete</body></button>
+                  <button class="log-btn delete" onclick = 'deleteAccount()'><body>Delete</body></button>
               </div>
 
               </div>
@@ -324,25 +316,91 @@
   </body>
 
   <script>
-    function logout() {
+    async function logout() {
+      console.log("Leaving the webpage");
+      var user_record = JSON.parse(localStorage.getItem("User Record"));
+      
+      //Write updated User Record to Database
+      let response = await fetch('/update/user', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          uid: user_record["uid"],
+          phoneNumber: user_record.phoneNumber,
+          address: user_record["Address"]
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+
       localStorage.removeItem("User Record");
       window.location.href = "./logoutPage.html";
     }
 
-    window.onload = function () {
-
-      
+    window.onload = async function () {
       loadProfile();
       //PORTION TO ADD SPECIAL FUNCTIONS TO DOCTOR ACCOUNTS
       if (localStorage.getItem("User Record") == null) {
         //
       } else {
-        
         //USER RECORD DOES NOT HAVE AN ACCOUNT TYPE BEING LISTED IN THE JSON, FIX!!!!
 
         var user_record = JSON.parse(localStorage.getItem("User Record"));
         console.log(user_record);
         console.log("Account Type: " + user_record['Account Type']); 
+
+        let response = await fetch('/get/prescriptions/user', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            uid: user_record["uid"]
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
+  
+        let responseStatus = response.status;
+        let prescriptions = await response.json()
+        console.log("Response Status: " + responseStatus);
+        console.log("Prescription Data Fetched: " + JSON.stringify(prescriptions));
+
+        if (responseStatus == 200){
+          for (var prescriptionNumber in prescriptions){
+            var prescription = prescriptions[prescriptionNumber];
+            addPrescription(prescriptionNumber, [prescription.medication], prescription.doctorFirstName + " " + prescription.doctorLastName, "Valid");
+          }
+        }
+
+        let paymentCardResponse = await fetch(`/get/payment_cards?uid=${user_record['uid']}`)
+        let paymentCardResponseJSON = await paymentCardResponse.json()
+
+        console.log("Payment Card Response Status: " + paymentCardResponse.status);
+        if (paymentCardResponse.status == 200){
+          console.log("Payment Data Fetched: " + JSON.stringify(paymentCardResponseJSON));
+
+          for (var paymentCardNumber in paymentCardResponseJSON){
+            var paymentCard = paymentCardResponseJSON[paymentCardNumber]
+            console.log("Payment Card: " + JSON.stringify(paymentCard));
+            var name = paymentCard.name;
+
+            var number = paymentCard.cardNumber;
+
+            var address = paymentCard.address;
+            var city = paymentCard.city;
+            var state = paymentCard.state;
+            var zip = paymentCard.zip;
+
+            var expireM = paymentCard.expireM;
+            var expireY = paymentCard.expireY;
+
+            var rows = "<tr><td>"+name+"</td><td>"+number+"</td><td>"+address+", "+city+", "+state+", "+zip+"</td><td>"+expireM+" "+expireY+"</td></tr>";
+            var table = document.getElementById("paymentList");
+            var template = document.createElement('template');
+            template.innerHTML = rows;
+            table.append(template.content);
+      
+          }
+        }
 
         //CURRENTLY APPLIES TO ALL ACCOUNTS. ONCE USER RECORD RETURNS ACCOUNT TYPE, REPLACE true WITH user_record.accountType == "Doctor"
         if(user_record["Account Type"] == "Doctor")
@@ -378,7 +436,9 @@
           user_record.displayName;
         document.getElementById("full-name").innerHTML =
           user_record.displayName;
-        document.getElementById("email").innerHTML = user_record.email;        
+        document.getElementById("email").innerHTML = user_record.email;   
+        document.getElementById("address").innerHTML = user_record["Address"];
+        document.getElementById("phone").innerHTML = user_record.phoneNumber;
       }
 
     }
@@ -394,6 +454,22 @@
 
       if(menuOption == "infoOption")
         loadProfile();
+    }
+
+    async function removeInfo(x, number, uid){
+      console.log(x);
+      var row = document.getElementById("paymentList").rows[x]
+      console.log(row);
+      console.log(number);
+      document.getElementById("paymentList").deleteRow(x);
+
+      //DELETE CREDIT CARD FROM DATABASE
+      let response = await fetch(`/delete/payment_card?cardNumber=${number}&uid=${uid}`, {
+        method: 'DELETE',
+      })
+
+      console.log("Response Status: " + response.status);
+      
     }
 
     //HELPER FUNCTION TO ADD ORDERS TO ORDER TABLE
@@ -451,12 +527,108 @@
           return;
       }
     }
-    function addressChange(){
+
+    async function addCard(){
+      document.getElementById("cvv").setCustomValidity("");
+
+
+      var fname = document.getElementById("fname").value;
+      var user_record = JSON.parse(localStorage.getItem("User Record"));
+      var uid = user_record["uid"];
+      var name = document.getElementById("cname").value;
+      var email = document.getElementById("email").value;
+
+      var number = document.getElementById("ccnum").value;
+
+      var address = document.getElementById("adr").value;
+      var city = document.getElementById("city").value;
+      var state = document.getElementById("state").value;
+      var zip = document.getElementById("zip").value;
+
+      var expireM = document.getElementById("expmonth").value;
+      var expireY = document.getElementById("expyear").value;
+      var cvv = document.getElementById("cvv").value;
+
+
+
+      //Validate State
+      var States = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
+      if(state==null || !States.includes(state)){
+        alert("Please Enter a Valid State!");
+        return false;
+      }
+
+    //Validate Zip Code      
+    regex = new RegExp(/^[0-9]{5}$/);
+      if(zip == null || regex.test(zip)==false){
+        alert("Please enter a valid Zip Code!");
+      return false;
+      }
+      //Test Validation for Credit Card Number (checks for a sequence of at least 12 numbers)
+      number = number.replace(/\s/g, '');
+      regex = new RegExp(/^[0-9]{12,19}$/);
+      if(number == null || regex.test(number) == false){
+        alert("Enter a valid Credit Card Number!");
+        return false;
+      }
+
+      //Test Validation for Month
+      var Months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      if(expireM== null || !Months.includes(expireM))
+      {
+        alert("Please Enter a valid Month!");
+        return false;
+      }
+
+      //Test Validation for Year (Checks for four digits right now)
+      regex = new RegExp(/^[0-9]{4}$/);
+      if(expireY == null || regex.test(expireY)==false){
+        alert("Please enter a valid Year!");
+      return false;
+      }
+
+      //Test Validation for CVV
+      regex = new RegExp(/^[0-9]{3,4}$/);
+      if(cvv == null || regex.test(cvv)==false){
+        alert("Please enter a valid CVV!");
+      return false;
+      }
+
+      var rows = "<tr><td>"+name+"</td><td>---- ---- ---- "+number.substring(number.length-4)+"</td><td>"+address+", "+city+", "+state+", "+zip+"</td><td>"+expireM+" "+expireY+`</td><td><i class=\"fa fa-trash\" style=\"cursor: pointer;\" onclick  = \"removeInfo(this.parentNode.parentNode.rowIndex, ${number}, '${uid}')\"></i></td></tr>`;
+      var table = document.getElementById("paymentList");
+      var template = document.createElement('template');
+      template.innerHTML = rows;
+      table.append(template.content);
+
+      var paymentInformation = {"uid" : user_record.uid, "name": name, "cardNumber": number, "address": address, "city": city, "state": state, "zip": zip, "expireM": expireM, "expireY": expireY,  "expirationDate": `${expireM}/${expireY}`, "cvv": cvv}
+      
+      let response = await fetch('/add/payment_card', {
+        method: 'PATCH',
+        body: JSON.stringify(paymentInformation),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+
+      return false;
+    }
+    async function addressChange(){
       var user_record = JSON.parse(localStorage.getItem("User Record"));
       var text = prompt("Address: ", document.getElementById("address").innerText);
       if(text){
         document.getElementById("address").innerText = text;
         user_record['Address'] = text;
+        let response = await fetch('/update/user', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            uid: user_record["uid"],
+            phoneNumber: user_record.phoneNumber,
+            address: user_record["Address"]
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
       }
       else{
 
@@ -464,12 +636,24 @@
 
       localStorage.setItem("User Record", JSON.stringify(user_record));
     }
-    function phoneNumberChange(){
+    async function phoneNumberChange(){
       var user_record = JSON.parse(localStorage.getItem("User Record"));
       let text = prompt("Phone: ", document.getElementById("phone").innerText);
       if(text){
         document.getElementById("phone").innerText = text;
-        user_record['Phone Number'] = text;
+        user_record.phoneNumber = text;
+
+        let response = await fetch('/update/user', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            uid: user_record["uid"],
+            phoneNumber: user_record.phoneNumber,
+            address: user_record["Address"]
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
       }
       else{
         
@@ -478,27 +662,20 @@
       localStorage.setItem("User Record", JSON.stringify(user_record));
     }
 
-    window.onbeforeunload = async function(){
-      console.log("Leaving the webpage");
+    async function deleteAccount(){
       var user_record = JSON.parse(localStorage.getItem("User Record"));
-      
-      //Write updated User Record to Database
-      let response = await fetch('/update/user', {
-        method: 'PATCH',
-        body: JSON.stringify({
-          uid: user_record["uid"],
-          phoneNumber: user_record["Phone Number"],
-          address: user_record["Address"]
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
+      var uid = user_record.uid;
+
+      //DELETE User Account FROM DATABASE
+      let response = await fetch(`/delete/account?uid=${uid}`, {
+        method: 'DELETE',
       })
 
-      return await response.text();
+      console.log("Response Status: " + response.status);
+      localStorage.removeItem("User Record");
+      window.location.href = "./logoutPage.html";
     }
 
     addOrder(69423, ["Viagra x1", "Iburprofen x2"], "Delivered");
-    addPrescription(42072, ["Rubbing Alchohol x3", "CBD x7"],"Dr. DicBud", "Denied");
   </script>
 </html>
