@@ -4,7 +4,7 @@ const APP_SECRET = "EOgSXbL9wbXoocQCIymU0GPibLjs9_HDpTCqtZxpru5ONHC2Nq5Zkgxb01xM
 const base = "https://api-m.sandbox.paypal.com";
 
 async function createOrder() {
-    var purchaseAmount = 100.00;
+    var purchaseAmount = 32.98;
     // const admin = require("./firebase").admin;
     // admin.database().ref("/total/").once("value")
     //     .then((snapshot) => {

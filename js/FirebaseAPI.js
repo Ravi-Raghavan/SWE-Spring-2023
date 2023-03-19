@@ -3,6 +3,7 @@ var CryptoJS = require("crypto-js");
 const admin = require("./firebase").admin;
 var db = admin.database();
 var ref = db.ref(`/users/`);
+var validatedPrescriptions = db.ref(`/validatedPrescriptions/`);
 
 //Function to create a user(i.e. registration!) in our database
 //userParameters: parameters for a particular user(i.e. name, email, etc)
@@ -237,6 +238,23 @@ async function updateUser(userParameters, response){
     })
 }
 
+async function getPrescriptionsUser(uid, response){
+    validatedPrescriptions.child(`${uid}`).on('value', (snapshot) => {
+        var value = snapshot.val();
+        if (value == null){
+            var prescription_data = {"404 Error Message": "N/A"}
+            response.writeHead(404, { "Content-type": "application/json" });
+            response.write(JSON.stringify(prescription_data));
+            response.end();
+        }
+        else{
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(value));
+            response.end();
+        }
+    })
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -246,5 +264,6 @@ module.exports = {
     getPhoneNumber: getPhoneNumber,
     getAddress: getAddress, 
     updateUser: updateUser,
+    getPrescriptionsUser: getPrescriptionsUser,
     login: login
 }
