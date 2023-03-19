@@ -59,25 +59,25 @@ body{
   font-size: 16px;
   color: var(--warning);
   margin-top: 30px;
-  transition: 0.5s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 .main-box .title-next-next-doctor {
   font-size: 16px;
   color: var(--warning);
   margin-top: 30px;
-  transition: 0.5s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 
 .main-box .title-next-next.next{
   color: var(--primary);
-  transition: 0.5s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 .main-box .title-next-next-doctor.next{
   color: var(--primary);
-  transition: 0.5s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 .main-box .title {
@@ -230,25 +230,25 @@ background-color: var(--tertiary);
   .main-box .acknowledgement-box span{
       font-size: 2rem;
       color: var(--warning);
-      transition: 0.5s ease-in-out;
+      transition: 0.3s ease-in-out;
     }
 
   .main-box .acknowledgement-box.clicked span{
       font-size: 2rem;
       color: var(--tertiary);
-      transition: 0.5s ease-in-out;
+      transition: 0.3s ease-in-out;
   }
 
   .main-box .acknowledgement-box-doctor span{
     font-size: 2rem;
     color: var(--warning);
-    transition: 0.5s ease-in-out;
+    transition: 0.3s ease-in-out;
   }
 
 .main-box .acknowledgement-box-doctor.clicked span{
     font-size: 2rem;
     color: var(--tertiary);
-    transition: 0.5s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 .main-box .submit:hover{
