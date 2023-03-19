@@ -64,18 +64,18 @@
                     <div> 
                         <i class="fa fa-envelope"></i>
                         <span>
-                            <h5>emailWithDrugs@nodrugs.com</h5>
+                            <h5>swespring2023@gmail.com</h5>
                             <p>Email us your deepest, darkest secrets.</p>
                         </span>
                     </div>
                 </div>
 
                 <div class = "contact-col">
-                    <form action="">
-                        <input type ="text" placeholder="Give us a Name!" required>
-                        <input type ="email" placeholder="Give us a Email!" required>
-                        <input type ="subject" placeholder="What's it about?" required>
-                        <textarea rows = "8" placeholder="What ails you?" required></textarea>
+                    <form action="" id = "contact-form">
+                        <input type ="text" id = "contact-form-name" placeholder="Give us a Name!" required>
+                        <input type ="email" id = "contact-form-email" placeholder="Give us a Email!" required>
+                        <input type ="subject" id = "contact-form-subject" placeholder="What's it about?" required>
+                        <textarea rows = "8" placeholder="What ails you?" id = "contact-form-content" required></textarea>
                         <button type="submit" class="log-btn log-btnContact">Send it!</button>
                     </form>
                 </div>
@@ -86,6 +86,15 @@
         <div id="footer"></div> 
         
         <script>
+
+            document.getElementById('contact-form').addEventListener('submit', function(evt){
+                evt.preventDefault();
+                var user_name = document.getElementById("contact-form-name").value;
+                var user_email = document.getElementById("contact-form-email").value;
+
+                var email_subject = document.getElementById("contact-form-subject").value;
+                var email_content = document.getElementById("contact-form-content").value;
+            })
 
             document.querySelector(".tester").addEventListener("click",() =>{
                 var sentence = "Did it work?";
