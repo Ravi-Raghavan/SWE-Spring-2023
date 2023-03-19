@@ -456,8 +456,14 @@
         loadProfile();
     }
 
-    function removeInfo(x){
+    function removeInfo(x, number){
+      console.log(x);
+      var row = document.getElementById("paymentList").rows[x]
+      console.log(row);
+      console.log(number);
       document.getElementById("paymentList").deleteRow(x);
+
+      //DELETE CREDIT CARD FROM DATABASE
     }
 
     //HELPER FUNCTION TO ADD ORDERS TO ORDER TABLE
@@ -581,7 +587,7 @@
       return false;
       }
 
-      var rows = "<tr><td>"+name+"</td><td>---- ---- ---- "+number.substring(number.length-4)+"</td><td>"+address+", "+city+", "+state+", "+zip+"</td><td>"+expireM+" "+expireY+"</td><td><i class=\"fa fa-trash\" style=\"cursor: pointer;\" onclick  = \"removeInfo(this.parentNode.parentNode.rowIndex)\"></i></td></tr>";
+      var rows = "<tr><td>"+name+"</td><td>---- ---- ---- "+number.substring(number.length-4)+"</td><td>"+address+", "+city+", "+state+", "+zip+"</td><td>"+expireM+" "+expireY+`</td><td><i class=\"fa fa-trash\" style=\"cursor: pointer;\" onclick  = \"removeInfo(this.parentNode.parentNode.rowIndex, ${number})\"></i></td></tr>`;
       var table = document.getElementById("paymentList");
       var template = document.createElement('template');
       template.innerHTML = rows;
