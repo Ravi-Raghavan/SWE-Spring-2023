@@ -71,14 +71,12 @@ body{
 
 
 .main-box .title-next-next.next{
-  font-size: 15px;
-  color:var(--tertiary);
+  color: var(--primary);
   transition: 0.5s ease-in-out;
 }
 
 .main-box .title-next-next-doctor.next{
-  font-size:15px;
-  color:var(--tertiary);
+  color: var(--primary);
   transition: 0.5s ease-in-out;
 }
 
