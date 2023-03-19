@@ -29,12 +29,29 @@ async function sendContactEmail(emailParameters){
         transporter.sendMail(mailOptions, function(error, info){
             if (error) {
                 console.log("Error: " + error);
-                rejects(error);
+                rejects("Unsuccessfuly Communication");
             } else {
-                resolve('Email sent: ' + info.response);
                 console.log("Email Sent: " + info.response);
+
+                var automatedReplyMailOptions = {
+                    from: `swespring2023@gmail.com`,
+                    to: `${user_email}`,
+                    subject: `Automated Reply`,
+                    text: `Thank you for Contacting Us. A Customer Service Representative will reply to your Query within 24 hours!`
+                }
+        
+                transporter.sendMail(automatedReplyMailOptions, function(error, info){
+                    if (error) {
+                        console.log("Error: " + error);
+                        rejects("Unsuccessfuly Communication");
+                    } else {
+                        console.log("Email Sent: " + info.response);
+                        resolve("Successful Communication");
+                    }
+                });
             }
         });
+
     })
 
     console.log("Done with sendValidationEmail()");
