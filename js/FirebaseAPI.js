@@ -126,9 +126,7 @@ async function getAccountType(uid){
             }
         })
     })
-
     return accountType;
-
 }
 
 //get subscription plan for user based on uid

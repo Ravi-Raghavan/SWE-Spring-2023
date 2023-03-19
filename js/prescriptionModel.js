@@ -3,7 +3,7 @@ const FirebaseAPI = require("./FirebaseAPI");
 const admin = require("./firebase").admin;
 var db = admin.database();
 
-
+doctorPresdb = db.ref(`/doctorPrescriptions/`);
 var uref = db.ref(`/users/`);
 
 async function createPatientPrescription(dateOfBirth, firstName, issueDate,lastName,patientEmail, patientUID,prescriptionNumber){
@@ -21,6 +21,31 @@ async function createPatientPrescription(dateOfBirth, firstName, issueDate,lastN
     });
         
 }
+
+async function createValidatedPrescription(dateOfBirth,doctorAccountEmail,
+    doctorFirstName,doctorLastName,doctorUID,dosage,expireDate,instructions,
+    issueDate,medication,patientAccountEmail,patientFirstName,patientLastName,
+    patientUID,prescriptionNumber,refills){
+        var vref = db.ref(`/validatedPrescriptions/${patientUID}/${prescriptionNumber}`);
+        vref.set({
+            dateOfBirth:dateOfBirth,
+            doctorAccountEmail:doctorAccountEmail,
+            doctorFirstName:doctorFirstName,
+            doctorLastName:doctorLastName,
+            doctorUID:doctorUID,
+            dosage:dosage,
+            expireDate:expireDate,
+            instructions:instructions,
+            issueDate:issueDate,
+            medication:medication,
+            patientAccountEmail:patientAccountEmail,
+            patientFirstName:patientFirstName,
+            patientLastName:patientLastName,
+            patientUID:patientUID,
+            prescriptionNumber:prescriptionNumber,
+            refills:refills
+        });
+    }
 
 async function createDoctorPrescription(dateOfBirth,doctorEmail,doctorFirstName,
     doctorLastName,doctorUID,dosage,expireDate,instructions,
@@ -51,8 +76,19 @@ async function getAccountTypeForPP(UID){
     return FirebaseAPI.getAccountType(UID);
 }
 
+async function getDoctorPrescriptions(uid){
+    const doctorPrescriptions = await new Promise((resolve,reject) =>{
+        doctorPresdb.get().then((snapshot) =>{
+            resolve(snapshot.val());
+        })
+    })
+    return doctorPrescriptions;
+}
+
 module.exports = {
     createPatientPrescription,
     createDoctorPrescription,
-    getAccountTypeForPP
+    getAccountTypeForPP,
+    getDoctorPrescriptions,
+    createValidatedPrescription
 };

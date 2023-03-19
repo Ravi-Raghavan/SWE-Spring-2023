@@ -174,8 +174,8 @@ const public_paths_product = [
 const { createProduct } = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCost } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
-const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess } = require("./js/prescriptionController");
-const { createDoctorPrescription } = require("./js/prescriptionModel");
+const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess } = require("./js/prescriptionController");
+const { createDoctorPrescription, createValidatedPrescription } = require("./js/prescriptionModel");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -566,6 +566,13 @@ const server = http.createServer((request, response) => {
         sendContactEmail(request, response);
         break;
 
+      case "/prescriptions/getDoctorList":
+        getDoctorPrescriptionsProcess(request,response);
+        break;  
+      
+      case "/make/validatedPrescription":
+        createValidatedPrescriptionProcess(request,response);
+        break;
     }
   } else {
     //Client is requesting a file

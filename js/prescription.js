@@ -21,6 +21,8 @@ function startType(){
       }
     })
   })
+
+  
 }
 
 function getUID(){
@@ -105,8 +107,100 @@ document.querySelector(".submit-box1").addEventListener("click", () =>{
     }).then((response)=>{
       console.log(response.json());
       if(response.status == 201){
+        
+        fetch("/prescriptions/getDoctorList",{
+          method: "GET",
+          cache: "no-cache"
+        }).then((response) => {
+          var doctorListPromise =  response.json();
+          console.log(response.status);
+          doctorListPromise.then((result) =>{
+            console.log("processing doctor list");
+            let fullList = result.doctorPrescriptionsList;
+            let prescriptions = Object.values(fullList);
+            for(let i = 0;i<prescriptions.length;i++){
+              let allPrescriptionValues = Object.values(prescriptions[i]);
+              for(let j = 0;j<allPrescriptionValues.length;j++){
+                let currPrescriptionFromDoctor = allPrescriptionValues[j];
+      
+                /**Prescription information to crossCheck with patient prescription */
+                let patientDOBFromDoctor = currPrescriptionFromDoctor.dateOfBirth;
+                let issueDateFromDoctor = currPrescriptionFromDoctor.issueDate;
+                let patientFirstName = currPrescriptionFromDoctor.patientFirstName;
+                let patientLastName = currPrescriptionFromDoctor.patientLastName;
+                let prescriptionNumberFromDoctor = currPrescriptionFromDoctor.prescriptionNumber;
+
+                let allTrue = true;
+                if(patientDOBFromDoctor!=dateOfBirth){
+                  allTrue = false;
+                }
+                if(issueDateFromDoctor!=issueDate){
+                  allTrue = false;
+                }
+                if(patientFirstName!=firstName.toUpperCase()){
+                  allTrue = false;
+                }
+                if(patientLastName!=lastName.toUpperCase()){
+                  allTrue = false;
+                }
+                if(prescriptionNumberFromDoctor!=prescriptionNumber){
+                  allTrue = false;
+                }
+                if(allTrue){
+                  console.log("all points checked out");
+                  i = prescriptions.length;
+                  j = allPrescriptionValues.length;
+                  /**Prescription information to add to validated prescription */
+                let medication = currPrescriptionFromDoctor.medication;
+                let doctorEmail = currPrescriptionFromDoctor.doctorEmail;
+                let doctorFirstName = currPrescriptionFromDoctor.doctorFirstName;
+                let doctorLastName = currPrescriptionFromDoctor.doctorLastName;
+                let doctorUID = currPrescriptionFromDoctor.doctorUID;
+                let dosage = currPrescriptionFromDoctor.dosage;
+                let expireDate = currPrescriptionFromDoctor.expireDate;
+                let instructions = currPrescriptionFromDoctor.instructions;
+                let refills = currPrescriptionFromDoctor.refills;
+                  var dataToSend = {
+                    dateOfBirth:dateOfBirth,
+            doctorAccountEmail:doctorEmail,
+            doctorFirstName:doctorFirstName,
+            doctorLastName:doctorLastName,
+            doctorUID:doctorUID,
+            dosage:dosage,
+            expireDate:expireDate,
+            instructions:instructions,
+            issueDate:issueDate,
+            medication:medication,
+            patientAccountEmail:email,
+            patientFirstName:firstName.toUpperCase(),
+            patientLastName:lastName.toUpperCase(),
+            patientUID:currentUID,
+            prescriptionNumber:prescriptionNumber,
+            refills:refills
+                  }
+
+                  fetch("/make/validatedPrescription",{
+                    method: "POST",
+                    cache: "no-cache",
+                    body: JSON.stringify(dataToSend)
+                  }).then((response)=>{
+                    console.log(response.status);
+                    if(response.status==201){
+                      console.log("prescription validated");
+                    }else{
+                      console.log("error: prescription not validated");
+                    }
+                  })
+                }else{
+                  console.log("all points do not check out");
+                }
+              }
+            }
+          })
+        })
         console.log("prescription added");
         window.location.href = "./submitted-prescription-patient.html";
+        
       }else{
         console.log("prescription not added");
       }
@@ -121,9 +215,9 @@ document.querySelector(".submit-box1").addEventListener("click", () =>{
       patientUID: currentUID
     })*/
     setHappened = true;
-    if(setHappened==false){
-      alert("The email provided in the form does not match the email address of this account! Patients may only request prescriptions to their own account.");
-    }
+  }
+  if(setHappened==false){
+    alert("The email provided in the form does not match the email address of this account! Patients may only request prescriptions to their own account.");
   }
 })
 
