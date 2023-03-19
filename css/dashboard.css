@@ -244,6 +244,23 @@ p{
     border: 1px solid var(--fourth);
     border-radius: 3px;
   }
+  .paymentRow input[type=email] {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid var(--fourth);
+    border-radius: 3px;
+  }
+
+  .paymentRow input[type=number] {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid var(--fourth);
+    border-radius: 3px;
+    margin: 0;
+  
+  }
   
   .paymentRow label {
     margin-bottom: 10px;

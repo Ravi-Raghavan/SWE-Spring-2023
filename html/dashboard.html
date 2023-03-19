@@ -204,7 +204,7 @@
                         <label for="fname"><i class="fa fa-user"></i> Full Name</label>
                         <input type="text" id="fname" name="firstname" placeholder="John M. Doe" required>
                         <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="text" id="email" name="email" placeholder="john@example.com" required>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
                         <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
                         <input type="text" id="adr" name="address" placeholder="542 W. 15th Street" required>
                         <label for="city"><i class="fa fa-institution"></i> City</label>
@@ -234,7 +234,7 @@
                         <label for="cname">Name on Card</label>
                         <input type="text" id="cname" name="cardname" placeholder="John More Doe" required>
                         <label for="ccnum">Credit card number</label>
-                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111-2222-3333-4444" required>
+                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111 2222 3333 4444" required>
                         <label for="expmonth">Exp Month</label>
                         <input type="text" id="expmonth" name="expmonth" placeholder="September" required>
             
@@ -245,7 +245,7 @@
                           </div>
                           <div class="col-50">
                             <label for="cvv">CVV</label>
-                            <input type="text" id="cvv" name="cvv" placeholder="352" required>
+                            <input type="text" id="cvv" name="cvv" placeholder="352" minlength ="3" maxlength="4" required>
                           </div>
                         </div>
                       </div>
@@ -474,8 +474,12 @@
     }
 
     function addCard(){
- 
+      document.getElementById("cvv").setCustomValidity("");
+
+
+      var fname = document.getElementById("fname").value;
       var name = document.getElementById("cname").value;
+      var email = document.getElementById("email").value;
 
       var number = document.getElementById("ccnum").value;
 
@@ -486,8 +490,54 @@
 
       var expireM = document.getElementById("expmonth").value;
       var expireY = document.getElementById("expyear").value;
+      var cvv = document.getElementById("cvv").value;
 
-      var rows = "<tr><td>"+name+"</td><td>---- ---- ---- "+number.substring(15)+"</td><td>"+address+", "+city+", "+state+", "+zip+"</td><td>"+expireM+" "+expireY+"</td></tr>";
+
+
+      //Validate State
+      var States = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
+      if(state==null || !States.includes(state)){
+        alert("Please Enter a Valid State!");
+        return false;
+      }
+
+    //Validate Zip Code      
+    regex = new RegExp(/^[0-9]{5}$/);
+      if(zip == null || regex.test(zip)==false){
+        alert("Please enter a valid Zip Code!");
+      return false;
+      }
+      //Test Validation for Credit Card Number (checks for a sequence of at least 12 numbers)
+      number = number.replace(/\s/g, '');
+      regex = new RegExp(/^[0-9]{12,19}$/);
+      if(number == null || regex.test(number) == false){
+        alert("Enter a valid Credit Card Number!");
+        return false;
+      }
+
+      //Test Validation for Month
+      var Months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      if(expireM== null || !Months.includes(expireM))
+      {
+        alert("Please Enter a valid Month!");
+        return false;
+      }
+
+      //Test Validation for Year (Checks for four digits right now)
+      regex = new RegExp(/^[0-9]{4}$/);
+      if(expireY == null || regex.test(expireY)==false){
+        alert("Please enter a valid Year!");
+      return false;
+      }
+
+      //Test Validation for CVV
+      regex = new RegExp(/^[0-9]{3,4}$/);
+      if(cvv == null || regex.test(cvv)==false){
+        alert("Please enter a valid CVV!");
+      return false;
+      }
+
+      var rows = "<tr><td>"+name+"</td><td>---- ---- ---- "+number.substring(number.length-4)+"</td><td>"+address+", "+city+", "+state+", "+zip+"</td><td>"+expireM+" "+expireY+"</td><td><i class=\"fa fa-trash\" style=\"cursor: pointer;\" onclick  = \"removeInfo(this.parentNode.parentNode.rowIndex)\"></i></td></tr>";
       var table = document.getElementById("paymentList");
       var template = document.createElement('template');
       template.innerHTML = rows;
