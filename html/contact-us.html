@@ -94,6 +94,22 @@
 
                 var email_subject = document.getElementById("contact-form-subject").value;
                 var email_content = document.getElementById("contact-form-content").value;
+
+                var email_data = {"user_name": user_name, "user_email": user_email, "email_subject": email_subject, "email_content": email_content};
+
+                fetch("/contact-us",{
+                    method: "POST",
+                    cache: "no-cache",
+                    body: JSON.stringify(email_data)
+                }).then((response)=>{
+                    if(response.status == 200){
+                        console.log("all good :)");
+                        alert("Email successfully Sent!");
+
+                    }else{
+                        console.log("not good :(");
+                    }
+                })
             })
 
             document.querySelector(".tester").addEventListener("click",() =>{

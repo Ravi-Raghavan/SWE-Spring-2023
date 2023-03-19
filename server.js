@@ -433,6 +433,23 @@ function updateUser(request, response){
   });
 }
 
+function sendContactEmail(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    await SMTP.sendContactEmail(credentials);
+  });
+
+  response.writeHead(200, { "Content-type": "text/plain" });
+  response.write("Done!");
+  response.end();
+}
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -541,6 +558,11 @@ const server = http.createServer((request, response) => {
       case "/prescription/accountType":
         getAccountTypeForPPProcess(request,response);
         break;  
+
+      case "/contact-us":
+        sendContactEmail(request, response);
+        break;
+
     }
   } else {
     //Client is requesting a file
