@@ -2,12 +2,15 @@ const FirebaseAPI = require("./FirebaseAPI");
 
 const admin = require("./firebase").admin;
 var db = admin.database();
-var ref = db.ref(`/patientPrescriptions/`);
-var dref = db.ref(`/doctorPrescriptions/`);
+
+
 var uref = db.ref(`/users/`);
 
 async function createPatientPrescription(dateOfBirth, firstName, issueDate,lastName,patientEmail, patientUID,prescriptionNumber){
-    var prescription = {
+        
+    
+    var ref = db.ref(`/patientPrescriptions/${patientUID}/${prescriptionNumber}`);
+    ref.set({
         dateOfBirth:dateOfBirth,
         firstName: firstName,
         issueDate: issueDate,
@@ -15,9 +18,6 @@ async function createPatientPrescription(dateOfBirth, firstName, issueDate,lastN
         patientEmail: patientEmail,
         patientUID: patientUID,
         prescriptionNumber: prescriptionNumber
-    };
-    ref.set({
-        [patientUID] : prescription
     });
         
 }
@@ -27,7 +27,9 @@ async function createDoctorPrescription(dateOfBirth,doctorEmail,doctorFirstName,
     issueDate,medication,patientFirstName,patientLastName, 
     prescriptionNumber,refills){
 
-    var prescription = {
+    var dref = db.ref(`/doctorPrescriptions/${doctorUID}/${prescriptionNumber}`);
+    
+    dref.set({
         dateOfBirth:dateOfBirth,
         doctorEmail:doctorEmail,
         doctorFirstName:doctorFirstName,
@@ -42,14 +44,15 @@ async function createDoctorPrescription(dateOfBirth,doctorEmail,doctorFirstName,
         patientLastName: patientLastName,
         prescriptionNumber:prescriptionNumber,
         refills:refills
-    }
-
-    dref.set({
-        [doctorUID] : prescription
     });
+}
+
+async function getAccountTypeForPP(UID){
+    return FirebaseAPI.getAccountType(UID);
 }
 
 module.exports = {
     createPatientPrescription,
     createDoctorPrescription,
+    getAccountTypeForPP
 };
