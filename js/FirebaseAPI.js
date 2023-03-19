@@ -292,6 +292,45 @@ async function getPaymentCards(credentials, response){
     })
 }
 
+async function deletePaymentCard(credentials, response){
+    var uid = credentials.uid;
+    var paymentsRef = ref.child(`${uid}/payment_cards`)
+
+    paymentsRef.on('value', (snapshot) => {
+        var value = snapshot.val();
+
+        if (value == null){
+            response.writeHead(404, { "Content-type": "text/plain" });
+            response.write("Failed to Delete Payment Card");
+            response.end();
+        }
+        else{
+            var paymentCardID = "";
+
+            for (var paymentCardKey in value){
+                var paymentCard = value[paymentCardKey]
+
+                if (paymentCard.cardNumber == credentials.cardNumber){
+                    paymentCardID = paymentCardKey;
+                }
+            }
+
+            paymentsRef.child(`${paymentCardKey}`).set(null)
+            .then(() => {
+                response.writeHead(200, { "Content-type": "text/plain" });
+                response.write("Successfully Delete Payment Card");
+                response.end();
+            })
+            .catch((err) => {
+                response.writeHead(404, { "Content-type": "text/plain" });
+                response.write("Failed to Delete Payment Card");
+                response.end();
+            })
+
+        }
+    })
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -304,5 +343,6 @@ module.exports = {
     getPrescriptionsUser: getPrescriptionsUser,
     addPaymentCard: addPaymentCard, 
     getPaymentCards: getPaymentCards, 
+    deletePaymentCard: deletePaymentCard,
     login: login
 }

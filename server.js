@@ -492,6 +492,18 @@ function getPaymentCards(request, response, queryStringParameters){
   });
 }
 
+function deletePaymentCard(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.deletePaymentCard(queryStringParameters, response);
+  });
+}
+
 function parseQueryStringParameters(queryString) {
   var queryStringParameters = {};
   var tokenizedQueryString = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
@@ -645,6 +657,9 @@ const server = http.createServer((request, response) => {
       
       case "/get/payment_cards":
         getPaymentCards(request, response, queryStringParameters);
+        break;
+      
+      case "/delete/payment_card":
         break;
     }
   } else {

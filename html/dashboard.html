@@ -456,7 +456,7 @@
         loadProfile();
     }
 
-    function removeInfo(x, number){
+    async function removeInfo(x, number){
       console.log(x);
       var row = document.getElementById("paymentList").rows[x]
       console.log(row);
@@ -464,6 +464,11 @@
       document.getElementById("paymentList").deleteRow(x);
 
       //DELETE CREDIT CARD FROM DATABASE
+      let response = await fetch(`delete/payment_card?cardNumber=${number}`, {
+        method: 'DELETE',
+      })
+
+      
     }
 
     //HELPER FUNCTION TO ADD ORDERS TO ORDER TABLE
