@@ -7,6 +7,17 @@ function handleUserManagingAccount(){
         window.location.href = '../html/dashboard.html';
     }
 }
+
+function handleUserManagingPrescriptions(){
+    //If user is not logged in, display alert and go back
+    if (localStorage.getItem("User Record") == null){
+        alert("Please Create an Account");
+    }
+    else{
+        window.location.href = '../html/PrescriptionRequest.html';
+    }
+}
+
 function getUniqueID(){
         var navigator_info = window.navigator;
         var screen_info = window.screen;
