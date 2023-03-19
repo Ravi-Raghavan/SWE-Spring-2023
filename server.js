@@ -83,6 +83,7 @@ const public_paths_js = [
   "/js/prescription.js",
   "/js/dynamicHeaderFooter.js",
   "/js/scroller.js",
+  "/js/reviewScroller.js",
   "/js/homepage.js",
   "/js/imagePreloader.js",
   "/js/testModel.js",
@@ -132,6 +133,8 @@ const public_paths_images = [
   "/images/snapchat.png",
   "/images/reddit.png",
   "/images/redx.png",
+  "/images/quadis_img.png",
+  "/images/kristina_img.png",
 ];
 
 const public_paths_product = [

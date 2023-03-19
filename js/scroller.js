@@ -128,8 +128,7 @@ function diagScrollRight(iter, fname, box, transformLen) {
 
   var boxGreenContainer, boxes, replacementBox, boxBlueContainer;
   var num = 1;
-  var nterm = (iter * (iter - 1)) / 2;
-  for (let j = 1; j <= iter; j++) {
+ for (let j = 1; j <= iter; j++) {
     boxBlueContainer = document.getElementById(`${fname}${j}`);
     num = j;
     // ? checks if the current frame is visible
@@ -280,28 +279,3 @@ function disableBtn(name) {
     }
   }, 1500);
 }
-
-
-
-// button stops the loop temporarily 10s
-// function pauseScroll(iter, fname, box, transformLen, typeDir) {
-
-//   clearInterval(intervalPropItem);
-//   intervalPropItem = null;
-
-//   console.log("stops interval");
-//   console.log(intervalPropItem);
-
-//   // if (!flag) {
-//   //   console.log("something");
-//   // } else {
-//   //   flag = false;
-//   // }
-
-//   // console.log("will run the infiinte loop");
-
-//   setTimeout(() => {
-//     // console.log("calling infinite loop after 10 seconds");
-//     startItemLoop();
-//   }, 10000);
-// }
