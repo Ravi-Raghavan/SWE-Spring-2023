@@ -171,7 +171,7 @@ const public_paths_product = [
 const { createProduct } = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCost } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
-const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess } = require("./js/prescriptionController");
+const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess } = require("./js/prescriptionController");
 const { createDoctorPrescription } = require("./js/prescriptionModel");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
@@ -537,6 +537,10 @@ const server = http.createServer((request, response) => {
       case "/make/doctorPrescription":
         createDoctorPrescriptionProcess(request,response);
         break;
+
+      case "/prescription/accountType":
+        getAccountTypeForPPProcess(request,response);
+        break;  
     }
   } else {
     //Client is requesting a file
