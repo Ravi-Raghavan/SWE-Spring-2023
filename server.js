@@ -504,6 +504,18 @@ function deletePaymentCard(request, response, queryStringParameters){
   });
 }
 
+function deleteAccount(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.deleteUserAccount(queryStringParameters, response);
+  });
+}
+
 function parseQueryStringParameters(queryString) {
   var queryStringParameters = {};
   var tokenizedQueryString = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
@@ -662,6 +674,10 @@ const server = http.createServer((request, response) => {
       
       case "/delete/payment_card":
         deletePaymentCard(request, response, queryStringParameters);
+        break;
+      
+      case "/delete/account":
+        deleteAccount(request, response, queryStringParameters);
         break;
     }
   } else {

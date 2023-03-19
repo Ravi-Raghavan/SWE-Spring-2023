@@ -91,7 +91,7 @@ async function search(searchParameters){
 
 //function which checks if a user's email has been validated yet
 async function isValidated(uid, response){
-    ref.child(`${uid}`).on('value', (snapshot) => {
+    ref.child(`${uid}`).once('value', (snapshot) => {
         var value = snapshot.val();
         if (value == null){
             response.writeHead(200, { "Content-type": "text/plain" });
@@ -116,7 +116,7 @@ async function isValidated(uid, response){
 //get account type of user with given uid
 async function getAccountType(uid){
     var accountType = await new Promise((resolve, reject) => {
-        ref.child(`${uid}`).on('value', (snapshot) => {
+        ref.child(`${uid}`).once('value', (snapshot) => {
             var value = snapshot.val();
             if (value == null){
                 resolve("N/A");
@@ -133,7 +133,7 @@ async function getAccountType(uid){
 //get subscription plan for user based on uid
 async function getSubscriptionPlan(uid){
     var subscriptionPlan = await new Promise((resolve, reject) => {
-        ref.child(`${uid}`).on('value', (snapshot) => {
+        ref.child(`${uid}`).once('value', (snapshot) => {
             var value = snapshot.val();
             if (value == null){
                 resolve("N/A");
@@ -151,7 +151,7 @@ async function getSubscriptionPlan(uid){
 //get phone number for user based on uid
 async function getPhoneNumber(uid){
     var phoneNumber = await new Promise((resolve, reject) => {
-        ref.child(`${uid}`).on('value', (snapshot) => {
+        ref.child(`${uid}`).once('value', (snapshot) => {
             var value = snapshot.val();
             if (value == null){
                 resolve("N/A");
@@ -169,7 +169,7 @@ async function getPhoneNumber(uid){
 //get address for user based on uid
 async function getAddress(uid){
     var address = await new Promise((resolve, reject) => {
-        ref.child(`${uid}`).on('value', (snapshot) => {
+        ref.child(`${uid}`).once('value', (snapshot) => {
             var value = snapshot.val();
             if (value == null){
                 resolve("N/A");
@@ -239,7 +239,7 @@ async function updateUser(userParameters, response){
 }
 
 async function getPrescriptionsUser(uid, response){
-    validatedPrescriptions.child(`${uid}`).on('value', (snapshot) => {
+    validatedPrescriptions.child(`${uid}`).once('value', (snapshot) => {
         var value = snapshot.val();
         if (value == null){
             var prescription_data = {"404 Error Message": "N/A"}
@@ -276,7 +276,7 @@ async function getPaymentCards(credentials, response){
     var uid = credentials.uid;
     var paymentsRef = ref.child(`${uid}/payment_cards`)
 
-    paymentsRef.on('value', (snapshot) => {
+    paymentsRef.once('value', (snapshot) => {
         var value = snapshot.val();
         if (value == null){
             var payment_data = {"404 Error Message": "N/A"}
@@ -306,7 +306,7 @@ async function deletePaymentCard(credentials, response){
         }
         else{
             var paymentCardID = "";
-            
+
             for (var paymentCardKey in value){
                 var paymentCard = value[paymentCardKey]
 
@@ -333,6 +333,34 @@ async function deletePaymentCard(credentials, response){
     })
 }
 
+async function deleteUserAccount(credentials, response){
+    var uid = credentials.uid;
+
+    admin.auth().deleteUser(uid)
+    .then(() => {
+
+        ref.child(`${uid}`).set(null)
+        .then(() => {
+            console.log("Success!");
+            response.writeHead(200, { "Content-type": "text/plain" });
+            response.write("Successfully Deleted User Account");
+            response.end();
+        })
+        .catch((err) => {
+            console.log(err);
+            response.writeHead(404, { "Content-type": "text/plain" });
+            response.write("Failed to Delete User Account");
+            response.end();
+        })
+    })
+    .catch((err) => {
+        console.log(err);
+        response.writeHead(404, { "Content-type": "text/plain" });
+        response.write("Failed to Delete User Account");
+        response.end();
+    })
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -346,5 +374,6 @@ module.exports = {
     addPaymentCard: addPaymentCard, 
     getPaymentCards: getPaymentCards, 
     deletePaymentCard: deletePaymentCard,
+    deleteUserAccount: deleteUserAccount,
     login: login
 }

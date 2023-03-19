@@ -290,7 +290,7 @@
 
                 <div class="settingRow">
                   <h3>Delete Account</h3>
-                  <button class="log-btn delete"><body>Delete</body></button>
+                  <button class="log-btn delete" onclick = 'deleteAccount()'><body>Delete</body></button>
               </div>
 
               </div>
@@ -660,6 +660,20 @@
       }
 
       localStorage.setItem("User Record", JSON.stringify(user_record));
+    }
+
+    async function deleteAccount(){
+      var user_record = JSON.parse(localStorage.getItem("User Record"));
+      var uid = user_record.uid;
+
+      //DELETE User Account FROM DATABASE
+      let response = await fetch(`/delete/account?uid=${uid}`, {
+        method: 'DELETE',
+      })
+
+      console.log("Response Status: " + response.status);
+      localStorage.removeItem("User Record");
+      window.location.href = "./logoutPage.html";
     }
 
     addOrder(69423, ["Viagra x1", "Iburprofen x2"], "Delivered");
