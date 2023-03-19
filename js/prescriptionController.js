@@ -29,7 +29,7 @@ async function createDoctorPrescriptionProcess(req,res){
 
                 const dprescriptionId = 7;
                 const data = {
-                    id: dprescriptionId
+                    id:dprescriptionId
                 };
                 res.writeHead(201, {'Content-Type':'application/json'});
                 res.end(JSON.stringify(data));
@@ -39,7 +39,23 @@ async function createDoctorPrescriptionProcess(req,res){
     }
 }
 
+async function getAccountTypeForPPProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const uidMessage = JSON.parse(body);
+        const gotType = await patientPrescription.getAccountTypeForPP(uidMessage);
+        const data = {
+            type:gotType
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createPatientPrescriptionProcess,
-    createDoctorPrescriptionProcess
+    createDoctorPrescriptionProcess,
+    getAccountTypeForPPProcess
 };

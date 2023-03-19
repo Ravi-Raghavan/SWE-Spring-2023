@@ -28,8 +28,8 @@ async function register(userParameters, response){
     userRecord["tokensValidAfterTime"] = currentDateTime;
     userRecord["Account Type"] = accountType;
     userRecord["Subscription Plan"] = "Free";
-    userRecord.phoneNumber = "N/A"
-    userRecord["Address"] = "N/A"
+    userRecord.phoneNumber = "123-456-7890"
+    userRecord["Address"] = "10 Frelinghuysen Road, Piscataway, New Jersey, 08854"
 
     console.log("==========USER RECORD ==============");
     console.log(userRecord);
@@ -47,8 +47,8 @@ async function register(userParameters, response){
         disabled: userParameters.disabled,
         accountType: accountType,
         subscriptionPlan: "Free",
-        phoneNumber: "N/A",
-        address: "N/A"
+        phoneNumber: "123-456-7890",
+        address: "10 Frelinghuysen Road, Piscataway, New Jersey, 08854"
     })
 
     //Send Request
@@ -214,6 +214,15 @@ async function login(userParameters, response){
 
 async function updateUser(userParameters, response){
     var uid = userParameters.uid;
+    
+    if (userParameters.phoneNumber == null){
+        userParameters.phoneNumber = "123-456-7890";
+    }
+
+    if (userParameters.address == null){
+        userParameters.address = "110 Frelinghuysen Road, Piscataway, NJ, 08854";
+    }
+
     ref.child(`${uid}`).update({
         phoneNumber: userParameters.phoneNumber,
         address: userParameters.address

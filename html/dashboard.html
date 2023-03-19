@@ -107,7 +107,7 @@
                   <th>Status</th>
                 
                 </tr>
-                <tr>
+                <!-- <tr>
                   <td>69420</td>
                   <td>Tylenol x1 <br> Iburprofen x2 <br> Rubbing Alcohol x3</td>
                   <td>Not Delivered</td>
@@ -122,7 +122,7 @@
                   <td>69422</td>
                   <td>Viagra x1</td>
                   <td>Delivered</td>
-                </tr>
+                </tr> -->
               </table>
             </div>
       </div>
@@ -139,7 +139,7 @@
               <th>Approval Status</th>
             
             </tr>
-            <tr>
+            <!-- <tr>
               <td>42069</td>
               <td>Tylenol x1 <br> Iburprofen x2 <br> Rubbing Alcohol x3</td>
               <td>Dr. Ravi</td>
@@ -157,7 +157,7 @@
               <td>Viagra x1</td>
               <td>Dr. Mayank</td>
               <td>Denied</td>
-            </tr>
+            </tr> -->
           </table>
         </div>
   </div>
@@ -332,7 +332,7 @@
         method: 'PATCH',
         body: JSON.stringify({
           uid: user_record["uid"],
-          phoneNumber: user_record["Phone Number"],
+          phoneNumber: user_record.phoneNumber,
           address: user_record["Address"]
         }),
         headers: {
@@ -495,12 +495,23 @@
       
       return false;
     }
-    function addressChange(){
+    async function addressChange(){
       var user_record = JSON.parse(localStorage.getItem("User Record"));
       var text = prompt("Address: ", document.getElementById("address").innerText);
       if(text){
         document.getElementById("address").innerText = text;
         user_record['Address'] = text;
+        let response = await fetch('/update/user', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            uid: user_record["uid"],
+            phoneNumber: user_record.phoneNumber,
+            address: user_record["Address"]
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
       }
       else{
 
@@ -508,12 +519,24 @@
 
       localStorage.setItem("User Record", JSON.stringify(user_record));
     }
-    function phoneNumberChange(){
+    async function phoneNumberChange(){
       var user_record = JSON.parse(localStorage.getItem("User Record"));
       let text = prompt("Phone: ", document.getElementById("phone").innerText);
       if(text){
         document.getElementById("phone").innerText = text;
-        user_record['Phone Number'] = text;
+        user_record.phoneNumber = text;
+
+        let response = await fetch('/update/user', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            uid: user_record["uid"],
+            phoneNumber: user_record.phoneNumber,
+            address: user_record["Address"]
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
       }
       else{
         

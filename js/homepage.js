@@ -7,6 +7,26 @@ function handleUserManagingAccount(){
         window.location.href = '../html/dashboard.html';
     }
 }
+
+function handleUserManagingPrescriptions(){
+    //If user is not logged in, display alert and go back
+    if (localStorage.getItem("User Record") == null){
+        alert("Please Create an Account");
+    }
+    else{
+        window.location.href = '../html/PrescriptionRequest.html';
+    }
+}
+
+function handleUserManagingDeliveries(){
+    if (localStorage.getItem("User Record") == null){
+        alert("Please Create an Account");
+    }
+    else{
+        window.location.href = '../html/deliverypage.html';
+    }
+}
+
 function getUniqueID(){
         var navigator_info = window.navigator;
         var screen_info = window.screen;
@@ -32,7 +52,7 @@ async function login_logout(){
             method: 'PATCH',
             body: JSON.stringify({
             uid: user_record["uid"],
-            phoneNumber: user_record["Phone Number"],
+            phoneNumber: user_record.phoneNumber,
             address: user_record["Address"]
             }),
             headers: {
