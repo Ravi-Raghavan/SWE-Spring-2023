@@ -456,7 +456,7 @@
         loadProfile();
     }
 
-    async function removeInfo(x, number){
+    async function removeInfo(x, number, uid){
       console.log(x);
       var row = document.getElementById("paymentList").rows[x]
       console.log(row);
@@ -464,10 +464,11 @@
       document.getElementById("paymentList").deleteRow(x);
 
       //DELETE CREDIT CARD FROM DATABASE
-      let response = await fetch(`delete/payment_card?cardNumber=${number}`, {
+      let response = await fetch(`/delete/payment_card?cardNumber=${number}&uid=${uid}`, {
         method: 'DELETE',
       })
 
+      console.log("Response Status: " + response.status);
       
     }
 
@@ -533,6 +534,7 @@
 
       var fname = document.getElementById("fname").value;
       var user_record = JSON.parse(localStorage.getItem("User Record"));
+      var uid = user_record["uid"];
       var name = document.getElementById("cname").value;
       var email = document.getElementById("email").value;
 
@@ -592,7 +594,7 @@
       return false;
       }
 
-      var rows = "<tr><td>"+name+"</td><td>---- ---- ---- "+number.substring(number.length-4)+"</td><td>"+address+", "+city+", "+state+", "+zip+"</td><td>"+expireM+" "+expireY+`</td><td><i class=\"fa fa-trash\" style=\"cursor: pointer;\" onclick  = \"removeInfo(this.parentNode.parentNode.rowIndex, ${number})\"></i></td></tr>`;
+      var rows = "<tr><td>"+name+"</td><td>---- ---- ---- "+number.substring(number.length-4)+"</td><td>"+address+", "+city+", "+state+", "+zip+"</td><td>"+expireM+" "+expireY+`</td><td><i class=\"fa fa-trash\" style=\"cursor: pointer;\" onclick  = \"removeInfo(this.parentNode.parentNode.rowIndex, ${number}, '${uid}')\"></i></td></tr>`;
       var table = document.getElementById("paymentList");
       var template = document.createElement('template');
       template.innerHTML = rows;

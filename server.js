@@ -552,6 +552,7 @@ const server = http.createServer((request, response) => {
 
     if (questionMarkIndex != -1){
       queryStringParameters = parseQueryStringParameters(path.substring(questionMarkIndex));
+      console.log(JSON.stringify(queryStringParameters));
       path = path.substring(0, questionMarkIndex);
     }
     
@@ -660,6 +661,7 @@ const server = http.createServer((request, response) => {
         break;
       
       case "/delete/payment_card":
+        deletePaymentCard(request, response, queryStringParameters);
         break;
     }
   } else {

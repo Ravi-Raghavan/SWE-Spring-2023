@@ -296,9 +296,9 @@ async function deletePaymentCard(credentials, response){
     var uid = credentials.uid;
     var paymentsRef = ref.child(`${uid}/payment_cards`)
 
-    paymentsRef.on('value', (snapshot) => {
+    paymentsRef.once('value', (snapshot) => {
         var value = snapshot.val();
-
+        console.log("Value: " + JSON.stringify(value));
         if (value == null){
             response.writeHead(404, { "Content-type": "text/plain" });
             response.write("Failed to Delete Payment Card");
@@ -306,7 +306,7 @@ async function deletePaymentCard(credentials, response){
         }
         else{
             var paymentCardID = "";
-
+            
             for (var paymentCardKey in value){
                 var paymentCard = value[paymentCardKey]
 
@@ -315,18 +315,20 @@ async function deletePaymentCard(credentials, response){
                 }
             }
 
-            paymentsRef.child(`${paymentCardKey}`).set(null)
+            console.log("HERE: " + paymentCardID);
+            ref.child(`${uid}/payment_cards/${paymentCardID}`).set(null)
             .then(() => {
+                console.log("Success!");
                 response.writeHead(200, { "Content-type": "text/plain" });
                 response.write("Successfully Delete Payment Card");
                 response.end();
             })
             .catch((err) => {
+                console.log(err);
                 response.writeHead(404, { "Content-type": "text/plain" });
                 response.write("Failed to Delete Payment Card");
                 response.end();
             })
-
         }
     })
 }
