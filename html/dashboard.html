@@ -178,13 +178,15 @@
                   <th style="width: 30%;">Card Number</th>
                   <th style="width: 40%;">Billing Address</th>
                   <th style="width: 10%;">Expiration Date</th>
+                  <th>Remove</th>
                 
                 </tr>
-                <tr>
+                <tr class = "payRow">
                   <td>Ravi Ragahavan</td>
                   <td>---- ---- ---- 4201</td>
                   <td>Some Random Obscure Address</td>
                   <td>09/26</td>
+                  <td  ><i class="fa fa-trash" style="cursor: pointer;" onclick  = "removeInfo(this.parentNode.parentNode.rowIndex)"></i></td>
                   
                 </tr>
               </table>
@@ -409,6 +411,10 @@
 
       if(menuOption == "infoOption")
         loadProfile();
+    }
+
+    function removeInfo(x){
+      document.getElementById("paymentList").deleteRow(x);
     }
 
     //HELPER FUNCTION TO ADD ORDERS TO ORDER TABLE
