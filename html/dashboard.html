@@ -189,7 +189,7 @@
             <div class="row">
               <div class="col-75">
                 <div class="container">
-                  <form onsubmit="return addCard()">
+                  <form onsubmit = "return false">
             
                     <div class="row">
                       <div class="col-50">
@@ -244,7 +244,7 @@
                       </div>
             
                     </div>
-                    <button  type="submit" class="btn btnDash" on> Add Card Information </button>
+                    <button  class="btn btnDash" onclick = "addCard()"> Add Card Information </button>
                   </form>
                 </div>
               </div>
@@ -371,6 +371,37 @@
           }
         }
 
+        let paymentCardResponse = await fetch(`/get/payment_cards?uid=${user_record['uid']}`)
+        let paymentCardResponseJSON = await paymentCardResponse.json()
+
+        console.log("Payment Card Response Status: " + paymentCardResponse.status);
+        if (paymentCardResponse.status == 200){
+          console.log("Payment Data Fetched: " + JSON.stringify(paymentCardResponseJSON));
+
+          for (var paymentCardNumber in paymentCardResponseJSON){
+            var paymentCard = paymentCardResponseJSON[paymentCardNumber]
+            console.log("Payment Card: " + JSON.stringify(paymentCard));
+            var name = paymentCard.name;
+
+            var number = paymentCard.cardNumber;
+
+            var address = paymentCard.address;
+            var city = paymentCard.city;
+            var state = paymentCard.state;
+            var zip = paymentCard.zip;
+
+            var expireM = paymentCard.expireM;
+            var expireY = paymentCard.expireY;
+
+            var rows = "<tr><td>"+name+"</td><td>"+number+"</td><td>"+address+", "+city+", "+state+", "+zip+"</td><td>"+expireM+" "+expireY+"</td></tr>";
+            var table = document.getElementById("paymentList");
+            var template = document.createElement('template');
+            template.innerHTML = rows;
+            table.append(template.content);
+      
+          }
+        }
+
         //CURRENTLY APPLIES TO ALL ACCOUNTS. ONCE USER RECORD RETURNS ACCOUNT TYPE, REPLACE true WITH user_record.accountType == "Doctor"
         if(user_record["Account Type"] == "Doctor")
         {
@@ -485,11 +516,12 @@
       }
     }
 
-    function addCard(){
+    async function addCard(){
       document.getElementById("cvv").setCustomValidity("");
 
 
       var fname = document.getElementById("fname").value;
+      var user_record = JSON.parse(localStorage.getItem("User Record"));
       var name = document.getElementById("cname").value;
       var email = document.getElementById("email").value;
 
@@ -554,7 +586,17 @@
       var template = document.createElement('template');
       template.innerHTML = rows;
       table.append(template.content);
+
+      var paymentInformation = {"uid" : user_record.uid, "name": name, "cardNumber": number, "address": address, "city": city, "state": state, "zip": zip, "expireM": expireM, "expireY": expireY,  "expirationDate": `${expireM}/${expireY}`, "cvv": cvv}
       
+      let response = await fetch('/add/payment_card', {
+        method: 'PATCH',
+        body: JSON.stringify(paymentInformation),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+
       return false;
     }
     async function addressChange(){

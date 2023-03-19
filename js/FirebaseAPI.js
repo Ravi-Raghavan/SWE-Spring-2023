@@ -255,6 +255,43 @@ async function getPrescriptionsUser(uid, response){
     })
 }
 
+async function addPaymentCard(credentials, response){
+    var uid = credentials.uid;
+    var paymentsRef = ref.child(`${uid}/payment_cards`)
+
+    paymentsRef.push().set(credentials)
+    .then(() => {
+        response.writeHead(200, { "Content-type": "text/plain" });
+        response.write("Successfully Updated");
+        response.end();
+    })
+    .catch((err) => {
+        response.writeHead(404, { "Content-type": "text/plain" });
+        response.write("Failed to Update User");
+        response.end();
+    })
+}
+
+async function getPaymentCards(credentials, response){
+    var uid = credentials.uid;
+    var paymentsRef = ref.child(`${uid}/payment_cards`)
+
+    paymentsRef.on('value', (snapshot) => {
+        var value = snapshot.val();
+        if (value == null){
+            var payment_data = {"404 Error Message": "N/A"}
+            response.writeHead(404, { "Content-type": "application/json" });
+            response.write(JSON.stringify(payment_data));
+            response.end();
+        }
+        else{
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(value));
+            response.end();
+        }
+    })
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -265,5 +302,7 @@ module.exports = {
     getAddress: getAddress, 
     updateUser: updateUser,
     getPrescriptionsUser: getPrescriptionsUser,
+    addPaymentCard: addPaymentCard, 
+    getPaymentCards: getPaymentCards, 
     login: login
 }
