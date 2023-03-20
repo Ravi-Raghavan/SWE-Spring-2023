@@ -4,6 +4,7 @@ const admin = require("./firebase").admin;
 var db = admin.database();
 var ref = db.ref(`/users/`);
 var validatedPrescriptions = db.ref(`/validatedPrescriptions/`);
+var cartRef = db.ref("/carts/")
 
 //Function to create a user(i.e. registration!) in our database
 //userParameters: parameters for a particular user(i.e. name, email, etc)
@@ -361,6 +362,26 @@ async function deleteUserAccount(credentials, response){
     })
 }
 
+async function getUserCart(credentials, response){
+    var uid = credentials.uid;
+
+    cartRef.child(`${uid}`).once("value", (snapshot) => {
+        var value = snapshot.val();
+        console.log("Value: " + JSON.stringify(value));
+
+        if (value == null){
+            response.writeHead(404, { "Content-type": "application/json" });
+            response.write("Failed to Delete Payment Card");
+            response.end();
+        }
+        else{
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(value));
+            response.end();
+        }
+    })
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -375,5 +396,6 @@ module.exports = {
     getPaymentCards: getPaymentCards, 
     deletePaymentCard: deletePaymentCard,
     deleteUserAccount: deleteUserAccount,
+    getUserCart: getUserCart,
     login: login
 }

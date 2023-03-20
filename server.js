@@ -573,6 +573,18 @@ function parseQueryStringParameters(queryString) {
   return queryStringParameters;
 }
 
+function getUserCart(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.getUserCart(queryStringParameters, response);
+  });
+}
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -731,6 +743,10 @@ const server = http.createServer((request, response) => {
       
       case "/delete/account":
         deleteAccount(request, response, queryStringParameters);
+        break;
+      
+      case "/get/cart":
+        getUserCart(request, response, queryStringParameters);
         break;
     }
   } else {

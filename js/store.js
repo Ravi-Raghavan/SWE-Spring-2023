@@ -25,16 +25,16 @@ else {
     ready()
 }
 
-function ready() {
+async function ready() {
 
     var removeCartItemButtons = document.getElementsByClassName('btn-danger')
-    console.log(removeCartItemButtons)
+    // console.log(removeCartItemButtons)
 
-    var cartItems = document.getElementsByClassName('cart-items')[0]
-    while (cartItems.hasChildNodes()) {
-        cartItems.removeChild(cartItems.firstChild)
-    }
-    updateCartTotal()
+    // var cartItems = document.getElementsByClassName('cart-items')[0]
+    // while (cartItems.hasChildNodes()) {
+    //     cartItems.removeChild(cartItems.firstChild)
+    // }
+    // updateCartTotal()
 
     //upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc)
 
@@ -57,6 +57,23 @@ function ready() {
     }
 
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
+
+    var user_record = JSON.parse(localStorage.getItem("User Record"));
+    var uid = user_record.uid;
+
+    let response = await fetch(`/get/cart?uid=${uid}`, {method: "GET"})
+    let cartJSON = await response.json();
+
+    let drugs = cartJSON["drugs"]
+    //alert(JSON.stringify(drugs));
+    for (var i = 0; i < drugs.length; i ++){
+        var drug = drugs[i];
+        var drugPrice = drug["price"]
+        var drugQuantity = drug["quantity"]
+        var drugTitle = drug["title"]
+
+        addItemToCart(drugTitle, drugPrice, null);
+    }
 }
 
 function purchaseClicked() {
