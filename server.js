@@ -32,7 +32,10 @@ const public_paths_html = [
   "/html/user-registration-form.html",
   "/html/waiting-for-validation.html",
   "/html/store.html",
-  "/html/submitted-prescription-patient.html",
+  "/html/submitted-prescription-patient-wait.html",
+  "/html/submitted-prescription-patient-validated.html",
+  "/html/submitted-prescription-doctor-wait.html",
+  "/html/submitted-prescription-doctor-validated.html",
   "/html/header.html",
   "/html/footer.html",
 ];
@@ -174,9 +177,11 @@ const public_paths_product = [
 const { createProduct } = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCost } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
-const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess } = require("./js/prescriptionController");
+const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess } = require("./js/prescriptionController");
 const { createDoctorPrescription, createValidatedPrescription } = require("./js/prescriptionModel");
 const FirebaseAPI = require("./js/FirebaseAPI");
+const { getPostData } = require("./js/utils");
+const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -245,7 +250,7 @@ function binarySearch(list, target) {
   return lo;
 }
 
-function FAQ(request, response) {
+function FAQ(request, response, queryStringParameters) {
   var searchQuery = "";
 
   request.on("data", (data) => {
@@ -253,6 +258,7 @@ function FAQ(request, response) {
   });
 
   request.on("end", async () => {
+    searchQuery = queryStringParameters.query;
     var stemmedTokensSearchQuery =
       natural.PorterStemmer.tokenizeAndStem(searchQuery).sort();
     var fileName = "./json/BayesianClassifier.json";
@@ -302,7 +308,33 @@ function FAQ(request, response) {
   });
 }
 
-function login(request, response) {
+function getFAQ(request, response) {
+
+  request.on("data", (data) => {
+    
+  });
+  var results = [];
+  request.on("end", async () => {
+    
+      FAQ_ref.once("value", function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+          var childKey = childSnapshot.key;
+          var childData = childSnapshot.val();
+          var topicList = childData.topics;
+          var articleTitle = childData.title;
+          results.push(childData);
+            
+        });
+
+        console.log("Search Results: " + JSON.stringify(results));
+        response.writeHead(200, { "Content-type": "application/json" });
+        response.write(JSON.stringify(results));
+        response.end();
+      });
+  });
+}
+
+function login(request, response, queryStringParameters) {
   var credentials = "";
 
   request.on("data", (data) => {
@@ -310,8 +342,7 @@ function login(request, response) {
   });
 
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
-    var email = credentials["email"];
+    var email = queryStringParameters["email"];
     var userParameters = { email: email };
     await firebaseAPI.login(userParameters, response);
   });
@@ -343,19 +374,36 @@ function register(request, response) {
   });
 }
 
-function sendEmail(request, response) {
+function sendEmail(request, response, queryStringParameters) {
   var credentials = "";
+
   request.on("data", (data) => {
     credentials += data;
   });
+
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
-    var email = credentials.email;
+    var email = queryStringParameters.email;
     await SMTP.sendValidationEmail(email);
   });
   response.writeHead(200, { "Content-type": "text/plain" });
   response.write("Done!");
   response.end();
+}
+
+async function sendValidatedPrescriptionNotificationProcess(req,res,queryStringParameters){
+  try{
+    let body = await getPostData(req);
+    const {doctorFirstName,doctorLastName,prescriptionNumber} = JSON.parse(body);
+    var email = queryStringParameters.email;
+    var notificationREF = await sendValidatedPrescriptionNotification(email,doctorFirstName,doctorLastName,prescriptionNumber);
+    const dataToSend = {
+      id: notificationREF
+    };
+    res.writeHead(200, {"Content-type": "application/json"});
+    res.end(JSON.stringify(dataToSend));
+  }catch (err){
+    console.log(err);
+  }
 }
 
 function serveFileContent(file, response) {
@@ -395,7 +443,7 @@ function completeValidation(request, response) {
   });
 }
 
-function checkValidation(request, response) {
+function checkValidation(request, response, queryStringParameters) {
   var credentials = "";
 
   request.on("data", (data) => {
@@ -403,21 +451,19 @@ function checkValidation(request, response) {
   });
 
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
-    var uid = credentials.uid;
+    var uid = queryStringParameters.uid;
     await firebaseAPI.isValidated(uid, response);
   });
 }
 
-function knowledgeBaseSearch(request, response) {
+function knowledgeBaseSearch(request, response, queryStringParameters) {
   var credentials = "";
   request.on("data", (data) => {
     credentials += data;
   });
 
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
-    var query = credentials.query;
+    var query = queryStringParameters.query;
     var jsonString = await SERP.executeQuery(query);
     response.writeHead(200, { "Content-type": "application/json" });
     response.write(jsonString);
@@ -583,11 +629,11 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/login":
-        login(request, response);
+        login(request, response, queryStringParameters);
         break;
 
       case "/login/google":
-        GoogleAuth.login(request, response);
+        GoogleAuth.login(request, response, queryStringParameters);
         break;
 
       case "/validate/user":
@@ -595,19 +641,27 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/fetch/user/validation":
-        checkValidation(request, response);
+        checkValidation(request, response, queryStringParameters);
         break;
 
       case "/send/email":
-        sendEmail(request, response);
+        sendEmail(request, response, queryStringParameters);
+        break;
+
+      case "/send/validationEmail":
+        sendValidatedPrescriptionNotificationProcess(request,response,queryStringParameters);
         break;
 
       case "/knowledgebase/search":
-        knowledgeBaseSearch(request, response);
+        knowledgeBaseSearch(request, response, queryStringParameters);
         break;
 
       case "/faq/search":
-        FAQ(request, response);
+        FAQ(request, response, queryStringParameters);
+        break;
+
+      case "/faq/articles":
+        getFAQ(request, response);
         break;
 
       case "/api/products":
@@ -655,6 +709,10 @@ const server = http.createServer((request, response) => {
       case "/prescriptions/getDoctorList":
         getDoctorPrescriptionsProcess(request,response);
         break;  
+
+      case "/prescriptions/getPatientList":
+        getPatientPrescriptionsProcess(request,response);
+        break;
       
       case "/make/validatedPrescription":
         createValidatedPrescriptionProcess(request,response);

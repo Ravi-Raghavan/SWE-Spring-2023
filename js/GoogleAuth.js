@@ -34,7 +34,7 @@ function register(request, response){
 }
 
 
-function login(request, response){
+function login(request, response, queryStringParameters){
     var credentials = "";
 
     request.on('data', (data) => {
@@ -42,8 +42,7 @@ function login(request, response){
     });
 
     request.on('end', async () => {
-        credentials = JSON.parse(credentials);
-        var decryptedToken = jwt_decode(credentials["JWT"]);
+        var decryptedToken = jwt_decode(queryStringParameters["JWT"]);
         var email = decryptedToken.email;
 
         var userParameters = {email: email};

@@ -29,13 +29,8 @@
           password: password
         }
 
-        fetch("/login", {
-          method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        fetch(`/login?email=${email}&password=${password}`, {
+          method: 'GET' // *GET, POST, PUT, DELETE, etc.
         })
         .then((response) => {
           if (response.status == 200){
@@ -75,13 +70,8 @@
             JWT: response.credential
           };
           
-          fetch("/login/google", {
-            method: 'POST', // *GET, POST, PUT, DELETE, etc.
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
+          fetch(`/login/google?JWT=${response.credential}`, {
+            method: 'GET'
           })
           .then( (response) => {
             if (response.status == 200){
@@ -116,11 +106,7 @@
         window.onload = function () {
           var client_id = "";
           fetch("/credentials/google", {
-            method: "GET",
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            headers: {
-              'Content-Type': 'application/json'
-            }
+            method: "GET"
           })
           .then((response) => {
             if (response.status == 200){

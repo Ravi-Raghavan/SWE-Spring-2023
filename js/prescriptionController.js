@@ -91,10 +91,24 @@ async function getDoctorPrescriptionsProcess(req,res){
     }
 }
 
+async function getPatientPrescriptionsProcess(req,res){
+    try{
+        const patientPrescriptionList = await patientPrescription.getPatientPrescriptions();
+        const data = {
+            patientPrescriptionList
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createPatientPrescriptionProcess,
     createDoctorPrescriptionProcess,
     getAccountTypeForPPProcess,
     getDoctorPrescriptionsProcess,
-    createValidatedPrescriptionProcess
+    createValidatedPrescriptionProcess,
+    getPatientPrescriptionsProcess
 };

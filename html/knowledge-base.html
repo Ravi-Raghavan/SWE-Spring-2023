@@ -95,13 +95,8 @@
                 query: query
             };
 
-            fetch("/knowledgebase/search", {
-                method: 'POST',
-                cache: 'no-cache',
-                headers:{
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
+            fetch(`/knowledgebase/search?query=${query}`, {
+                method: 'GET'
             })
             .then((response ) => {
                 if (response.status == 200){
