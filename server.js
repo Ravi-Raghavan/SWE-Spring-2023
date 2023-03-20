@@ -32,7 +32,10 @@ const public_paths_html = [
   "/html/user-registration-form.html",
   "/html/waiting-for-validation.html",
   "/html/store.html",
-  "/html/submitted-prescription-patient.html",
+  "/html/submitted-prescription-patient-wait.html",
+  "/html/submitted-prescription-patient-validated.html",
+  "/html/submitted-prescription-doctor-wait.html",
+  "/html/submitted-prescription-doctor-validated.html",
   "/html/header.html",
   "/html/footer.html",
 ];

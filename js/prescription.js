@@ -195,15 +195,17 @@ document.querySelector(".submit-box1").addEventListener("click", () =>{
                       console.log("error: prescription not validated");
                     }
                   })
+                  window.location.href = "./submitted-prescription-patient-validated.html";
                 }else{
                   console.log("all points do not check out");
+                  window.location.href = "./submitted-prescription-patient-wait.html";
                 }
               }
             }
           })
         })
         console.log("prescription added");
-        //window.location.href = "./submitted-prescription-patient.html";
+        
         
       }else{
         console.log("prescription not added");
@@ -378,17 +380,18 @@ document.querySelector(".submit-box2").addEventListener("click",()=>{
                         console.log(response.status);
                         if(response.status == 201){
                           console.log("prescription validated");
+                          window.location.href = "./submitted-prescription-doctor-validated.html";
                         }else{
                           console.log("prescription not validated");
                         }
                       })
+                    }else{
+                      window.location.href = "./submitted-prescription-doctor-wait.html";
                     }
                   }
                 }
               })
             })
-            console.log("all good :)");
-            //window.location.href = "./submitted-prescription-patient.html";
         }else{
             console.log("not good :(");
         }
