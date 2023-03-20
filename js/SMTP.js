@@ -101,7 +101,7 @@ async function sendValidatedPrescriptionNotification(email,doctorFirstName,docto
     var mailOptions = {
         from: 'swespring2023@gmail.com',
         to: `${email}`,
-        subject: 'Validate Email Address',
+        subject: 'Prescription Ready',
         text: `Dear Patient,\n\n     Your Doctor, ${doctorFirstName} ${doctorLastName}, has filled your prescription. Prescription ${"'"+prescriptionNumber+"'"} is now validated and ready to use! Thank you for choosing DrubHub and have a nice day :)\n\nBest,\nThe DrugHub Team`
     };
 
