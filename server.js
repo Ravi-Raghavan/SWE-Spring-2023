@@ -308,6 +308,32 @@ function FAQ(request, response, queryStringParameters) {
   });
 }
 
+function getFAQ(request, response) {
+
+  request.on("data", (data) => {
+    
+  });
+  var results = [];
+  request.on("end", async () => {
+    
+      FAQ_ref.once("value", function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+          var childKey = childSnapshot.key;
+          var childData = childSnapshot.val();
+          var topicList = childData.topics;
+          var articleTitle = childData.title;
+          results.push(childData);
+            
+        });
+
+        console.log("Search Results: " + JSON.stringify(results));
+        response.writeHead(200, { "Content-type": "application/json" });
+        response.write(JSON.stringify(results));
+        response.end();
+      });
+  });
+}
+
 function login(request, response, queryStringParameters) {
   var credentials = "";
 
@@ -632,6 +658,10 @@ const server = http.createServer((request, response) => {
 
       case "/faq/search":
         FAQ(request, response, queryStringParameters);
+        break;
+
+      case "/faq/articles":
+        getFAQ(request, response);
         break;
 
       case "/api/products":
