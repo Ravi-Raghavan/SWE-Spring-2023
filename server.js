@@ -180,6 +180,8 @@ const { createMyMessageProcess } = require("./js/testController");
 const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess } = require("./js/prescriptionController");
 const { createDoctorPrescription, createValidatedPrescription } = require("./js/prescriptionModel");
 const FirebaseAPI = require("./js/FirebaseAPI");
+const { getPostData } = require("./js/utils");
+const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -360,6 +362,22 @@ function sendEmail(request, response, queryStringParameters) {
   response.writeHead(200, { "Content-type": "text/plain" });
   response.write("Done!");
   response.end();
+}
+
+async function sendValidatedPrescriptionNotificationProcess(req,res,queryStringParameters){
+  try{
+    let body = await getPostData(req);
+    const {doctorFirstName,doctorLastName,prescriptionNumber} = JSON.parse(body);
+    var email = queryStringParameters.email;
+    var notificationREF = await sendValidatedPrescriptionNotification(email,doctorFirstName,doctorLastName,prescriptionNumber);
+    const dataToSend = {
+      id: notificationREF
+    };
+    res.writeHead(200, {"Content-type": "application/json"});
+    res.end(JSON.stringify(dataToSend));
+  }catch (err){
+    console.log(err);
+  }
 }
 
 function serveFileContent(file, response) {
@@ -602,6 +620,10 @@ const server = http.createServer((request, response) => {
 
       case "/send/email":
         sendEmail(request, response, queryStringParameters);
+        break;
+
+      case "/send/validationEmail":
+        sendValidatedPrescriptionNotificationProcess(request,response,queryStringParameters);
         break;
 
       case "/knowledgebase/search":

@@ -23,8 +23,6 @@ function startType(){
   })
 
   
-
-  
 }
 
 function getUID(){
@@ -380,6 +378,18 @@ document.querySelector(".submit-box2").addEventListener("click",()=>{
                         console.log(response.status);
                         if(response.status == 201){
                           console.log("prescription validated");
+                          var sendData = {
+                            doctorFirstName: doctorFirstName,
+                            doctorLastName: doctorLastName,
+                            prescriptionNumber: prescriptionNumber
+                          }
+                          fetch(`/send/validationEmail?email=${patientEmail}`, {
+                            method: "Post",
+                            cache: "no-cache",
+                            body: JSON.stringify(sendData)
+                          }).then((response)=>{
+                            console.log(response.status);
+                          })
                           window.location.href = "./submitted-prescription-doctor-validated.html";
                         }else{
                           console.log("prescription not validated");

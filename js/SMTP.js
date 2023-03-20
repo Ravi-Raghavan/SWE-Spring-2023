@@ -89,7 +89,38 @@ async function sendValidationEmail(email){
     console.log("Done with sendValidationEmail()");
 }
 
+async function sendValidatedPrescriptionNotification(email,doctorFirstName,doctorLastName,prescriptionNumber){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+        user: 'swespring2023@gmail.com',
+        pass: 'lotrlepvzmwdnsny'
+    }
+    });
+
+    var mailOptions = {
+        from: 'swespring2023@gmail.com',
+        to: `${email}`,
+        subject: 'Validate Email Address',
+        text: `Dear Patient,\n\n     Your Doctor, ${doctorFirstName} ${doctorLastName}, has filled your prescription. Prescription ${"'"+prescriptionNumber+"'"} is now validated and ready to use! Thank you for choosing DrubHub and have a nice day :)\n\nBest,\nThe DrugHub Team`
+    };
+
+    result = await new Promise((resolve, reject) =>{
+        transporter.sendMail(mailOptions,function(error, info){
+            if(error){
+                reject(error);
+            }else{
+                resolve('Email sent: '+ info.response);
+                console.log("Email sent " + info.response);
+            }
+        });
+    })
+
+    console.log("Done with sending Notification");
+}
+
 module.exports = {
     sendContactEmail: sendContactEmail, 
-    sendValidationEmail: sendValidationEmail
+    sendValidationEmail: sendValidationEmail,
+    sendValidatedPrescriptionNotification:sendValidatedPrescriptionNotification
 }
