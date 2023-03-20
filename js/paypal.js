@@ -4,16 +4,16 @@ const APP_SECRET = "EOgSXbL9wbXoocQCIymU0GPibLjs9_HDpTCqtZxpru5ONHC2Nq5Zkgxb01xM
 const base = "https://api-m.sandbox.paypal.com";
 
 async function createOrder() {
-    var purchaseAmount = 32.98;
-    // const admin = require("./firebase").admin;
-    // admin.database().ref("/total/").once("value")
-    //     .then((snapshot) => {
-    //         purchaseAmount = snapshot.val();
-    //         console.log("Variable read from Firebase successfully");
-    //     })
-    //     .catch((error) => {
-    //         console.error("Error sending variable to Firebase:", error);
-    //     });
+    var purchaseAmount;
+    const admin = require("./firebase").admin;
+    admin.database().ref("/orders/").child("-NPxNDaanq4hgBCvZPW-").once("value")
+        .then((snapshot) => {
+            purchaseAmount = snapshot.val().costs;
+            console.log("Variable read from Firebase successfully:", snapshot.val().costs);
+        })
+        .catch((error) => {
+            console.error("Error sending variable to Firebase:", error);
+        });
     const accessToken = await generateAccessToken();
     const url = `${base}/v2/checkout/orders`;
     const response = await fetch(url, {
