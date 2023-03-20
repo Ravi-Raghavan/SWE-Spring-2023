@@ -199,7 +199,7 @@ document.querySelector(".submit-box1").addEventListener("click", () =>{
           })
         })
         console.log("prescription added");
-        window.location.href = "./submitted-prescription-patient.html";
+        //window.location.href = "./submitted-prescription-patient.html";
         
       }else{
         console.log("prescription not added");
@@ -300,6 +300,9 @@ document.querySelector(".submit-box2").addEventListener("click",()=>{
         }).then((response) => {
           console.log(response.json());
           if(response.status == 201){
+
+            
+
             console.log("all good :)");
             window.location.href = "./submitted-prescription-patient.html";
         }else{
