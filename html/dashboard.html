@@ -371,7 +371,7 @@
           }
         }
 
-        let paymentCardResponse = await fetch(`/get/payment_cards?uid=${user_record['uid']}`)
+        let paymentCardResponse = await fetch(`/get/payment_cards?uid=${user_record['uid']}`, {method: "GET"})
         let paymentCardResponseJSON = await paymentCardResponse.json()
 
         console.log("Payment Card Response Status: " + paymentCardResponse.status);
