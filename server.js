@@ -175,7 +175,7 @@ const public_paths_product = [
 ];
 
 const { createProduct } = require("./js/productController");
-const { testCreateOrder, updateOrder, createOrder, updateCost } = require("./js/orderController");
+const { testCreateOrder, updateOrder, createOrder, updateCart } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
 const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess } = require("./js/prescriptionController");
 const { createDoctorPrescription, createValidatedPrescription } = require("./js/prescriptionModel");
@@ -673,15 +673,10 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/api/updateCart":
-        console.log("/api/updateCart");
-        updateOrder(request, response);
+        console.log("updating the total cost: /api/updateCost");
+        updateCart(request, response);
         break;
       
-      case "/api/updateCost":
-        console.log("updating the total cost: /api/updateCost");
-        updateCost(request, response);
-        break;
-
       case "/testMake":
         createMyMessageProcess(request, response);
         break;  

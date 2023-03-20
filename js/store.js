@@ -161,24 +161,37 @@ function updateCartTotal() {
     var cartRows = cartItemContainer.getElementsByClassName('cart-row')
     total = 0
     totalquantity = 0
+    var drugData = []
+
     for (var i = 0; i < cartRows.length; i++) {
+        var drugInformation = {}
         var cartRow = cartRows[i]
         var priceElement = cartRow.getElementsByClassName('cart-price')[0]
         var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
+        var title = cartRow.getElementsByClassName('cart-item')[0].innerText;
         var price = parseFloat(priceElement.innerText.replace('$', ''))
         var quantity = quantityElement.value
         total = total + (price * quantity)
         totalquantity = parseFloat(totalquantity) + parseFloat(quantity)
+
+        drugInformation["title"] = title;
+        drugInformation["quantity"] = quantity;
+        drugInformation["price"] = price;
+
+        drugData.push(drugInformation);
     }
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
     
-    fetch('http://localhost:8000/api/updateCost', {
+    console.log("UID: " + JSON.parse(window.localStorage.getItem("User Record")).uid);
+    console.log("Drug Data: " + drugData);
+
+    fetch('http://localhost:8000/api/updateCart', {
             method : 'PATCH',
             body : JSON.stringify({
-                costs : total,
-                quantity : totalquantity++,
-
+                cartTotal : total,
+                drugs: drugData,
+                uid: JSON.parse(window.localStorage.getItem("User Record")).uid
             }),
             headers: {
                 'Content-type': 'application/json',
