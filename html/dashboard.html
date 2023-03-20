@@ -564,6 +564,7 @@
     regex = new RegExp(/^[0-9]{5}$/);
       if(zip == null || regex.test(zip)==false){
         alert("Please enter a valid Zip Code!");
+        document.getElementById("zip").value = "";
         invalidInput = true;
       }
       //Test Validation for Credit Card Number (checks for a sequence of at least 15-16 numbers)
@@ -571,6 +572,7 @@
       regex = new RegExp(/^[0-9]{15,16}$/);
       if(number == null || regex.test(number) == false){
         alert("Enter a valid Credit Card Number!");
+        document.getElementById("ccnum").value="";
         invalidInput = true;
       }
 
@@ -579,6 +581,7 @@
       if(expireM== null || !Months.includes(expireM))
       {
         alert("Please Enter a valid Month!");
+        document.getElementById("expmonth").value = "";
         invalidInput = true;
       }
 
@@ -586,6 +589,7 @@
       regex = new RegExp(/^[0-9]{4}$/);
       if(expireY == null || regex.test(expireY)==false){
         alert("Please enter a valid Year!");
+        document.getElementById("expyear").value = "";
         invalidInput = true;
       }
 
@@ -593,6 +597,7 @@
       regex = new RegExp(/^[0-9]{3,4}$/);
       if(cvv == null || regex.test(cvv)==false){
         alert("Please enter a valid CVV!");
+        document.getElementById("cvv").value = "";
         invalidInput = true;
       }
 
