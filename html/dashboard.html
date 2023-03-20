@@ -128,7 +128,7 @@
       </div>
 
       <div class="row">
-        <h2>Recent Prescriptions:</h2>
+        <h2 id="DoctorPrescribedItems">Recent Prescriptions:</h2>
       
         <div class="OrderTable">
           <table id="prescriptionList">
@@ -650,7 +650,7 @@
         {
 
           document.getElementById("loggingOut").remove();
-
+          document.getElementById("DoctorPrescribedItems").innerText = "Claimed Prescriptions:";
           var rows = "<a id=\"approvalOption\"class=\"\"href=\"#\"onclick='swapDisplay(\"approval-info\", \"approvalOption\")'>Patient List</a>";
           var menu = document.getElementById("sideMenu");
           var template = document.createElement('template');
