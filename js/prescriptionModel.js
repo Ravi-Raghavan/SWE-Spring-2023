@@ -5,6 +5,7 @@ var db = admin.database();
 
 doctorPresdb = db.ref(`/doctorPrescriptions/`);
 var uref = db.ref(`/users/`);
+patientPresdb =db.ref(`/patientPrescriptions/`);
 
 async function createPatientPrescription(dateOfBirth, firstName, issueDate,lastName,patientEmail, patientUID,prescriptionNumber){
         
@@ -76,7 +77,7 @@ async function getAccountTypeForPP(UID){
     return FirebaseAPI.getAccountType(UID);
 }
 
-async function getDoctorPrescriptions(uid){
+async function getDoctorPrescriptions(){
     const doctorPrescriptions = await new Promise((resolve,reject) =>{
         doctorPresdb.get().then((snapshot) =>{
             resolve(snapshot.val());
@@ -85,10 +86,20 @@ async function getDoctorPrescriptions(uid){
     return doctorPrescriptions;
 }
 
+async function getPatientPrescriptions(){
+    const patientPrescriptions  = await new Promise((resolve,reject) => {
+        patientPresdb.get().then((snapshot) =>{
+            resolve(snapshot.val());
+        })
+    })
+    return patientPrescriptions;
+}
+
 module.exports = {
     createPatientPrescription,
     createDoctorPrescription,
     getAccountTypeForPP,
     getDoctorPrescriptions,
-    createValidatedPrescription
+    createValidatedPrescription,
+    getPatientPrescriptions
 };

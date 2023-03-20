@@ -174,7 +174,7 @@ const public_paths_product = [
 const { createProduct } = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCost } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
-const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess } = require("./js/prescriptionController");
+const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess } = require("./js/prescriptionController");
 const { createDoctorPrescription, createValidatedPrescription } = require("./js/prescriptionModel");
 const FirebaseAPI = require("./js/FirebaseAPI");
 
@@ -655,6 +655,10 @@ const server = http.createServer((request, response) => {
       case "/prescriptions/getDoctorList":
         getDoctorPrescriptionsProcess(request,response);
         break;  
+
+      case "/prescriptions/getPatientList":
+        getPatientPrescriptionsProcess(request,response);
+        break;
       
       case "/make/validatedPrescription":
         createValidatedPrescriptionProcess(request,response);
