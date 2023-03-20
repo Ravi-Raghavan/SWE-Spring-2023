@@ -245,7 +245,7 @@ function binarySearch(list, target) {
   return lo;
 }
 
-function FAQ(request, response) {
+function FAQ(request, response, queryStringParameters) {
   var searchQuery = "";
 
   request.on("data", (data) => {
@@ -253,6 +253,7 @@ function FAQ(request, response) {
   });
 
   request.on("end", async () => {
+    searchQuery = queryStringParameters.query;
     var stemmedTokensSearchQuery =
       natural.PorterStemmer.tokenizeAndStem(searchQuery).sort();
     var fileName = "./json/BayesianClassifier.json";
@@ -302,7 +303,7 @@ function FAQ(request, response) {
   });
 }
 
-function login(request, response) {
+function login(request, response, queryStringParameters) {
   var credentials = "";
 
   request.on("data", (data) => {
@@ -310,8 +311,7 @@ function login(request, response) {
   });
 
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
-    var email = credentials["email"];
+    var email = queryStringParameters["email"];
     var userParameters = { email: email };
     await firebaseAPI.login(userParameters, response);
   });
@@ -343,14 +343,15 @@ function register(request, response) {
   });
 }
 
-function sendEmail(request, response) {
+function sendEmail(request, response, queryStringParameters) {
   var credentials = "";
+
   request.on("data", (data) => {
     credentials += data;
   });
+
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
-    var email = credentials.email;
+    var email = queryStringParameters.email;
     await SMTP.sendValidationEmail(email);
   });
   response.writeHead(200, { "Content-type": "text/plain" });
@@ -395,7 +396,7 @@ function completeValidation(request, response) {
   });
 }
 
-function checkValidation(request, response) {
+function checkValidation(request, response, queryStringParameters) {
   var credentials = "";
 
   request.on("data", (data) => {
@@ -403,21 +404,19 @@ function checkValidation(request, response) {
   });
 
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
-    var uid = credentials.uid;
+    var uid = queryStringParameters.uid;
     await firebaseAPI.isValidated(uid, response);
   });
 }
 
-function knowledgeBaseSearch(request, response) {
+function knowledgeBaseSearch(request, response, queryStringParameters) {
   var credentials = "";
   request.on("data", (data) => {
     credentials += data;
   });
 
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
-    var query = credentials.query;
+    var query = queryStringParameters.query;
     var jsonString = await SERP.executeQuery(query);
     response.writeHead(200, { "Content-type": "application/json" });
     response.write(jsonString);
@@ -583,11 +582,11 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/login":
-        login(request, response);
+        login(request, response, queryStringParameters);
         break;
 
       case "/login/google":
-        GoogleAuth.login(request, response);
+        GoogleAuth.login(request, response, queryStringParameters);
         break;
 
       case "/validate/user":
@@ -595,19 +594,19 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/fetch/user/validation":
-        checkValidation(request, response);
+        checkValidation(request, response, queryStringParameters);
         break;
 
       case "/send/email":
-        sendEmail(request, response);
+        sendEmail(request, response, queryStringParameters);
         break;
 
       case "/knowledgebase/search":
-        knowledgeBaseSearch(request, response);
+        knowledgeBaseSearch(request, response, queryStringParameters);
         break;
 
       case "/faq/search":
-        FAQ(request, response);
+        FAQ(request, response, queryStringParameters);
         break;
 
       case "/api/products":

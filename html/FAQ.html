@@ -178,13 +178,8 @@
         function NLPResults(){
             var searchQuery = document.getElementById("searchField").value
             
-            fetch("/faq/search", {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                body: searchQuery // body data type must match "Content-Type" header
+            fetch(`/faq/search?query=${searchQuery}`, {
+                method: 'GET'
             })
             .then((response) => {
                 if (response.status == 200){
