@@ -348,6 +348,7 @@
         var user_record = JSON.parse(localStorage.getItem("User Record"));
         console.log(user_record);
         console.log("Account Type: " + user_record['Account Type']); 
+        var uid = user_record["uid"];
 
         let response = await fetch('/get/prescriptions/user', {
           method: 'PATCH',
@@ -393,7 +394,7 @@
             var expireM = paymentCard.expireM;
             var expireY = paymentCard.expireY;
 
-            var rows = "<tr><td>"+name+"</td><td>"+number+"</td><td>"+address+", "+city+", "+state+", "+zip+"</td><td>"+expireM+" "+expireY+"</td></tr>";
+            var rows = "<tr><td>"+name+"</td><td>"+number+"</td><td>"+address+", "+city+", "+state+", "+zip+"</td><td>"+expireM+" "+expireY+`</td><td><i class=\"fa fa-trash\" style=\"cursor: pointer;\" onclick  = \"removeInfo(this.parentNode.parentNode.rowIndex, ${number}, '${uid}')\"></i></td></tr>`;
             var table = document.getElementById("paymentList");
             var template = document.createElement('template');
             template.innerHTML = rows;
@@ -549,27 +550,28 @@
       var expireY = document.getElementById("expyear").value;
       var cvv = document.getElementById("cvv").value;
 
-
+      var invalidInput = false;
 
       //Validate State
       var States = ['AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'];
       if(state==null || !States.includes(state)){
         alert("Please Enter a Valid State!");
-        return false;
+        document.getElementById("state").value = "";
+        invalidInput = true;
       }
 
     //Validate Zip Code      
     regex = new RegExp(/^[0-9]{5}$/);
       if(zip == null || regex.test(zip)==false){
         alert("Please enter a valid Zip Code!");
-      return false;
+        invalidInput = true;
       }
-      //Test Validation for Credit Card Number (checks for a sequence of at least 12 numbers)
+      //Test Validation for Credit Card Number (checks for a sequence of at least 15-16 numbers)
       number = number.replace(/\s/g, '');
-      regex = new RegExp(/^[0-9]{12,19}$/);
+      regex = new RegExp(/^[0-9]{15,16}$/);
       if(number == null || regex.test(number) == false){
         alert("Enter a valid Credit Card Number!");
-        return false;
+        invalidInput = true;
       }
 
       //Test Validation for Month
@@ -577,22 +579,25 @@
       if(expireM== null || !Months.includes(expireM))
       {
         alert("Please Enter a valid Month!");
-        return false;
+        invalidInput = true;
       }
 
       //Test Validation for Year (Checks for four digits right now)
       regex = new RegExp(/^[0-9]{4}$/);
       if(expireY == null || regex.test(expireY)==false){
         alert("Please enter a valid Year!");
-      return false;
+        invalidInput = true;
       }
 
       //Test Validation for CVV
       regex = new RegExp(/^[0-9]{3,4}$/);
       if(cvv == null || regex.test(cvv)==false){
         alert("Please enter a valid CVV!");
-      return false;
+        invalidInput = true;
       }
+
+      if(invalidInput)
+       return false;
 
       var rows = "<tr><td>"+name+"</td><td>---- ---- ---- "+number.substring(number.length-4)+"</td><td>"+address+", "+city+", "+state+", "+zip+"</td><td>"+expireM+" "+expireY+`</td><td><i class=\"fa fa-trash\" style=\"cursor: pointer;\" onclick  = \"removeInfo(this.parentNode.parentNode.rowIndex, ${number}, '${uid}')\"></i></td></tr>`;
       var table = document.getElementById("paymentList");
