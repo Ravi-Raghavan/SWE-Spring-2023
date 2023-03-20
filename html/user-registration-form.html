@@ -102,11 +102,7 @@
       window.onload = function () {
         var client_id = "";
         fetch("/credentials/google", {
-          method: "GET",
-          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-          headers: {
-            "Content-Type": "application/json",
-          },
+          method: "GET"
         }).then((response) => {
           if (response.status == 200) {
             response.json().then((json) => {
