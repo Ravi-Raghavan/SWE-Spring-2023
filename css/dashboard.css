@@ -10,6 +10,8 @@
     border-style:groove;
     border-color: var(--fourth);
     background-color: var(--suppliment);
+    max-width: 100px;
+    max-height: 100px;
 }
 
 .info-container{
