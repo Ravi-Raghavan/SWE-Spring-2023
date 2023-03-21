@@ -55,6 +55,10 @@ async function test(){
 async function evaluate(){
     await train();
     await test();
+
+    classifier.save('../json/BayesianClassifier.json', function(err, classifier) {
+        // the classifier is saved to the classifier.json file!
+    });
 }
 
 evaluate();
