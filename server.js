@@ -263,8 +263,7 @@ function FAQ(request, response, queryStringParameters) {
 
   request.on("end", async () => {
     searchQuery = queryStringParameters.query;
-    var stemmedTokensSearchQuery =
-      natural.PorterStemmer.tokenizeAndStem(searchQuery).sort();
+    var stemmedTokensSearchQuery = natural.PorterStemmer.tokenizeAndStem(searchQuery).sort();
     var fileName = "./json/BayesianClassifier.json";
     natural.BayesClassifier.load(fileName, null, function (err, classifier) {
       var category = classifier.classify(searchQuery);
@@ -278,11 +277,8 @@ function FAQ(request, response, queryStringParameters) {
           var articleTitle = childData.title;
 
           if (topicList.includes(category)) {
-            var stemmedTokensArticle =
-              natural.PorterStemmer.tokenizeAndStem(articleTitle).sort();
-            console.log(
-              "Stemmed Tokens for Query: " + stemmedTokensSearchQuery
-            );
+            var stemmedTokensArticle = natural.PorterStemmer.tokenizeAndStem(articleTitle).sort();
+            console.log("Stemmed Tokens for Query: " + stemmedTokensSearchQuery);
             console.log("Stemmed Tokens for Article: " + stemmedTokensArticle);
             var similarity = 0;
 
