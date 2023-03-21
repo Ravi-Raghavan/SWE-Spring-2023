@@ -749,7 +749,9 @@ const server = http.createServer((request, response) => {
         getUserCart(request, response, queryStringParameters);
         break;
     }
-  } else {
+  } 
+  
+  else {
     //Client is requesting a file
     console.log("Serving File Content: " + file);
     serveFileContent(file, response);
@@ -762,7 +764,16 @@ const server = http.createServer((request, response) => {
   let captureUrl = reqUrl.match(/^\/api\/orders\/([^\/]+)\/capture$/);
 
   if (reqUrl === "/api/orders" && request.method == "POST") {
-    paypal
+    var credentials = "";
+
+    request.on("data", (data) => {
+      credentials += data;
+    });
+
+    request.on("end", async () => {
+      var uid = credentials.uid;
+      console.log("User's UID: ", uid);
+      paypal
       .createOrder()
       .then((order) => {
         response.statusCode = 200;
@@ -774,6 +785,9 @@ const server = http.createServer((request, response) => {
         response.setHeader("Content-Type", "text/plain");
         response.end(`Error creating order: ${error}`);
       });
+    });
+
+    
   } else if (
     captureUrl != null &&
     reqUrl === captureUrl[0] &&
