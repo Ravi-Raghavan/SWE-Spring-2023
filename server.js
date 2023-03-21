@@ -95,6 +95,7 @@ const public_paths_js = [
   "/js/testController.js",
   "/js/prescriptionModel.js",
   "/js/prescriptonController.js",
+  "/js/FAQ-view.js",
 ];
 
 const public_paths_images = [
