@@ -119,8 +119,36 @@ async function sendValidatedPrescriptionNotification(email,doctorFirstName,docto
     console.log("Done with sending Notification");
 }
 
+async function sendPatientActionRequired(email,doctorFirstName,doctorLastName,prescriptionNumber){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+        user: 'swespring2023@gmail.com',
+        pass: 'lotrlepvzmwdnsny'
+    }
+    });
+    var mailOptions = {
+        from: 'swespring2023@gmail.com',
+        to: `${email}`,
+        subject: 'Action Required - DrugHub',
+        text: `Dear Patient,\n\n     Your Doctor, ${doctorFirstName} ${doctorLastName}, has filled prescription ${"'"+prescriptionNumber+"'"}. Please log into your DrugHub account and fill out the prescription request form to being using your prescription. Thank you for choosing DrubHub and have a nice day :)\n\nPrescription Request Form: http://localhost:8000/html/PrescriptionRequest.html \n\nBest,\nThe DrugHub Team`
+    };
+    result = await new Promise((resolve, reject) =>{
+        transporter.sendMail(mailOptions,function(error, info){
+            if(error){
+                reject(error);
+            }else{
+                resolve('Email sent: '+ info.response);
+                console.log("Email sent " + info.response);
+            }
+        });
+    })
+    console.log("Done with sending Notification");
+}
+
 module.exports = {
     sendContactEmail: sendContactEmail, 
     sendValidationEmail: sendValidationEmail,
-    sendValidatedPrescriptionNotification:sendValidatedPrescriptionNotification
+    sendValidatedPrescriptionNotification:sendValidatedPrescriptionNotification,
+    sendPatientActionRequired:sendPatientActionRequired
 }

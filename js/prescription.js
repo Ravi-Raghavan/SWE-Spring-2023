@@ -195,11 +195,12 @@ document.querySelector(".submit-box1").addEventListener("click", () =>{
                   })
                   window.location.href = "./submitted-prescription-patient-validated.html";
                 }else{
-                  console.log("all points do not check out");
-                  window.location.href = "./submitted-prescription-patient-wait.html";
+                  
                 }
               }
             }
+            console.log("all points do not check out");
+                  window.location.href = "./submitted-prescription-patient-wait.html";
           })
         })
         console.log("prescription added");
@@ -396,10 +397,12 @@ document.querySelector(".submit-box2").addEventListener("click",()=>{
                         }
                       })
                     }else{
-                      window.location.href = "./submitted-prescription-doctor-wait.html";
+                      
                     }
                   }
                 }
+                console.log("all points do not check out");
+                window.location.href = "./submitted-prescription-doctor-wait.html";
               })
             })
         }else{

@@ -406,6 +406,22 @@ async function sendValidatedPrescriptionNotificationProcess(req,res,queryStringP
   }
 }
 
+async function sendPatientActionRequiredProcess(req,res,queryStringParameters){
+  try{
+    let body = await getPostData(req);
+    const {doctorFirstName,doctorLastName,prescriptionNumber} = JSON.parse(body);
+    var email = queryStringParameters.email;
+    var notificationREF = await sendValidatedPrescriptionNotification(email,doctorFirstName,doctorLastName,prescriptionNumber);
+    const dataToSend = {
+      id: notificationREF
+    };
+    res.writeHead(200, {"Content-type": "application/json"});
+    res.end(JSON.stringify(dataToSend));
+  }catch (err){
+    console.log(err);
+  }
+}
+
 function serveFileContent(file, response) {
   fs.readFile(file, function (err, content) {
     if (err) {
@@ -662,6 +678,10 @@ const server = http.createServer((request, response) => {
 
       case "/send/validationEmail":
         sendValidatedPrescriptionNotificationProcess(request,response,queryStringParameters);
+        break;
+
+      case "/send/patientActionRequired":
+        sendPatientActionRequiredProcess(request,response,queryStringParameters);
         break;
 
       case "/knowledgebase/search":
