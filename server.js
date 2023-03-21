@@ -67,6 +67,7 @@ const public_paths_css = [
 
 const public_paths_js = [
   "/js/darkmode.js",
+  "/js/dashboard-view.js",
   "/js/script.js",
   "/js/paypal.js",
   "/js/firebase.js",
