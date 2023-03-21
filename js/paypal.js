@@ -6,6 +6,7 @@ const base = "https://api-m.sandbox.paypal.com";
 const admin = require("./firebase").admin;
 const cartRef = admin.database().ref("/carts/");
 const orderRef = admin.database().ref("/orders/");
+const userRef = admin.database().ref("/users/");
 
 var uid;
 async function createOrder(userID) {
@@ -56,16 +57,14 @@ async function capturePayment(orderId) {
     });
     const data = await response.json();
     console.log(data);
-    console.log(
-        cartRef.child(uid).once("value")
-            .then((snapshot) => {
-                console.log(snapshot.val());
-                orderRef.child(uid).set(snapshot.val());
-            })
-            .catch((error) => {
-                console.error("Error reading variable from Firebase:", error);
-            })
-    );
+    cartRef.child(uid).once("value")
+        .then((snapshot) => {
+            orderRef.child(uid).set(snapshot.val());
+            userRef.child(uid).child("/orders/").set(snapshot.val());
+        })
+        .catch((error) => {
+            console.error("Error reading variable from Firebase:", error);
+        })
     return data;
 }
 
