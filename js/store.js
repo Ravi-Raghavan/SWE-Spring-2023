@@ -36,7 +36,7 @@ async function ready() {
     // }
     // updateCartTotal()
 
-    //upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc)
+    //upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc, drugQuantity)
 
 
     for (var i = 0; i < removeCartItemButtons.length; i++) {
@@ -72,7 +72,7 @@ async function ready() {
         var drugQuantity = drug["quantity"]
         var drugTitle = drug["title"]
 
-        addItemToCart(drugTitle, drugPrice, null);
+        addItemToCart(drugTitle, drugPrice, "../images/Ibuprofen.jpg", drugQuantity);
     }
 }
 
@@ -116,7 +116,7 @@ function addToCartClicked(event) {
     order.push({ "item-name": title, "price": priceVal, "quantity": 1 })
     console.log(order)
 
-    addItemToCart(title, price, imageSrc)
+    addItemToCart(title, price, imageSrc, 1)
     updateCartTotal()
     
     //This fetch will request the uri path to update the cost of the cart and add drugs
@@ -139,7 +139,7 @@ function addToCartClicked(event) {
     // console.log(order)
 }
 
-function addItemToCart(title, price, imageSrc) {
+function addItemToCart(title, price, imageSrc, drugQuantity) {
     var cartRow = document.createElement('div')
     cartRow.classList.add('cart-row')
     cartRow.innerText = title
@@ -160,7 +160,7 @@ function addItemToCart(title, price, imageSrc) {
 </div>
 <span class="cart-price cart-column">${price}</span>
 <div class="cart-quantity cart-column">
-    <input class="cart-quantity-input" type="number" value="1">
+    <input class="cart-quantity-input" type="number" value="${drugQuantity}">
     <button class="btn btn-danger" type="button">REMOVE</button>
 </div>`
 
