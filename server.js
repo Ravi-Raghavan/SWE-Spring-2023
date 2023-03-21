@@ -20,7 +20,7 @@ const public_paths_html = [
   "/html/contact-us.html",
   "/html/dashboard.html",
   "/html/deliverypage.html",
-  "/html/email-validation.html",
+  "/html/email-validated.html",
   "/html/FAQ.html",
   "/html/homepage.html",
   "/html/index.html",
@@ -141,6 +141,7 @@ const public_paths_images = [
   "/images/redx.png",
   "/images/quadis_img.png",
   "/images/kristina_img.png",
+  "/images/DHLogo2Transp.png"
 ];
 
 const public_paths_product = [
