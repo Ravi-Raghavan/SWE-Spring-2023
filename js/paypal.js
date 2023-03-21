@@ -59,8 +59,8 @@ async function capturePayment(orderId) {
     console.log(data);
     cartRef.child(uid).once("value")
         .then((snapshot) => {
-            orderRef.child(uid).set(snapshot.val());
-            userRef.child(uid).child("/orders/").set(snapshot.val());
+            orderRef.child(uid).push().set(snapshot.val());
+            userRef.child(uid).child("/orders/").push().set(snapshot.val());
         })
         .catch((error) => {
             console.error("Error reading variable from Firebase:", error);
