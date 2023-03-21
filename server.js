@@ -85,6 +85,7 @@ const public_paths_js = [
   "/js/util.js",
   "/js/prescription.js",
   "/js/dynamicHeaderFooter.js",
+  "/js/contact-us-view.js",
   "/js/scroller.js",
   "/js/reviewScroller.js",
   "/js/homepage.js",
