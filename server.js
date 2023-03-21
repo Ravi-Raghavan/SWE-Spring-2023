@@ -311,11 +311,11 @@ function FAQ(request, response, queryStringParameters) {
 function getFAQ(request, response) {
 
   request.on("data", (data) => {
-    
+
   });
   var results = [];
   request.on("end", async () => {
-    
+
       FAQ_ref.once("value", function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
           var childKey = childSnapshot.key;
@@ -323,7 +323,7 @@ function getFAQ(request, response) {
           var topicList = childData.topics;
           var articleTitle = childData.title;
           results.push(childData);
-            
+
         });
 
         console.log("Search Results: " + JSON.stringify(results));
@@ -625,7 +625,7 @@ const server = http.createServer((request, response) => {
       console.log(JSON.stringify(queryStringParameters));
       path = path.substring(0, questionMarkIndex);
     }
-    
+
 
     switch (path) {
       case "/credentials/google":
@@ -688,18 +688,18 @@ const server = http.createServer((request, response) => {
         console.log("updating the total cost: /api/updateCost");
         updateCart(request, response);
         break;
-      
+
       case "/testMake":
         createMyMessageProcess(request, response);
-        break;  
-      
+        break;
+
       case "/update/user":
         updateUser(request, response);
         break;
 
       case "/make/patientPrescription":
         createPatientPrescriptionProcess(request,response);
-        break;  
+        break;
 
       case "/make/doctorPrescription":
         createDoctorPrescriptionProcess(request,response);
@@ -707,7 +707,7 @@ const server = http.createServer((request, response) => {
 
       case "/prescription/accountType":
         getAccountTypeForPPProcess(request,response);
-        break;  
+        break;
 
       case "/contact-us":
         sendContactEmail(request, response);
@@ -715,42 +715,42 @@ const server = http.createServer((request, response) => {
 
       case "/prescriptions/getDoctorList":
         getDoctorPrescriptionsProcess(request,response);
-        break;  
+        break;
 
       case "/prescriptions/getPatientList":
         getPatientPrescriptionsProcess(request,response);
         break;
-      
+
       case "/make/validatedPrescription":
         createValidatedPrescriptionProcess(request,response);
         break;
-      
+
       case "/get/prescriptions/user":
         getPrescriptionsUser(request, response);
         break;
-      
+
       case "/add/payment_card":
         addPaymentCard(request, response);
         break;
-      
+
       case "/get/payment_cards":
         getPaymentCards(request, response, queryStringParameters);
         break;
-      
+
       case "/delete/payment_card":
         deletePaymentCard(request, response, queryStringParameters);
         break;
-      
+
       case "/delete/account":
         deleteAccount(request, response, queryStringParameters);
         break;
-      
+
       case "/get/cart":
         getUserCart(request, response, queryStringParameters);
         break;
     }
-  } 
-  
+  }
+
   else {
     //Client is requesting a file
     console.log("Serving File Content: " + file);
@@ -771,10 +771,10 @@ const server = http.createServer((request, response) => {
     });
 
     request.on("end", async () => {
-      var uid = credentials.uid;
+      var uid = JSON.parse(credentials).uid;
       console.log("User's UID: ", uid);
       paypal
-      .createOrder()
+      .createOrder(uid)
       .then((order) => {
         response.statusCode = 200;
         response.setHeader("Content-Type", "application/json");
@@ -787,7 +787,7 @@ const server = http.createServer((request, response) => {
       });
     });
 
-    
+
   } else if (
     captureUrl != null &&
     reqUrl === captureUrl[0] &&

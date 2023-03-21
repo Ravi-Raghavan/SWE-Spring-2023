@@ -3,16 +3,21 @@ const APP_SECRET = "EOgSXbL9wbXoocQCIymU0GPibLjs9_HDpTCqtZxpru5ONHC2Nq5Zkgxb01xM
 
 const base = "https://api-m.sandbox.paypal.com";
 
-async function createOrder() {
+const admin = require("./firebase").admin;
+const cartRef = admin.database().ref("/carts/");
+const orderRef = admin.database().ref("/orders/");
+
+var uid;
+async function createOrder(userID) {
     var purchaseAmount;
-    const admin = require("./firebase").admin;
-    admin.database().ref("/orders/").child("-NPxNDaanq4hgBCvZPW-").once("value")
+    uid = userID;
+    cartRef.child(userID).once("value")
         .then((snapshot) => {
-            purchaseAmount = snapshot.val().costs;
-            console.log("Variable read from Firebase successfully:", snapshot.val().costs);
+            purchaseAmount = snapshot.val().cartTotal;
+            console.log("Variable read from Firebase successfully:", snapshot.val().cartTotal);
         })
         .catch((error) => {
-            console.error("Error sending variable to Firebase:", error);
+            console.error("Error reading variable from Firebase:", error);
         });
     const accessToken = await generateAccessToken();
     const url = `${base}/v2/checkout/orders`;
@@ -51,6 +56,16 @@ async function capturePayment(orderId) {
     });
     const data = await response.json();
     console.log(data);
+    console.log(
+        cartRef.child(uid).once("value")
+            .then((snapshot) => {
+                console.log(snapshot.val());
+                orderRef.child(uid).set(snapshot.val());
+            })
+            .catch((error) => {
+                console.error("Error reading variable from Firebase:", error);
+            })
+    );
     return data;
 }
 
@@ -60,7 +75,7 @@ async function generateAccessToken() {
         body: "grant_type=client_credentials",
         headers: {
             Authorization:
-            "Basic " + Buffer.from(CLIENT_ID + ":" + APP_SECRET).toString("base64"),
+                "Basic " + Buffer.from(CLIENT_ID + ":" + APP_SECRET).toString("base64"),
         },
     });
     const data = await response.json();
