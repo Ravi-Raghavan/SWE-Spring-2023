@@ -177,8 +177,8 @@ const public_paths_product = [
 const { createProduct } = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCart } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
-const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess } = require("./js/prescriptionController");
-const { createDoctorPrescription, createValidatedPrescription } = require("./js/prescriptionModel");
+const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess, deletePatientPrescriptionProcess, deleteDoctorPrescriptionProcess } = require("./js/prescriptionController");
+const { createDoctorPrescription, createValidatedPrescription, deleteDoctorPrescription } = require("./js/prescriptionModel");
 const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
@@ -761,6 +761,14 @@ const server = http.createServer((request, response) => {
         deletePaymentCard(request, response, queryStringParameters);
         break;
 
+      case "/delete/patientPrescription":
+        deletePatientPrescriptionProcess(request,response);
+        break;  
+
+      case "/delete/doctorPrescription":
+        deleteDoctorPrescriptionProcess(request,response);
+        break;
+        
       case "/delete/account":
         deleteAccount(request, response, queryStringParameters);
         break;

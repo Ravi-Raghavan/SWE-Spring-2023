@@ -104,11 +104,43 @@ async function getPatientPrescriptionsProcess(req,res){
     }
 }
 
+async function deletePatientPrescriptionProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const {patientUID, prescriptionNumber} = JSON.parse(body);
+        const deletePatientREF = await patientPrescription.deletePatientPrescription(patientUID,prescriptionNumber);
+        const data = {
+            deletePatientREF
+        };
+        res.writeHead(204,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function deleteDoctorPrescriptionProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const {doctorUID,prescriptionNumber} = JSON.parse(body);
+        const deleteDoctorREF = await patientPrescription.deleteDoctorPrescription(doctorUID,prescriptionNumber);
+        const data = {
+            deleteDoctorREF
+        };
+        res.writeHead(204,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createPatientPrescriptionProcess,
     createDoctorPrescriptionProcess,
     getAccountTypeForPPProcess,
     getDoctorPrescriptionsProcess,
     createValidatedPrescriptionProcess,
-    getPatientPrescriptionsProcess
+    getPatientPrescriptionsProcess,
+    deletePatientPrescriptionProcess,
+    deleteDoctorPrescriptionProcess
 };

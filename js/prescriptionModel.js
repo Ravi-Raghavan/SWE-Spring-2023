@@ -95,11 +95,25 @@ async function getPatientPrescriptions(){
     return patientPrescriptions;
 }
 
+async function deletePatientPrescription(patientUID, prescriptionNumber){
+    var path = db.ref(`/patientPrescriptions/${patientUID}/${prescriptionNumber}/`);
+    path.remove();
+    return "done";
+}
+
+async function deleteDoctorPrescription(doctorUID, prescriptionNumber){
+    var path = db.ref(`/doctorPrescriptions/${doctorUID}/${prescriptionNumber}/`);
+    path.remove();
+    return "done";
+}
+
 module.exports = {
     createPatientPrescription,
     createDoctorPrescription,
     getAccountTypeForPP,
     getDoctorPrescriptions,
     createValidatedPrescription,
-    getPatientPrescriptions
+    getPatientPrescriptions,
+    deletePatientPrescription,
+    deleteDoctorPrescription
 };
