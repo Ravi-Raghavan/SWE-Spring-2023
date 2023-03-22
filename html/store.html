@@ -70,7 +70,7 @@
     <section class="container content-section">
         <h2 class="section-header">Prescriptions</h2>
         <div class="shop-items">
-            <div class="shop-item">
+            <div class="shop-item" id = "prescriptionMedication">
                 <span class="shop-item-title">Oxycotin</span>
                 <img class="shop-item-image" src="../images/Oxycotin.jpg" />
                 <div class="shop-item-details">
@@ -159,6 +159,40 @@
         const body = document.body;
         body.classList.toggle("dark");
     }
+    window.onload = async function (){
+    if (localStorage.getItem("User Record") == null) {
+        //
+      } else {
+        //USER RECORD DOES NOT HAVE AN ACCOUNT TYPE BEING LISTED IN THE JSON, FIX!!!!
+
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        var uid = user_record["uid"];
+
+        let response = await fetch('/get/prescriptions/user', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            uid: user_record["uid"]
+          }),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        })
+  
+        let responseStatus = response.status;
+        let prescriptions = await response.json()
+        console.log("This is what is prescriptions:"+ prescriptions);
+        var counter = 0;
+        if (responseStatus == 200){
+          for (var prescriptionNumber in prescriptions){
+            counter++;
+          }
+        }
+        if(counter == 0){
+        document.getElementById("prescriptionMedication").remove();
+        }
+    }
+}
+
 </script>
 
 </html>
