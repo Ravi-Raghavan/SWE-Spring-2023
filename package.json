@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "crypto-js": "^4.1.1",
+    "csv": "^6.2.8",
     "firebase": "^9.18.0",
     "firebase-admin": "^11.5.0",
     "google-search-results-nodejs": "^2.1.0",

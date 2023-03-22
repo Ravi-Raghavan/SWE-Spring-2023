@@ -164,21 +164,21 @@ document.querySelector(".submit-box1").addEventListener("click", () =>{
                 let refills = currPrescriptionFromDoctor.refills;
                   var dataToSend = {
                     dateOfBirth:dateOfBirth,
-            doctorAccountEmail:doctorEmail,
-            doctorFirstName:doctorFirstName,
-            doctorLastName:doctorLastName,
-            doctorUID:doctorUID,
-            dosage:dosage,
-            expireDate:expireDate,
-            instructions:instructions,
-            issueDate:issueDate,
-            medication:medication,
-            patientAccountEmail:email,
-            patientFirstName:firstName.toUpperCase(),
-            patientLastName:lastName.toUpperCase(),
-            patientUID:currentUID,
-            prescriptionNumber:prescriptionNumber,
-            refills:refills
+                    doctorAccountEmail:doctorEmail,
+                    doctorFirstName:doctorFirstName,
+                    doctorLastName:doctorLastName,
+                    doctorUID:doctorUID,
+                    dosage:dosage,
+                    expireDate:expireDate,
+                    instructions:instructions,
+                  issueDate:issueDate,
+                  medication:medication,
+                  patientAccountEmail:email,
+                  patientFirstName:firstName.toUpperCase(),
+                  patientLastName:lastName.toUpperCase(),
+                  patientUID:currentUID,
+                  prescriptionNumber:prescriptionNumber,
+                  refills:refills
                   }
 
                   fetch("/make/validatedPrescription",{
@@ -189,17 +189,47 @@ document.querySelector(".submit-box1").addEventListener("click", () =>{
                     console.log(response.status);
                     if(response.status==201){
                       console.log("prescription validated");
+                      var sendToDelete = {
+                        patientUID:currentUID,
+                        prescriptionNumber: prescriptionNumber
+                      };
+                      fetch("/delete/patientPrescription",{
+                        method:"DELETE",
+                        cache:"no-cache",
+                        body:JSON.stringify(sendToDelete)
+                      }).then((response)=>{
+                        console.log(response.status);
+                        if(response.status==204){
+                          console.log("prescription Deleted from patient Pending Path");
+                        }
+                      })
+                      var sendToDeleteDoctor = {
+                        doctorUID:doctorUID,
+                        prescriptionNumber:prescriptionNumber
+                      }
+                      fetch("/delete/doctorPrescription",{
+                        method:"DELETE",
+                        cache:"no-cache",
+                        body:JSON.stringify(sendToDeleteDoctor)
+                      }).then((response)=>{
+                        console.log(response.status);
+                        if(response.status == 204){
+                          console.log("prescription Deleted from Doctor pending path");
+                        }
+                      })
+                      window.location.href = "./submitted-prescription-patient-validated.html";
                     }else{
                       console.log("error: prescription not validated");
                     }
                   })
-                  window.location.href = "./submitted-prescription-patient-validated.html";
+                  
                 }else{
-                  console.log("all points do not check out");
-                  window.location.href = "./submitted-prescription-patient-wait.html";
+                  
                 }
               }
             }
+            console.log("all points do not check out");
+                  window.location.href = "./submitted-prescription-patient-wait.html";
           })
         })
         console.log("prescription added");
@@ -378,6 +408,34 @@ document.querySelector(".submit-box2").addEventListener("click",()=>{
                         console.log(response.status);
                         if(response.status == 201){
                           console.log("prescription validated");
+                          var sendToDelete = {
+                            patientUID:currPrescriptionFromPatient.patientUID,
+                            prescriptionNumber: prescriptionNumber
+                          };
+                          fetch("/delete/patientPrescription",{
+                            method:"DELETE",
+                            cache:"no-cache",
+                            body:JSON.stringify(sendToDelete)
+                          }).then((response)=>{
+                            console.log(response.status);
+                            if(response.status==204){
+                              console.log("prescription Deleted from patient Pending Path");
+                            }
+                          })
+                          var sendToDeleteDoctor = {
+                            doctorUID:currentUID,
+                            prescriptionNumber:prescriptionNumber
+                          }
+                          fetch("/delete/doctorPrescription",{
+                            method:"DELETE",
+                            cache:"no-cache",
+                            body:JSON.stringify(sendToDeleteDoctor)
+                          }).then((response)=>{
+                            console.log(response.status);
+                            if(response.status == 204){
+                              console.log("prescription Deleted from Doctor pending path");
+                            }
+                          })
                           var sendData = {
                             doctorFirstName: doctorFirstName,
                             doctorLastName: doctorLastName,
@@ -396,10 +454,12 @@ document.querySelector(".submit-box2").addEventListener("click",()=>{
                         }
                       })
                     }else{
-                      window.location.href = "./submitted-prescription-doctor-wait.html";
+
                     }
                   }
                 }
+                console.log("all points do not check out");
+                window.location.href = "./submitted-prescription-doctor-wait.html";
               })
             })
         }else{

@@ -67,13 +67,3 @@ async function login_logout(){
         window.location.href = "./user-auth-form.html";
     }
 }
-window.onload = function(){
-    if (localStorage.getItem("User Record") == null){
-        document.getElementById("Link6").innerHTML = "Log In";
-    }
-    else{
-        var user_record = JSON.parse(localStorage.getItem("User Record"));
-        var profilePicture = user_record.photoURL
-        document.getElementById("dropbtn").src = profilePicture
-    }
-}

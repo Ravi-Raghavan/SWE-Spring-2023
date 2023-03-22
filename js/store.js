@@ -85,7 +85,6 @@ function purchaseClicked() {
     //     cartItems.removeChild(cartItems.firstChild)
     // }
     document.getElementById("paypal-button-container").style.display = "block";
-    // addtodb(total);
 }
 
 function removeCartItem(event) {
@@ -118,7 +117,7 @@ function addToCartClicked(event) {
 
     addItemToCart(title, price, imageSrc, 1)
     updateCartTotal()
-    
+
     //This fetch will request the uri path to update the cost of the cart and add drugs
     //we can update quantity too if we add a variable to this javascript file that updates quantity aswell.
     // fetch('http://localhost:8000/api/updateCart', {
@@ -199,7 +198,7 @@ function updateCartTotal() {
     }
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
-    
+
     console.log("UID: " + JSON.parse(window.localStorage.getItem("User Record")).uid);
     console.log("Drug Data: " + drugData);
 
@@ -219,29 +218,3 @@ function updateCartTotal() {
     .catch((error) => console.error("Error: ", error));
 
 }
-
-
-const firebaseConfig = {
-    apiKey: "AIzaSyAD8RODlLg_BCHxy3ghN91W5XxIvPLbAp4",
-    authDomain: "swe-spring-2023.firebaseapp.com",
-    databaseURL: "https://swe-spring-2023-default-rtdb.firebaseio.com",
-    projectId: "swe-spring-2023",
-    storageBucket: "swe-spring-2023.appspot.com",
-    messagingSenderId: "600915655715",
-    appId: "1:600915655715:web:966a0affd54b6df2478596",
-    measurementId: "G-EW7N8BG805"
-};
-
-// initializeApp(firebaseConfig);
-
-// addtodb = function(price) {
-//     const database = getDatabase();
-//     const ref = database.ref("/total/");
-//     ref.set(price)
-//         .then(() => {
-//             console.log("Variable sent to Firebase successfully");
-//         })
-//         .catch((error) => {
-//             console.error("Error sending variable to Firebase:", error);
-//         });
-// }
