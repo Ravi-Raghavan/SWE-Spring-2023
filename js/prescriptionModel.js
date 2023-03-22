@@ -115,6 +115,39 @@ async function createPrescriptionBank(bankNumber){
     return "done";
 }
 
+async function getPrescriptionBank(bankNumber){
+    var path = db.ref(`/prescriptionBank/`);
+
+    const patientPrescriptions  = await new Promise((resolve,reject) => {
+        path.get().then((snapshot)=>{
+            var bank = snapshot.val();
+            let hit = false;
+            var bankNumbers = Object.keys(bank);
+            for(let i = 0;i<bankNumbers.length;i++){
+                if(bankNumber==bankNumbers[i]){
+                    hit = true;
+                    resolve(true);
+                    i = bankNumbers.length;
+                }
+            }
+            if(hit==false){
+                resolve(false);
+            }
+        });
+    })
+    return patientPrescriptions;
+}
+
+async function changeStatusBankNumber(bankNumber){
+    var path = db.ref(`/prescriptionBank/${bankNumber}`);
+    var newPath = db.ref(`/prescriptionPipeline/${bankNumber}`);
+    path.remove();
+    newPath.set({
+        status:"waiting"
+    });
+    return "done";
+}
+
 module.exports = {
     createPatientPrescription,
     createDoctorPrescription,
@@ -124,5 +157,7 @@ module.exports = {
     getPatientPrescriptions,
     deletePatientPrescription,
     deleteDoctorPrescription,
-    createPrescriptionBank
+    createPrescriptionBank,
+    getPrescriptionBank,
+    changeStatusBankNumber
 };

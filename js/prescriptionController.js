@@ -149,6 +149,37 @@ async function createPrescriptionBankProcess(req,res){
     }
 }
 
+async function getPrescriptionBankProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const bankNumber = JSON.parse(body);
+        const validPrescriptionNumber = await patientPrescription.getPrescriptionBank(bankNumber);
+        
+        const data = {
+            returnValue : validPrescriptionNumber
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function changeStatusBankNumberProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const bankNumber = JSON.parse(body);
+        const message = await patientPrescription.changeStatusBankNumber(bankNumber);
+        const data = {
+            message:message
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createPatientPrescriptionProcess,
     createDoctorPrescriptionProcess,
@@ -159,4 +190,6 @@ module.exports = {
     deletePatientPrescriptionProcess,
     deleteDoctorPrescriptionProcess,
     createPrescriptionBankProcess,
+    getPrescriptionBankProcess,
+    changeStatusBankNumberProcess
 };

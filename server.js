@@ -182,8 +182,8 @@ const public_paths_product = [
 const { createProduct } = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCart } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
-const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess, deletePatientPrescriptionProcess, deleteDoctorPrescriptionProcess, createPrescriptionBankProcess } = require("./js/prescriptionController");
-const { createDoctorPrescription, createValidatedPrescription, deleteDoctorPrescription } = require("./js/prescriptionModel");
+const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess, deletePatientPrescriptionProcess, deleteDoctorPrescriptionProcess, createPrescriptionBankProcess, getPrescriptionBankProcess, changeStatusBankNumberProcess } = require("./js/prescriptionController");
+const { createDoctorPrescription, createValidatedPrescription, deleteDoctorPrescription, changeStatusBankNumber } = require("./js/prescriptionModel");
 const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
@@ -704,6 +704,14 @@ const server = http.createServer((request, response) => {
 
       case "/create/prescriptionBank":
         createPrescriptionBankProcess(request,response);
+        break;
+
+      case "/get/prescriptionBank":
+        getPrescriptionBankProcess(request,response);
+        break;
+
+      case "/move/prescription/toPipeline":
+        changeStatusBankNumberProcess(request,response);
         break;
 
       case "/make/validatedPrescription":

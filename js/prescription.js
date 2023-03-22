@@ -1,5 +1,6 @@
 
 
+
 window.onload = startType();
 
 function startType(){
@@ -104,168 +105,189 @@ document.querySelector(".submit-box1").addEventListener("click", () =>{
       return;
   }
   var prescriptionNumber = document.getElementById("DOB").value;
-  //console.log(fullName.toUpperCase());
-  if(getEmail() != email){
-    alert("The email provided in the form does not match the email address of this account! Patients may only request prescriptions to their own account.");
-    return;
-  }
-  if(getEmail() == email){
-    var data = {
-      dateOfBirth: dateOfBirth,
-      firstName: firstName.toUpperCase(),
-      issueDate: issueDate,
-      lastName: lastName.toUpperCase(),
-      patientEmail:email,
-      patientUID: currentUID,
-      prescriptionNumber:prescriptionNumber,
-    }
-    fetch("/make/patientPrescription",{
-      method: "POST",
-      cache: "no-cache",
-      body: JSON.stringify(data)
-    }).then((response)=>{
-      console.log(response.json());
-      if(response.status == 201){
-        
-        fetch("/prescriptions/getDoctorList",{
-          method: "GET",
-          cache: "no-cache"
-        }).then((response) => {
-          var doctorListPromise =  response.json();
-          console.log(response.status);
-          doctorListPromise.then((result) =>{
-            console.log("processing doctor list");
-            let fullList = result.doctorPrescriptionsList;
-            let prescriptions = Object.values(fullList);
-            for(let i = 0;i<prescriptions.length;i++){
-              let allPrescriptionValues = Object.values(prescriptions[i]);
-              for(let j = 0;j<allPrescriptionValues.length;j++){
-                let currPrescriptionFromDoctor = allPrescriptionValues[j];
+  fetch("/get/prescriptionBank",{
+    method:"POST",
+    cache:"no-cache",
+    body: JSON.stringify(prescriptionNumber)
+  }).then((response)=>{
+    var bankPromise = response.json();
+    bankPromise.then((result)=>{
+      var returnValue = result.returnValue;
+      if(returnValue){
+        if(getEmail() != email){
+          alert("The email provided in the form does not match the email address of this account! Patients may only request prescriptions to their own account.");
+          return;
+        }
+        if(getEmail() == email){
+          var data = {
+            dateOfBirth: dateOfBirth,
+            firstName: firstName.toUpperCase(),
+            issueDate: issueDate,
+            lastName: lastName.toUpperCase(),
+            patientEmail:email,
+            patientUID: currentUID,
+            prescriptionNumber:prescriptionNumber,
+          }
+          fetch("/make/patientPrescription",{
+            method: "POST",
+            cache: "no-cache",
+            body: JSON.stringify(data)
+          }).then((response)=>{
+            console.log(response.json());
+            if(response.status == 201){
+              fetch("/move/prescription/toPipeline",{
+                method:"POST",
+                cache:"no-cache",
+                body: JSON.stringify(prescriptionNumber)
+              })
+              
+              fetch("/prescriptions/getDoctorList",{
+                method: "GET",
+                cache: "no-cache"
+              }).then((response) => {
+                var doctorListPromise =  response.json();
+                console.log(response.status);
+                doctorListPromise.then((result) =>{
+                  console.log("processing doctor list");
+                  let fullList = result.doctorPrescriptionsList;
+                  let prescriptions = Object.values(fullList);
+                  for(let i = 0;i<prescriptions.length;i++){
+                    let allPrescriptionValues = Object.values(prescriptions[i]);
+                    for(let j = 0;j<allPrescriptionValues.length;j++){
+                      let currPrescriptionFromDoctor = allPrescriptionValues[j];
+            
+                      /**Prescription information to crossCheck with patient prescription */
+                      let patientDOBFromDoctor = currPrescriptionFromDoctor.dateOfBirth;
+                      let issueDateFromDoctor = currPrescriptionFromDoctor.issueDate;
+                      let patientFirstName = currPrescriptionFromDoctor.patientFirstName;
+                      let patientLastName = currPrescriptionFromDoctor.patientLastName;
+                      let prescriptionNumberFromDoctor = currPrescriptionFromDoctor.prescriptionNumber;
       
-                /**Prescription information to crossCheck with patient prescription */
-                let patientDOBFromDoctor = currPrescriptionFromDoctor.dateOfBirth;
-                let issueDateFromDoctor = currPrescriptionFromDoctor.issueDate;
-                let patientFirstName = currPrescriptionFromDoctor.patientFirstName;
-                let patientLastName = currPrescriptionFromDoctor.patientLastName;
-                let prescriptionNumberFromDoctor = currPrescriptionFromDoctor.prescriptionNumber;
-
-                let allTrue = true;
-                if(patientDOBFromDoctor!=dateOfBirth){
-                  allTrue = false;
-                }
-                if(issueDateFromDoctor!=issueDate){
-                  allTrue = false;
-                }
-                if(patientFirstName!=firstName.toUpperCase()){
-                  allTrue = false;
-                }
-                if(patientLastName!=lastName.toUpperCase()){
-                  allTrue = false;
-                }
-                if(prescriptionNumberFromDoctor!=prescriptionNumber){
-                  allTrue = false;
-                }
-                if(allTrue){
-                  console.log("all points checked out");
-                  i = prescriptions.length;
-                  j = allPrescriptionValues.length;
-                  /**Prescription information to add to validated prescription */
-                let medication = currPrescriptionFromDoctor.medication;
-                let doctorEmail = currPrescriptionFromDoctor.doctorEmail;
-                let doctorFirstName = currPrescriptionFromDoctor.doctorFirstName;
-                let doctorLastName = currPrescriptionFromDoctor.doctorLastName;
-                let doctorUID = currPrescriptionFromDoctor.doctorUID;
-                let dosage = currPrescriptionFromDoctor.dosage;
-                let expireDate = currPrescriptionFromDoctor.expireDate;
-                let instructions = currPrescriptionFromDoctor.instructions;
-                let refills = currPrescriptionFromDoctor.refills;
-                  var dataToSend = {
-                    dateOfBirth:dateOfBirth,
-                    doctorAccountEmail:doctorEmail,
-                    doctorFirstName:doctorFirstName,
-                    doctorLastName:doctorLastName,
-                    doctorUID:doctorUID,
-                    dosage:dosage,
-                    expireDate:expireDate,
-                    instructions:instructions,
-                  issueDate:issueDate,
-                  medication:medication,
-                  patientAccountEmail:email,
-                  patientFirstName:firstName.toUpperCase(),
-                  patientLastName:lastName.toUpperCase(),
-                  patientUID:currentUID,
-                  prescriptionNumber:prescriptionNumber,
-                  refills:refills
-                  }
-
-                  fetch("/make/validatedPrescription",{
-                    method: "POST",
-                    cache: "no-cache",
-                    body: JSON.stringify(dataToSend)
-                  }).then((response)=>{
-                    console.log(response.status);
-                    if(response.status==201){
-                      console.log("prescription validated");
-                      var sendToDelete = {
-                        patientUID:currentUID,
-                        prescriptionNumber: prescriptionNumber
-                      };
-                      fetch("/delete/patientPrescription",{
-                        method:"DELETE",
-                        cache:"no-cache",
-                        body:JSON.stringify(sendToDelete)
-                      }).then((response)=>{
-                        console.log(response.status);
-                        if(response.status==204){
-                          console.log("prescription Deleted from patient Pending Path");
-                        }
-                      })
-                      var sendToDeleteDoctor = {
-                        doctorUID:doctorUID,
-                        prescriptionNumber:prescriptionNumber
+                      let allTrue = true;
+                      if(patientDOBFromDoctor!=dateOfBirth){
+                        allTrue = false;
                       }
-                      fetch("/delete/doctorPrescription",{
-                        method:"DELETE",
-                        cache:"no-cache",
-                        body:JSON.stringify(sendToDeleteDoctor)
-                      }).then((response)=>{
-                        console.log(response.status);
-                        if(response.status == 204){
-                          console.log("prescription Deleted from Doctor pending path");
+                      if(issueDateFromDoctor!=issueDate){
+                        allTrue = false;
+                      }
+                      if(patientFirstName!=firstName.toUpperCase()){
+                        allTrue = false;
+                      }
+                      if(patientLastName!=lastName.toUpperCase()){
+                        allTrue = false;
+                      }
+                      if(prescriptionNumberFromDoctor!=prescriptionNumber){
+                        allTrue = false;
+                      }
+                      if(allTrue){
+                        console.log("all points checked out");
+                        i = prescriptions.length;
+                        j = allPrescriptionValues.length;
+                        /**Prescription information to add to validated prescription */
+                      let medication = currPrescriptionFromDoctor.medication;
+                      let doctorEmail = currPrescriptionFromDoctor.doctorEmail;
+                      let doctorFirstName = currPrescriptionFromDoctor.doctorFirstName;
+                      let doctorLastName = currPrescriptionFromDoctor.doctorLastName;
+                      let doctorUID = currPrescriptionFromDoctor.doctorUID;
+                      let dosage = currPrescriptionFromDoctor.dosage;
+                      let expireDate = currPrescriptionFromDoctor.expireDate;
+                      let instructions = currPrescriptionFromDoctor.instructions;
+                      let refills = currPrescriptionFromDoctor.refills;
+                        var dataToSend = {
+                          dateOfBirth:dateOfBirth,
+                          doctorAccountEmail:doctorEmail,
+                          doctorFirstName:doctorFirstName,
+                          doctorLastName:doctorLastName,
+                          doctorUID:doctorUID,
+                          dosage:dosage,
+                          expireDate:expireDate,
+                          instructions:instructions,
+                        issueDate:issueDate,
+                        medication:medication,
+                        patientAccountEmail:email,
+                        patientFirstName:firstName.toUpperCase(),
+                        patientLastName:lastName.toUpperCase(),
+                        patientUID:currentUID,
+                        prescriptionNumber:prescriptionNumber,
+                        refills:refills
                         }
-                      })
-                      window.location.href = "./submitted-prescription-patient-validated.html";
-                    }else{
-                      console.log("error: prescription not validated");
+      
+                        fetch("/make/validatedPrescription",{
+                          method: "POST",
+                          cache: "no-cache",
+                          body: JSON.stringify(dataToSend)
+                        }).then((response)=>{
+                          console.log(response.status);
+                          if(response.status==201){
+                            console.log("prescription validated");
+                            var sendToDelete = {
+                              patientUID:currentUID,
+                              prescriptionNumber: prescriptionNumber
+                            };
+                            fetch("/delete/patientPrescription",{
+                              method:"DELETE",
+                              cache:"no-cache",
+                              body:JSON.stringify(sendToDelete)
+                            }).then((response)=>{
+                              console.log(response.status);
+                              if(response.status==204){
+                                console.log("prescription Deleted from patient Pending Path");
+                              }
+                            })
+                            var sendToDeleteDoctor = {
+                              doctorUID:doctorUID,
+                              prescriptionNumber:prescriptionNumber
+                            }
+                            fetch("/delete/doctorPrescription",{
+                              method:"DELETE",
+                              cache:"no-cache",
+                              body:JSON.stringify(sendToDeleteDoctor)
+                            }).then((response)=>{
+                              console.log(response.status);
+                              if(response.status == 204){
+                                console.log("prescription Deleted from Doctor pending path");
+                              }
+                            })
+                            window.location.href = "./submitted-prescription-patient-validated.html";
+                          }else{
+                            console.log("error: prescription not validated");
+                          }
+                        })
+                        
+                      }else{
+                        
+                      }
                     }
-                  })
-                  
-                }else{
-                  
-                }
-              }
+                  }
+                  console.log("all points do not check out");
+                        window.location.href = "./submitted-prescription-patient-wait.html";
+                })
+              })
+              console.log("prescription added");
+              
+              
+            }else{
+              console.log("prescription not added");
             }
-            console.log("all points do not check out");
-                  window.location.href = "./submitted-prescription-patient-wait.html";
           })
-        })
-        console.log("prescription added");
-        
-        
+          /*set(ref(db,"patientPrescriptions/"+foundUSERID+"/"),{
+            firstName: firstName.toUpperCase(),
+            lastName: lastName.toUpperCase(),
+            patientEmail:email,
+            issueDate: issueDate,
+            dateOfBirth: dateOfBirth,
+            prescriptionNumber:prescriptionNumber,
+            patientUID: currentUID
+          })*/
+        }
       }else{
-        console.log("prescription not added");
+        alert("The prescription number provided is not valid for request. Please double check your prescription or contact your Doctor if there is an error")
+        return;
       }
     })
-    /*set(ref(db,"patientPrescriptions/"+foundUSERID+"/"),{
-      firstName: firstName.toUpperCase(),
-      lastName: lastName.toUpperCase(),
-      patientEmail:email,
-      issueDate: issueDate,
-      dateOfBirth: dateOfBirth,
-      prescriptionNumber:prescriptionNumber,
-      patientUID: currentUID
-    })*/
-  }
+  })
+  //console.log(fullName.toUpperCase());
+  
   
   
   
@@ -290,7 +312,16 @@ document.querySelector(".submit-box2").addEventListener("click",()=>{
   var dosage = document.getElementById("ddosage").value;
   var refills = document.getElementById("drefills").value;
   var prescriptionNumber = document.getElementById("dprescriptionNumber").value;
-  var instructions = document.getElementById("dinstructions").value; 
+  fetch("/get/prescriptionBank",{
+    method:"POST",
+    cache:"no-cache",
+    body: JSON.stringify(prescriptionNumber)
+  }).then((response)=>{
+    var bankPromise = response.json();
+    bankPromise.then((result)=>{
+      var returnValue = result.returnValue;
+      if(returnValue){
+        var instructions = document.getElementById("dinstructions").value; 
   //console.log("hi");
   //console.log("hi".toUpperCase());
   //console.log("hi342lksdj".toUpperCase());
@@ -353,6 +384,11 @@ document.querySelector(".submit-box2").addEventListener("click",()=>{
         }).then((response) => {
           console.log(response.json());
           if(response.status == 201){
+            fetch("/move/prescription/toPipeline",{
+              method:"POST",
+              cache:"no-cache",
+              body: JSON.stringify(prescriptionNumber)
+            })
             fetch("/prescriptions/getPatientList",{
               method: "GET",
               cache: "no-cache",
@@ -501,9 +537,13 @@ document.querySelector(".submit-box2").addEventListener("click",()=>{
         })*/
         
         }
-      
-    
-      
+      }else{
+        alert("The prescription number provided is not valid to fill. Please double check the prescription or generate a new prescription number.")
+        return;
+      }
+    })
+  })
+  
 })
 
 
