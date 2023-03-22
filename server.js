@@ -96,6 +96,7 @@ const public_paths_js = [
   "/js/prescriptionModel.js",
   "/js/prescriptonController.js",
   "/js/FAQ-view.js",
+  "/js/profilePic.js"
 ];
 
 const public_paths_images = [
@@ -165,7 +166,6 @@ const public_paths_product = [
   "/product/opium.jpeg",
   "/product/Pantoprazole.jpeg",
   "/product/PCP.jpg",
-  "/product/polyjuice.webp",
   "/product/Rohypnol.jpg",
   "/product/steroids.jpeg",
   "/product/tigerBalm.jpg",
@@ -176,85 +176,26 @@ const public_paths_product = [
   "/product/GHB.jpg",
   "/product/Tobacco.webp",
   "/product/salvia.jpg",
+  "/product/tigerBalm.avif",
+  "/product/WheyProtien.avif",
+  "/product/Cafine.avif",
+  "/product/HMB.webp",
+  "/product/PhosphatidicAcid.webp",
+  "/product/VitaminD.avif",
 ];
 
 const { createProduct } = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCart } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
-const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess, deletePatientPrescriptionProcess, deleteDoctorPrescriptionProcess } = require("./js/prescriptionController");
-const { createDoctorPrescription, createValidatedPrescription, deleteDoctorPrescription } = require("./js/prescriptionModel");
+const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess, deletePatientPrescriptionProcess, deleteDoctorPrescriptionProcess, createPrescriptionBankProcess, getPrescriptionBankProcess, changeStatusBankNumberProcess, changeStatusBankNumberPatientProcess, changeToActiveBankNumberProcess, getFromPatientPipelineProcess, patientPipelineToActiveProcess, bankToDoctorPipelineProcess, getFromDoctorPipelineProcess, doctorPipelineToActiveProcess, getRandomBankNumberProcess } = require("./js/prescriptionController");
+const { createDoctorPrescription, createValidatedPrescription, deleteDoctorPrescription, changeStatusBankNumber, doctorPipelineToActive } = require("./js/prescriptionModel");
 const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
-function binarySearch(list, target) {
-  var lo = 0;
-  var hi = list.length - 1;
-
-  while (lo <= hi) {
-    var mid = Math.floor((lo + hi) / 2);
-
-    if (list[mid] == target) {
-      return mid;
-    } else if (list[mid] < target) {
-      lo = mid + 1;
-    } else {
-      hi = mid - 1;
-    }
-  }
-
-  if (lo < 0) {
-    lo = 0;
-  } else if (lo > list.length - 1) {
-    lo = list.length - 1;
-  }
-
-  if (lo > 0 && lo < list.length - 1) {
-    let distanceA = natural.LevenshteinDistance(list[lo - 1], target);
-    let distanceB = natural.LevenshteinDistance(list[lo], target);
-    let distanceC = natural.LevenshteinDistance(list[lo + 1], target);
-
-    if (distanceA < distanceB && distanceA < distanceC) {
-      return lo - 1;
-    }
-
-    if (distanceB < distanceA && distanceB < distanceC) {
-      return lo;
-    }
-
-    if (distanceC < distanceB && distanceC < distanceA) {
-      return lo + 1;
-    }
-  } else if (lo == 0 && lo + 1 <= list.length - 1) {
-    let distanceA = natural.LevenshteinDistance(list[lo], target);
-    let distanceB = natural.LevenshteinDistance(list[lo + 1], target);
-
-    if (distanceA < distanceB) {
-      return lo;
-    }
-
-    if (distanceB < distanceA) {
-      return lo + 1;
-    }
-  } else if (lo == list.length - 1 && lo - 1 >= 0) {
-    let distanceA = natural.LevenshteinDistance(list[lo], target);
-    let distanceB = natural.LevenshteinDistance(list[lo - 1], target);
-
-    if (distanceA < distanceB) {
-      return lo;
-    }
-
-    if (distanceB < distanceA) {
-      return lo - 1;
-    }
-  }
-
-  return lo;
-}
-
-function FAQ(request, response, queryStringParameters) {
+async function FAQ(request, response, queryStringParameters) {
   var searchQuery = "";
 
   request.on("data", (data) => {
@@ -263,51 +204,62 @@ function FAQ(request, response, queryStringParameters) {
 
   request.on("end", async () => {
     searchQuery = queryStringParameters.query;
-    var stemmedTokensSearchQuery =
-      natural.PorterStemmer.tokenizeAndStem(searchQuery).sort();
-    var fileName = "./json/BayesianClassifier.json";
-    natural.BayesClassifier.load(fileName, null, function (err, classifier) {
-      var category = classifier.classify(searchQuery);
-      console.log("Category: " + category);
-      var results = [];
-      FAQ_ref.once("value", function (snapshot) {
-        snapshot.forEach(function (childSnapshot) {
-          var childKey = childSnapshot.key;
-          var childData = childSnapshot.val();
-          var topicList = childData.topics;
-          var articleTitle = childData.title;
+    var categoryClassifierFileName = "./json/CategoryBayesianClassifier.json";
+    var intentClassifierFileName = "./json/IntentBayesianClassifier.json";
+    natural.BayesClassifier.load(categoryClassifierFileName, null, async function (err, categoryClassifier) {
+      natural.BayesClassifier.load(intentClassifierFileName, null, async function(err, intentClassifier){
+        var categoryClassifications = categoryClassifier.getClassifications(searchQuery);
+        var intentClassifications = intentClassifier.getClassifications(searchQuery);
 
-          if (topicList.includes(category)) {
-            var stemmedTokensArticle =
-              natural.PorterStemmer.tokenizeAndStem(articleTitle).sort();
-            console.log(
-              "Stemmed Tokens for Query: " + stemmedTokensSearchQuery
-            );
-            console.log("Stemmed Tokens for Article: " + stemmedTokensArticle);
-            var similarity = 0;
+        console.log("Category Classifications: " + JSON.stringify(categoryClassifications));
+        console.log("Intent Classifications: " + JSON.stringify(intentClassifications));
 
-            stemmedTokensSearchQuery.forEach((term) => {
-              var index = binarySearch(stemmedTokensArticle, term);
-              console.log("Term: " + term);
-              console.log("Index: " + index);
-              similarity =
-                similarity +
-                natural.LevenshteinDistance(stemmedTokensArticle[index], term);
-            });
+        var category = categoryClassifier.classify(searchQuery);
+        var results = []
 
-            console.log("Levenshtein Distance: " + similarity);
+        for (let i = 0; i < intentClassifications.length; i ++){
+          var intentClassification = intentClassifications[i];
+          var intent = intentClassification["label"]
 
-            if (similarity <= 15) {
-              results.push(childData);
+          let extractSubcategoryArticles = await db.ref(`/FAQ/${category}/${intent}/`).once("value");
+          var value = extractSubcategoryArticles.val()
+
+          console.log("Intent: " + intent);
+          console.log("Extracted Subcategory Results: " + JSON.stringify(value));
+
+          if (value != null){
+            console.log("Valid Snapshot Returned");
+
+            for (let key in value){
+              console.log("Key: " + key + " Value: " + JSON.stringify(value[key]));
+              results.push(value[key]);
             }
           }
-        });
+        }
 
-        console.log("Search Results: " + JSON.stringify(results));
-        response.writeHead(200, { "Content-type": "application/json" });
-        response.write(JSON.stringify(results));
-        response.end();
-      });
+        if (results.length == 0){
+          FAQ_ref.once("value", function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
+              childSnapshot.forEach(function(childChildSnapshot){
+                childChildSnapshot.forEach(function(childChildChildSnapshot){
+                  results.push(childChildChildSnapshot.val())
+                })
+              })
+            });
+    
+            console.log("Search Results: " + JSON.stringify(results));
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(results));
+            response.end();
+          });
+        }
+        else{
+          console.log("Search Results: " + JSON.stringify(results));
+          response.writeHead(200, { "Content-type": "application/json" });
+          response.write(JSON.stringify(results));
+          response.end();
+        }
+      })
     });
   });
 }
@@ -322,12 +274,11 @@ function getFAQ(request, response) {
 
       FAQ_ref.once("value", function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
-          var childKey = childSnapshot.key;
-          var childData = childSnapshot.val();
-          var topicList = childData.topics;
-          var articleTitle = childData.title;
-          results.push(childData);
-
+          childSnapshot.forEach(function(childChildSnapshot){
+            childChildSnapshot.forEach(function(childChildChildSnapshot){
+              results.push(childChildChildSnapshot.val())
+            })
+          })
         });
 
         console.log("Search Results: " + JSON.stringify(results));
@@ -520,7 +471,7 @@ function sendContactEmail(request, response){
   response.end();
 }
 
-function getPrescriptionsUser(request, response){
+function getPrescriptionsUser(request, response, queryStringParameters){
   var credentials = "";
 
   request.on("data", (data) => {
@@ -528,8 +479,19 @@ function getPrescriptionsUser(request, response){
   });
 
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
-    await FirebaseAPI.getPrescriptionsUser(credentials.uid, response);
+    await FirebaseAPI.getPrescriptionsUser(queryStringParameters["uid"], response);
+  });
+}
+
+function getOrdersUser(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.getOrdersUser(queryStringParameters, response);
   });
 }
 
@@ -745,12 +707,52 @@ const server = http.createServer((request, response) => {
         getPatientPrescriptionsProcess(request,response);
         break;
 
+      case "/create/prescriptionBank":
+        createPrescriptionBankProcess(request,response);
+        break;
+
+      case "/get/prescriptionBank":
+        getPrescriptionBankProcess(request,response);
+        break;
+
+      case "/move/patient/pipeline/active":
+        patientPipelineToActiveProcess(request,response);
+        break;  
+
+      case "/move/doctor/pipeline/active":
+        doctorPipelineToActiveProcess(request,response);
+        break;  
+
+      case "/get/pipeline/patient":
+        getFromPatientPipelineProcess(request,response);
+        break;
+
+      case "/get/random/number":
+        getRandomBankNumberProcess(request,response);
+        break;
+
+      case "/get/pipeline/doctor":
+        getFromDoctorPipelineProcess(request,response);
+        break;
+
+      case "/move/prescription/patient/Pipeline":
+        changeStatusBankNumberPatientProcess(request,response);
+        break;
+
+      case "/move/prescription/toPipeline/doctor":
+        bankToDoctorPipelineProcess(request,response);
+        break;
+
       case "/make/validatedPrescription":
         createValidatedPrescriptionProcess(request,response);
         break;
 
       case "/get/prescriptions/user":
-        getPrescriptionsUser(request, response);
+        getPrescriptionsUser(request, response, queryStringParameters);
+        break;
+      
+      case "/get/orders/user":
+        getOrdersUser(request, response, queryStringParameters);
         break;
 
       case "/add/payment_card":

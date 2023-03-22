@@ -32,14 +32,8 @@ async function logout() {
       console.log("Account Type: " + user_record['Account Type']); 
       var uid = user_record["uid"];
 
-      let response = await fetch('/get/prescriptions/user', {
-        method: 'PATCH',
-        body: JSON.stringify({
-          uid: user_record["uid"]
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
+      let response = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
+        method: 'GET'
       })
 
       let responseStatus = response.status;
@@ -54,6 +48,30 @@ async function logout() {
         }
       }
 
+
+      /**FETCH ORDERS */
+      let ordersResponse = await fetch(`/get/orders/user?uid=${user_record["uid"]}`, {
+        method: 'GET'
+      })
+
+      let ordersResponseStatus = ordersResponse.status;
+      let orders = await ordersResponse.json();
+      console.log("Response Status: " + ordersResponseStatus);
+      console.log("Order Data Fetched: " + JSON.stringify(orders));
+
+      if (ordersResponseStatus == 200){
+        for (var orderNumber in orders){
+          var order = orders[orderNumber];
+          var drugs = []
+          for (var drugNumber in order["drugs"]){
+            var drug = order["drugs"][drugNumber];
+            drugs.push(drug["title"]);
+          }
+          addOrder(orderNumber, drugs, "placed");
+        }
+      }
+
+      /**FETCH PAYMENT INFORMATION */
       let paymentCardResponse = await fetch(`/get/payment_cards?uid=${user_record['uid']}`, {method: "GET"})
       let paymentCardResponseJSON = await paymentCardResponse.json()
 
@@ -122,6 +140,10 @@ async function logout() {
       document.getElementById("email").innerHTML = user_record.email;   
       document.getElementById("address").innerHTML = user_record["Address"];
       document.getElementById("phone").innerHTML = user_record.phoneNumber;
+
+      document.getElementById("dropbtn").src = profilePicture;
+      document.getElementById("dropbtn").style.filter = "none";
+      document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
     }
 
   }
@@ -386,5 +408,3 @@ async function logout() {
     localStorage.removeItem("User Record");
     window.location.href = "./logoutPage.html";
   }
-
-  addOrder(69423, ["Viagra x1", "Iburprofen x2"], "Delivered");

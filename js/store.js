@@ -22,7 +22,9 @@ if (document.readyState == 'loading') {
 }
 else {
     //webpage is loaded
+    
     ready()
+    
 }
 
 async function ready() {
@@ -217,4 +219,37 @@ function updateCartTotal() {
     .then((json) => console.log("Success:", json))
     .catch((error) => console.error("Error: ", error));
 
+}
+
+window.onload = async function (){
+    if (localStorage.getItem("User Record") == null) {
+        //
+      } else {
+
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        var uid = user_record["uid"];
+        var profilePicture = user_record.photoURL;
+
+        let response = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
+            method: 'GET'
+          })
+    
+        let responseStatus = response.status;
+        let prescriptions = await response.json()
+        console.log("This is what is prescriptions:"+ JSON.stringify(prescriptions));
+        document.getElementById("dropbtn").src = profilePicture;
+        console.log(profilePicture);
+        document.getElementById("dropbtn").style.filter = "none";
+        document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
+        var counter = 0;
+        if (responseStatus == 200){
+          for (var prescriptionNumber in prescriptions){
+            console.log("ran");
+            counter++;
+          }
+        }
+        if(counter == 0){
+        document.getElementById("prescriptionMedication").remove();
+        }
+    }
 }

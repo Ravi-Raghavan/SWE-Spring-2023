@@ -107,6 +107,148 @@ async function deleteDoctorPrescription(doctorUID, prescriptionNumber){
     return "done";
 }
 
+async function createPrescriptionBank(bankNumber){
+    var path = db.ref(`/prescriptionBank/${bankNumber}/`);
+    path.set({
+        status: "null"
+    });
+    return "done";
+}
+
+async function getPrescriptionBank(bankNumber){
+    var path = db.ref(`/prescriptionBank/`);
+
+    const patientPrescriptions  = await new Promise((resolve,reject) => {
+        path.get().then((snapshot)=>{
+            var bank = snapshot.val();
+            let hit = false;
+            var bankNumbers = Object.keys(bank);
+            for(let i = 0;i<bankNumbers.length;i++){
+                if(bankNumber==bankNumbers[i]){
+                    hit = true;
+                    resolve(true);
+                    i = bankNumbers.length;
+                }
+            }
+            if(hit==false){
+                resolve(false);
+            }
+        });
+    })
+    return patientPrescriptions;
+}
+
+async function changeStatusBankNumberPatient(bankNumber){
+    var path = db.ref(`/prescriptionBank/${bankNumber}`);
+    var newPath = db.ref(`/prescriptionPipeline/Patient/${bankNumber}`);
+    path.remove();
+    newPath.set({
+        status:"waiting"
+    });
+    return "done";
+}
+
+async function bankToDoctorPipeline(bankNumber){
+    var path = db.ref(`/prescriptionBank/${bankNumber}`);
+    var newPath = db.ref(`/prescriptionPipeline/Doctor/${bankNumber}`);
+    path.remove();
+    newPath.set({
+        status:"waiting"
+    });
+    return "done";
+}
+
+async function patientPipelineToActive(bankNumber){
+    var path = db.ref(`/prescriptionPipeline/Patient/${bankNumber}/`);
+    var newPath = db.ref(`/prescriptionActive/${bankNumber}/`);
+    path.remove();
+    newPath.set({
+        status:"active"
+    });
+    return "done";
+}
+
+async function doctorPipelineToActive(bankNumber){
+    var path = db.ref(`/prescriptionPipeline/Doctor/${bankNumber}/`);
+    var newPath = db.ref(`/prescriptionActive/${bankNumber}/`);
+    path.remove();
+    newPath.set({
+        status:"active"
+    });
+    return "done";
+}
+
+async function getFromPatientPipeline(bankNumber){
+    var path = db.ref(`/prescriptionPipeline/Patient`);
+
+    const patientPrescriptions  = await new Promise((resolve,reject) => {
+        path.get().then((snapshot)=>{
+            var bank = snapshot.val();
+            if(bank==null){
+                resolve(false);
+                
+            }else{
+                let hit = false;
+            var bankNumbers = Object.keys(bank);
+            for(let i = 0;i<bankNumbers.length;i++){
+                if(bankNumber==bankNumbers[i]){
+                    hit = true;
+                    resolve(true);
+                    i = bankNumbers.length;
+                }
+            }
+            if(hit==false){
+                resolve(false);
+            }
+            }
+        });
+    })
+    return patientPrescriptions;
+}
+
+async function getFromDoctorPipeline(bankNumber){
+    var path = db.ref(`/prescriptionPipeline/Doctor`);
+
+    const patientPrescriptions  = await new Promise((resolve,reject) => {
+        path.get().then((snapshot)=>{
+            var bank = snapshot.val();
+            if(bank==null){
+                resolve(false);
+                
+            }else{
+                let hit = false;
+            var bankNumbers = Object.keys(bank);
+            for(let i = 0;i<bankNumbers.length;i++){
+                if(bankNumber==bankNumbers[i]){
+                    hit = true;
+                    resolve(true);
+                    i = bankNumbers.length;
+                }
+            }
+            if(hit==false){
+                resolve(false);
+            }
+            }
+        });
+    })
+    return patientPrescriptions;
+}
+
+async function getRandomBankNumber(){
+    var path = db.ref(`/prescriptionBank/`);
+    const bankNumber = await new Promise((resolve,reject) => {
+        path.get().then((snapshot)=>{
+            var object = snapshot.val();
+            var bankNumbers =Object.keys(object);
+            const randomNumber = Math.floor(Math.random() * bankNumbers.length);
+            //console.log(bankNumbers);
+            //console.log(bankNumbers.length);
+            resolve(bankNumbers[randomNumber]);
+        });
+    });
+    return bankNumber;
+}
+
 module.exports = {
     createPatientPrescription,
     createDoctorPrescription,
@@ -115,5 +257,14 @@ module.exports = {
     createValidatedPrescription,
     getPatientPrescriptions,
     deletePatientPrescription,
-    deleteDoctorPrescription
+    deleteDoctorPrescription,
+    createPrescriptionBank,
+    getPrescriptionBank,
+    changeStatusBankNumberPatient,
+    getFromPatientPipeline,
+    patientPipelineToActive,
+    bankToDoctorPipeline,
+    getFromDoctorPipeline,
+    doctorPipelineToActive,
+    getRandomBankNumber
 };
