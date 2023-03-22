@@ -140,6 +140,10 @@ async function logout() {
       document.getElementById("email").innerHTML = user_record.email;   
       document.getElementById("address").innerHTML = user_record["Address"];
       document.getElementById("phone").innerHTML = user_record.phoneNumber;
+
+      document.getElementById("dropbtn").src = profilePicture;
+      document.getElementById("dropbtn").style.filter = "none";
+      document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
     }
 
   }
