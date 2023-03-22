@@ -79,6 +79,7 @@ async function ready() {
 
         addItemToCart(drugTitle, drugPrice, image , drugQuantity);
     }
+    updateCartTotal();
 }
 
 function purchaseClicked() {
