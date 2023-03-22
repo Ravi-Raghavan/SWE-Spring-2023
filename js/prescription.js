@@ -21,7 +21,24 @@ function startType(){
       }
     })
   })
-  
+  /*var set = new Set();
+  while(set.size<=10){
+    const randomNumber1 = Math.floor(Math.random() * 900) + 100;
+    const randomNumber2 = Math.floor(Math.random() * 9000) + 1000;
+    const randomLetter1 = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    const randomLetter2 = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    let randomPrescription = randomNumber1+"-"+randomNumber2+"-"+randomLetter1.toUpperCase()+randomLetter2.toUpperCase();
+    set.add(randomPrescription);
+  }
+  console.log(set);
+  set.forEach((value)=>{
+    console.log(value);
+    fetch("/create/prescriptionBank",{
+      method:"POST",
+      cache:"no-cache",
+      body:JSON.stringify(value)
+    })
+  });*/
   
 }
 
