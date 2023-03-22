@@ -182,7 +182,7 @@ const public_paths_product = [
 const { createProduct } = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCart } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
-const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess, deletePatientPrescriptionProcess, deleteDoctorPrescriptionProcess, createPrescriptionBankProcess, getPrescriptionBankProcess, changeStatusBankNumberProcess, changeStatusBankNumberPatientProcess, changeToActiveBankNumberProcess, getFromPatientPipelineProcess, patientPipelineToActiveProcess, bankToDoctorPipelineProcess, getFromDoctorPipelineProcess, doctorPipelineToActiveProcess } = require("./js/prescriptionController");
+const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess, deletePatientPrescriptionProcess, deleteDoctorPrescriptionProcess, createPrescriptionBankProcess, getPrescriptionBankProcess, changeStatusBankNumberProcess, changeStatusBankNumberPatientProcess, changeToActiveBankNumberProcess, getFromPatientPipelineProcess, patientPipelineToActiveProcess, bankToDoctorPipelineProcess, getFromDoctorPipelineProcess, doctorPipelineToActiveProcess, getRandomBankNumberProcess } = require("./js/prescriptionController");
 const { createDoctorPrescription, createValidatedPrescription, deleteDoctorPrescription, changeStatusBankNumber, doctorPipelineToActive } = require("./js/prescriptionModel");
 const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
@@ -720,6 +720,10 @@ const server = http.createServer((request, response) => {
 
       case "/get/pipeline/patient":
         getFromPatientPipelineProcess(request,response);
+        break;
+
+      case "/get/random/number":
+        getRandomBankNumberProcess(request,response);
         break;
 
       case "/get/pipeline/doctor":

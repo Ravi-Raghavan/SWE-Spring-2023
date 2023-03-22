@@ -257,6 +257,19 @@ async function getFromDoctorPipelineProcess(req,res){
     }
 }
 
+async function getRandomBankNumberProcess(req,res){
+    try{
+        const bankNumber = await patientPrescription.getRandomBankNumber();
+        const data = {
+            number : bankNumber
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createPatientPrescriptionProcess,
     createDoctorPrescriptionProcess,
@@ -273,5 +286,6 @@ module.exports = {
     patientPipelineToActiveProcess,
     bankToDoctorPipelineProcess,
     getFromDoctorPipelineProcess,
-    doctorPipelineToActiveProcess
+    doctorPipelineToActiveProcess,
+    getRandomBankNumberProcess
 };

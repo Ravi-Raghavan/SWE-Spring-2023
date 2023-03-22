@@ -68,8 +68,18 @@ console.log(getEmail());
 let counter = 0;
 document.querySelector(".generate-button").addEventListener("click",() =>{
   counter++;
-  if(counter%2==0){
-    document.querySelector(".generate-button").innerHTML = "Sup Lol";
+  if(counter%2==1){
+    fetch("/get/random/number",{
+      method:"GET",
+      cache:"no-cache"
+    }).then((response)=>{
+      var numberPromise = response.json();
+      numberPromise.then((result)=>{
+        let number = result.number;
+        document.querySelector(".generate-button").innerHTML = number;
+      })
+    })
+    
   }else{
     document.querySelector(".generate-button").innerHTML = "Generate Prescription Number";
   }

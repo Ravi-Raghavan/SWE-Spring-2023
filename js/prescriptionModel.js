@@ -234,6 +234,21 @@ async function getFromDoctorPipeline(bankNumber){
     return patientPrescriptions;
 }
 
+async function getRandomBankNumber(){
+    var path = db.ref(`/prescriptionBank/`);
+    const bankNumber = await new Promise((resolve,reject) => {
+        path.get().then((snapshot)=>{
+            var object = snapshot.val();
+            var bankNumbers =Object.keys(object);
+            const randomNumber = Math.floor(Math.random() * bankNumbers.length);
+            //console.log(bankNumbers);
+            //console.log(bankNumbers.length);
+            resolve(bankNumbers[randomNumber]);
+        });
+    });
+    return bankNumber;
+}
+
 module.exports = {
     createPatientPrescription,
     createDoctorPrescription,
@@ -250,5 +265,6 @@ module.exports = {
     patientPipelineToActive,
     bankToDoctorPipeline,
     getFromDoctorPipeline,
-    doctorPipelineToActive
+    doctorPipelineToActive,
+    getRandomBankNumber
 };
