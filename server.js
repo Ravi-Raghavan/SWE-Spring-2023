@@ -218,11 +218,27 @@ function FAQ(request, response, queryStringParameters) {
               results.push(value[key]);
             }
             console.log(results);
+            console.log("Search Results: " + JSON.stringify(results));
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(results));
+            response.end();
           }
-          console.log("Search Results: " + JSON.stringify(results));
-          response.writeHead(200, { "Content-type": "application/json" });
-          response.write(JSON.stringify(results));
-          response.end();
+          else{
+            FAQ_ref.once("value", function (snapshot) {
+              snapshot.forEach(function (childSnapshot) {
+                childSnapshot.forEach(function(childChildSnapshot){
+                  childChildSnapshot.forEach(function(childChildChildSnapshot){
+                    results.push(childChildChildSnapshot.val())
+                  })
+                })
+              });
+      
+              console.log("Search Results: " + JSON.stringify(results));
+              response.writeHead(200, { "Content-type": "application/json" });
+              response.write(JSON.stringify(results));
+              response.end();
+            });
+          }
         });
 
       })
