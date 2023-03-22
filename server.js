@@ -206,13 +206,14 @@ function FAQ(request, response, queryStringParameters) {
         var categoryClassifications = categoryClassifier.getClassifications(searchQuery);
         var intentClassifications = intentClassifier.getClassifications(searchQuery);
 
-        console.log("Category Classifications: " + categoryClassifications);
-        console.log("Intent Classifications: " + intentClassifications);
+        console.log("Category Classifications: " + JSON.stringify(categoryClassifications));
+        console.log("Intent Classifications: " + JSON.stringify(intentClassifications));
 
         var category = categoryClassifier.classify(searchQuery);
         var results = []
 
-        for (var intent in intentClassifications){
+        for (var intentClassification in intentClassifications){
+          var intent = intentClassification["label"]
           let extractSubcategoryArticles = await db.ref(`/FAQ/${category}/${intent}/`).once("value");
           var value = extractSubcategoryArticles.val()
 
