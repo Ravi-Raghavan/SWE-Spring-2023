@@ -261,13 +261,13 @@ async function populateFAQ(){
         var title = article_title;
         var content = change_shipping_address[title]
 
-        await FAQ_ref.child("/SHPPING_ADDRESS/change_shipping_address").push().set({"title": title, "content": content})
+        await FAQ_ref.child("/SHIPPING_ADDRESS/change_shipping_address").push().set({"title": title, "content": content})
     }
     for (let article_title in set_up_shipping_address){
         var title = article_title;
         var content = set_up_shipping_address[title]
 
-        await FAQ_ref.child("/SHPPING_ADDRESS/set_up_shipping_address").push().set({"title": title, "content": content})
+        await FAQ_ref.child("/SHIPPING_ADDRESS/set_up_shipping_address").push().set({"title": title, "content": content})
     }
 }
 
