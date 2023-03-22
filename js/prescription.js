@@ -79,7 +79,6 @@ document.querySelector(".generate-button").addEventListener("click",() =>{
         document.querySelector(".generate-button").innerHTML = number;
       })
     })
-    
   }else{
     document.querySelector(".generate-button").innerHTML = "Generate Prescription Number";
   }
