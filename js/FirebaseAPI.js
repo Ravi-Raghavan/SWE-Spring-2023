@@ -293,6 +293,26 @@ async function getPaymentCards(credentials, response){
     })
 }
 
+async function getOrdersUser(credentials, response){
+    var uid = credentials.uid;
+    var ordersRef = ref.child(`${uid}/orders`)
+
+    ordersRef.once('value', (snapshot) => {
+        var value = snapshot.val();
+        if (value == null){
+            var orders_data = {"404 Error Message": "N/A"}
+            response.writeHead(404, { "Content-type": "application/json" });
+            response.write(JSON.stringify(orders_data));
+            response.end();
+        }
+        else{
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(value));
+            response.end();
+        }
+    })
+}
+
 async function deletePaymentCard(credentials, response){
     var uid = credentials.uid;
     var paymentsRef = ref.child(`${uid}/payment_cards`)
@@ -392,6 +412,7 @@ module.exports = {
     getAddress: getAddress, 
     updateUser: updateUser,
     getPrescriptionsUser: getPrescriptionsUser,
+    getOrdersUser: getOrdersUser,
     addPaymentCard: addPaymentCard, 
     getPaymentCards: getPaymentCards, 
     deletePaymentCard: deletePaymentCard,
