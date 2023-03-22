@@ -189,71 +189,6 @@ const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
-function binarySearch(list, target) {
-  var lo = 0;
-  var hi = list.length - 1;
-
-  while (lo <= hi) {
-    var mid = Math.floor((lo + hi) / 2);
-
-    if (list[mid] == target) {
-      return mid;
-    } else if (list[mid] < target) {
-      lo = mid + 1;
-    } else {
-      hi = mid - 1;
-    }
-  }
-
-  if (lo < 0) {
-    lo = 0;
-  } else if (lo > list.length - 1) {
-    lo = list.length - 1;
-  }
-
-  if (lo > 0 && lo < list.length - 1) {
-    let distanceA = natural.LevenshteinDistance(list[lo - 1], target);
-    let distanceB = natural.LevenshteinDistance(list[lo], target);
-    let distanceC = natural.LevenshteinDistance(list[lo + 1], target);
-
-    if (distanceA < distanceB && distanceA < distanceC) {
-      return lo - 1;
-    }
-
-    if (distanceB < distanceA && distanceB < distanceC) {
-      return lo;
-    }
-
-    if (distanceC < distanceB && distanceC < distanceA) {
-      return lo + 1;
-    }
-  } else if (lo == 0 && lo + 1 <= list.length - 1) {
-    let distanceA = natural.LevenshteinDistance(list[lo], target);
-    let distanceB = natural.LevenshteinDistance(list[lo + 1], target);
-
-    if (distanceA < distanceB) {
-      return lo;
-    }
-
-    if (distanceB < distanceA) {
-      return lo + 1;
-    }
-  } else if (lo == list.length - 1 && lo - 1 >= 0) {
-    let distanceA = natural.LevenshteinDistance(list[lo], target);
-    let distanceB = natural.LevenshteinDistance(list[lo - 1], target);
-
-    if (distanceA < distanceB) {
-      return lo;
-    }
-
-    if (distanceB < distanceA) {
-      return lo - 1;
-    }
-  }
-
-  return lo;
-}
-
 function FAQ(request, response, queryStringParameters) {
   var searchQuery = "";
 
@@ -263,47 +198,33 @@ function FAQ(request, response, queryStringParameters) {
 
   request.on("end", async () => {
     searchQuery = queryStringParameters.query;
-    var stemmedTokensSearchQuery = natural.PorterStemmer.tokenizeAndStem(searchQuery).sort();
-    var fileName = "./json/BayesianClassifier.json";
-    natural.BayesClassifier.load(fileName, null, function (err, classifier) {
-      var category = classifier.classify(searchQuery);
-      console.log("Category: " + category);
-      var results = [];
-      FAQ_ref.once("value", function (snapshot) {
-        snapshot.forEach(function (childSnapshot) {
-          var childKey = childSnapshot.key;
-          var childData = childSnapshot.val();
-          var topicList = childData.topics;
-          var articleTitle = childData.title;
+    var categoryClassifierFileName = "./json/CategoryBayesianClassifier.json";
+    var intentClassifierFileName = "./json/IntentBayesianClassifier.json";
+    natural.BayesClassifier.load(categoryClassifierFileName, null, function (err, categoryClassifier) {
+      natural.BayesClassifier.load(intentClassifierFileName, null, function(err, intentClassifier){
+        var category = categoryClassifier.classify(searchQuery);
+        var intent = intentClassifier.classify(searchQuery);
 
-          if (topicList.includes(category)) {
-            var stemmedTokensArticle = natural.PorterStemmer.tokenizeAndStem(articleTitle).sort();
-            console.log("Stemmed Tokens for Query: " + stemmedTokensSearchQuery);
-            console.log("Stemmed Tokens for Article: " + stemmedTokensArticle);
-            var similarity = 0;
+        console.log("Category: " + category);
+        console.log("Intent: " +  intent);
 
-            stemmedTokensSearchQuery.forEach((term) => {
-              var index = binarySearch(stemmedTokensArticle, term);
-              console.log("Term: " + term);
-              console.log("Index: " + index);
-              similarity =
-                similarity +
-                natural.LevenshteinDistance(stemmedTokensArticle[index], term);
-            });
-
-            console.log("Levenshtein Distance: " + similarity);
-
-            if (similarity <= 15) {
-              results.push(childData);
+        db.ref(`/FAQ/${category}/${intent}/`).once("value", function (snapshot) {
+          var value = snapshot.val()
+          var results = []
+          if (value != null){
+            console.log("Valid Snapshot Returned");
+            for (let key in value){
+              results.push(value[key]);
             }
+            console.log(results);
           }
+          console.log("Search Results: " + JSON.stringify(results));
+          response.writeHead(200, { "Content-type": "application/json" });
+          response.write(JSON.stringify(results));
+          response.end();
         });
 
-        console.log("Search Results: " + JSON.stringify(results));
-        response.writeHead(200, { "Content-type": "application/json" });
-        response.write(JSON.stringify(results));
-        response.end();
-      });
+      })
     });
   });
 }
@@ -318,12 +239,11 @@ function getFAQ(request, response) {
 
       FAQ_ref.once("value", function (snapshot) {
         snapshot.forEach(function (childSnapshot) {
-          var childKey = childSnapshot.key;
-          var childData = childSnapshot.val();
-          var topicList = childData.topics;
-          var articleTitle = childData.title;
-          results.push(childData);
-
+          childSnapshot.forEach(function(childChildSnapshot){
+            childChildSnapshot.forEach(function(childChildChildSnapshot){
+              results.push(childChildChildSnapshot.val())
+            })
+          })
         });
 
         console.log("Search Results: " + JSON.stringify(results));
