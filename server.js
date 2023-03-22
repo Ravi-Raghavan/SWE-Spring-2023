@@ -166,7 +166,6 @@ const public_paths_product = [
   "/product/opium.jpeg",
   "/product/Pantoprazole.jpeg",
   "/product/PCP.jpg",
-  "/product/polyjuice.webp",
   "/product/Rohypnol.jpg",
   "/product/steroids.jpeg",
   "/product/tigerBalm.jpg",
@@ -177,6 +176,12 @@ const public_paths_product = [
   "/product/GHB.jpg",
   "/product/Tobacco.webp",
   "/product/salvia.jpg",
+  "/product/tigerBalm.avif",
+  "/product/WheyProtien.avif",
+  "/product/Cafine.avif",
+  "/product/HMB.webp",
+  "/product/PhosphatidicAcid.webp",
+  "/product/VitaminD.avif",
 ];
 
 const { createProduct } = require("./js/productController");
