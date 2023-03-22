@@ -445,8 +445,7 @@ function getPrescriptionsUser(request, response, queryStringParameters){
   });
 
   request.on("end", async () => {
-    uid = queryStringParameters["uid"];
-    await FirebaseAPI.getPrescriptionsUser(uid, response);
+    await FirebaseAPI.getPrescriptionsUser(queryStringParameters["uid"], response);
   });
 }
 
@@ -458,8 +457,7 @@ function getOrdersUser(request, response, queryStringParameters){
   });
 
   request.on("end", async () => {
-    uid = queryStringParameters["uid"];
-    await FirebaseAPI.getOrdersUser(uid, response);
+    await FirebaseAPI.getOrdersUser(queryStringParameters, response);
   });
 }
 

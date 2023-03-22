@@ -296,9 +296,11 @@ async function getPaymentCards(credentials, response){
 async function getOrdersUser(credentials, response){
     var uid = credentials.uid;
     var ordersRef = ref.child(`${uid}/orders`)
+    console.log("UID: " + uid);
 
     ordersRef.once('value', (snapshot) => {
         var value = snapshot.val();
+        console.log("Orders Data: " + JSON.stringify(value));
         if (value == null){
             var orders_data = {"404 Error Message": "N/A"}
             response.writeHead(404, { "Content-type": "application/json" });
