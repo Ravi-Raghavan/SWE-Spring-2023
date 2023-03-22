@@ -57,7 +57,7 @@ async function logout() {
       let ordersResponseStatus = ordersResponse.status;
       let orders = await ordersResponse.json();
       console.log("Response Status: " + ordersResponseStatus);
-      console.log("Prescription Data Fetched: " + JSON.stringify(orders));
+      console.log("Order Data Fetched: " + JSON.stringify(orders));
 
       if (ordersResponseStatus == 200){
         for (var orderNumber in orders){
@@ -140,6 +140,10 @@ async function logout() {
       document.getElementById("email").innerHTML = user_record.email;   
       document.getElementById("address").innerHTML = user_record["Address"];
       document.getElementById("phone").innerHTML = user_record.phoneNumber;
+
+      document.getElementById("dropbtn").src = profilePicture;
+      document.getElementById("dropbtn").style.filter = "none";
+      document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
     }
 
   }
@@ -404,5 +408,3 @@ async function logout() {
     localStorage.removeItem("User Record");
     window.location.href = "./logoutPage.html";
   }
-
-  addOrder(69423, ["Viagra x1", "Iburprofen x2"], "Delivered");

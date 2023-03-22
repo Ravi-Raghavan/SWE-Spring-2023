@@ -107,16 +107,7 @@
                             var result = organic_results[i];
                             let index = i + 1;
                             array.push(result);
-                            //document.getElementById("tableArticles").innerHTML = result["displayed_link"];
-
-                            //document.getElementById(`displayed_link_${index}`).href = result["link"];
-                            //document.getElementById(`title_${index}`).innerHTML = result["title"];
-                            //document.getElementById(`snippet_${index}`).innerHTML = result["snippet"];
-                            //document.getElementById()
-
-                            
-
-                            //$('#tableArticle').append('<tr> <td> <a style="display: block;" href="#popup1">'+'THE TEST HAS WORKED!'+' </a> </td></tr>');
+                           
                             var rows= '<tr onclick="rowListen(this)" class="article_row"> <td><a style="display: block;" href="#popup1">'+result["title"]+'</a></td></tr>';
                             var table = document.getElementById('tableArticles');
                             var template = document.createElement('template');

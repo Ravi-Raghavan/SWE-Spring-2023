@@ -187,15 +187,15 @@ const public_paths_product = [
 const { createProduct } = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCart } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
-const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess, deletePatientPrescriptionProcess, deleteDoctorPrescriptionProcess } = require("./js/prescriptionController");
-const { createDoctorPrescription, createValidatedPrescription, deleteDoctorPrescription } = require("./js/prescriptionModel");
+const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess, deletePatientPrescriptionProcess, deleteDoctorPrescriptionProcess, createPrescriptionBankProcess, getPrescriptionBankProcess, changeStatusBankNumberProcess, changeStatusBankNumberPatientProcess, changeToActiveBankNumberProcess, getFromPatientPipelineProcess, patientPipelineToActiveProcess, bankToDoctorPipelineProcess, getFromDoctorPipelineProcess, doctorPipelineToActiveProcess, getRandomBankNumberProcess } = require("./js/prescriptionController");
+const { createDoctorPrescription, createValidatedPrescription, deleteDoctorPrescription, changeStatusBankNumber, doctorPipelineToActive } = require("./js/prescriptionModel");
 const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
-function FAQ(request, response, queryStringParameters) {
+async function FAQ(request, response, queryStringParameters) {
   var searchQuery = "";
 
   request.on("data", (data) => {
@@ -206,30 +206,59 @@ function FAQ(request, response, queryStringParameters) {
     searchQuery = queryStringParameters.query;
     var categoryClassifierFileName = "./json/CategoryBayesianClassifier.json";
     var intentClassifierFileName = "./json/IntentBayesianClassifier.json";
-    natural.BayesClassifier.load(categoryClassifierFileName, null, function (err, categoryClassifier) {
-      natural.BayesClassifier.load(intentClassifierFileName, null, function(err, intentClassifier){
+    natural.BayesClassifier.load(categoryClassifierFileName, null, async function (err, categoryClassifier) {
+      natural.BayesClassifier.load(intentClassifierFileName, null, async function(err, intentClassifier){
+        var categoryClassifications = categoryClassifier.getClassifications(searchQuery);
+        var intentClassifications = intentClassifier.getClassifications(searchQuery);
+
+        console.log("Category Classifications: " + JSON.stringify(categoryClassifications));
+        console.log("Intent Classifications: " + JSON.stringify(intentClassifications));
+
         var category = categoryClassifier.classify(searchQuery);
-        var intent = intentClassifier.classify(searchQuery);
+        var results = []
 
-        console.log("Category: " + category);
-        console.log("Intent: " +  intent);
+        for (let i = 0; i < intentClassifications.length; i ++){
+          var intentClassification = intentClassifications[i];
+          var intent = intentClassification["label"]
 
-        db.ref(`/FAQ/${category}/${intent}/`).once("value", function (snapshot) {
-          var value = snapshot.val()
-          var results = []
+          let extractSubcategoryArticles = await db.ref(`/FAQ/${category}/${intent}/`).once("value");
+          var value = extractSubcategoryArticles.val()
+
+          console.log("Intent: " + intent);
+          console.log("Extracted Subcategory Results: " + JSON.stringify(value));
+
           if (value != null){
             console.log("Valid Snapshot Returned");
+
             for (let key in value){
+              console.log("Key: " + key + " Value: " + JSON.stringify(value[key]));
               results.push(value[key]);
             }
-            console.log(results);
           }
+        }
+
+        if (results.length == 0){
+          FAQ_ref.once("value", function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
+              childSnapshot.forEach(function(childChildSnapshot){
+                childChildSnapshot.forEach(function(childChildChildSnapshot){
+                  results.push(childChildChildSnapshot.val())
+                })
+              })
+            });
+    
+            console.log("Search Results: " + JSON.stringify(results));
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(results));
+            response.end();
+          });
+        }
+        else{
           console.log("Search Results: " + JSON.stringify(results));
           response.writeHead(200, { "Content-type": "application/json" });
           response.write(JSON.stringify(results));
           response.end();
-        });
-
+        }
       })
     });
   });
@@ -450,8 +479,7 @@ function getPrescriptionsUser(request, response, queryStringParameters){
   });
 
   request.on("end", async () => {
-    uid = queryStringParameters["uid"];
-    await FirebaseAPI.getPrescriptionsUser(uid, response);
+    await FirebaseAPI.getPrescriptionsUser(queryStringParameters["uid"], response);
   });
 }
 
@@ -463,8 +491,7 @@ function getOrdersUser(request, response, queryStringParameters){
   });
 
   request.on("end", async () => {
-    uid = queryStringParameters["uid"];
-    await FirebaseAPI.getOrdersUser(uid, response);
+    await FirebaseAPI.getOrdersUser(queryStringParameters, response);
   });
 }
 
@@ -678,6 +705,42 @@ const server = http.createServer((request, response) => {
 
       case "/prescriptions/getPatientList":
         getPatientPrescriptionsProcess(request,response);
+        break;
+
+      case "/create/prescriptionBank":
+        createPrescriptionBankProcess(request,response);
+        break;
+
+      case "/get/prescriptionBank":
+        getPrescriptionBankProcess(request,response);
+        break;
+
+      case "/move/patient/pipeline/active":
+        patientPipelineToActiveProcess(request,response);
+        break;  
+
+      case "/move/doctor/pipeline/active":
+        doctorPipelineToActiveProcess(request,response);
+        break;  
+
+      case "/get/pipeline/patient":
+        getFromPatientPipelineProcess(request,response);
+        break;
+
+      case "/get/random/number":
+        getRandomBankNumberProcess(request,response);
+        break;
+
+      case "/get/pipeline/doctor":
+        getFromDoctorPipelineProcess(request,response);
+        break;
+
+      case "/move/prescription/patient/Pipeline":
+        changeStatusBankNumberPatientProcess(request,response);
+        break;
+
+      case "/move/prescription/toPipeline/doctor":
+        bankToDoctorPipelineProcess(request,response);
         break;
 
       case "/make/validatedPrescription":
