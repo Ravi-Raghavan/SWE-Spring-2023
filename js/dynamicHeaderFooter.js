@@ -15,6 +15,9 @@ fetch("/html/header.html")
   .then((data) => {
     // console.log(data);
     document.getElementById("header").innerHTML = data;
+  })
+  .catch((error) => {
+    console.log("Error: " + error);
   });
 
 //  Load footer content
@@ -23,5 +26,8 @@ fetch("/html/footer.html")
   .then((data) => {
     // console.log(data);
     document.getElementById("footer").innerHTML = data;
+  })
+  .catch((error) => {
+    console.log("Error: " + error);
   });
 
