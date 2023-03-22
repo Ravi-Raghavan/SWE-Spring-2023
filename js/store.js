@@ -218,3 +218,33 @@ function updateCartTotal() {
     .catch((error) => console.error("Error: ", error));
 
 }
+
+window.onload = async function (){
+    if (localStorage.getItem("User Record") == null) {
+        //
+      } else {
+        //USER RECORD DOES NOT HAVE AN ACCOUNT TYPE BEING LISTED IN THE JSON, FIX!!!!
+
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        var uid = user_record["uid"];
+
+        let response = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
+            method: 'GET'
+          })
+    
+        let responseStatus = response.status;
+        let prescriptions = await response.json()
+        console.log("This is what is prescriptions:"+ JSON.stringify(prescriptions));
+        
+        var counter = 0;
+        if (responseStatus == 200){
+          for (var prescriptionNumber in prescriptions){
+            console.log("ran");
+            counter++;
+          }
+        }
+        if(counter == 0){
+        document.getElementById("prescriptionMedication").remove();
+        }
+    }
+}
