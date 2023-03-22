@@ -22,21 +22,23 @@ if (document.readyState == 'loading') {
 }
 else {
     //webpage is loaded
+    
     ready()
+    
 }
 
-function ready() {
+async function ready() {
 
     var removeCartItemButtons = document.getElementsByClassName('btn-danger')
-    console.log(removeCartItemButtons)
+    // console.log(removeCartItemButtons)
 
-    var cartItems = document.getElementsByClassName('cart-items')[0]
-    while (cartItems.hasChildNodes()) {
-        cartItems.removeChild(cartItems.firstChild)
-    }
-    updateCartTotal()
+    // var cartItems = document.getElementsByClassName('cart-items')[0]
+    // while (cartItems.hasChildNodes()) {
+    //     cartItems.removeChild(cartItems.firstChild)
+    // }
+    // updateCartTotal()
 
-    //upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc)
+    //upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc, drugQuantity)
 
 
     for (var i = 0; i < removeCartItemButtons.length; i++) {
@@ -57,6 +59,23 @@ function ready() {
     }
 
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
+
+    var user_record = JSON.parse(localStorage.getItem("User Record"));
+    var uid = user_record.uid;
+
+    let response = await fetch(`/get/cart?uid=${uid}`, {method: "GET"})
+    let cartJSON = await response.json();
+
+    let drugs = cartJSON["drugs"]
+    //alert(JSON.stringify(drugs));
+    for (var i = 0; i < drugs.length; i ++){
+        var drug = drugs[i];
+        var drugPrice = drug["price"]
+        var drugQuantity = drug["quantity"]
+        var drugTitle = drug["title"]
+
+        addItemToCart(drugTitle, drugPrice, "../images/Ibuprofen.jpg", drugQuantity);
+    }
 }
 
 function purchaseClicked() {
@@ -68,7 +87,6 @@ function purchaseClicked() {
     //     cartItems.removeChild(cartItems.firstChild)
     // }
     document.getElementById("paypal-button-container").style.display = "block";
-    // addtodb(total);
 }
 
 function removeCartItem(event) {
@@ -99,9 +117,9 @@ function addToCartClicked(event) {
     order.push({ "item-name": title, "price": priceVal, "quantity": 1 })
     console.log(order)
 
-    addItemToCart(title, price, imageSrc)
+    addItemToCart(title, price, imageSrc, 1)
     updateCartTotal()
-    
+
     //This fetch will request the uri path to update the cost of the cart and add drugs
     //we can update quantity too if we add a variable to this javascript file that updates quantity aswell.
     // fetch('http://localhost:8000/api/updateCart', {
@@ -122,7 +140,7 @@ function addToCartClicked(event) {
     // console.log(order)
 }
 
-function addItemToCart(title, price, imageSrc) {
+function addItemToCart(title, price, imageSrc, drugQuantity) {
     var cartRow = document.createElement('div')
     cartRow.classList.add('cart-row')
     cartRow.innerText = title
@@ -143,7 +161,7 @@ function addItemToCart(title, price, imageSrc) {
 </div>
 <span class="cart-price cart-column">${price}</span>
 <div class="cart-quantity cart-column">
-    <input class="cart-quantity-input" type="number" value="1">
+    <input class="cart-quantity-input" type="number" value="${drugQuantity}">
     <button class="btn btn-danger" type="button">REMOVE</button>
 </div>`
 
@@ -161,24 +179,37 @@ function updateCartTotal() {
     var cartRows = cartItemContainer.getElementsByClassName('cart-row')
     total = 0
     totalquantity = 0
+    var drugData = []
+
     for (var i = 0; i < cartRows.length; i++) {
+        var drugInformation = {}
         var cartRow = cartRows[i]
         var priceElement = cartRow.getElementsByClassName('cart-price')[0]
         var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
+        var title = cartRow.getElementsByClassName('cart-item')[0].innerText;
         var price = parseFloat(priceElement.innerText.replace('$', ''))
         var quantity = quantityElement.value
         total = total + (price * quantity)
         totalquantity = parseFloat(totalquantity) + parseFloat(quantity)
+
+        drugInformation["title"] = title;
+        drugInformation["quantity"] = quantity;
+        drugInformation["price"] = price;
+
+        drugData.push(drugInformation);
     }
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
-    
-    fetch('http://localhost:8000/api/updateCost', {
+
+    console.log("UID: " + JSON.parse(window.localStorage.getItem("User Record")).uid);
+    console.log("Drug Data: " + drugData);
+
+    fetch('http://localhost:8000/api/updateCart', {
             method : 'PATCH',
             body : JSON.stringify({
-                costs : total,
-                quantity : totalquantity++,
-
+                cartTotal : total,
+                drugs: drugData,
+                uid: JSON.parse(window.localStorage.getItem("User Record")).uid
             }),
             headers: {
                 'Content-type': 'application/json',
@@ -190,28 +221,35 @@ function updateCartTotal() {
 
 }
 
+window.onload = async function (){
+    if (localStorage.getItem("User Record") == null) {
+        //
+      } else {
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAD8RODlLg_BCHxy3ghN91W5XxIvPLbAp4",
-    authDomain: "swe-spring-2023.firebaseapp.com",
-    databaseURL: "https://swe-spring-2023-default-rtdb.firebaseio.com",
-    projectId: "swe-spring-2023",
-    storageBucket: "swe-spring-2023.appspot.com",
-    messagingSenderId: "600915655715",
-    appId: "1:600915655715:web:966a0affd54b6df2478596",
-    measurementId: "G-EW7N8BG805"
-};
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        var uid = user_record["uid"];
+        var profilePicture = user_record.photoURL;
 
-// initializeApp(firebaseConfig);
-
-// addtodb = function(price) {
-//     const database = getDatabase();
-//     const ref = database.ref("/total/");
-//     ref.set(price)
-//         .then(() => {
-//             console.log("Variable sent to Firebase successfully");
-//         })
-//         .catch((error) => {
-//             console.error("Error sending variable to Firebase:", error);
-//         });
-// }
+        let response = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
+            method: 'GET'
+          })
+    
+        let responseStatus = response.status;
+        let prescriptions = await response.json()
+        console.log("This is what is prescriptions:"+ JSON.stringify(prescriptions));
+        document.getElementById("dropbtn").src = profilePicture;
+        console.log(profilePicture);
+        document.getElementById("dropbtn").style.filter = "none";
+        document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
+        var counter = 0;
+        if (responseStatus == 200){
+          for (var prescriptionNumber in prescriptions){
+            console.log("ran");
+            counter++;
+          }
+        }
+        if(counter == 0){
+        document.getElementById("prescriptionMedication").remove();
+        }
+    }
+}

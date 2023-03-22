@@ -2,7 +2,13 @@ paypal.Buttons({
         // Sets up the transaction when a payment button is clicked
         createOrder: (data, actions) => {
             return fetch("/api/orders", {
-                method: "post",
+                method: "POST",
+                body: JSON.stringify({
+                    uid: JSON.parse(window.localStorage.getItem("User Record")).uid,
+                  }),
+                  headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                  },
             })
                 .then((response) => response.json())
                 .then((response) => {

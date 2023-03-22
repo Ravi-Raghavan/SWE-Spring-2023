@@ -104,11 +104,188 @@ async function getPatientPrescriptionsProcess(req,res){
     }
 }
 
+async function deletePatientPrescriptionProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const {patientUID, prescriptionNumber} = JSON.parse(body);
+        const deletePatientREF = await patientPrescription.deletePatientPrescription(patientUID,prescriptionNumber);
+        const data = {
+            deletePatientREF
+        };
+        res.writeHead(204,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function deleteDoctorPrescriptionProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const {doctorUID,prescriptionNumber} = JSON.parse(body);
+        const deleteDoctorREF = await patientPrescription.deleteDoctorPrescription(doctorUID,prescriptionNumber);
+        const data = {
+            deleteDoctorREF
+        };
+        res.writeHead(204,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function createPrescriptionBankProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const bankNumber = JSON.parse(body);
+        const bankNumberREF = await patientPrescription.createPrescriptionBank(bankNumber);
+        const data ={
+            bankNumberREF
+        };
+        res.writeHead(201,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function getPrescriptionBankProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const bankNumber = JSON.parse(body);
+        const validPrescriptionNumber = await patientPrescription.getPrescriptionBank(bankNumber);
+        
+        const data = {
+            returnValue : validPrescriptionNumber
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function changeStatusBankNumberPatientProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const bankNumber = JSON.parse(body);
+        const message = await patientPrescription.changeStatusBankNumberPatient(bankNumber);
+        const data = {
+            message:message
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function bankToDoctorPipelineProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const bankNumber = JSON.parse(body);
+        const message = await patientPrescription.bankToDoctorPipeline(bankNumber);
+        const data = {
+            message:message
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function patientPipelineToActiveProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const bankNumber = JSON.parse(body);
+        const message = await patientPrescription.patientPipelineToActive(bankNumber);
+        const data = {
+            message:message
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }   
+}
+
+async function doctorPipelineToActiveProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const bankNumber = JSON.parse(body);
+        const message = await patientPrescription.doctorPipelineToActive(bankNumber);
+        const data = {
+            message:message
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function getFromPatientPipelineProcess(req, res){
+    try{
+        let body = await getPostData(req);
+        const bankNumber = JSON.parse(body);
+        const validPrescriptionNumber = await patientPrescription.getFromPatientPipeline(bankNumber);
+        
+        const data = {
+            returnValue : validPrescriptionNumber
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function getFromDoctorPipelineProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const bankNumber = JSON.parse(body);
+        const validPrescriptionNumber = await patientPrescription.getFromDoctorPipeline(bankNumber);
+        
+        const data = {
+            returnValue : validPrescriptionNumber
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function getRandomBankNumberProcess(req,res){
+    try{
+        const bankNumber = await patientPrescription.getRandomBankNumber();
+        const data = {
+            number : bankNumber
+        };
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createPatientPrescriptionProcess,
     createDoctorPrescriptionProcess,
     getAccountTypeForPPProcess,
     getDoctorPrescriptionsProcess,
     createValidatedPrescriptionProcess,
-    getPatientPrescriptionsProcess
+    getPatientPrescriptionsProcess,
+    deletePatientPrescriptionProcess,
+    deleteDoctorPrescriptionProcess,
+    createPrescriptionBankProcess,
+    getPrescriptionBankProcess,
+    changeStatusBankNumberPatientProcess,
+    getFromPatientPipelineProcess,
+    patientPipelineToActiveProcess,
+    bankToDoctorPipelineProcess,
+    getFromDoctorPipelineProcess,
+    doctorPipelineToActiveProcess,
+    getRandomBankNumberProcess
 };

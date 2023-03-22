@@ -141,9 +141,39 @@ async function updateCost(req, res) {
     }
 }
 
+async function updateCart(req, res) {
+    try {
+        //Add method to check if order exists:
+        /*
+        if(!product)
+        {
+            res.writeHead(400, {'Content-Type': 'application/json'})
+            res.end(JSON.stringify({message: 'product not found'}))
+        }
+        */
+
+        let body = await getPostData(req); //data must have orderID, costs, quantity, status, and drug
+        const {cartTotal, drugs, uid} = JSON.parse(body);
+
+        await Order.updateUserCart(cartTotal, drugs, uid);
+        
+        const data = {
+            uid: uid
+        };
+
+        //console.log("order id is: ",orderId)
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(data));
+    
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     testCreateOrder,
     createOrder,
     updateOrder,
+    updateCart,
     updateCost
 }

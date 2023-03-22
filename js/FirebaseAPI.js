@@ -4,6 +4,7 @@ const admin = require("./firebase").admin;
 var db = admin.database();
 var ref = db.ref(`/users/`);
 var validatedPrescriptions = db.ref(`/validatedPrescriptions/`);
+var cartRef = db.ref("/carts/")
 
 //Function to create a user(i.e. registration!) in our database
 //userParameters: parameters for a particular user(i.e. name, email, etc)
@@ -292,6 +293,28 @@ async function getPaymentCards(credentials, response){
     })
 }
 
+async function getOrdersUser(credentials, response){
+    var uid = credentials.uid;
+    var ordersRef = ref.child(`${uid}/orders`)
+    console.log("UID: " + uid);
+
+    ordersRef.once('value', (snapshot) => {
+        var value = snapshot.val();
+        console.log("Orders Data: " + JSON.stringify(value));
+        if (value == null){
+            var orders_data = {"404 Error Message": "N/A"}
+            response.writeHead(404, { "Content-type": "application/json" });
+            response.write(JSON.stringify(orders_data));
+            response.end();
+        }
+        else{
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(value));
+            response.end();
+        }
+    })
+}
+
 async function deletePaymentCard(credentials, response){
     var uid = credentials.uid;
     var paymentsRef = ref.child(`${uid}/payment_cards`)
@@ -361,6 +384,26 @@ async function deleteUserAccount(credentials, response){
     })
 }
 
+async function getUserCart(credentials, response){
+    var uid = credentials.uid;
+
+    cartRef.child(`${uid}`).once("value", (snapshot) => {
+        var value = snapshot.val();
+        console.log("Value: " + JSON.stringify(value));
+
+        if (value == null){
+            response.writeHead(404, { "Content-type": "application/json" });
+            response.write("Failed to Delete Payment Card");
+            response.end();
+        }
+        else{
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(value));
+            response.end();
+        }
+    })
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -371,9 +414,11 @@ module.exports = {
     getAddress: getAddress, 
     updateUser: updateUser,
     getPrescriptionsUser: getPrescriptionsUser,
+    getOrdersUser: getOrdersUser,
     addPaymentCard: addPaymentCard, 
     getPaymentCards: getPaymentCards, 
     deletePaymentCard: deletePaymentCard,
     deleteUserAccount: deleteUserAccount,
+    getUserCart: getUserCart,
     login: login
 }

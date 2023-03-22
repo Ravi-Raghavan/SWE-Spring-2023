@@ -1,6 +1,7 @@
 const admin = require("./firebase").admin;
 var db = admin.database();
 var ref = db.ref(`/orders/`);
+var cartRef = db.ref("/carts/");
 
 /* Given a status (string), are we able to cancel the order? Return a boolean. */
 function canCancel(status) {
@@ -184,11 +185,26 @@ async function testUpdate(orderID, title, quantity, price){
 
 }
 
+async function updateUserCart(cartTotal, drugs, uid){
+    cartRef.child(`${uid}`).set({
+        cartTotal: cartTotal, 
+        drugs: drugs, 
+        uid: uid
+    })
+    .then(() => {
+        console.log(`Cart Updated for User: ${uid}`);
+    })
+    .catch((err) => {
+        console.log('Cart Failed to be Updated');
+    })
+}
+
 
 module.exports = {
     create,
     update,
     createOrder,
     testUpdate,
+    updateUserCart,
     costUpdate
 };
