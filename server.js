@@ -96,6 +96,7 @@ const public_paths_js = [
   "/js/prescriptionModel.js",
   "/js/prescriptonController.js",
   "/js/FAQ-view.js",
+  "/js/profilePic.js"
 ];
 
 const public_paths_images = [
