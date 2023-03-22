@@ -189,7 +189,7 @@ async function updateUserCart(cartTotal, drugs, uid){
     cartRef.child(`${uid}`).set({
         cartTotal: cartTotal, 
         drugs: drugs, 
-        uid: uid
+        uid: uid,
     })
     .then(() => {
         console.log(`Cart Updated for User: ${uid}`);

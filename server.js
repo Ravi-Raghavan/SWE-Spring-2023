@@ -182,6 +182,16 @@ const public_paths_product = [
   "/product/HMB.webp",
   "/product/PhosphatidicAcid.webp",
   "/product/VitaminD.avif",
+  "/product/Levothyroxine.jpg",
+  "/product/Albuterol.jpg",
+  "/product/Amlodipine.jpg",
+  "/product/Atorvastatin.jpg",
+  "/product/Lisinopril.jpg",
+  "/product/Metformin.jpg",
+  "/product/Metoprolol.jpg",
+  "/product/Tylenol500mg.jpg",
+  "/product/NyquilSevereColdFlu.jpg",
+  "/product/Omeprazole.jpg"
 ];
 
 const { createProduct } = require("./js/productController");

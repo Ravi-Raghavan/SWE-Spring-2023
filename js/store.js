@@ -73,9 +73,13 @@ async function ready() {
         var drugPrice = drug["price"]
         var drugQuantity = drug["quantity"]
         var drugTitle = drug["title"]
+        var image = drug['imageSrc']
 
-        addItemToCart(drugTitle, drugPrice, "../images/Ibuprofen.jpg", drugQuantity);
+        //"../images/Ibuprofen.jpg"
+
+        addItemToCart(drugTitle, drugPrice, image , drugQuantity);
     }
+    updateCartTotal();
 }
 
 function purchaseClicked() {
@@ -187,6 +191,8 @@ function updateCartTotal() {
         var priceElement = cartRow.getElementsByClassName('cart-price')[0]
         var quantityElement = cartRow.getElementsByClassName('cart-quantity-input')[0]
         var title = cartRow.getElementsByClassName('cart-item')[0].innerText;
+        var imgSrc = cartRow.getElementsByClassName('cart-item-image')[0].src;
+        //console.log("[][][] The image Source is :" +imgSrc)
         var price = parseFloat(priceElement.innerText.replace('$', ''))
         var quantity = quantityElement.value
         total = total + (price * quantity)
@@ -195,6 +201,7 @@ function updateCartTotal() {
         drugInformation["title"] = title;
         drugInformation["quantity"] = quantity;
         drugInformation["price"] = price;
+        drugInformation["imageSrc"] = imgSrc;
 
         drugData.push(drugInformation);
     }
