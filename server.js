@@ -201,46 +201,58 @@ function FAQ(request, response, queryStringParameters) {
     searchQuery = queryStringParameters.query;
     var categoryClassifierFileName = "./json/CategoryBayesianClassifier.json";
     var intentClassifierFileName = "./json/IntentBayesianClassifier.json";
-    natural.BayesClassifier.load(categoryClassifierFileName, null, function (err, categoryClassifier) {
-      natural.BayesClassifier.load(intentClassifierFileName, null, function(err, intentClassifier){
+    natural.BayesClassifier.load(categoryClassifierFileName, null, async function (err, categoryClassifier) {
+      natural.BayesClassifier.load(intentClassifierFileName, null, async function(err, intentClassifier){
+        var categoryClassifications = categoryClassifier.getClassifications(searchQuery);
+        var intentClassifications = intentClassifier.getClassifications(searchQuery);
+
+        console.log("Category Classifications: " + categoryClassifications);
+        console.log("Intent Classifications: " + intentClassifications);
+
         var category = categoryClassifier.classify(searchQuery);
-        var intent = intentClassifier.classify(searchQuery);
+        var results = []
 
-        console.log("Category: " + category);
-        console.log("Intent: " +  intent);
+        for (var intent in intentClassifications){
+          let extractSubcategoryArticles = await db.ref(`/FAQ/${category}/${intent}/`).once("value");
+          var value = extractSubcategoryArticles.val()
 
-        db.ref(`/FAQ/${category}/${intent}/`).once("value", function (snapshot) {
-          var value = snapshot.val()
-          var results = []
+          var subcategoryResults = []
           if (value != null){
             console.log("Valid Snapshot Returned");
             for (let key in value){
-              results.push(value[key]);
+              subcategoryResults.push(value[key]);
             }
-            console.log(results);
+
+            console.log("Subcategory Results: " + subcategoryResults);
+              
+            for (var subcategoryResult in subcategoryResults){
+              results.push(subcategoryResult);
+            }
+          }
+        }
+
+        if (results.length == 0){
+          FAQ_ref.once("value", function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
+              childSnapshot.forEach(function(childChildSnapshot){
+                childChildSnapshot.forEach(function(childChildChildSnapshot){
+                  results.push(childChildChildSnapshot.val())
+                })
+              })
+            });
+    
             console.log("Search Results: " + JSON.stringify(results));
             response.writeHead(200, { "Content-type": "application/json" });
             response.write(JSON.stringify(results));
             response.end();
-          }
-          else{
-            FAQ_ref.once("value", function (snapshot) {
-              snapshot.forEach(function (childSnapshot) {
-                childSnapshot.forEach(function(childChildSnapshot){
-                  childChildSnapshot.forEach(function(childChildChildSnapshot){
-                    results.push(childChildChildSnapshot.val())
-                  })
-                })
-              });
-      
-              console.log("Search Results: " + JSON.stringify(results));
-              response.writeHead(200, { "Content-type": "application/json" });
-              response.write(JSON.stringify(results));
-              response.end();
-            });
-          }
-        });
-
+          });
+        }
+        else{
+          console.log("Search Results: " + JSON.stringify(results));
+          response.writeHead(200, { "Content-type": "application/json" });
+          response.write(JSON.stringify(results));
+          response.end();
+        }
       })
     });
   });
