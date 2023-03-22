@@ -436,7 +436,7 @@ function sendContactEmail(request, response){
   response.end();
 }
 
-function getPrescriptionsUser(request, response){
+function getPrescriptionsUser(request, response, queryStringParameters){
   var credentials = "";
 
   request.on("data", (data) => {
@@ -444,8 +444,21 @@ function getPrescriptionsUser(request, response){
   });
 
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
-    await FirebaseAPI.getPrescriptionsUser(credentials.uid, response);
+    uid = queryStringParameters["uid"];
+    await FirebaseAPI.getPrescriptionsUser(uid, response);
+  });
+}
+
+function getOrdersUser(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    uid = queryStringParameters["uid"];
+    await FirebaseAPI.getOrdersUser(uid, response);
   });
 }
 
@@ -666,7 +679,11 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/get/prescriptions/user":
-        getPrescriptionsUser(request, response);
+        getPrescriptionsUser(request, response, queryStringParameters);
+        break;
+      
+      case "/get/orders/user":
+        getOrdersUser(request, response, queryStringParameters);
         break;
 
       case "/add/payment_card":
