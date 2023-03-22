@@ -62,6 +62,15 @@ async function capturePayment(orderId) {
             let orderPushRef = orderRef.child(uid).push();
             orderPushRef.set(snapshot.val());
             userRef.child(uid).child("/orders/").child(orderPushRef.key).set(snapshot.val());
+
+            /**DELETE CART */
+            cartRef.child(uid).set(null)
+            .then(() => {
+                console.log("Cart is Deleted!");
+            })
+            .catch((err) => {
+                console.log(err);
+            })
         })
         .catch((error) => {
             console.error("Error reading variable from Firebase:", error);
