@@ -134,6 +134,21 @@ async function deleteDoctorPrescriptionProcess(req,res){
     }
 }
 
+async function createPrescriptionBankProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const bankNumber = JSON.parse(body);
+        const bankNumberREF = await patientPrescription.createPrescriptionBank(bankNumber);
+        const data ={
+            bankNumberREF
+        };
+        res.writeHead(201,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     createPatientPrescriptionProcess,
     createDoctorPrescriptionProcess,
@@ -142,5 +157,6 @@ module.exports = {
     createValidatedPrescriptionProcess,
     getPatientPrescriptionsProcess,
     deletePatientPrescriptionProcess,
-    deleteDoctorPrescriptionProcess
+    deleteDoctorPrescriptionProcess,
+    createPrescriptionBankProcess,
 };

@@ -107,6 +107,14 @@ async function deleteDoctorPrescription(doctorUID, prescriptionNumber){
     return "done";
 }
 
+async function createPrescriptionBank(bankNumber){
+    var path = db.ref(`/prescriptionBank/${bankNumber}/`);
+    path.set({
+        status: "null"
+    });
+    return "done";
+}
+
 module.exports = {
     createPatientPrescription,
     createDoctorPrescription,
@@ -115,5 +123,6 @@ module.exports = {
     createValidatedPrescription,
     getPatientPrescriptions,
     deletePatientPrescription,
-    deleteDoctorPrescription
+    deleteDoctorPrescription,
+    createPrescriptionBank
 };
