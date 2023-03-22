@@ -3,8 +3,10 @@
 window.onload = startType();
 
 function startType(){
-  var userID = getUID();
-  fetch("/prescription/accountType",{
+  var userID = {
+    uid: getUID()
+  };
+    fetch("/prescription/accountType",{
       method: "POST",
       cache: "no-cache",
       body: JSON.stringify(userID)

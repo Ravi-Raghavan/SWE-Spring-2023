@@ -66,8 +66,8 @@ async function createDoctorPrescriptionProcess(req,res){
 async function getAccountTypeForPPProcess(req,res){
     try{
         let body = await getPostData(req);
-        const uidMessage = JSON.parse(body);
-        const gotType = await patientPrescription.getAccountTypeForPP(uidMessage);
+        const uid = JSON.parse(body); // {"uid": "aljv8su"}
+        const gotType = await patientPrescription.getAccountTypeForPP(uid);
         const data = {
             type:gotType
         };

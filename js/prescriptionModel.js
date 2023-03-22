@@ -7,8 +7,12 @@ doctorPresdb = db.ref(`/doctorPrescriptions/`);
 var uref = db.ref(`/users/`);
 patientPresdb =db.ref(`/patientPrescriptions/`);
 
+// async function verifyPrescription
+
 async function createPatientPrescription(dateOfBirth, firstName, issueDate,lastName,patientEmail, patientUID,prescriptionNumber){
-        
+    // Need to call some main function that checks the list of all prescriptions on the other side and see if it matches... Good idea or not???
+    
+    
     
     var ref = db.ref(`/patientPrescriptions/${patientUID}/${prescriptionNumber}`);
     ref.set({
