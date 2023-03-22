@@ -190,7 +190,7 @@ const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
-function FAQ(request, response, queryStringParameters) {
+async function FAQ(request, response, queryStringParameters) {
   var searchQuery = "";
 
   request.on("data", (data) => {
@@ -212,22 +212,22 @@ function FAQ(request, response, queryStringParameters) {
         var category = categoryClassifier.classify(searchQuery);
         var results = []
 
-        for (var intentClassification in intentClassifications){
+        for (let i = 0; i < intentClassifications.length; i ++){
+          var intentClassification = intentClassifications[i];
           var intent = intentClassification["label"]
+
           let extractSubcategoryArticles = await db.ref(`/FAQ/${category}/${intent}/`).once("value");
           var value = extractSubcategoryArticles.val()
 
-          var subcategoryResults = []
+          console.log("Intent: " + intent);
+          console.log("Extracted Subcategory Results: " + JSON.stringify(value));
+
           if (value != null){
             console.log("Valid Snapshot Returned");
-            for (let key in value){
-              subcategoryResults.push(value[key]);
-            }
 
-            console.log("Subcategory Results: " + subcategoryResults);
-              
-            for (var subcategoryResult in subcategoryResults){
-              results.push(subcategoryResult);
+            for (let key in value){
+              console.log("Key: " + key + " Value: " + JSON.stringify(value[key]));
+              results.push(value[key]);
             }
           }
         }
