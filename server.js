@@ -256,7 +256,7 @@ async function FAQ(request, response, queryStringParameters) {
                 })
               })
             });
-    
+
             console.log("Search Results: " + JSON.stringify(results));
             response.writeHead(200, { "Content-type": "application/json" });
             response.write(JSON.stringify(results));
@@ -727,11 +727,11 @@ const server = http.createServer((request, response) => {
 
       case "/move/patient/pipeline/active":
         patientPipelineToActiveProcess(request,response);
-        break;  
+        break;
 
       case "/move/doctor/pipeline/active":
         doctorPipelineToActiveProcess(request,response);
-        break;  
+        break;
 
       case "/get/pipeline/patient":
         getFromPatientPipelineProcess(request,response);
@@ -760,7 +760,7 @@ const server = http.createServer((request, response) => {
       case "/get/prescriptions/user":
         getPrescriptionsUser(request, response, queryStringParameters);
         break;
-      
+
       case "/get/orders/user":
         getOrdersUser(request, response, queryStringParameters);
         break;
@@ -779,12 +779,12 @@ const server = http.createServer((request, response) => {
 
       case "/delete/patientPrescription":
         deletePatientPrescriptionProcess(request,response);
-        break;  
+        break;
 
       case "/delete/doctorPrescription":
         deleteDoctorPrescriptionProcess(request,response);
         break;
-        
+
       case "/delete/account":
         deleteAccount(request, response, queryStringParameters);
         break;
@@ -801,10 +801,7 @@ const server = http.createServer((request, response) => {
     serveFileContent(file, response);
   }
 
-  let reqUrl =
-    url.parse(request.url).pathname == "/"
-      ? "index.html"
-      : url.parse(request.url).pathname;
+  let reqUrl = url.parse(request.url).pathname == "/" ? "index.html" : url.parse(request.url).pathname;
   let captureUrl = reqUrl.match(/^\/api\/orders\/([^\/]+)\/capture$/);
 
   if (reqUrl === "/api/orders" && request.method == "POST") {
@@ -832,15 +829,10 @@ const server = http.createServer((request, response) => {
     });
 
 
-  } else if (
-    captureUrl != null &&
-    reqUrl === captureUrl[0] &&
-    request.method == "POST"
-  ) {
+  } else if (captureUrl != null && reqUrl === captureUrl[0] && request.method == "POST") {
     const orderId = captureUrl[1];
     console.log(orderId);
-    paypal
-      .capturePayment(orderId)
+    paypal.capturePayment(orderId)
       .then((data) => {
         response.statusCode = 200;
         response.setHeader("Content-Type", "application/json");

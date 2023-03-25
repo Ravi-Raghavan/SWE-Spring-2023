@@ -70,6 +70,7 @@
             JWT: response.credential
           };
           
+          console.log("JWT TOKEN: " + response.credential);
           fetch(`/login/google?JWT=${response.credential}`, {
             method: 'GET'
           })
