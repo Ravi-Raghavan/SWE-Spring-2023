@@ -567,7 +567,7 @@ function parseQueryStringParameters(queryString) {
 
 function getUserCart(request, response, queryStringParameters){
   var credentials = "";
-
+console.log("String Parameters:"+queryStringParameters)
   request.on("data", (data) => {
     credentials += data;
   });

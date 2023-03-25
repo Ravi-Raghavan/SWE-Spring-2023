@@ -151,6 +151,7 @@ async function updateCart(req, res) {
             res.end(JSON.stringify({message: 'product not found'}))
         }
         */
+        //console.log("The request Message: \n" + JSON.parse(JSON.stringify(req)));
 
         let body = await getPostData(req); //data must have orderID, costs, quantity, status, and drug
         const {cartTotal, drugs, uid} = JSON.parse(body);
