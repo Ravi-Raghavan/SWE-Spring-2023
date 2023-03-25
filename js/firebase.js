@@ -1,5 +1,5 @@
 admin = require("firebase-admin");
-const { getStorage } = require('firebase-admin/storage');
+const { getStorage} = require('firebase-admin/storage');
 
 var serviceAccount = require("./../json/firebase-admin.json");
 
@@ -9,5 +9,7 @@ admin.initializeApp({
   storageBucket: 'swe-spring-2023.appspot.com'
 });
 
+
+const storage = getStorage();
 const bucket = getStorage().bucket();
-module.exports = { admin, bucket};
+module.exports = { admin, storage, bucket};

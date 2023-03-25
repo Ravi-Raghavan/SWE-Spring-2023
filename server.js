@@ -22,6 +22,7 @@ const public_paths_html = [
   "/html/deliverypage.html",
   "/html/email-validated.html",
   "/html/FAQ.html",
+  "/html/fileUploadTest.html",
   "/html/homepage.html",
   "/html/index.html",
   "/html/knowledge-base.html",
@@ -202,6 +203,7 @@ const { createDoctorPrescription, createValidatedPrescription, deleteDoctorPresc
 const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
+const cloudStorage = require("./js/cloudStorage");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -577,6 +579,21 @@ console.log("String Parameters:"+queryStringParameters)
   });
 }
 
+
+function uploadDocumentation(request, response){
+  var credentials = "";
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    console.log("UID: " + credentials.uid);
+    //console.log("Raw File Data: " + credentials.rawFileData);
+    await cloudStorage.uploadDocumentation(credentials.uid, credentials.rawFileData, response);
+  });
+}
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -791,6 +808,10 @@ const server = http.createServer((request, response) => {
 
       case "/get/cart":
         getUserCart(request, response, queryStringParameters);
+        break;
+
+      case "/upload/documentation":
+        uploadDocumentation(request, response);
         break;
     }
   }
