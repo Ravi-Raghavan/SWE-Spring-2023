@@ -1,24 +1,34 @@
 const bucket = require("./firebase").bucket;
+var fs = require('fs');
+const path = require('path');   
+const filePath = path.join(__dirname, 'start.html');
 
 async function uploadFromMemory(destFileName, contents, response) {
 
-    bucket.file(destFileName).save(contents)
-    .then(() => {
-        console.log("SUCCESS");
-          response.writeHead(200, { "Content-type": "text/plain" });
-          response.write("Successfully Uploaded File");
-          response.end();
-    })
-    .catch((error) => {      
-        console.log("FAILURE");
-          response.writeHead(404, { "Content-type": "text/plain" });
-          response.write("Couldn't Upload File");
-          response.end();
-    })
+    fs.readFile("/Users/raviraghavan/Desktop/Undergrad BS CS:CE/Undergrad Junior Year/Spring 2023 Semester/SWE/images/reddit.png", {encoding: 'utf-8'}, function(err, data){
+        if (!err) {
+            bucket.file(destFileName).save(data)
+                .then(() => {
+                    console.log("SUCCESS");
+                    response.writeHead(200, { "Content-type": "text/plain" });
+                    response.write("Successfully Uploaded File");
+                    response.end();
+                })
+                .catch((error) => {      
+                    console.log("FAILURE");
+                    response.writeHead(404, { "Content-type": "text/plain" });
+                    response.write("Couldn't Upload File");
+                    response.end();
+                })
+        } 
+        else {
+            console.log(err);
+        }
+    });
   }
 
 
-function uploadDocumentation(uid, rawFileData, response){
+async function uploadDocumentation(uid, rawFileData, response){
     if (uid == null){
         uid = "TEST";
     }
@@ -28,7 +38,7 @@ function uploadDocumentation(uid, rawFileData, response){
     console.log("Raw File Length: " + rawFileData.length);
 
     console.log("Going to upload data from memory");
-    uploadFromMemory(`user-destination/${uid}.jpeg`, rawFileData, response).catch(console.error);
+    await uploadFromMemory(`user-destination/${uid}.jpeg`, rawFileData, response).catch(console.error);
 
 }
 module.exports = {
