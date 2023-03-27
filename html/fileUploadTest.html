@@ -39,6 +39,8 @@
                 uid: uid
             }
 
+            alert(rawFileData.length);
+
             let response = await fetch('/upload/documentation', {
                 method: 'POST',
                 body: JSON.stringify(data),
