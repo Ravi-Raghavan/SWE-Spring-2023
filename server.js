@@ -2,6 +2,10 @@
 const http = require("http");
 const url = require("url");
 const fs = require("fs");
+const formidable = require('formidable');
+const bucket = require("./js/firebase").bucket;
+const stream  = require('stream');
+
 const lookup = require("mime-types").lookup;
 var CryptoJS = require("crypto-js");
 const admin = require("./js/firebase").admin;
@@ -570,20 +574,45 @@ console.log("String Parameters:"+queryStringParameters)
 
 
 function uploadDocumentation(request, response){
-  var requestBody = ""
-  var i = 0;
-  request.on("data", (data) => {
-    requestBody += data;
+  const form = formidable({multiples: true})
 
-    if (i == 0){
-      console.log(JSON.parse(data));
-      process.exit(0);
+  form.parse(request, (err, fields, files) => {
+    if (err) {
+      response.writeHead(err.httpCode || 400, { 'Content-Type': 'text/plain' });
+      response.end(String(err));
+      return;
     }
-  });
+    
+    var filePath = files["myfile"]["filepath"];
+    var mimeType = files["myfile"]["mimetype"];
+    var originalFileName = files["myfile"]["originalFilename"]
+    var newFileName = files["myfile"]["newFilename"]
 
-  request.on("end", async () => {
+    fs.readFile(filePath, function (err, content) {
+      if (err) {
+        console.log(`File Not Found ${filePath}`);
+      } else {
+        console.log("Mime Type: " + mimeType);
+        console.log("File Path: " + filePath);
+        console.log("Original File Name: " + originalFileName);
+        console.log("New File Name: " + newFileName);
 
-  });
+        bucket.file(originalFileName).save(content)
+        .then(() => {
+            console.log("SUCCESS");
+            response.writeHead(200, { "Content-type": "text/plain" });
+            response.write("Successfully Uploaded File");
+            response.end();
+        })
+        .catch((error) => {      
+            console.log("FAILURE");
+            response.writeHead(404, { "Content-type": "text/plain" });
+            response.write("Couldn't Upload File");
+            response.end();
+        })
+      }
+    });
+  })
 }
 
 const server = http.createServer((request, response) => {
