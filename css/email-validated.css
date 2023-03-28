@@ -36,6 +36,7 @@ button:hover {
 img.avatar {
   width: 50%;
   border-radius: 40%;
+  margin-top: -30px;
 }
 /* .modal{
             background-color: white;

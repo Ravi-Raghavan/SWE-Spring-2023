@@ -22,6 +22,7 @@ const public_paths_html = [
   "/html/deliverypage.html",
   "/html/email-validated.html",
   "/html/FAQ.html",
+  "/html/fileUploadTest.html",
   "/html/homepage.html",
   "/html/index.html",
   "/html/knowledge-base.html",
@@ -202,6 +203,7 @@ const { createDoctorPrescription, createValidatedPrescription, deleteDoctorPresc
 const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
+const cloudStorage = require("./js/cloudStorage");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -256,7 +258,7 @@ async function FAQ(request, response, queryStringParameters) {
                 })
               })
             });
-    
+
             console.log("Search Results: " + JSON.stringify(results));
             response.writeHead(200, { "Content-type": "application/json" });
             response.write(JSON.stringify(results));
@@ -567,13 +569,28 @@ function parseQueryStringParameters(queryString) {
 
 function getUserCart(request, response, queryStringParameters){
   var credentials = "";
-
+console.log("String Parameters:"+queryStringParameters)
   request.on("data", (data) => {
     credentials += data;
   });
 
   request.on("end", async () => {
     await FirebaseAPI.getUserCart(queryStringParameters, response);
+  });
+}
+
+
+function uploadDocumentation(request, response){
+  var credentials = "";
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    console.log("UID: " + credentials.uid);
+    //console.log("Raw File Data: " + credentials.rawFileData);
+    await cloudStorage.uploadDocumentation(credentials.uid, credentials.rawFileData, response);
   });
 }
 
@@ -727,11 +744,11 @@ const server = http.createServer((request, response) => {
 
       case "/move/patient/pipeline/active":
         patientPipelineToActiveProcess(request,response);
-        break;  
+        break;
 
       case "/move/doctor/pipeline/active":
         doctorPipelineToActiveProcess(request,response);
-        break;  
+        break;
 
       case "/get/pipeline/patient":
         getFromPatientPipelineProcess(request,response);
@@ -760,7 +777,7 @@ const server = http.createServer((request, response) => {
       case "/get/prescriptions/user":
         getPrescriptionsUser(request, response, queryStringParameters);
         break;
-      
+
       case "/get/orders/user":
         getOrdersUser(request, response, queryStringParameters);
         break;
@@ -779,18 +796,22 @@ const server = http.createServer((request, response) => {
 
       case "/delete/patientPrescription":
         deletePatientPrescriptionProcess(request,response);
-        break;  
+        break;
 
       case "/delete/doctorPrescription":
         deleteDoctorPrescriptionProcess(request,response);
         break;
-        
+
       case "/delete/account":
         deleteAccount(request, response, queryStringParameters);
         break;
 
       case "/get/cart":
         getUserCart(request, response, queryStringParameters);
+        break;
+
+      case "/upload/documentation":
+        uploadDocumentation(request, response);
         break;
     }
   }
@@ -801,10 +822,7 @@ const server = http.createServer((request, response) => {
     serveFileContent(file, response);
   }
 
-  let reqUrl =
-    url.parse(request.url).pathname == "/"
-      ? "index.html"
-      : url.parse(request.url).pathname;
+  let reqUrl = url.parse(request.url).pathname == "/" ? "index.html" : url.parse(request.url).pathname;
   let captureUrl = reqUrl.match(/^\/api\/orders\/([^\/]+)\/capture$/);
 
   if (reqUrl === "/api/orders" && request.method == "POST") {
@@ -832,15 +850,10 @@ const server = http.createServer((request, response) => {
     });
 
 
-  } else if (
-    captureUrl != null &&
-    reqUrl === captureUrl[0] &&
-    request.method == "POST"
-  ) {
+  } else if (captureUrl != null && reqUrl === captureUrl[0] && request.method == "POST") {
     const orderId = captureUrl[1];
     console.log(orderId);
-    paypal
-      .capturePayment(orderId)
+    paypal.capturePayment(orderId)
       .then((data) => {
         response.statusCode = 200;
         response.setHeader("Content-Type", "application/json");
