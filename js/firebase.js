@@ -11,5 +11,5 @@ admin.initializeApp({
 
 
 const storage = getStorage();
-const bucket = getStorage().bucket();
+const bucket = storage.bucket();
 module.exports = { admin, storage, bucket};

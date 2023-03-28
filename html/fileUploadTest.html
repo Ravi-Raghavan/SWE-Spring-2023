@@ -9,35 +9,22 @@
         only one file to be chosen:
     </h3>
           
+    <form action="/upload/documentation" method="post" enctype="multipart/form-data" action = "#">
         <label for="myfile">Select a file:</label>
-        <input type="file" id="myfile" accept="image/jpeg" />
+        <input type="file" id="fileupload" name = "myfile" accept="image/jpeg" />
         <br /><br />
-        <button onclick = "saveFile()"> SUBMIT</button>
-
-        <button > GET</button>
-    
+        <input type = "submit" value="submit" id="submit" />
+    </form>
 </body>
 
 <script>
     var fileReader = new FileReader();
 
     async function handleEvent(event){
-        if (event.type == "load"){
+        if (event.type == "loadend"){
             var uid = "TEST";
             var rawFileData = event.target.result;
-        
-
-            if (localStorage.getItem("User Record") != null){
-                var user_record = JSON.parse(localStorage.getItem("User Record"));
-                if (user_record != null && user_record.uid != null){
-                    uid = user_record.uid
-                }
-            }
-
-            var data = {
-                rawFileData: rawFileData,
-                uid: uid
-            }
+            var data = {rawFileData: rawFileData, uid: uid}
 
             alert(rawFileData.length);
 

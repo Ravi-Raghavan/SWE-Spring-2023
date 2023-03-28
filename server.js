@@ -570,16 +570,19 @@ console.log("String Parameters:"+queryStringParameters)
 
 
 function uploadDocumentation(request, response){
-  var credentials = "";
+  var requestBody = ""
+  var i = 0;
   request.on("data", (data) => {
-    credentials += data;
+    requestBody += data;
+
+    if (i == 0){
+      console.log(JSON.parse(data));
+      process.exit(0);
+    }
   });
 
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
-    console.log("UID: " + credentials.uid);
-    //console.log("Raw File Data: " + credentials.rawFileData);
-    await cloudStorage.uploadDocumentation(credentials.uid, credentials.rawFileData, response);
+
   });
 }
 
