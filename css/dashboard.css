@@ -198,6 +198,38 @@ p{
 .OrderTable tr:nth-child(even){background-color: var(--suppliment)}
 
 
+.UserTable{
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid var(--fourth);
+  font-family: var(--soft); 
+}
+
+.UserTable th, td {
+  text-align: left;
+  padding: 8px;
+  border: 1px solid var(--primary);
+  color: var(--fourth);
+}
+
+
+
+.UserTable tr.table_header th {
+background-color: var(--tertiary);
+font-family: var(--strong);
+color: var(--primary);
+}
+
+.UserTable tr.second th {
+background-color: var(--secondary);
+}
+
+
+.UserTable tbody{background-color: var(--suppliment)}
+
+
+
 .paymentRow{
     margin-top: 30px;
 }
@@ -454,4 +486,78 @@ input:checked + .slider:before {
 .user-list tbody td .user-subhead {
   font-size: 0.875em;
   font-style: italic;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  margin-top: 200px;
+  background: var(--primary);
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: var(--fourth);
+  padding-bottom: 10px;
+  font-family: var(--strong);
+}
+.popup .close {
+  transition: all 200ms;
+  padding: 6px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: var(--secondary);
+  color:var(--primary);
+  font-size: 25px;
+  text-decoration: none;
+  border: var(--primary);
+  cursor: pointer;
+  font-family: var(--soft);
+  transition: 0.5s ease-out;
+  border-radius: 6px;
+}
+.popup .close:hover {
+  background-color: var(--tertiary);
+}
+.popup .content {
+  padding-bottom: 25px;
+  max-height: 30%;
+  overflow: auto;
+  color:var(--fourth);
+}
+
+@media screen and (max-width: 700px) {
+  .box {
+    width: 70%;
+  }
+  .popup {
+    width: 70%;
+  }
+}
+
+.popup .xButton {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  background: var(--secondary);
+  color:var(--primary);
 }

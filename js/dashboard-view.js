@@ -120,6 +120,8 @@ async function logout() {
         template.innerHTML = rows;
         menu.appendChild(template.content);
       }
+
+      
     }
   };
 
@@ -408,3 +410,48 @@ async function logout() {
     localStorage.removeItem("User Record");
     window.location.href = "./logoutPage.html";
   }
+
+  var clicked;
+  function rowListen(x){
+    clicked = x;
+    
+    document.getElementById("articleTitle").innerText = x.innerText;
+
+    document.querySelector('.overlay').style.opacity = 1;
+    document.querySelector('.overlay').style.visibility = "visible";
+
+ 
+    if(false ){
+      document.getElementById("accept").style.display = "none";
+      document.getElementById("deny").style.display = "none";
+
+    }
+
+    else{
+      document.getElementById("accept").style.display = "";
+      document.getElementById("deny").style.display = "";
+     
+    }
+    
+}
+
+function accept(){
+  clicked.style.color = "#008000";
+  exit();
+}
+
+function deny(){
+  clicked.style.color = "#ff0000";
+  exit();
+}
+
+function download(){
+
+}
+
+
+function exit(){
+    document.querySelector('.overlay').style.opacity = 0;
+    document.querySelector('.overlay').style.visibility = "hidden";
+}
+

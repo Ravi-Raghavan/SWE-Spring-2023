@@ -51,6 +51,12 @@
           onclick='swapDisplay("settings-info", "settingsOption")'
           >Settings</a>
 
+          <a id="viewOption"
+          class=""
+          href="#"
+          onclick='swapDisplay("viewUser-info", "viewOption")'
+          >View Users</a>
+
           
 
         <a id ="loggingOut" onclick="logout()">Logout</a>
@@ -554,10 +560,125 @@
           </div>
         </section>
       </div>
+
+      <!---VIEW USERS INFORMATION-->
+      <div id="viewUser-info" class="info-container">
+        <section id="info" class="DrugFo">
+          
+            <div class="row">
+
+              <div id="popup1" class="overlay">
+                <div class="popup">
+                  <a class="xButton" onclick='exit()'>&times;</a>
+                    <h2 id="articleTitle" style="text-align: center;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat nihil rerum omnis nulla non odit esse quasi eius maiores fuga ducimus quod, optio repudiandae porro recusandae laudantium animi adipisci rem!</h2>
+                    <div id="articleContent" class="content"></div>
+                    <a  id = "accept" class ="close" onclick='accept()'>Accept</a>
+                    <a  id = "goTo"  onclick='download()'  class="close" >Download</a>
+                    <a  id = "deny" class="close" onclick='deny()'>Deny</a>
+                </div>
+            </div>
+            
+              <div class="OrderTable">
+                <table id="userList">
+                  <tr class="table_header second">
+                    <th style="width: 10%;">User</th>
+                    <th style="width: 20%;">Orders</th>
+                    <th style="width: 20%;">Prescriptions</th>
+                    <th style="width: 40%;">Documentation</th>
+                  </tr>
+<!---------------------------------------------Row Start-------------------------------------------------------------------------------------------->
+                  <tr onclick="showOrHide(this)">
+                    <td>445456465454654D</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr style="display: none;">                   
+                      <td></td>
+                      <td>
+                        #123412
+                        <br>  #1231234
+                        <br>  #123412  
+                      </td>
+                      
+                      <td>
+                        #123412
+                        <br>  #1231234
+                        <br>  #123412  
+                      </td>
+                    
+                      <td>
+                        <div onclick="rowListen(this)" style="color: #ff0000;">fakeDoctorStuff.jpg</div>
+                        <br>  
+                        <div onclick="rowListen(this)" style="color: #ffa500;">maybeReal.pdf</div>
+                        <br>  
+                        <div onclick="rowListen(this)" style="color: rgb(0, 128, 0);">verified.png</div>
+                      </td>
+                  </tr>
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+<!---------------------------------------------Row Start-------------------------------------------------------------------------------------------->
+                  <tr onclick="showOrHide(this)">
+                    <td>1231234234</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+
+                  <tr style="display: none;" >                   
+                      <td></td>
+                      <td>
+                        #123412
+                        <br>  #1231234
+                        <br>  #123412  
+                      </td>
+                      
+                      <td>
+                        #123412
+                        <br>  #1231234
+                        <br>  #123412  
+                      </td>
+                    
+                      <td>
+                        <div onclick="rowListen(this)" style="color: #ff0000;">fakeDoctorStuff.jpg</div>
+                        <br>  
+                        <div onclick="rowListen(this)" style="color: #ffa500;">maybeReal.pdf</div>
+                        <br>  
+                        <div onclick="rowListen(this)" style="color: rgb(0, 128, 0);">verified.png</div>
+                      </td>
+                  </tr>
+<!----------------------------------------------------------------------------------------------------------------------------------------->
+                  
+                </table>
+              </div>
+             
+              </div>
+
+              </div>
+    
+            </div>
+          
+        </section>
+      </div>
     </div>
   </body>
 
   <script src="/js/dashboard-view.js"></script>
   <script src = "../js/homepage.js"></script>
   <!-- <script src="../js/profilePic.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+  <script type="text/javascript">
+    function showOrHide(x) {
+      var $rows = $('#userList tr');
+      $(document).ready(function(){
+        if($rows.eq(x.rowIndex+1).is(":visible"))
+          $rows.eq(x.rowIndex+1).hide();
+        
+        else
+          $rows.eq(x.rowIndex+1).show();
+      });
+    }
+
+
+  </script>
 </html>
