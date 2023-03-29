@@ -121,6 +121,22 @@ async function logout() {
         menu.appendChild(template.content);
       }
 
+      if(user_record["Account Type"] == "Pharmacy")
+      {
+
+        document.getElementById("loggingOut").remove();
+        var rows = "<a id=\"viewOption\" class=\"\" href=\"#\" onclick='swapDisplay(\"viewUser-info\", \"viewOption\")' >View Users</a>";
+        var menu = document.getElementById("sideMenu");
+        var template = document.createElement('template');
+        template.innerHTML = rows;
+        
+        menu.appendChild(template.content);
+
+        rows = "<a id =\"loggingOut\" onclick=\"logout()\">Logout</a>";
+        template.innerHTML = rows;
+        menu.appendChild(template.content);
+      }
+
       
     }
   };
