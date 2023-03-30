@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Hello world!</title>
+  </head>
+  <body>
+    <h2>Recent Orders:</h2>
+    <div class="OrderTable">
+        <table id="ordersList">
+            <tr class="table_header">
+                <th>Order Number</th>
+                <th width = "150%">Items</th>
+                <th>Status</th>
+                
+            </tr>
+
+            {{#each orders}}
+            <tr>
+                <td>{{this.oid}}</td>
+                <td>Tylenol x1 <br> Iburprofen x2 <br> Rubbing Alcohol x3</td>
+                <td>{{this.status}}</td>
+                
+            </tr>
+            {{/each}}
+
+        </table>
+    </div>
+  </body>
+</html>
