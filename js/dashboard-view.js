@@ -122,7 +122,7 @@ async function logout() {
         menu.appendChild(template.content);
       }
 
-      if(user_record["Account Type"] == "Pharmacy")
+      if(user_record["Account Type"] == "Admin")
       {
 
         document.getElementById("loggingOut").remove();
