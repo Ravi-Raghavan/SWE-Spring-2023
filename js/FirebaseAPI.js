@@ -474,15 +474,12 @@ async function downloadOrders(credentials, response){
               .create(document, options)
               .then((res) => {
                 console.log(res);
+                response.writeHead(200, { "Content-type": "application/pdf", "Content-Length": res.length, "Content-Disposition": `attachment; filename=${uid}-orders.pdf`});
+                response.end(res);
               })
               .catch((error) => {
                 console.error(error);
               });
-            
-
-            response.writeHead(200, { "Content-type": "application/json" });
-            response.write(JSON.stringify(value));
-            response.end();
         }
     })
 }
