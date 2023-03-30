@@ -6,7 +6,7 @@ var pdf = require("pdf-creator-node");
 var fs = require("fs");
 
 // Read HTML Template
-var html = fs.readFileSync("../html/pdfCreationTemplate.html", "utf8");
+var html = fs.readFileSync("../html/orderTemplate.html", "utf8");
 
 var options = {
     format: "A3",
@@ -14,7 +14,7 @@ var options = {
     border: "10mm",
     header: {
         height: "45mm",
-        contents: '<div style="text-align: center;">Author: Shyam Hajare</div>'
+        contents: '<div style="text-align: center;"></div>'
     },
     footer: {
         height: "28mm",
@@ -28,27 +28,23 @@ var options = {
 };
 
 
-var users = [
+var orders = [
     {
-      name: "Shyam",
-      age: "26",
-    },
-    {
-      name: "Navjot",
-      age: "26",
-    },
-    {
-      name: "Vitthal",
-      age: "26",
-    },
+     oid: "222",
+     drugs: {
+        name: "Cocaine", 
+        quantity: 25
+     },
+    status: "placed",
+    }
   ];
   var document = {
     html: html,
     data: {
-      users: users,
+      orders: orders,
     },
     path: "./output.pdf",
-    type: "buffer",
+    type: "",
   };
 
   pdf

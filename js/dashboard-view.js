@@ -467,13 +467,13 @@ function download(){
 
 }
 
-function downloadOrders(){
+async function downloadOrders(){
   //Step 1 is to get the current User UID
   var user_record = JSON.parse(localStorage.getItem("User Record"));
   var uid = user_record.uid;
 
-  //GET REQUEST TO SERVER TO FETCH 
-
+  //GET REQUEST TO SERVER TO FETCH PDF DATA. 
+  let response = await fetch(`/download/orders?uid=${uid}`, {method: 'GET'})
 }
 
 
