@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Order History</title>
+  </head>
+  <body>
+    <h2>Recent Orders:</h2>
+    <div class="OrderTable">
+        <table id="ordersList">
+            <tr class="table_header">
+                <th>Order Number</th>
+                <th width = "150%">Items</th>
+                <th>Status</th>
+                <th>Total Cost</th>
+                
+            </tr>
+
+            {{#each orders}}
+            <tr>
+                <td>{{this.oid}}</td>
+                <td>
+                  {{#each this.drugs}}
+                  {{this.name}} x{{this.quantity}} <br>
+                  {{/each}}
+                </td>
+                <td>{{this.status}}</td>
+                <td>${{this.totalCost}}</td>
+                
+            </tr>
+            {{/each}}
+
+        </table>
+    </div>
+  </body>
+</html>

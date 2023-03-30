@@ -2,6 +2,10 @@
 const http = require("http");
 const url = require("url");
 const fs = require("fs");
+const formidable = require('formidable');
+const bucket = require("./js/firebase").bucket;
+const stream  = require('stream');
+
 const lookup = require("mime-types").lookup;
 var CryptoJS = require("crypto-js");
 const admin = require("./js/firebase").admin;
@@ -147,52 +151,41 @@ const public_paths_images = [
 ];
 
 const public_paths_product = [
-  "/product/2CB.jpeg",
   "/product/Ashwagandha.jpg",
   "/product/Aspirin.jpg",
-  "/product/DMT.webp",
-  "/product/cocaine.jpg",
   "/product/creatine.webp",
-  "/product/Ecstasy.jpg",
   "/product/Fentanyl.jpg",
-  "/product/heroin.webp",
   "/product/Ibuprofen.jpg",
   "/product/ketaset.png",
   "/product/Losartan.jpeg",
-  "/product/LSD.jpg",
-  "/product/Marijuana.jpg",
-  "/product/Meth.jpg",
   "/product/Morphine.jpg",
   "/product/Naproxen.jpg",
-  "/product/opium.jpeg",
   "/product/Pantoprazole.jpeg",
-  "/product/PCP.jpg",
-  "/product/Rohypnol.jpg",
-  "/product/steroids.jpeg",
-  "/product/tigerBalm.jpg",
-  "/product/whey_protien.jpeg",
-  "/product/polyJuice.webp",
-  "/product/Benzodiazepines.webp",
-  "/product/Adderall.jpg",
-  "/product/GHB.jpg",
-  "/product/Tobacco.webp",
-  "/product/salvia.jpg",
   "/product/tigerBalm.avif",
   "/product/WheyProtien.avif",
   "/product/Cafine.avif",
-  "/product/HMB.webp",
   "/product/PhosphatidicAcid.webp",
-  "/product/VitaminD.avif",
   "/product/Levothyroxine.jpg",
   "/product/Albuterol.jpg",
   "/product/Amlodipine.jpg",
   "/product/Atorvastatin.jpg",
-  "/product/Lisinopril.jpg",
+  "/product/Lisinopril.avif",
   "/product/Metformin.jpg",
   "/product/Metoprolol.jpg",
   "/product/Tylenol500mg.jpg",
   "/product/NyquilSevereColdFlu.jpg",
-  "/product/Omeprazole.jpg"
+  "/product/Simvastatin.jpg",
+  "/product/Gabapentin.avif",
+  "/product/Tramadol.jpg",
+  "/product/Warfarin.jpg",
+  "/product/Prednisone.avif",
+  "/product/Omeprazole.webp",
+  "/product/VitaminC.avif",
+  "/product/Omega3.jpg",
+  "/product/Calcium.webp",
+  "/product/zinc.webp",
+  "/product/vitaminD.jpeg",
+  "/product/HMB.webp",
 ];
 
 const { createProduct } = require("./js/productController");
@@ -580,17 +573,63 @@ console.log("String Parameters:"+queryStringParameters)
 }
 
 
-function uploadDocumentation(request, response){
+function uploadDocumentation(request, response, queryStringParameters){
+  const form = formidable({multiples: true})
+  var uid = queryStringParameters.uid;
+
+  form.parse(request, (err, fields, files) => {
+    console.log("Fields: " + JSON.stringify(fields));
+    if (err) {
+      response.writeHead(err.httpCode || 400, { 'Content-Type': 'text/plain' });
+      response.end(String(err));
+      return;
+    }
+    
+    var filePath = files["myfile"]["filepath"];
+    var mimeType = files["myfile"]["mimetype"];
+    var originalFileName = files["myfile"]["originalFilename"]
+    var newFileName = files["myfile"]["newFilename"]
+
+    fs.readFile(filePath, function (err, content) {
+      if (err) {
+        console.log(`File Not Found ${filePath}`);
+      } else {
+        console.log("Mime Type: " + mimeType);
+        console.log("File Path: " + filePath);
+        console.log("Original File Name: " + originalFileName);
+        console.log("New File Name: " + newFileName);
+
+        var userFile = `${uid}/${originalFileName}`;
+
+        console.log("User File: " + userFile);
+
+        bucket.file(userFile).save(content)
+        .then(() => {
+            console.log("SUCCESS");
+            response.writeHead(200, { "Content-type": "text/plain" });
+            response.write("Successfully Uploaded File");
+            response.end();
+        })
+        .catch((error) => {      
+            console.log("FAILURE");
+            response.writeHead(404, { "Content-type": "text/plain" });
+            response.write("Couldn't Upload File");
+            response.end();
+        })
+      }
+    });
+  })
+}
+
+function downloadOrders(request, response, queryStringParameters){
   var credentials = "";
+
   request.on("data", (data) => {
     credentials += data;
   });
 
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
-    console.log("UID: " + credentials.uid);
-    //console.log("Raw File Data: " + credentials.rawFileData);
-    await cloudStorage.uploadDocumentation(credentials.uid, credentials.rawFileData, response);
+    await FirebaseAPI.downloadOrders(queryStringParameters, response);
   });
 }
 
@@ -811,7 +850,11 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/upload/documentation":
-        uploadDocumentation(request, response);
+        uploadDocumentation(request, response, queryStringParameters);
+        break;
+      
+      case "/download/orders":
+        downloadOrders(request, response, queryStringParameters);
         break;
     }
   }

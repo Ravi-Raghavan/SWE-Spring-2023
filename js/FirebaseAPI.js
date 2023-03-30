@@ -5,6 +5,9 @@ var db = admin.database();
 var ref = db.ref(`/users/`);
 var validatedPrescriptions = db.ref(`/validatedPrescriptions/`);
 var cartRef = db.ref("/carts/")
+var pdf = require("pdf-creator-node");
+var fs = require("fs");
+
 
 //Function to create a user(i.e. registration!) in our database
 //userParameters: parameters for a particular user(i.e. name, email, etc)
@@ -404,6 +407,83 @@ async function getUserCart(credentials, response){
     })
 }
 
+async function downloadOrders(credentials, response){
+    var uid = credentials.uid;
+    var ordersRef = ref.child(`${uid}/orders`)
+    console.log("UID: " + uid);
+
+    ordersRef.once('value', (snapshot) => {
+        var value = snapshot.val();
+        console.log("Orders Data: " + JSON.stringify(value));
+        if (value == null){
+            var orders_data = {"404 Error Message": "N/A"}
+            response.writeHead(404, { "Content-type": "application/json" });
+            response.write(JSON.stringify(orders_data));
+            response.end();
+        }
+        else{
+            // Read HTML Template
+            var html = fs.readFileSync("./html/orderTemplate.html", "utf8");
+
+            var options = {
+                format: "A3",
+                orientation: "portrait",
+                border: "10mm",
+                header: {
+                    height: "45mm",
+                    contents: '<div style="text-align: center;"></div>'
+                },
+                footer: {
+                    height: "28mm",
+                    contents: {
+                        first: 'Cover page',
+                        2: 'Second page', // Any page number is working. 1-based index
+                        default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+                        last: 'Last Page'
+                    }
+                }
+            };
+
+            var orders = [];
+
+            for (var key in value){
+                var order = {}
+                order["oid"] = key
+
+                order["drugs"] = []
+                for (var drugKey in value[key]["drugs"]){
+                    order["drugs"].push({name: value[key]["drugs"][drugKey]["title"], quantity: value[key]["drugs"][drugKey]["quantity"]})
+                }
+
+                order["status"] = "placed";
+                order["totalCost"] = value[key]["cartTotal"];
+
+                orders.push(order);
+            }
+
+            var document = {
+                html: html,
+                data: {
+                  orders: orders,
+                },
+                path: `./${uid}-orders.pdf`,
+                type: "buffer",
+              };
+            
+              pdf
+              .create(document, options)
+              .then((res) => {
+                console.log(res);
+                response.writeHead(200, { "Content-type": "application/pdf", "Content-Length": res.length, "Content-Disposition": `attachment; filename=${uid}-orders.pdf`});
+                response.end(res);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+        }
+    })
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -420,5 +500,6 @@ module.exports = {
     deletePaymentCard: deletePaymentCard,
     deleteUserAccount: deleteUserAccount,
     getUserCart: getUserCart,
+    downloadOrders: downloadOrders, 
     login: login
 }

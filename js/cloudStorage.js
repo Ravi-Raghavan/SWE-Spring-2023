@@ -1,30 +1,21 @@
 const bucket = require("./firebase").bucket;
-var fs = require('fs');
-const path = require('path');   
-const filePath = path.join(__dirname, 'start.html');
+const stream  = require('stream');
 
 async function uploadFromMemory(destFileName, contents, response) {
 
-    fs.readFile("/Users/raviraghavan/Desktop/Undergrad BS CS:CE/Undergrad Junior Year/Spring 2023 Semester/SWE/images/reddit.png", {encoding: 'utf-8'}, function(err, data){
-        if (!err) {
-            bucket.file(destFileName).save(data)
-                .then(() => {
-                    console.log("SUCCESS");
-                    response.writeHead(200, { "Content-type": "text/plain" });
-                    response.write("Successfully Uploaded File");
-                    response.end();
-                })
-                .catch((error) => {      
-                    console.log("FAILURE");
-                    response.writeHead(404, { "Content-type": "text/plain" });
-                    response.write("Couldn't Upload File");
-                    response.end();
-                })
-        } 
-        else {
-            console.log(err);
-        }
-    });
+    bucket.file(destFileName).save(contents)
+    .then(() => {
+        console.log("SUCCESS");
+        response.writeHead(200, { "Content-type": "text/plain" });
+        response.write("Successfully Uploaded File");
+        response.end();
+    })
+    .catch((error) => {      
+        console.log("FAILURE");
+        response.writeHead(404, { "Content-type": "text/plain" });
+        response.write("Couldn't Upload File");
+        response.end();
+    })
   }
 
 
@@ -38,7 +29,28 @@ async function uploadDocumentation(uid, rawFileData, response){
     console.log("Raw File Length: " + rawFileData.length);
 
     console.log("Going to upload data from memory");
-    await uploadFromMemory(`user-destination/${uid}.jpeg`, rawFileData, response).catch(console.error);
+    //await uploadFromMemory(`user-file/${uid}.jpeg`, rawFileData, response).catch(console.error);
+
+    dataStream = new stream.PassThrough();
+    gcFile = bucket.file(`user-file/${uid}.jpeg`)
+
+    dataStream.push(rawFileData)
+    dataStream.push(null)
+
+    await new Promise((resolve, reject) => {
+    dataStream.pipe(gcFile.createWriteStream({
+        resumable  : false,
+        validation : false,
+        metadata   : {'Cache-Control': 'public, max-age=31536000'}
+    }))
+    .on('error', (error) => { 
+        reject(error) 
+    })
+    .on('finish', () => { 
+        console.log("Writing Data has been done!");
+        resolve(true)
+    })
+    })
 
 }
 module.exports = {

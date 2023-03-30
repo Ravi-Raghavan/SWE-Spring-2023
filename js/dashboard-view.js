@@ -31,6 +31,7 @@ async function logout() {
       console.log(user_record);
       console.log("Account Type: " + user_record['Account Type']); 
       var uid = user_record["uid"];
+      document.getElementById("uploadDocumentationForm").action = `/upload/documentation?uid=${uid}`;
 
       let response = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
         method: 'GET'
@@ -120,6 +121,24 @@ async function logout() {
         template.innerHTML = rows;
         menu.appendChild(template.content);
       }
+
+      if(user_record["Account Type"] == "Admin")
+      {
+
+        document.getElementById("loggingOut").remove();
+        var rows = "<a id=\"viewOption\" class=\"\" href=\"#\" onclick='swapDisplay(\"viewUser-info\", \"viewOption\")' >View Users</a>";
+        var menu = document.getElementById("sideMenu");
+        var template = document.createElement('template');
+        template.innerHTML = rows;
+        
+        menu.appendChild(template.content);
+
+        rows = "<a id =\"loggingOut\" onclick=\"logout()\">Logout</a>";
+        template.innerHTML = rows;
+        menu.appendChild(template.content);
+      }
+
+      
     }
   };
 
@@ -408,3 +427,69 @@ async function logout() {
     localStorage.removeItem("User Record");
     window.location.href = "./logoutPage.html";
   }
+
+  var clicked;
+  function rowListen(x){
+    clicked = x;
+    
+    document.getElementById("articleTitle").innerText = x.innerText;
+
+    document.querySelector('.overlay').style.opacity = 1;
+    document.querySelector('.overlay').style.visibility = "visible";
+
+ 
+    if(false ){
+      document.getElementById("accept").style.display = "none";
+      document.getElementById("deny").style.display = "none";
+
+    }
+
+    else{
+      document.getElementById("accept").style.display = "";
+      document.getElementById("deny").style.display = "";
+     
+    }
+    
+}
+
+function accept(){
+  clicked.style.color = "#008000";
+  exit();
+}
+
+function deny(){
+  clicked.style.color = "#ff0000";
+  exit();
+}
+
+//This Function is used to download stuff from the server
+function download(){
+
+}
+
+async function downloadOrders(){
+  //Step 1 is to get the current User UID
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+  var uid = user_record.uid;
+
+  //GET REQUEST TO SERVER TO FETCH PDF DATA. 
+  let response = await fetch(`/download/orders?uid=${uid}`, {method: 'GET'})
+  let response_blob = await response.blob();
+
+  //MAKE PDF CLIENT SIDE 
+  const link = document.createElement('a');
+  // create a blobURI pointing to our Blob
+  link.href = URL.createObjectURL(response_blob);
+  link.download = `${uid}-orders.pdf`;
+  // some browser needs the anchor to be in the doc
+  document.body.append(link);
+  link.click();
+  link.remove();
+}
+
+
+function exit(){
+    document.querySelector('.overlay').style.opacity = 0;
+    document.querySelector('.overlay').style.visibility = "hidden";
+}
+
