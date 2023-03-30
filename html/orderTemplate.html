@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Hello world!</title>
+    <title>Order History</title>
   </head>
   <body>
     <h2>Recent Orders:</h2>
@@ -18,7 +18,11 @@
             {{#each orders}}
             <tr>
                 <td>{{this.oid}}</td>
-                <td>Tylenol x1 <br> Iburprofen x2 <br> Rubbing Alcohol x3</td>
+                <td>
+                  {{#each this.drugs}}
+                  {{this.drugs}} x {{this.drugs}} <br>
+                  {{/each}}
+                </td>
                 <td>{{this.status}}</td>
                 
             </tr>

@@ -621,6 +621,18 @@ function uploadDocumentation(request, response, queryStringParameters){
   })
 }
 
+function downloadOrders(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.downloadOrders(queryStringParameters, response);
+  });
+}
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -839,6 +851,10 @@ const server = http.createServer((request, response) => {
 
       case "/upload/documentation":
         uploadDocumentation(request, response, queryStringParameters);
+        break;
+      
+      case "/download/orders":
+        downloadOrders(request, response, queryStringParameters);
         break;
     }
   }
