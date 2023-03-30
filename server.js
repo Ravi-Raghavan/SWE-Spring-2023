@@ -605,10 +605,19 @@ function uploadDocumentation(request, response, queryStringParameters){
 
         bucket.file(userFile).save(content)
         .then(() => {
+          var filesRef = ref.child(`${uid}/files`);
+          filesRef.push().set({name: userFile, status: "unverified"})
+          .then(() => {
             console.log("SUCCESS");
-            response.writeHead(200, { "Content-type": "text/plain" });
-            response.write("Successfully Uploaded File");
-            response.end();
+              response.writeHead(200, { "Content-type": "text/plain" });
+              response.write("Successfully Uploaded File");
+              response.end();
+          })
+          .catch((err) => {
+              response.writeHead(404, { "Content-type": "text/plain" });
+              response.write("Failed to Upload File");
+              response.end();
+          })
         })
         .catch((error) => {      
             console.log("FAILURE");
