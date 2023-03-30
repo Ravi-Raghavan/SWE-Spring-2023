@@ -233,45 +233,45 @@ async function logout() {
     var table = document.getElementById('userList');
     var template = document.createElement('template');
     template.innerHTML = rows;
-    table.append(template.content);
+    table.appendChild(template.content);
 
-    rows = "<tr style=\"display: none;\"><td></td><td>";
+    rows = '<tr style=\"display: none;\"><td></td><td>';
 
     
     //Orders
     for(i = 0; i < OrderNumbers.length; i++){
       rows = rows + "#"+(OrderNumbers[i]);
       if(i != (OrderNumbers.length -1))
-        rows = rows + ("<br>");
+        rows = rows + ('<br>');
     }
-    rows = rows + ("</td><td>");
+    rows = rows + ('</td><td>');
 
     //Prescriptions
     for(i = 0; i < PrescriptionNumbers.length; i++){
-      rows = rows + "#"+(PrescriptionNumbers[i]);
+      rows = rows + '#'+(PrescriptionNumbers[i]);
       if(i != (PrescriptionNumbers.length -1))
-        rows = rows + ("<br>");
+        rows = rows + ('<br>');
     }
-    rows = rows + ("</td><td>");    
+    rows = rows + ('</td><td>');    
 
     //fileTitles
     for(i = 0; i < fileTitles.length; i++){
-      rows = rows + "<div onclick=\"rowListen(this)\"";
+      rows = rows + '<div onclick=\"rowListen(this)\"';
       
       //Change this depending on fileStatus.
-      rows = rows + " style=\"color: #ffa500;\">"
+      rows = rows + 'style=\"color: #ffa500;\">';
       
-      rows = rows + fileTitles[i] +"</div>";
+      rows = rows + fileTitles[i] +'</div>';
       if(i != (fileTitles.length -1))
-        rows = rows + ("<br>");
+        rows = rows + ('<br>');
     }
-    rows = rows + ("</td></tr>"); 
+    rows = rows + ('</td></tr>'); 
 
 
     table = document.getElementById('userList');
     template = document.createElement('template');
     template.innerHTML = rows;
-    table.append(template.content);
+    table.appendChild(template.content);
 
   }
 
