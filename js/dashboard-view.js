@@ -474,6 +474,17 @@ async function downloadOrders(){
 
   //GET REQUEST TO SERVER TO FETCH PDF DATA. 
   let response = await fetch(`/download/orders?uid=${uid}`, {method: 'GET'})
+  let response_blob = await response.blob();
+
+  //MAKE PDF CLIENT SIDE 
+  const link = document.createElement('a');
+  // create a blobURI pointing to our Blob
+  link.href = URL.createObjectURL(response_blob);
+  link.download = `${uid}-orders.pdf`;
+  // some browser needs the anchor to be in the doc
+  document.body.append(link);
+  link.click();
+  link.remove();
 }
 
 
