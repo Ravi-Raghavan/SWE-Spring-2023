@@ -423,7 +423,7 @@ async function downloadOrders(credentials, response){
         }
         else{
             // Read HTML Template
-            var html = fs.readFileSync("../html/orderTemplate.html", "utf8");
+            var html = fs.readFileSync("./html/orderTemplate.html", "utf8");
 
             var options = {
                 format: "A3",
@@ -431,7 +431,7 @@ async function downloadOrders(credentials, response){
                 border: "10mm",
                 header: {
                     height: "45mm",
-                    contents: '<div style="text-align: center;">Author: Shyam Hajare</div>'
+                    contents: '<div style="text-align: center;"></div>'
                 },
                 footer: {
                     height: "28mm",
@@ -444,13 +444,41 @@ async function downloadOrders(credentials, response){
                 }
             };
 
-            var orders = {};
+            var orders = [];
 
             for (var key in value){
                 var order = {}
                 order["oid"] = key
-                order["status"] = "placed"
+
+                order["drugs"] = []
+                for (var drugKey in value[key]["drugs"]){
+                    order["drugs"].push({name: value[key]["drugs"][drugKey]["title"], quantity: value[key]["drugs"][drugKey]["quantity"]})
+                }
+
+                order["status"] = "placed";
+                order["totalCost"] = value[key]["cartTotal"];
+
+                orders.push(order);
             }
+
+            var document = {
+                html: html,
+                data: {
+                  orders: orders,
+                },
+                path: `./${uid}-orders.pdf`,
+                type: "buffer",
+              };
+            
+              pdf
+              .create(document, options)
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+            
 
             response.writeHead(200, { "Content-type": "application/json" });
             response.write(JSON.stringify(value));

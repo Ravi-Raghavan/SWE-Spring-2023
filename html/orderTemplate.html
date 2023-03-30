@@ -12,6 +12,7 @@
                 <th>Order Number</th>
                 <th width = "150%">Items</th>
                 <th>Status</th>
+                <th>Total Cost</th>
                 
             </tr>
 
@@ -20,10 +21,11 @@
                 <td>{{this.oid}}</td>
                 <td>
                   {{#each this.drugs}}
-                  {{this.drugs}} x {{this.drugs}} <br>
+                  {{this.name}} x{{this.quantity}} <br>
                   {{/each}}
                 </td>
                 <td>{{this.status}}</td>
+                <td>${{this.totalCost}}</td>
                 
             </tr>
             {{/each}}

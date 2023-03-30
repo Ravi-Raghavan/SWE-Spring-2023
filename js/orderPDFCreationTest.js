@@ -31,11 +31,16 @@ var options = {
 var orders = [
     {
      oid: "222",
-     drugs: {
+     drugs: [{
         name: "Cocaine", 
         quantity: 25
-     },
+     }, 
+     {
+        name: "Meth", 
+        quantity: 25
+     }],
     status: "placed",
+    totalCost: 25
     }
   ];
   var document = {
