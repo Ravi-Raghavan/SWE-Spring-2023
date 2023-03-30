@@ -573,10 +573,12 @@ console.log("String Parameters:"+queryStringParameters)
 }
 
 
-function uploadDocumentation(request, response){
+function uploadDocumentation(request, response, queryStringParameters){
   const form = formidable({multiples: true})
+  var uid = queryStringParameters.uid;
 
   form.parse(request, (err, fields, files) => {
+    console.log("Fields: " + JSON.stringify(fields));
     if (err) {
       response.writeHead(err.httpCode || 400, { 'Content-Type': 'text/plain' });
       response.end(String(err));
@@ -597,7 +599,11 @@ function uploadDocumentation(request, response){
         console.log("Original File Name: " + originalFileName);
         console.log("New File Name: " + newFileName);
 
-        bucket.file(originalFileName).save(content)
+        var userFile = `${uid}/${originalFileName}`;
+
+        console.log("User File: " + userFile);
+
+        bucket.file(userFile).save(content)
         .then(() => {
             console.log("SUCCESS");
             response.writeHead(200, { "Content-type": "text/plain" });
@@ -832,7 +838,7 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/upload/documentation":
-        uploadDocumentation(request, response);
+        uploadDocumentation(request, response, queryStringParameters);
         break;
     }
   }

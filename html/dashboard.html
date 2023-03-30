@@ -103,7 +103,7 @@
 
       <!---ORDER INFORMATION-->
       <div id="order-AND-prescription-info" class="info-container">
-        <button>Download</button>
+        <button onclick = 'downloadOrders()'>Download</button>
         <section id="info" class="DrugFo">
           <div class="row">
             <h2>Recent Orders:</h2>
@@ -178,7 +178,19 @@
         <section id="info" class="DrugFo">
           
             <div class="row">
-              <h2>Placeholder: This is the Upload Page.</h2>
+              <h1>Show File-select Fields</h1>
+  
+    <h3>
+        Show a file-select field which allows
+        only one file to be chosen:
+    </h3>
+          
+    <form action = "/upload/documentation" method="post" enctype="multipart/form-data" action = "#" id = "uploadDocumentationForm">
+        <label for="myfile">Select a file:</label>
+        <input type="file" id="fileupload" name = "myfile" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" />
+        <br /><br />
+        <input type = "submit" value="submit" id="submit" />
+    </form>
             </div>
       </div>
 

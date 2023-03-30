@@ -31,6 +31,7 @@ async function logout() {
       console.log(user_record);
       console.log("Account Type: " + user_record['Account Type']); 
       var uid = user_record["uid"];
+      document.getElementById("uploadDocumentationForm").action = `/upload/documentation?uid=${uid}`;
 
       let response = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
         method: 'GET'
@@ -461,7 +462,17 @@ function deny(){
   exit();
 }
 
+//This Function is used to download stuff from the server
 function download(){
+
+}
+
+function downloadOrders(){
+  //Step 1 is to get the current User UID
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+  var uid = user_record.uid;
+
+  //GET REQUEST TO SERVER TO FETCH 
 
 }
 
