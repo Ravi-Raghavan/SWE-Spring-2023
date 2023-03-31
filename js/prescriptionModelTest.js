@@ -1,9 +1,14 @@
+const {getEmail} = require("./FirebaseAPI");
+
+/* Firebase */
 const FirebaseAPI = require("./FirebaseAPI");
 const admin = require("./firebase").admin;
 const db = admin.database();
 
+/* Currently, these references are just temp references that are not associated with the main prescription references. */
 const pPresRef = db.ref('/unverifiedPrescriptions/patientPrescriptions');
 const dPresRef = db.ref('/unverifiedPrescriptions/doctorPrescriptions');
+const vPresRef = db.ref('/__validatedPrescriptions');
 
 /* Add support for getting a promise to a ref that can extract all unverified patient prescriptions */
 async function getPatientPrescriptionRef(patientUID) {
@@ -54,8 +59,9 @@ async function verifyPrescription(prescriptionNumber) {
 
     // console.log(JSON.stringify(patientInfo) === JSON.stringify(doctorInfo));
     
+    /* If the prescriptions match, then great. Add it to the list of verified prescriptions. */
     if(JSON.stringify(patientInfo) === JSON.stringify(doctorInfo)) {
-        const validRef = db.ref("__validatedPrescriptions").child(prescriptionNumber);
+        const validRef = vPresRef.child(prescriptionNumber);
         validRef.set({
             dateOfBirth: doctorInfoFull.dateOfBirth,
             doctorAccountEmail: doctorInfoFull.doctorEmail,
@@ -75,52 +81,87 @@ async function verifyPrescription(prescriptionNumber) {
             refills:doctorInfoFull.refills
         });
 
-        // console.log(doctorInfoFull);
+         /* This code will remove the prescriptions from the list of unused prescriptions */
         pPresRef.child(prescriptionNumber).remove();
         dPresRef.child(prescriptionNumber).remove();
     }
 
 }
 
+/** Adds patient prescription information
+ * THROWS an error if..
+ *  UID does not exist
+ *  email doesn't match
+ */
 async function processPatientPrescription(dateOfBirth, firstName, issueDate, lastName, patientEmail, patientUID, prescriptionNumber) {
-    const ref = pPresRef.child(prescriptionNumber);
-    ref.set({
-        dateOfBirth:dateOfBirth,
-        firstName: firstName,
-        issueDate: issueDate,
-        lastName: lastName,
-        patientEmail: patientEmail,
-        patientUID: patientUID,
-        prescriptionNumber: prescriptionNumber
-    }).then(() => {
-        verifyPrescription(prescriptionNumber);
-    });
+    // const email = await getEmail(patientUID);
+    try {
+        var email = await getEmail(patientUID);
+    } catch(err) {
+        throw Error(err);
+    }
+
+    if(patientEmail === email) {
+        const ref = pPresRef.child(prescriptionNumber);
+        ref.set({
+            dateOfBirth:dateOfBirth,
+            firstName: firstName,
+            issueDate: issueDate,
+            lastName: lastName,
+            patientEmail: patientEmail,
+            patientUID: patientUID,
+            prescriptionNumber: prescriptionNumber
+        }).then(() => {
+            verifyPrescription(prescriptionNumber);
+        });
+    } else {
+        throw Error("email doesn't match uid");
+    }
+
 }
 
+/** Adds patient prescription information
+ * THROWS an error if..
+ *  UID does not exist
+ *  email doesn't match
+ */
 async function processDoctorPrescription(dateOfBirth,doctorEmail,doctorFirstName,
     doctorLastName,doctorUID,dosage,expireDate,instructions,
     issueDate,medication,patientFirstName,patientLastName, 
     prescriptionNumber,refills){
 
-    const ref = dPresRef.child(prescriptionNumber);
-    ref.set({
-        dateOfBirth:dateOfBirth,
-        doctorEmail:doctorEmail,
-        doctorFirstName:doctorFirstName,
-        doctorLastName:doctorLastName,
-        doctorUID:doctorUID,
-        dosage: dosage,
-        expireDate:expireDate,
-        instructions: instructions,
-        issueDate:issueDate,
-        medication:medication,
-        patientFirstName:patientFirstName,
-        patientLastName: patientLastName,
-        prescriptionNumber:prescriptionNumber,
-        refills:refills
-    }).then(() => {
-        verifyPrescription(prescriptionNumber);
-    })
+    try {
+        var email = await getEmail(doctorUID);
+    } catch(err) {
+        throw Error(err);
+    }
+
+    if(email === doctorEmail) {
+        const ref = dPresRef.child(prescriptionNumber);
+        ref.set({
+            dateOfBirth:dateOfBirth,
+            doctorEmail:doctorEmail,
+            doctorFirstName:doctorFirstName,
+            doctorLastName:doctorLastName,
+            doctorUID:doctorUID,
+            dosage: dosage,
+            expireDate:expireDate,
+            instructions: instructions,
+            issueDate:issueDate,
+            medication:medication,
+            patientFirstName:patientFirstName,
+            patientLastName: patientLastName,
+            prescriptionNumber:prescriptionNumber,
+            refills:refills
+        }).then(() => {
+            verifyPrescription(prescriptionNumber);
+        })
+    } else {
+        throw Error("email doesn't match uid");
+        // console.log("This is not the email associated with the account.");
+    }
+
+    
 }
 
 module.exports = {

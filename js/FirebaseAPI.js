@@ -177,6 +177,22 @@ async function getPhoneNumber(uid){
     return phoneNumber;
 }
 
+// get email address for user based on uid.
+// MUST handle the error of invalid uid in some way, either through then().catch(), or try/catch.
+async function getEmail(uid) {
+    const email = await new Promise((resolve, reject) => {
+        ref.child(`${uid}`).once('value', (snapshot) => {
+            if (snapshot.val() == null) {
+                reject("invalid uid");
+            } else {
+                resolve(snapshot.child("email").val());
+            }
+        })
+    })
+
+    return email;
+}
+
 //get address for user based on uid
 async function getAddress(uid){
     var address = await new Promise((resolve, reject) => {
@@ -498,6 +514,7 @@ module.exports = {
     getAccountType: getAccountType,
     getSubscriptionPlan: getSubscriptionPlan,
     getPhoneNumber: getPhoneNumber,
+    getEmail: getEmail,
     getAddress: getAddress, 
     updateUser: updateUser,
     getPrescriptionsUser: getPrescriptionsUser,
