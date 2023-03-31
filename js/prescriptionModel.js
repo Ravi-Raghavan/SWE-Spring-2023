@@ -1,3 +1,4 @@
+const { async } = require("@firebase/util");
 const { getAccountType } = require("./FirebaseAPI");
 const FirebaseAPI = require("./FirebaseAPI");
 
@@ -22,7 +23,8 @@ async function addPatientPrescription(f,l,e,d,p,uid){
         lastName:l,
         patientEmail:e,
         patientDOB:d,
-        prescriptionNumber:p
+        prescriptionNumber:p,
+        patientUID:uid
     });
     return "added";
 }
@@ -97,10 +99,56 @@ async function validate(){
     return dataToValidate;
 }
 
+async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
+    expireDate,instructions,
+    med,patientEmail,plName,pDOB,pfName,pUID,
+    prescriptionNumber,refills){
+        path = db.ref(`/validatedPrescriptions/${pUID}/${prescriptionNumber}/`);
+        path.set({
+            doctorAccountEmail:doctorEmail,
+            doctorFirstName:dfName,
+            doctorLastName:dlName,
+            doctorUID:dUID,
+            dosage:dosage,
+            expireDate:expireDate,
+            instructions:instructions,
+            medication:med,
+            patientAccountEmail:patientEmail,
+            patientLastName:plName,
+            dateOfBirth:pDOB,
+            patientFirstName:pfName,
+            patientUID:pUID,
+            prescriptionNumber:prescriptionNumber,
+            refills:refills
+        });
+        return "added";
+    }
+
+    async function removePrescriptions(dUID,pUID,pN){
+        let path1 = db.ref(`/patientPrescriptions/${pUID}/${pN}/`);
+        let path2 = db.ref(`/doctorPrescriptions/${dUID}/${pN}/`);
+        path1.remove();
+        path2.remove();
+        return "Done";
+    }
+
+    async function changeStatus(pN){
+        let removePath = db.ref(`/prescriptionBank/${pN}/`);
+        let addPath = db.ref(`/activePrescriptions/${pN}/`);
+        removePath.remove();
+        addPath.set({
+            status:"active"
+        })
+        return "done";
+    }   
+
 module.exports = {
     getType,
     addPatientPrescription,
     addDoctorPrescription,
     checkPrescription,
-    validate
+    validate,
+    addValidatedPrescription,
+    removePrescriptions,
+    changeStatus
 };

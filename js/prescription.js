@@ -125,7 +125,7 @@ document.querySelector(".submit-box1").addEventListener("click",() =>{
           /**
            * If prescription is added successfully ---> do some action below
            */
-          validatePrescription("PATIENT");
+          validatePrescription("PATIENT",prescriptionNumber);
         }
       })
     }else{
@@ -222,6 +222,7 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
           /**
            * If prescription is added successfully ---> do some action below
            */
+          validatePrescription("DOCTOR",prescriptionNumber);
         }
       })
     }else{
@@ -248,11 +249,40 @@ function pAckClicked(accountType){
   }
 }
 
-function validatePrescription(accountType){
+function validatePrescription(accountType,prescriptionNumber){
   fetch("/prescription/attempt/validation",{
     method:"POST",
     cache:"no-cache"
   }).then((response) =>{
+    console.log(response.status);
+    if(accountType=="PATIENT"){
+      if(response.status==200){
+        changeStatus(prescriptionNumber);
+        window.location.href = "./submitted-prescription-patient-validated.html";
+      }else{
+        window.location.href = "./submitted-prescription-patient-wait.html";
+      }
+    }else{
+      if(response.status==200){
+        changeStatus(prescriptionNumber);
+        window.location.href = "./submitted-prescription-doctor-validated.html";
+      }else{
+        window.location.href = "./submitted-prescription-doctor-wait.html";
+      }
+    }
+  })
+}
+
+
+function changeStatus(pN){
+  var data = {
+    prescriptionNumber:pN
+  }
+  fetch("/prescription/active",{
+    method:"POST",
+    cache:"no-cache",
+    body:JSON.stringify(data)
+  }).then((reponse)=>{
     
   })
 }
