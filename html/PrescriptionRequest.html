@@ -44,22 +44,20 @@
         <section class="form-box">
           <div class="left-side">                
             <label for="dob">Patient account email</label>
-            <input type="text" id="email" name="Date of Birth" placeholder="ex@gmail.com"/>
+            <input type="text" id="email" name="Date of Birth" placeholder="" disabled="disabled"/>
           </div>              
-          <div class="right-side">
-            <label for="rd">Issue Date</label>
-            <input type="text" id="rd" name="Request Date" placeholder="MM/DD/YYYY" class="Age"/>
-          </div>                
+                   
         </section>
 
         <section class="form-box">
           <div class="left-side"> 
             <label for="dob">Date Of Birth</label>
-            <input type="text" id="dob" name="Date of Birth" placeholder="MM/DD/YYYY" class="Age"/>
+            <!--<input type="text" id="dob" name="Date of Birth" placeholder="MM/DD/YYYY" class="Age"/>-->
+            <input type="date" id="patientDateOfBirth" name="datepicker">
           </div>
           <div class="right-side">
             <label for="dob">Prescription #</label>
-            <input type="text" id="DOB" name="Date of Birth" placeholder="" />
+            <input type="text" id="prescriptionNumber" name="Date of Birth" placeholder="" />
           </div>  
         </section>
         <section class="title-next-next">
@@ -97,48 +95,44 @@
         <section class="form-box">
           <div class="left-side">
             <label for="fname">Patient first name</label>
-            <input type="text" id="dpfname" name="fname"  placeholder="First Name"/>
+            <input type="text" id="dpfname" name="fname"  placeholder=""/>
           </div>
           <div class="right-side">
             <label for="lname">Patient last name</label>
-            <input type="text" id="dplname" name="lname" placeholder="Last Name" />
+            <input type="text" id="dplname" name="lname" placeholder="" />
           </div>  
         </section>
 
         <section class="form-box"> 
           <div class="left-side">             
           <label for="dob">Patient Date of Birth </label>
-          <input type="text" id="dpatientDateOfBirth" name="Date of Birth" placeholder="MM/DD/YYYY" class="Age"/>
+          <input type="date" id="dpatientDateOfBirth" name="datepicker">
         </div>
           </section>
 
         <section class="form-box">
           <div class="left-side">
             <label for="fname">Doctor first name</label>
-            <input type="text" id="dfname" name="fname"  placeholder="First Name"/>
+            <input type="text" id="dfname" name="fname"  placeholder=""/>
           </div>
           <div class="right-side">
             <label for="lname">Doctor last name</label>
-            <input type="text" id="dlname" name="lname" placeholder="Last Name" />
+            <input type="text" id="dlname" name="lname" placeholder="" />
           </div>  
         </section>
 
         <section class="form-box">
           <div class="left-side">    
             <label for="dob">Doctor's account email</label>
-            <input type="text" id="demail" name="Date of Birth" placeholder="ex@gmail.com"/>
+            <input type="text" id="demail" name="Date of Birth" placeholder="" disabled="disabled"/>
           </div> 
           
         </section>
 
-        <section class="form-box">
-          <div class="left-side">  
-            <label for="dob">Issue Date</label>
-            <input type="text" id="dDOB" name="Date of Birth" placeholder="MM/DD/YYYY" class="Age"/>
-          </div>           
+        <section class="form-box">       
           <div class="right-side">                               
             <label for="rd">Expire Date</label>
-            <input type="text" id="drd" name="Request Date" placeholder="MM/DD/YYYY" class="Age"/>
+            <input type="date" id="dexpireDate" name="datepicker">
           </div>  
         </section>
 

@@ -191,12 +191,13 @@ const public_paths_product = [
 const { createProduct } = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCart } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
-const { createPatientPrescriptionProcess, createDoctorPrescriptionProcess, getAccountTypeForPPProcess, getDoctorPrescriptionsProcess, createValidatedPrescriptionProcess, getPatientPrescriptionsProcess, deletePatientPrescriptionProcess, deleteDoctorPrescriptionProcess, createPrescriptionBankProcess, getPrescriptionBankProcess, changeStatusBankNumberProcess, changeStatusBankNumberPatientProcess, changeToActiveBankNumberProcess, getFromPatientPipelineProcess, patientPipelineToActiveProcess, bankToDoctorPipelineProcess, getFromDoctorPipelineProcess, doctorPipelineToActiveProcess, getRandomBankNumberProcess } = require("./js/prescriptionController");
-const { createDoctorPrescription, createValidatedPrescription, deleteDoctorPrescription, changeStatusBankNumber, doctorPipelineToActive } = require("./js/prescriptionModel");
+
+
 const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 const cloudStorage = require("./js/cloudStorage");
+const { getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess } = require("./js/prescriptionController");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -685,6 +686,29 @@ const server = http.createServer((request, response) => {
 
 
     switch (path) {
+      /**
+       * Prescription Section Start
+       */
+
+      case "/prescription/get/accountType":
+        getTypeProcess(request,response,queryStringParameters);
+        break;
+
+      case "/prescription/add/patient":
+        addPatientPrescriptionProcess(request,response);
+        break;
+
+      case "/prescription/add/doctor":
+        addDoctorPrescriptionProcess(request,response);
+        break;
+
+      case "/prescription/check/prescriptionNumber":
+        checkPrescriptionProcess(request,response,queryStringParameters);
+        break;
+      /**
+       * Prescription Section End
+       */
+
       case "/credentials/google":
         GoogleAuth.retrieveClientCredentials(response);
         break;
@@ -758,70 +782,10 @@ const server = http.createServer((request, response) => {
         updateUser(request, response);
         break;
 
-      case "/make/patientPrescription":
-        createPatientPrescriptionProcess(request,response);
-        break;
-
-      case "/make/doctorPrescription":
-        createDoctorPrescriptionProcess(request,response);
-        break;
-
-      case "/prescription/accountType":
-        getAccountTypeForPPProcess(request,response);
-        break;
-
       case "/contact-us":
         sendContactEmail(request, response);
         break;
-
-      case "/prescriptions/getDoctorList":
-        getDoctorPrescriptionsProcess(request,response);
-        break;
-
-      case "/prescriptions/getPatientList":
-        getPatientPrescriptionsProcess(request,response);
-        break;
-
-      case "/create/prescriptionBank":
-        createPrescriptionBankProcess(request,response);
-        break;
-
-      case "/get/prescriptionBank":
-        getPrescriptionBankProcess(request,response);
-        break;
-
-      case "/move/patient/pipeline/active":
-        patientPipelineToActiveProcess(request,response);
-        break;
-
-      case "/move/doctor/pipeline/active":
-        doctorPipelineToActiveProcess(request,response);
-        break;
-
-      case "/get/pipeline/patient":
-        getFromPatientPipelineProcess(request,response);
-        break;
-
-      case "/get/random/number":
-        getRandomBankNumberProcess(request,response);
-        break;
-
-      case "/get/pipeline/doctor":
-        getFromDoctorPipelineProcess(request,response);
-        break;
-
-      case "/move/prescription/patient/Pipeline":
-        changeStatusBankNumberPatientProcess(request,response);
-        break;
-
-      case "/move/prescription/toPipeline/doctor":
-        bankToDoctorPipelineProcess(request,response);
-        break;
-
-      case "/make/validatedPrescription":
-        createValidatedPrescriptionProcess(request,response);
-        break;
-
+      
       case "/get/prescriptions/user":
         getPrescriptionsUser(request, response, queryStringParameters);
         break;
@@ -840,14 +804,6 @@ const server = http.createServer((request, response) => {
 
       case "/delete/payment_card":
         deletePaymentCard(request, response, queryStringParameters);
-        break;
-
-      case "/delete/patientPrescription":
-        deletePatientPrescriptionProcess(request,response);
-        break;
-
-      case "/delete/doctorPrescription":
-        deleteDoctorPrescriptionProcess(request,response);
         break;
 
       case "/delete/account":
