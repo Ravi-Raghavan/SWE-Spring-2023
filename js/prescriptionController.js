@@ -147,15 +147,12 @@ async function validateProcess(req,res){
             if(addedOrNot=="added"){
                 let removeStatus = await prescriptionModel.removePrescriptions(dUID,pUID,prescriptionNumber);
                 if(removeStatus=="Done"){
-                    res.writeHead(200);
-                    res.end();
+                    res.writeHead(200,'Content-Type:application/json');
+                    res.end(JSON.stringify(patientEmail));
                 }else{
                     res.writeHead(402);
                     res.end();
                 }
-            }else{
-                res.writeHead(401);
-                res.end();
             }
         }else{
             res.writeHead(301);
