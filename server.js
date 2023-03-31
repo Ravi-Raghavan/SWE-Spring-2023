@@ -197,7 +197,7 @@ const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 const cloudStorage = require("./js/cloudStorage");
-const { getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess } = require("./js/prescriptionController");
+const { validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess } = require("./js/prescriptionController");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -705,6 +705,11 @@ const server = http.createServer((request, response) => {
       case "/prescription/check/prescriptionNumber":
         checkPrescriptionProcess(request,response,queryStringParameters);
         break;
+
+      case "/prescription/attempt/validation":
+        validateProcess(request,response);
+        break;
+
       /**
        * Prescription Section End
        */

@@ -103,9 +103,19 @@ async function checkPrescriptionProcess(req,res,queryStringParameters){
     }
 }
 
+async function validateProcess(req,res){
+    let returnValue = await prescriptionModel.validate();
+    console.log(returnValue);
+    if(returnValue==[]){
+        res.writeHead(300);
+        res.end();
+    }
+}
+
 module.exports = {
     getTypeProcess,
     addPatientPrescriptionProcess,
     addDoctorPrescriptionProcess,
-    checkPrescriptionProcess
+    checkPrescriptionProcess,
+    validateProcess
 };

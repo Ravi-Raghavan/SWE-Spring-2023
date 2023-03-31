@@ -116,7 +116,7 @@ document.querySelector(".submit-box1").addEventListener("click",() =>{
         prescriptionNumber:prescriptionNumber,
         uid:getUID()
       };
-      fetch(`/prescription/add/patient/`,{
+      fetch(`/prescription/add/patient`,{
         method:"POST",
         cache:"no-cache",
         body:JSON.stringify(patientPrescriptionPackage)
@@ -125,6 +125,7 @@ document.querySelector(".submit-box1").addEventListener("click",() =>{
           /**
            * If prescription is added successfully ---> do some action below
            */
+          validatePrescription("PATIENT");
         }
       })
     }else{
@@ -247,6 +248,14 @@ function pAckClicked(accountType){
   }
 }
 
+function validatePrescription(accountType){
+  fetch("/prescription/attempt/validation",{
+    method:"POST",
+    cache:"no-cache"
+  }).then((response) =>{
+    
+  })
+}
 
   
 
