@@ -22,9 +22,9 @@ if (document.readyState == 'loading') {
 }
 else {
     //webpage is loaded
-    
+
     ready()
-    
+
 }
 
 async function ready() {
@@ -90,7 +90,11 @@ function purchaseClicked() {
     // while (cartItems.hasChildNodes()) {
     //     cartItems.removeChild(cartItems.firstChild)
     // }
-    document.getElementById("paypal-button-container").style.display = "block";
+    if (total != 0) {
+        document.getElementById("paypal-button-container").style.display = "block";
+    } else {
+        alert("Please add items to cart first")
+    }
 }
 
 function removeCartItem(event) {
@@ -240,7 +244,7 @@ window.onload = async function (){
         let response = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
             method: 'GET'
           })
-    
+
         let responseStatus = response.status;
         let prescriptions = await response.json()
         console.log("This is what is prescriptions:"+ JSON.stringify(prescriptions));
