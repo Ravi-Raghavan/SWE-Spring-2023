@@ -225,6 +225,56 @@ async function logout() {
     
   }
 
+  //HELPER FUNCTION TO ADD USERS TO USER TABLE
+  //Params: Integer (UID), Array of Integers (Order Numbers), Array of Integers (Prescription Numbers), Array of Strings (File Titles)
+  //Usage Example: addUserData(599212, [123123, 13231], [2314, 2134123], ["test.jpg", "works.png"]);
+  function addUserData(UID, OrderNumbers, PrescriptionNumbers, fileTitles){
+    var rows = "<tr onclick=\"showOrHide(this)\"> <td>"+UID+"</td><td></td><td></td><td></td></tr>";
+    var table = document.getElementById('userList');
+    var template = document.createElement('template');
+    template.innerHTML = rows;
+    table.appendChild(template.content);
+
+    rows = '<tr style=\"display: none;\"><td></td><td>';
+
+    
+    //Orders
+    for(i = 0; i < OrderNumbers.length; i++){
+      rows = rows + "#"+(OrderNumbers[i]);
+      if(i != (OrderNumbers.length -1))
+        rows = rows + ('<br>');
+    }
+    rows = rows + ('</td><td>');
+
+    //Prescriptions
+    for(i = 0; i < PrescriptionNumbers.length; i++){
+      rows = rows + '#'+(PrescriptionNumbers[i]);
+      if(i != (PrescriptionNumbers.length -1))
+        rows = rows + ('<br>');
+    }
+    rows = rows + ('</td><td>');    
+
+    //fileTitles
+    for(i = 0; i < fileTitles.length; i++){
+      rows = rows + '<div onclick=\"rowListen(this)\"';
+      
+      //Change this depending on fileStatus.
+      rows = rows + 'style=\"color: #ffa500;\">';
+      
+      rows = rows + fileTitles[i] +'</div>';
+      if(i != (fileTitles.length -1))
+        rows = rows + ('<br>');
+    }
+    rows = rows + ('</td></tr>'); 
+
+
+    table = document.getElementById('userList');
+    template = document.createElement('template');
+    template.innerHTML = rows;
+    table.appendChild(template.content);
+
+  }
+
   //HELPER FUNCTION TO ADD PRESCRIPTIONS TO PRESCRIPTION TABLE
   //Params: Integer (Prescription Number), Array of Strings (List of Items and Quanitity), String (Name of Prescriber), String (Approval Status)
   //Usage Example: addOrder(599212, ["Drug1 x2", "Drug2 x3"], "Dr. Doctor","Delivered");

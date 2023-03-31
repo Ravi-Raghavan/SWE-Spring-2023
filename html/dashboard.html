@@ -184,7 +184,9 @@
         only one file to be chosen:
     </h3>
           
-    <form action = "/upload/documentation" method="post" enctype="multipart/form-data" action = "#" id = "uploadDocumentationForm">
+    <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+
+    <form action = "/upload/documentation" method="post" enctype="multipart/form-data" action = "#" id = "uploadDocumentationForm" target = "dummyframe">
         <label for="myfile">Select a file:</label>
         <input type="file" id="fileupload" name = "myfile" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" />
         <br /><br />
@@ -601,7 +603,7 @@
             </div>
             
               <div class="OrderTable">
-                <table id="userList">
+                <table id="userList" style="width: 100%;">
                   <tr class="table_header second">
                     <th style="width: 10%;">User</th>
                     <th style="width: 20%;">Orders</th>
@@ -609,7 +611,7 @@
                     <th style="width: 40%;">Documentation</th>
                   </tr>
 <!---------------------------------------------Row Start-------------------------------------------------------------------------------------------->
-                  <tr onclick="showOrHide(this)">
+                  <!-- <tr onclick="showOrHide(this)">
                     <td>445456465454654D</td>
                     <td></td>
                     <td></td>
@@ -637,10 +639,10 @@
                         <br>  
                         <div onclick="rowListen(this)" style="color: rgb(0, 128, 0);">verified.png</div>
                       </td>
-                  </tr>
+                  </tr> -->
 <!----------------------------------------------------------------------------------------------------------------------------------------->
 <!---------------------------------------------Row Start-------------------------------------------------------------------------------------------->
-                  <tr onclick="showOrHide(this)">
+                  <!-- <tr onclick="showOrHide(this)">
                     <td>1231234234</td>
                     <td></td>
                     <td></td>
@@ -668,7 +670,8 @@
                         <br>  
                         <div onclick="rowListen(this)" style="color: rgb(0, 128, 0);">verified.png</div>
                       </td>
-                  </tr>
+                  </tr> -->
+                  
 <!----------------------------------------------------------------------------------------------------------------------------------------->
                   
                 </table>
@@ -678,7 +681,6 @@
 
               </div>
     
-            </div>
           
         </section>
       </div>
@@ -700,6 +702,9 @@
           $rows.eq(x.rowIndex+1).show();
       });
     }
+
+    addUserData(123123, [123,234,523], [213,222], ["this.jpg", "that.png"]);
+    addUserData(123123, [123,234,523], [213,222], ["this.jpg", "that.png"]);
 
 
   </script>
