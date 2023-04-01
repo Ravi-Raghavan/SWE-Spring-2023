@@ -653,6 +653,26 @@ function updateDocumentationStatus(request, response){
 
 }
 
+async function downloadUserFile(request, response, queryStringParameters) {
+
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    var file_name = queryStringParameters.file_name;
+    // Downloads the file into a buffer in memory.
+    const contents = await bucket.file(file_name).download();
+    response.writeHead(200, { "Content-type": "application/pdf", "Content-Length": contents.length, "Content-Disposition": `attachment; filename=${file_name}`});
+    response.end(contents);
+    
+  });
+}
+
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -846,6 +866,10 @@ const server = http.createServer((request, response) => {
       
       case "/update/documentation/status":
         updateDocumentationStatus(request, response);
+        break;
+      
+      case "/download/file":
+        downloadUserFile(request, response, queryStringParameters);
         break;
     }
   }
