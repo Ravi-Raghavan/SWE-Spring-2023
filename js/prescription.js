@@ -257,9 +257,34 @@ function validatePrescription(accountType,prescriptionNumber,doctorEmail,doctorF
       if(accountType=="PATIENT"){
         document.querySelector(".main-box").className+="one";
         document.querySelector(".error-boxone").className = document.querySelector(".error-boxone").className.substring(0,9);
+        document.querySelector(".link").addEventListener("click",()=>{
+          document.querySelector(".link").classList.toggle("clicked");
+          response.json().then((result)=>{
+            let dE = result.dE;
+            let dUID = result.dUID;
+            var data = {
+              pN:prescriptionNumber,
+              dUID:dUID
+            }
+            console.log(data);
+            fetch(`/prescription/remove/doctor`,{
+              method:"POST",
+              cache:"no-cache",
+              body:JSON.stringify(data)
+            })
+          })
+          window.location.href = "./submitted-prescription-patient-wait.html";
+        })
       }else{
         document.querySelector(".main-box").className+="two";
         document.querySelector(".error-boxtwo").className = document.querySelector(".error-boxtwo").className.substring(0,9);
+        document.querySelector(".linkd").addEventListener("click",()=>{
+          document.querySelector(".linkd").classList.toggle("clicked");
+          response.json().then((result)=>{
+            let pE = result.pE;
+            let pUID = result.pUID;
+          })
+        })
       }
     }else{
       if(accountType=="PATIENT"){
@@ -294,13 +319,9 @@ document.querySelector(".back-button-d").addEventListener("click",()=>{
   startType();
 })
 
-document.querySelector(".link").addEventListener("click",()=>{
-  document.querySelector(".link").classList.toggle("clicked");
-})
 
-document.querySelector(".linkd").addEventListener("click",()=>{
-  document.querySelector(".linkd").classList.toggle("clicked");
-})
+
+
 
 
 function changeStatus(pN){

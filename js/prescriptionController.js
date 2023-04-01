@@ -155,8 +155,18 @@ async function validateProcess(req,res){
                 }
             }
         }else{
-            res.writeHead(301);
-            res.end();
+            let dE = r[2].doctorAccountEmail;
+            let pE = r[1].patientEmail;
+            let pUID = r[1].patientUID;
+            let dUID = r[2].doctorUID;
+            var dataToSend = {
+                dE:dE,
+                pE:pE,
+                pUID:pUID,
+                dUID:dUID
+            }
+            res.writeHead(301,'Content-Type:application/json');
+            res.end(JSON.stringify(dataToSend));
         }
     }
 }
@@ -178,11 +188,31 @@ async function changeStatusProcess(req,res){
     }
 }
 
+async function removeDoctorPrescriptionProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const {pN,dUID} = JSON.parse(body);
+            let returnStatus = await prescriptionModel.removeDoctorPrescription(dUID,pN);
+        if(returnStatus=="removed"){
+            res.writeHead(205);
+            res.end();
+        }else{
+            res.writeHead(405);
+            res.end();
+        }
+       
+        
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     getTypeProcess,
     addPatientPrescriptionProcess,
     addDoctorPrescriptionProcess,
     checkPrescriptionProcess,
     validateProcess,
-    changeStatusProcess
+    changeStatusProcess,
+    removeDoctorPrescriptionProcess
 };
