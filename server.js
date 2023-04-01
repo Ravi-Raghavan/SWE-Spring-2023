@@ -627,6 +627,32 @@ function downloadOrders(request, response, queryStringParameters){
   });
 }
 
+function getUserDocumentation(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.getUserDocumentation(response);
+  });
+}
+
+function updateDocumentationStatus(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials)
+    await FirebaseAPI.updateDocumentationStatus(credentials, response);
+  });
+
+}
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -808,6 +834,14 @@ const server = http.createServer((request, response) => {
       
       case "/download/orders":
         downloadOrders(request, response, queryStringParameters);
+        break;
+      
+      case "/fetch/user/documentation":
+        getUserDocumentation(request, response);
+        break;
+      
+      case "/update/documentation/status":
+        updateDocumentationStatus(request, response);
         break;
     }
   }

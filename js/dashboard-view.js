@@ -20,6 +20,38 @@ async function logout() {
   }
 
   window.onload = async function () {
+    //GET LIST OF USERS WITH NAMES OF THEIR DOCUMENTATION AS A JSON OBJECT
+    let userDocumentation = await fetch(`/fetch/user/documentation`, {
+      method: 'GET'
+    })
+
+    let userDocumentationJSON = await userDocumentation.json();
+
+    for (var user in userDocumentationJSON){
+      console.log("USER: " + user);
+      var userInfo = userDocumentationJSON[user];
+      var files = userInfo["files"];
+
+      if (files != null){
+
+        console.log("FILE DATA: " + JSON.stringify(files));
+
+        var fileTitles = []
+        var fileStatus = []
+
+        for (var file in files){
+          fileTitles.push(files[file]["name"])
+          fileStatus.push(files[file]["status"])
+        }
+
+
+        addUserData(user, [1, 2, 3], [1, 2, 3], fileTitles, fileStatus)
+      }
+      
+    }
+
+    //////////
+
     loadProfile();
     //PORTION TO ADD SPECIAL FUNCTIONS TO DOCTOR ACCOUNTS
     if (localStorage.getItem("User Record") == null) {
@@ -228,7 +260,7 @@ async function logout() {
   //HELPER FUNCTION TO ADD USERS TO USER TABLE
   //Params: Integer (UID), Array of Integers (Order Numbers), Array of Integers (Prescription Numbers), Array of Strings (File Titles)
   //Usage Example: addUserData(599212, [123123, 13231], [2314, 2134123], ["test.jpg", "works.png"]);
-  function addUserData(UID, OrderNumbers, PrescriptionNumbers, fileTitles){
+  function addUserData(UID, OrderNumbers, PrescriptionNumbers, fileTitles, fileStatus){
     var rows = "<tr onclick=\"showOrHide(this)\"> <td>"+UID+"</td><td></td><td></td><td></td></tr>";
     var table = document.getElementById('userList');
     var template = document.createElement('template');
@@ -257,9 +289,19 @@ async function logout() {
     //fileTitles
     for(i = 0; i < fileTitles.length; i++){
       rows = rows + '<div onclick=\"rowListen(this)\"';
+
+      var status = fileStatus[i];
       
       //Change this depending on fileStatus.
-      rows = rows + 'style=\"color: #ffa500;\">';
+      if (status == "denied"){
+        rows = rows + 'style=\"color: #ff0000;\">';
+      }
+      else if (status == "unverified"){
+        rows = rows + 'style=\"color: #ffa500;\">';
+      }
+      else if(status == "verified"){
+        rows = rows + 'style=\"color: #008000;\">';
+      }
       
       rows = rows + fileTitles[i] +'</div>';
       if(i != (fileTitles.length -1))
@@ -502,13 +544,52 @@ async function logout() {
     
 }
 
-function accept(){
+async function accept(){
   clicked.style.color = "#008000";
+
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+  var uid = user_record.uid;
+  var file_name = clicked.innerText;
+  var file_status = "verified";
+
+  var data = {
+    uid: uid,
+    file_name: file_name, 
+    file_status: file_status
+  }
+
+  let response = await fetch('/update/documentation/status', {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+  })
   exit();
 }
 
-function deny(){
+async function deny(){
   clicked.style.color = "#ff0000";
+
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+  var uid = user_record.uid;
+  var file_name = clicked.innerText;
+  var file_status = "denied";
+
+  var data = {
+    uid: uid,
+    file_name: file_name, 
+    file_status: file_status
+  }
+
+  let response = await fetch('/update/documentation/status', {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+  })
+
   exit();
 }
 
