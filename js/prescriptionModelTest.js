@@ -22,6 +22,8 @@ async function getDoctorPrescriptionRef(doctorUID) {
 
 // TODO: FINISH
 async function verifyPrescription(prescriptionNumber) {
+
+
     let patientInfo = {
         firstName: null,
         lastName: null,
@@ -84,6 +86,13 @@ async function verifyPrescription(prescriptionNumber) {
          /* This code will remove the prescriptions from the list of unused prescriptions */
         pPresRef.child(prescriptionNumber).remove();
         dPresRef.child(prescriptionNumber).remove();
+    } else {
+        // pPresRef.child(prescriptionNumber).remove();
+        // dPresRef.child(prescriptionNumber).remove();
+
+        console.log(patientInfoFull)
+        console.log(doctorInfoFull);
+        // throw Error("verification error")
     }
 
 }
