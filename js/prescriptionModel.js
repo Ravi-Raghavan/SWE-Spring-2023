@@ -99,7 +99,16 @@ async function validate(pN){
             }
         }
     })
-    return dataToValidate;
+    if(dataToValidate.length>0){
+        if(dataToValidate[0]!=pN){
+            return [];
+        }else{
+            return dataToValidate;
+        }
+    }else{
+        return dataToValidate;
+    }
+    
 }
 
 async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
