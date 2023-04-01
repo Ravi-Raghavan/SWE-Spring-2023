@@ -530,6 +530,10 @@ async function updateDocumentationStatus(credentials, response){
     var file_name = credentials.file_name;
     var file_status = credentials.file_status;
 
+    console.log("UID: " + uid);
+    console.log("file_name: " + file_name);
+    console.log("file_status: " + file_status);
+
     var fileRef = db.ref(`/users/${uid}/files`);
 
     fileRef.once('value', (snapshot) => {
@@ -541,15 +545,16 @@ async function updateDocumentationStatus(credentials, response){
         }
         else{
             var fileKeyToUpdate = snapshot.val();
+            var fileKey = ""
 
             console.log(JSON.stringify(fileKeyToUpdate));
             for (var key in fileKeyToUpdate){
                 if (fileKeyToUpdate[key]["name"] == file_name){
-                    fileKeyToUpdate = fileKeyToUpdate[key];
+                    fileKey = key;
                 }
             }
 
-            const fileNameRef = fileRef.child(fileKeyToUpdate)
+            const fileNameRef = fileRef.child(`${fileKey}`)
 
             fileNameRef.update({
                 status: file_status

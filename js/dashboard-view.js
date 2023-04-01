@@ -288,7 +288,7 @@ async function logout() {
 
     //fileTitles
     for(i = 0; i < fileTitles.length; i++){
-      rows = rows + '<div onclick=\"rowListen(this)\"';
+      rows = rows + `<div onclick=\"rowListen(this, \'${UID}\')\"`;
 
       var status = fileStatus[i];
       
@@ -521,8 +521,10 @@ async function logout() {
   }
 
   var clicked;
-  function rowListen(x){
+  var UID;
+  function rowListen(x, uid){
     clicked = x;
+    UID = uid;
     
     document.getElementById("articleTitle").innerText = x.innerText;
 
@@ -547,8 +549,7 @@ async function logout() {
 async function accept(){
   clicked.style.color = "#008000";
 
-  var user_record = JSON.parse(localStorage.getItem("User Record"));
-  var uid = user_record.uid;
+  var uid = UID;
   var file_name = clicked.innerText;
   var file_status = "verified";
 
@@ -571,8 +572,7 @@ async function accept(){
 async function deny(){
   clicked.style.color = "#ff0000";
 
-  var user_record = JSON.parse(localStorage.getItem("User Record"));
-  var uid = user_record.uid;
+  var uid = UID;
   var file_name = clicked.innerText;
   var file_status = "denied";
 
