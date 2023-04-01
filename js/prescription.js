@@ -1,8 +1,5 @@
 window.onload = startType();
 function startType(){
-  var userID = {
-    uid: getUID()
-  };
     fetch(`/prescription/get/accountType?uid=${getUID()}`,{
       method: "GET",
       cache: "no-cache"
@@ -11,6 +8,7 @@ function startType(){
     //console.log(ourPromise);
     ourPromise.then((result) =>{
       let ourType = result;
+      
       if(ourType.toUpperCase() == "DOCTOR"){
         document.querySelector(".main-boxtwo").className = document.querySelector(".main-boxtwo").className.substring(0,8);
         document.getElementById("demail").value = getEmail();
@@ -256,7 +254,13 @@ function validatePrescription(accountType,prescriptionNumber,doctorEmail,doctorF
   }).then((response) =>{
     console.log(response.status)
     if(response.status==301){
-      
+      if(accountType=="PATIENT"){
+        document.querySelector(".main-box").className+="one";
+        document.querySelector(".error-boxone").className = document.querySelector(".error-boxone").className.substring(0,9);
+      }else{
+        document.querySelector(".main-box").className+="two";
+        document.querySelector(".error-boxtwo").className = document.querySelector(".error-boxtwo").className.substring(0,9);
+      }
     }else{
       if(accountType=="PATIENT"){
         if(response.status==200){
@@ -279,6 +283,16 @@ function validatePrescription(accountType,prescriptionNumber,doctorEmail,doctorF
     }
   })
 }
+
+document.querySelector(".back-button-p").addEventListener("click",()=>{
+  document.querySelector(".error-box").className+="one";
+  startType();
+})
+
+document.querySelector(".back-button-d").addEventListener("click",()=>{
+  document.querySelector(".error-box").className+="two";
+  startType();
+})
 
 
 function changeStatus(pN){
