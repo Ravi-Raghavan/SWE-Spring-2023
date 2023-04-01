@@ -507,6 +507,67 @@ async function downloadOrders(credentials, response){
     })
 }
 
+async function getUserDocumentation(response){
+    ref.once('value', (snapshot) => {
+        var value = snapshot.val();
+
+        if (value == null){
+            response.writeHead(404, { "Content-type": "text/plain" });
+            response.write("Failed to Delete Payment Card");
+            response.end();
+        }
+        else{
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(value));
+            response.end();
+        }
+    })
+
+}
+
+async function updateDocumentationStatus(credentials, response){
+    var uid = credentials.uid;
+    var file_name = credentials.file_name;
+    var file_status = credentials.file_status;
+
+    var fileRef = db.ref(`/users/${uid}/files`);
+
+    fileRef.once('value', (snapshot) => {
+        if (!snapshot.exists()){
+            console.log("NOOOOOO");
+            response.writeHead(404, { "Content-type": "text/plain" });
+            response.write("Failed to Update Doc Status");
+            response.end();
+        }
+        else{
+            var fileKeyToUpdate = snapshot.val();
+
+            console.log(JSON.stringify(fileKeyToUpdate));
+            for (var key in fileKeyToUpdate){
+                if (fileKeyToUpdate[key]["name"] == file_name){
+                    fileKeyToUpdate = fileKeyToUpdate[key];
+                }
+            }
+
+            const fileNameRef = fileRef.child(fileKeyToUpdate)
+
+            fileNameRef.update({
+                status: file_status
+            })
+            .then(() => {
+                response.writeHead(200, { "Content-type": "text/plain" });
+                response.write("Successfully Updated Doc Status");
+                response.end();
+            })
+            .catch(() => {
+                response.writeHead(404, { "Content-type": "text/plain" });
+                response.write("Failed to Update Doc Status");
+                response.end();
+            })
+        }
+    });
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -525,5 +586,7 @@ module.exports = {
     deleteUserAccount: deleteUserAccount,
     getUserCart: getUserCart,
     downloadOrders: downloadOrders, 
+    getUserDocumentation: getUserDocumentation,
+    updateDocumentationStatus: updateDocumentationStatus,
     login: login
 }

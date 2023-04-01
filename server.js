@@ -367,22 +367,6 @@ async function sendValidatedPrescriptionNotificationProcess(req,res,queryStringP
   }
 }
 
-async function sendPatientActionRequiredProcess(req,res,queryStringParameters){
-  try{
-    let body = await getPostData(req);
-    const {doctorFirstName,doctorLastName,prescriptionNumber} = JSON.parse(body);
-    var email = queryStringParameters.email;
-    var notificationREF = await sendValidatedPrescriptionNotification(email,doctorFirstName,doctorLastName,prescriptionNumber);
-    const dataToSend = {
-      id: notificationREF
-    };
-    res.writeHead(200, {"Content-type": "application/json"});
-    res.end(JSON.stringify(dataToSend));
-  }catch (err){
-    console.log(err);
-  }
-}
-
 function serveFileContent(file, response) {
   fs.readFile(file, function (err, content) {
     if (err) {
@@ -643,6 +627,32 @@ function downloadOrders(request, response, queryStringParameters){
   });
 }
 
+function getUserDocumentation(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.getUserDocumentation(response);
+  });
+}
+
+function updateDocumentationStatus(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials)
+    await FirebaseAPI.updateDocumentationStatus(credentials, response);
+  });
+
+}
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -713,6 +723,10 @@ const server = http.createServer((request, response) => {
       case "/prescription/active":
         changeStatusProcess(request,response);
         break;  
+
+      case "/prescription/send/validated/email":
+        sendValidatedPrescriptionNotificationProcess(request,response,queryStringParameters);
+        break;
       /**
        * Prescription Section End
        */
@@ -747,14 +761,6 @@ const server = http.createServer((request, response) => {
 
       case "/send/email":
         sendEmail(request, response, queryStringParameters);
-        break;
-
-      case "/send/validationEmail":
-        sendValidatedPrescriptionNotificationProcess(request,response,queryStringParameters);
-        break;
-
-      case "/send/patientActionRequired":
-        sendPatientActionRequiredProcess(request,response,queryStringParameters);
         break;
 
       case "/knowledgebase/search":
@@ -828,6 +834,14 @@ const server = http.createServer((request, response) => {
       
       case "/download/orders":
         downloadOrders(request, response, queryStringParameters);
+        break;
+      
+      case "/fetch/user/documentation":
+        getUserDocumentation(request, response);
+        break;
+      
+      case "/update/documentation/status":
+        updateDocumentationStatus(request, response);
         break;
     }
   }
