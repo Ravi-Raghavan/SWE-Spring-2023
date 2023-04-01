@@ -23,6 +23,20 @@ body{
   text-decoration: underline;
 }
 
+.linkd{
+  margin-left: 2rem;
+  color:#0072c6;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.linkd.clicked{
+  margin-left: 2rem;
+  color:#720cb6;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .generate-boxone{
   display:none;
 }

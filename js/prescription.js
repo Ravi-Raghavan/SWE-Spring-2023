@@ -294,6 +294,14 @@ document.querySelector(".back-button-d").addEventListener("click",()=>{
   startType();
 })
 
+document.querySelector(".link").addEventListener("click",()=>{
+  document.querySelector(".link").classList.toggle("clicked");
+})
+
+document.querySelector(".linkd").addEventListener("click",()=>{
+  document.querySelector(".linkd").classList.toggle("clicked");
+})
+
 
 function changeStatus(pN){
   var data = {
