@@ -697,6 +697,10 @@ const server = http.createServer((request, response) => {
       case "/prescription/active":
         changeStatusProcess(request,response);
         break;  
+
+      case "/prescription/send/validated/email":
+        sendValidatedPrescriptionNotificationProcess(request,response,queryStringParameters);
+        break;
       /**
        * Prescription Section End
        */
@@ -731,10 +735,6 @@ const server = http.createServer((request, response) => {
 
       case "/send/email":
         sendEmail(request, response, queryStringParameters);
-        break;
-
-      case "/prescription/send/validated/email":
-        sendValidatedPrescriptionNotificationProcess(request,response,queryStringParameters);
         break;
 
       case "/knowledgebase/search":
