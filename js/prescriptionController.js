@@ -104,7 +104,10 @@ async function checkPrescriptionProcess(req,res,queryStringParameters){
 }
 
 async function validateProcess(req,res){
-    let r = await prescriptionModel.validate();
+    try{
+    let body = await getPostData(req);
+    const {prescriptionNumber} = JSON.parse(body);
+    let r = await prescriptionModel.validate(prescriptionNumber);
     //console.log(r);
     if(r.length<3){
         res.writeHead(300);
@@ -131,21 +134,21 @@ async function validateProcess(req,res){
             var pDOB = r[1].patientDOB;
             var pfName = r[1].firstName;
             var pUID = r[1].patientUID;
-            var prescriptionNumber = r[0];
+            var prescriptionNumber1 = r[0];
             var refills = r[2].refills;
             var validatedPrescription = {
                 doctorEmail,dfName,dlName,dUID,dosage,
                 expireDate,instructions,
                 med,patientEmail,plName,pDOB,pfName,pUID,
-                prescriptionNumber,refills
+                prescriptionNumber1,refills
             }
             console.log(validatedPrescription);
             var addedOrNot = await prescriptionModel.addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
                 expireDate,instructions,
                 med,patientEmail,plName,pDOB,pfName,pUID,
-                prescriptionNumber,refills);
+                prescriptionNumber1,refills);
             if(addedOrNot=="added"){
-                let removeStatus = await prescriptionModel.removePrescriptions(dUID,pUID,prescriptionNumber);
+                let removeStatus = await prescriptionModel.removePrescriptions(dUID,pUID,prescriptionNumber1);
                 if(removeStatus=="Done"){
                     res.writeHead(200,'Content-Type:application/json');
                     res.end(JSON.stringify(patientEmail));
@@ -169,6 +172,10 @@ async function validateProcess(req,res){
             res.end(JSON.stringify(dataToSend));
         }
     }
+    }catch (err){
+        console.log(err);
+    }
+    
 }
 
 async function changeStatusProcess(req,res){

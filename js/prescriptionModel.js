@@ -60,7 +60,7 @@ async function checkPrescription(){
     return bank;
 }
 
-async function validate(){
+async function validate(pN){
     let path1 = db.ref(`/patientPrescriptions/`);
     let path2 = db.ref(`/doctorPrescriptions/`);
     const patientSide = await new Promise((resolve,reject)=>{
@@ -93,6 +93,9 @@ async function validate(){
                 dataToValidate[0] = d1[i];
                 dataToValidate[1] = myMap.get(d1[i]);
                 dataToValidate[2] = d2[i];
+                if(dataToValidate[0]==pN){
+                    i = d1.length+1;
+                }
             }
         }
     })

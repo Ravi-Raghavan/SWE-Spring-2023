@@ -106,6 +106,9 @@ document.querySelector(".submit-box1").addEventListener("click",() =>{
     cache:"no-cache"
   }).then((response)=>{
     if(response.status==200){
+      /**
+       * Code to add prescription start
+       */
       var patientPrescriptionPackage ={
         firstName:pfName.toUpperCase(),
         lastName:plName.toUpperCase(),
@@ -126,6 +129,9 @@ document.querySelector(".submit-box1").addEventListener("click",() =>{
           validatePrescription("PATIENT",prescriptionNumber,null,null,null);
         }
       })
+      /**
+       * end
+       */
     }else{
       alert("Prescription Number is Invalid!")
     }
@@ -248,9 +254,13 @@ function pAckClicked(accountType){
 }
 
 function validatePrescription(accountType,prescriptionNumber,doctorEmail,doctorFirstName,doctorLastName){
+  var sender = {
+    prescriptionNumber:prescriptionNumber
+  }
   fetch("/prescription/attempt/validation",{
     method:"POST",
-    cache:"no-cache"
+    cache:"no-cache",
+    body:JSON.stringify(sender)
   }).then((response) =>{
     console.log(response.status)
     if(response.status==301){
