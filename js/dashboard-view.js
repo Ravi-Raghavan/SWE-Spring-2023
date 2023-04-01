@@ -535,13 +535,14 @@ async function logout() {
     if(false ){
       document.getElementById("accept").style.display = "none";
       document.getElementById("deny").style.display = "none";
+      document.getElementById("download").style.display = "";
 
     }
 
     else{
       document.getElementById("accept").style.display = "";
       document.getElementById("deny").style.display = "";
-     
+      document.getElementById("download").style.display = "";
     }
     
 }
@@ -594,8 +595,22 @@ async function deny(){
 }
 
 //This Function is used to download stuff from the server
-function download(){
+async function download(){
+  alert("HERE");
+  var file_name = clicked.innerText;
+  console.log("FILE NAME: " + file_name);
+  let response = await fetch(`/download/file?file_name=${file_name}`, {method: 'GET'})
+  let response_blob = await response.blob();
 
+  //MAKE PDF CLIENT SIDE 
+  const link = document.createElement('a');
+  // create a blobURI pointing to our Blob
+  link.href = URL.createObjectURL(response_blob);
+  link.download = `${file_name}`;
+  // some browser needs the anchor to be in the doc
+  document.body.append(link);
+  link.click();
+  link.remove();
 }
 
 async function downloadOrders(){
