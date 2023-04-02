@@ -60,7 +60,7 @@ async function checkPrescription(){
     return bank;
 }
 
-async function validate(){
+async function validate(pN){
     let path1 = db.ref(`/patientPrescriptions/`);
     let path2 = db.ref(`/doctorPrescriptions/`);
     const patientSide = await new Promise((resolve,reject)=>{
@@ -93,10 +93,22 @@ async function validate(){
                 dataToValidate[0] = d1[i];
                 dataToValidate[1] = myMap.get(d1[i]);
                 dataToValidate[2] = d2[i];
+                if(dataToValidate[0]==pN){
+                    i = d1.length+1;
+                }
             }
         }
     })
-    return dataToValidate;
+    if(dataToValidate.length>0){
+        if(dataToValidate[0]!=pN){
+            return [];
+        }else{
+            return dataToValidate;
+        }
+    }else{
+        return dataToValidate;
+    }
+    
 }
 
 async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
@@ -148,6 +160,12 @@ async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
         return "removed";
     }
 
+    async function removePatientPrescription(uid,pN){
+        let path = db.ref(`/patientPrescriptions/${uid}/${pN}/`);
+        path.remove();
+        return "removed";
+    }
+
 module.exports = {
     getType,
     addPatientPrescription,
@@ -157,5 +175,6 @@ module.exports = {
     addValidatedPrescription,
     removePrescriptions,
     changeStatus,
-    removeDoctorPrescription
+    removeDoctorPrescription,
+    removePatientPrescription
 };
