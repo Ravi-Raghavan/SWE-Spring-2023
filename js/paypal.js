@@ -63,6 +63,7 @@ async function capturePayment(orderId) {
             orderPushRef.set(snapshot.val());
             orderPushRef.child("status").set("Pending");
             userRef.child(uid).child("/orders/").child(orderPushRef.key).set(snapshot.val());
+            userRef.child(uid).child("/orders/").child(orderPushRef.key).child("status").set("Pending");
 
             /**DELETE CART */
             cartRef.child(uid).set(null)

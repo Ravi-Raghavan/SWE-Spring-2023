@@ -899,6 +899,9 @@ const server = http.createServer((request, response) => {
       case "/download/file":
         downloadUserFile(request, response, queryStringParameters);
         break;
+      
+      case "/verify/documentation":
+        break;
     }
   }
 
