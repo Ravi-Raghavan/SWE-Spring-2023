@@ -42,6 +42,7 @@ async function register(userParameters, response){
     userRecord["Subscription Plan"] = "Free";
     userRecord.phoneNumber = "123-456-7890"
     userRecord["Address"] = "10 Frelinghuysen Road, Piscataway, New Jersey, 08854"
+    userRecord["Documentation Verified"] = false;
 
     console.log("==========USER RECORD ==============");
     console.log(userRecord);
@@ -60,7 +61,8 @@ async function register(userParameters, response){
         accountType: accountType,
         subscriptionPlan: "Free",
         phoneNumber: "123-456-7890",
-        address: "10 Frelinghuysen Road, Piscataway, New Jersey, 08854"
+        address: "10 Frelinghuysen Road, Piscataway, New Jersey, 08854",
+        documentationVerified: false
     })
 
     //Send Request
@@ -82,11 +84,13 @@ async function search(searchParameters){
             var subscriptionPlan = await getSubscriptionPlan(uid);
             var phoneNumber = await getPhoneNumber(uid);
             var address = await getAddress(uid);
+            var documentationVerified = await getDocumentationValidationStatus(uid);
 
             userRecord["Account Type"] = accountType;
             userRecord["Subscription Plan"] = subscriptionPlan;
             userRecord.phoneNumber = phoneNumber;
             userRecord["Address"] = address;
+            userRecord["Documentation Verified"] = documentationVerified;
 
             resolve(JSON.stringify(userRecord));
         })
@@ -139,6 +143,33 @@ async function getAccountType(uid){
         })
     })
     return accountType;
+}
+
+async function getDocumentationValidationStatus(uid){
+    var documentationValidationStatus = await new Promise((resolve, reject) => {
+        ref.child(`${uid}`).once('value', (snapshot) => {
+            var value = snapshot.val();
+            if (value == null){
+                resolve("false");
+            }
+            else{
+                var documentationVerified = value["documentationVerified"];
+
+                var responseContent = "false";
+
+                if (documentationVerified){
+                    responseContent = "true";
+                }
+                resolve(responseContent);
+            }
+        })
+    })
+
+    if (documentationValidationStatus === "true"){
+        return true;
+    }
+
+    return false;
 }
 
 //get subscription plan for user based on uid
@@ -240,6 +271,12 @@ async function login(userParameters, response){
 
 async function updateUser(userParameters, response){
     var uid = userParameters.uid;
+
+    var documentationVerified = false;
+
+    if (userParameters.documentationVerified != null){
+        documentationVerified = userParameters.documentationVerified;
+    }
     
     if (userParameters.phoneNumber == null){
         userParameters.phoneNumber = "123-456-7890";
@@ -251,7 +288,8 @@ async function updateUser(userParameters, response){
 
     ref.child(`${uid}`).update({
         phoneNumber: userParameters.phoneNumber,
-        address: userParameters.address
+        address: userParameters.address,
+        documentationVerified: documentationVerified
     })
     .then(() => {
         response.writeHead(200, { "Content-type": "text/plain" });
@@ -594,5 +632,6 @@ module.exports = {
     downloadOrders: downloadOrders, 
     getUserDocumentation: getUserDocumentation,
     updateDocumentationStatus: updateDocumentationStatus,
+    getDocumentationValidationStatus: getDocumentationValidationStatus,
     login: login
 }
