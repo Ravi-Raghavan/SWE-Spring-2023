@@ -284,6 +284,16 @@ function validatePrescription(accountType,prescriptionNumber,doctorEmail,doctorF
               cache:"no-cache",
               body:JSON.stringify(data)
             })
+            var emailData = {
+              prescriptionNumber:prescriptionNumber,
+              email:dE,
+              accountType:"DOCTOR"
+            };
+            fetch("/prescription/send/error/email",{
+              method: "POST",
+              cache:"no-cache",
+              body:JSON.stringify(emailData)
+            })
           })
           window.location.href = "./submitted-prescription-patient-wait.html";
         })
@@ -306,6 +316,16 @@ function validatePrescription(accountType,prescriptionNumber,doctorEmail,doctorF
               method:"POST",
               cache:"no-cache",
               body:JSON.stringify(data)
+            })
+            var emailData = {
+              prescriptionNumber:prescriptionNumber,
+              email:pE,
+              accountType:"PATIENT"
+            };
+            fetch("/prescription/send/error/email",{
+              method: "POST",
+              cache:"no-cache",
+              body:JSON.stringify(emailData)
             })
           })
           window.location.href = "./submitted-prescription-doctor-wait.html";

@@ -367,6 +367,24 @@ async function sendValidatedPrescriptionNotificationProcess(req,res,queryStringP
   }
 }
 
+async function sendErrorEmailProcess(req,res){
+  try{
+    let body = await getPostData(req);
+    const {prescriptionNumber,email,accountType} = JSON.parse(body);
+    if(accountType=="PATIENT"){
+      await SMTP.sendErrorEmailPatient(email,prescriptionNumber);
+      res.writeHead(200);
+      res.end();
+    }else{
+      await SMTP.sendErrorEmailDoctor(email,prescriptionNumber);
+      res.writeHead(201);
+      res.end();
+    }
+  }catch (err){
+    console.log(err);
+  }
+}
+
 function serveFileContent(file, response) {
   fs.readFile(file, function (err, content) {
     if (err) {
@@ -746,6 +764,10 @@ const server = http.createServer((request, response) => {
 
       case "/prescription/send/validated/email":
         sendValidatedPrescriptionNotificationProcess(request,response,queryStringParameters);
+        break;
+
+      case "/prescription/send/error/email":
+        sendErrorEmailProcess(request,response);
         break;
 
       case "/prescription/remove/doctor":
