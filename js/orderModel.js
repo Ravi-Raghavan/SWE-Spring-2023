@@ -87,17 +87,17 @@ async function cancel(requesterID, orderID) {
     const uid = await new Promise((resolve, reject) => {
         ref.child(orderID).once('value', (snapshot) => {
             const userInfo = snapshot.val();
-            
-        }) 
+
+        })
     })
 }
 
 async function createPrescription() {
-    
+
 }
 
 async function update(orderID, costs, quantity, status, drug){
-        
+
     const userRef = db.ref(`/users/`);
 
     let exists = await new Promise((resolve, reject) => {
@@ -110,7 +110,7 @@ async function update(orderID, costs, quantity, status, drug){
         }
     });
         //Write data to file
-        
+
         const oID = ref.child(orderID).update({
             status: status || ref.status,
             quantity: quantity || ref.quantity,
@@ -119,7 +119,7 @@ async function update(orderID, costs, quantity, status, drug){
 
 
         });
-        
+
         console.log('Order updated');
         return oID;
 
@@ -131,7 +131,7 @@ async function costUpdate(orderID, costs, quantity, drug){
     let exists = await new Promise((resolve, reject) => {
         let curQuantity = 0;
     try {
-       
+
         var Ref = ref.child(orderID).once('value', (snapshot) => {
                 var orderInfo = snapshot.val();
                 console.log(orderInfo);
@@ -148,14 +148,14 @@ async function costUpdate(orderID, costs, quantity, drug){
             'quantity' : (quantity)
             }
         );
-        
-    
+
+
     } catch (err) {
         reject(err)
     }
     });
 
-        
+
         console.log('Order updated');
         return ref.child(orderID);
 
@@ -166,15 +166,15 @@ async function testUpdate(orderID, title, quantity, price){
     var updateVal;
 
     let exists = await new Promise((resolve, reject) => {
-    try { 
+    try {
             const drugRef = ref.child(orderID).child('drugs').push();
             drugRef.set({
                 title,
                 quantity,
                 price,
-            
+
             })
-    
+
 
     } catch (err) {
         reject(err)
@@ -187,8 +187,8 @@ async function testUpdate(orderID, title, quantity, price){
 
 async function updateUserCart(cartTotal, drugs, uid){
     cartRef.child(`${uid}`).set({
-        cartTotal: cartTotal, 
-        drugs: drugs, 
+        cartTotal: cartTotal,
+        drugs: drugs,
         uid: uid,
     })
     .then(() => {
@@ -199,6 +199,11 @@ async function updateUserCart(cartTotal, drugs, uid){
     })
 }
 
+const orderRef = admin.database().ref("/orders/");
+function updateOrderStatus() {
+    let orderPushRef = orderRef.child(uid).push();
+    orderPushRef.child("status").set("Ready for Pickup");
+}
 
 module.exports = {
     create,
@@ -206,5 +211,6 @@ module.exports = {
     createOrder,
     testUpdate,
     updateUserCart,
-    costUpdate
+    costUpdate,
+    updateOrderStatus
 };

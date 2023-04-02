@@ -61,6 +61,7 @@ async function capturePayment(orderId) {
         .then((snapshot) => {
             let orderPushRef = orderRef.child(uid).push();
             orderPushRef.set(snapshot.val());
+            orderPushRef.child("status").set("Pending");
             userRef.child(uid).child("/orders/").child(orderPushRef.key).set(snapshot.val());
 
             /**DELETE CART */
