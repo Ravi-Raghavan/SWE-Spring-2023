@@ -160,6 +160,12 @@ async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
         return "removed";
     }
 
+    async function removePatientPrescription(uid,pN){
+        let path = db.ref(`/patientPrescriptions/${uid}/${pN}/`);
+        path.remove();
+        return "removed";
+    }
+
 module.exports = {
     getType,
     addPatientPrescription,
@@ -169,5 +175,6 @@ module.exports = {
     addValidatedPrescription,
     removePrescriptions,
     changeStatus,
-    removeDoctorPrescription
+    removeDoctorPrescription,
+    removePatientPrescription
 };

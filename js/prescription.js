@@ -276,7 +276,9 @@ function validatePrescription(accountType,prescriptionNumber,doctorEmail,doctorF
               pN:prescriptionNumber,
               dUID:dUID
             }
-            console.log(data);
+            /**
+             * API to clean up database
+             */
             fetch(`/prescription/remove/doctor`,{
               method:"POST",
               cache:"no-cache",
@@ -293,7 +295,20 @@ function validatePrescription(accountType,prescriptionNumber,doctorEmail,doctorF
           response.json().then((result)=>{
             let pE = result.pE;
             let pUID = result.pUID;
+            var data ={
+              pN:prescriptionNumber,
+              pUID:pUID
+            }
+            /**
+             * API to clean up database
+             */
+            fetch(`/prescription/remove/patient`,{
+              method:"POST",
+              cache:"no-cache",
+              body:JSON.stringify(data)
+            })
           })
+          window.location.href = "./submitted-prescription-doctor-wait.html";
         })
       }
     }else{
@@ -328,10 +343,6 @@ document.querySelector(".back-button-d").addEventListener("click",()=>{
   document.querySelector(".error-box").className+="two";
   startType();
 })
-
-
-
-
 
 
 function changeStatus(pN){

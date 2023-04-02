@@ -207,8 +207,23 @@ async function removeDoctorPrescriptionProcess(req,res){
             res.writeHead(405);
             res.end();
         }
-       
-        
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function removePatientPrescriptionProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const {pN,pUID} = JSON.parse(body);
+        let returnStatus = await prescriptionModel.removePatientPrescription(pUID,pN);
+        if(returnStatus=="removed"){
+            res.writeHead(205);
+            res.end();
+        }else{
+            res.writeHead(405);
+            res.end();
+        }
     }catch (err){
         console.log(err);
     }
@@ -221,5 +236,6 @@ module.exports = {
     checkPrescriptionProcess,
     validateProcess,
     changeStatusProcess,
-    removeDoctorPrescriptionProcess
+    removeDoctorPrescriptionProcess,
+    removePatientPrescriptionProcess
 };
