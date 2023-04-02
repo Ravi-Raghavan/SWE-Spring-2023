@@ -7,6 +7,7 @@ var validatedPrescriptions = db.ref(`/validatedPrescriptions/`);
 var cartRef = db.ref("/carts/")
 var pdf = require("pdf-creator-node");
 var fs = require("fs");
+var SMTP = require("./SMTP");
 
 
 //Function to create a user(i.e. registration!) in our database
@@ -598,7 +599,9 @@ async function updateDocumentationStatus(credentials, response){
             fileNameRef.update({
                 status: file_status
             })
-            .then(() => {
+            .then(async () => {
+                var email = await getEmail(uid);
+                await SMTP.sendDocumentationEmail(email, file_name, file_status);
                 response.writeHead(200, { "Content-type": "text/plain" });
                 response.write("Successfully Updated Doc Status");
                 response.end();

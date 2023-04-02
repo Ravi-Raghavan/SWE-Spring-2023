@@ -177,10 +177,43 @@ async function sendErrorEmailPatient(email,prescriptionNumber){
     console.log("Done with sending Notification");
 }
 
+async function sendDocumentationEmail(email, fileName, status){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+        user: 'swespring2023@gmail.com',
+        pass: 'lotrlepvzmwdnsny'
+    }
+    });
+
+    var subject = status == "verified" ? "Documentation Verified" : "Documentation Denied";
+    var text = status == "verified" ? `Your Documentation ${fileName} has been verified` : `Your Documentation ${fileName} has been denied`
+
+    var mailOptions = {
+        from: 'swespring2023@gmail.com',
+        to: `${email}`,
+        subject: subject,
+        text: text
+    };
+
+    result = await new Promise((resolve, reject) =>{
+        transporter.sendMail(mailOptions,function(error, info){
+            if(error){
+                reject(error);
+            }else{
+                resolve('Email sent: '+ info.response);
+                console.log("Email sent " + info.response);
+            }
+        });
+    })
+    console.log("Done with sending email");
+}
+
 module.exports = {
     sendContactEmail: sendContactEmail, 
     sendValidationEmail: sendValidationEmail,
     sendValidatedPrescriptionNotification:sendValidatedPrescriptionNotification,
     sendErrorEmailDoctor:sendErrorEmailDoctor,
-    sendErrorEmailPatient:sendErrorEmailPatient
+    sendErrorEmailPatient:sendErrorEmailPatient,
+    sendDocumentationEmail : sendDocumentationEmail
 }
