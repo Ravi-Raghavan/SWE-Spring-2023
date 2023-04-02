@@ -26,32 +26,33 @@
         <h2 class="section-header">Over-The-Counter</h2>
         <div class="shop-items">
             <div class="shop-item">
-                <span class="shop-item-title">Ibuprofen</span>
-                <img class="shop-item-image" src="../images/Ibuprofen.jpg" />
+                <span class="shop-item-title itemTitle-1">Ibuprofen</span>
+                <img class="shop-item-image itemImg-1" src="../images/Ibuprofen.jpg" />
                 <div class="shop-item-details">
-                    <span class="shop-item-price">$12.99</span>
-                    <button class="btn btn-primary shop-item-button" type="button">
+                    <span class="shop-item-price itemPrice-1">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-1', 'itemPrice-1', 'itemTitle-1');">
                         ADD TO CART
                     </button>
                 </div>
             </div>
 
             <div class="shop-item">
-                <span class="shop-item-title">Ibuprofen</span>
-                <img class="shop-item-image" src="../product/Ashwagandha.jpg">
-                    <span class="shop-item-price">$12.99</span>
-                    <button class="btn btn-primary shop-item-button" type="button">
+                <span class="shop-item-title itemTitle-2">Ashwagandha</span>
+                <img class="shop-item-image itemImg-2" src="../product/Ashwagandha.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-2">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-2', 'itemPrice-2', 'itemTitle-2', 1);">
                         ADD TO CART
                     </button>
                 </div>
             </div>
 
             <div class="shop-item">
-                <span class="shop-item-title">Happy Juice</span>
-                <img class="shop-item-image" src="../images/Codeine.jpg" />
+                <span class="shop-item-title  itemTitle-3">Happy Juice</span>
+                <img class="shop-item-image itemImg-3" src="../images/Codeine.jpg" />
                 <div class="shop-item-details">
-                    <span class="shop-item-price">$14.99</span>
-                    <button class="btn btn-primary shop-item-button" type="button">
+                    <span class="shop-item-price itemPrice-3">$14.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-3', 'itemPrice-3', 'itemTitle-3');">
                         ADD TO CART
                     </button>
                 </div>
@@ -81,7 +82,7 @@
     <section class="container content-section">
         <h2 class="section-header">Prescriptions</h2>
         <div class="shop-items">
-            <div class="shop-item" id = "prescriptionMedication">
+            <div class="shop-item">
                 <span class="shop-item-title">Oxycotin</span>
                 <img class="shop-item-image" src="../images/Oxycotin.jpg" />
                 <div class="shop-item-details">
@@ -165,14 +166,7 @@
     <div id="footer"></div>
 
 </body>
-<script>
-    function toggleDarkMode() {
-        const body = document.body;
-        body.classList.toggle("dark");
-    }
 
-
-</script>
 <script src="../js/homepage.js"></script>
 <script src="../js/profilePic.js"></script>
 </html>
