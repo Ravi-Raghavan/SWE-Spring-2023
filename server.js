@@ -147,7 +147,8 @@ const public_paths_images = [
   "/images/redx.png",
   "/images/quadis_img.png",
   "/images/kristina_img.png",
-  "/images/DHLogo2Transp.png"
+  "/images/DHLogo2Transp.png",
+  "/images/ColorlessLogo.png"
 ];
 
 const public_paths_product = [
