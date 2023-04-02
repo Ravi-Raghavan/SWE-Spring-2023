@@ -596,11 +596,12 @@ async function deny(){
 
 //This Function is used to download stuff from the server
 async function test(){
-  alert("HERE");
+  //alert("HERE");
   var file_name = clicked.innerText;
   console.log("FILE NAME: " + file_name);
+
   let response = await fetch(`/download/file?file_name=${file_name}`, {method: 'GET'})
-  let response_blob = await response.blob();
+  let response_blob = await response.blob()
 
   //MAKE PDF CLIENT SIDE 
   const link = document.createElement('a');

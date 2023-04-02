@@ -498,6 +498,7 @@ async function downloadOrders(credentials, response){
               .then((res) => {
                 console.log(res);
                 response.writeHead(200, { "Content-type": "application/pdf", "Content-Length": res.length, "Content-Disposition": `attachment; filename=${uid}-orders.pdf`});
+                console.log(typeof res);
                 response.end(res);
               })
               .catch((error) => {

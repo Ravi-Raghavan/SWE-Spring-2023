@@ -681,13 +681,14 @@ async function downloadUserFile(request, response, queryStringParameters) {
   });
 
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
     var file_name = queryStringParameters.file_name;
+
+    console.log("FILE NAME: " + file_name);
     // Downloads the file into a buffer in memory.
     const contents = await bucket.file(file_name).download();
-    response.writeHead(200, { "Content-type": "application/pdf", "Content-Length": contents.length, "Content-Disposition": `attachment; filename=${file_name}`});
-    response.end(contents);
-    
+    console.log(contents[0]);
+    response.writeHead(200, { "Content-type": "application/pdf", "Content-Length": contents[0].length, "Content-Disposition": `attachment; filename=${file_name}`});
+    response.end(contents[0]);
   });
 }
 
