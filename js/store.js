@@ -116,6 +116,24 @@ function quantityChanged(event) {
 
 function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     var button = event.target;
+
+    var theme = document.getElementsByTagName("body")[0];
+    if (theme.classList.contains('dark')) {
+         button.style.outline = "2px solid var(--primary)";
+
+         setTimeout(function () {
+           button.style.outline = "transparent";
+         }, 1000);
+    } else {
+        button.style.outline = "2px solid var(--primary)";
+
+        setTimeout(function () {
+          button.style.outline = "transparent";
+        }, 1000);
+    }
+
+   
+
   var shopItem = button.parentElement.parentElement;
   var title =
         shopItem.getElementsByClassName(itemTitle)[0].innerText;
@@ -125,7 +143,7 @@ function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     shopItem
       .getElementsByClassName(itemPrice)[0]
       .innerText.replace("$", "")
-  );
+    );
 
   // var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
   var imageSrc = shopItem.getElementsByClassName(itemImg)[0].src;
@@ -135,7 +153,7 @@ function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
   console.log(order);
 
   addItemToCart(title, price, imageSrc, 1);
-  updateCartTotal();
+    updateCartTotal();
 
   //This fetch will request the uri path to update the cost of the cart and add drugs
   //we can update quantity too if we add a variable to this javascript file that updates quantity aswell.

@@ -167,6 +167,12 @@ footer
   .second ul .item_name {
     max-width: 170px;
   }
+  /* store item box size */
+   .shop-items {
+    margin-left: -200px;
+    margin-right: -200px;
+    padding: 10px 0;
+  }
 }
 
 @media screen and (max-width: 1450px) {
