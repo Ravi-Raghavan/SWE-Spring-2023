@@ -12,14 +12,14 @@ var fs = require("fs");
 //Function to create a user(i.e. registration!) in our database
 //userParameters: parameters for a particular user(i.e. name, email, etc)
 async function register(userParameters, response){
-
+/*
     if (userParameters.accountType == "Admin" && userParameters.email != "swespring2023@gmail.com"){
         response.writeHead(404, { "Content-type": "text/plain" });
         response.write(`Cannot create another admin account!`);
         response.end();
         return;
     }
-
+*/
     //Create the user in the authentication table
     let userCredentials = await admin.auth().createUser({
         email: userParameters.email,

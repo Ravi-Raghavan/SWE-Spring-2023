@@ -595,7 +595,7 @@ async function deny(){
 }
 
 //This Function is used to download stuff from the server
-async function download(){
+async function test(){
   alert("HERE");
   var file_name = clicked.innerText;
   console.log("FILE NAME: " + file_name);
