@@ -516,17 +516,30 @@ async function logout() {
   function rowListen(x, uid){
     clicked = x;
     UID = uid;
-    
     document.getElementById("articleTitle").innerText = x.innerText;
 
     document.querySelector('.overlay').style.opacity = 1;
     document.querySelector('.overlay').style.visibility = "visible";
 
+    var rgb = x.style.color.toString();
+
+    rgb = rgb.substring(4, rgb.length-1)
+             .replace(/ /g, '')
+             .split(',');
+    
+    console.log(rgb);
+
  
-    if(false ){
+    if( (rgb[0] == 0 && rgb[1] == 128 && rgb[2] == 0) || (rgb[0] == 255 && rgb[1] == 0 && rgb[2] == 0)){
       document.getElementById("accept").style.display = "none";
       document.getElementById("deny").style.display = "none";
       document.getElementById("download").style.display = "";
+      if(rgb[0] == 0 && rgb[1] == 128 && rgb[2] == 0)
+      document.getElementById("articleTitle").innerText = x.innerText + "\n\nVERIFIED!";
+
+      else{
+        document.getElementById("articleTitle").innerText = x.innerText + "\n\nDENIED!";
+      }
 
     }
 
