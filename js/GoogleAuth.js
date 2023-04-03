@@ -27,13 +27,13 @@ function register(request, response){
         var decryptedToken = jwt_decode(credentials["JWT"]);
         var email = decryptedToken.email;
         var accountType = credentials.accountType;
-
+/*
         if (accountType == "Admin" && email != "swespring2023@gmail.com"){
             response.writeHead(404, { "Content-type": "text/plain" });
             response.write(`Cannot create another admin account!`);
             response.end();
             return;
-        }
+        }*/
 
         var userParameters = {accountType: accountType, email: email, emailVerified: true, password: "Google-OAuth", displayName: decryptedToken.name, photoURL: decryptedToken.picture, disabled: false}
         await firebaseAPI.register(userParameters, response);

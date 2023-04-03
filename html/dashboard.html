@@ -597,7 +597,7 @@
                     <h2 id="articleTitle" style="text-align: center;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat nihil rerum omnis nulla non odit esse quasi eius maiores fuga ducimus quod, optio repudiandae porro recusandae laudantium animi adipisci rem!</h2>
                     <div id="articleContent" class="content"></div>
                     <a  id = "accept" class ="close" onclick='accept()'>Accept</a>
-                    <a  id = "download" class="close" onclick='download()'>Download</a>
+                    <a  id = "download" class="close" onclick='test()'>Download</a>
                     <a  id = "deny" class="close" onclick='deny()'>Deny</a>
                 </div>
             </div>
@@ -609,6 +609,7 @@
                     <th style="width: 20%;">Orders</th>
                     <th style="width: 20%;">Prescriptions</th>
                     <th style="width: 40%;">Documentation</th>
+                    <th style="width: 40%;">Verify</th>
                   </tr>
 <!---------------------------------------------Row Start-------------------------------------------------------------------------------------------->
                   <!-- <tr onclick="showOrHide(this)">
@@ -702,10 +703,6 @@
           $rows.eq(x.rowIndex+1).show();
       });
     }
-
-    addUserData(123123, [123,234,523], [213,222], ["this.jpg", "that.png"], ["denied", "unverified"]);
-    addUserData(123123, [123,234,523], [213,222], ["this.jpg", "that.png"], ["denied", "unverified"]);
-
 
   </script>
 </html>

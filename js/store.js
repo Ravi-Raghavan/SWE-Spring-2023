@@ -112,40 +112,67 @@ function quantityChanged(event) {
     updateCartTotal()
 }
 
-function addToCartClicked(event) {
-    var button = event.target
-    var shopItem = button.parentElement.parentElement
-    var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText
-    var price = shopItem.getElementsByClassName('shop-item-price')[0].innerText
-    var priceVal = parseFloat(shopItem.getElementsByClassName('shop-item-price')[0].innerText.replace('$', ''))
 
-    var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
-    console.log(title, price)
-    //Add item to order JSON.
-    order.push({ "item-name": title, "price": priceVal, "quantity": 1 })
-    console.log(order)
 
-    addItemToCart(title, price, imageSrc, 1)
-    updateCartTotal()
+function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
+    var button = event.target;
 
-    //This fetch will request the uri path to update the cost of the cart and add drugs
-    //we can update quantity too if we add a variable to this javascript file that updates quantity aswell.
-    // fetch('http://localhost:8000/api/updateCart', {
-    //         method : 'PATCH',
-    //         body : JSON.stringify({
-    //             costs : total,
-    //             quantity : 1,
-    //             drugs : title
-    //         }),
-    //         headers: {
-    //             'Content-type': 'application/json',
-    //     },
-    // })
-    // .then((response) => response.json())
-    // .then((json) => console.log(json));
+    var theme = document.getElementsByTagName("body")[0];
+    if (theme.classList.contains('dark')) {
+         button.style.outline = "2px solid var(--primary)";
 
-    // order.push({"costs" : total+priceVal, "drugs" : title , "quantity" : 1})
-    // console.log(order)
+         setTimeout(function () {
+           button.style.outline = "transparent";
+         }, 1000);
+    } else {
+        button.style.outline = "2px solid var(--primary)";
+
+        setTimeout(function () {
+          button.style.outline = "transparent";
+        }, 1000);
+    }
+
+   
+
+  var shopItem = button.parentElement.parentElement;
+  var title =
+        shopItem.getElementsByClassName(itemTitle)[0].innerText;
+    console.log(shopItem);
+  var price = shopItem.getElementsByClassName(itemPrice)[0].innerText;
+  var priceVal = parseFloat(
+    shopItem
+      .getElementsByClassName(itemPrice)[0]
+      .innerText.replace("$", "")
+    );
+
+  // var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
+  var imageSrc = shopItem.getElementsByClassName(itemImg)[0].src;
+  console.log(title, price);
+  //Add item to order JSON.
+  order.push({ "item-name": title, price: priceVal, quantity: 1 });
+  console.log(order);
+
+  addItemToCart(title, price, imageSrc, 1);
+    updateCartTotal();
+
+  //This fetch will request the uri path to update the cost of the cart and add drugs
+  //we can update quantity too if we add a variable to this javascript file that updates quantity aswell.
+  // fetch('http://localhost:8000/api/updateCart', {
+  //         method : 'PATCH',
+  //         body : JSON.stringify({
+  //             costs : total,
+  //             quantity : 1,
+  //             drugs : title
+  //         }),
+  //         headers: {
+  //             'Content-type': 'application/json',
+  //     },
+  // })
+  // .then((response) => response.json())
+  // .then((json) => console.log(json));
+
+  // order.push({"costs" : total+priceVal, "drugs" : title , "quantity" : 1})
+  // console.log(order)
 }
 
 function addItemToCart(title, price, imageSrc, drugQuantity) {

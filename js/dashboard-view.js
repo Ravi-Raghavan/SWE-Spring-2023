@@ -8,7 +8,8 @@ async function logout() {
       body: JSON.stringify({
         uid: user_record["uid"],
         phoneNumber: user_record.phoneNumber,
-        address: user_record["Address"]
+        address: user_record["Address"],
+        documentationVerified: user_record["Documentation Verified"]
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -307,6 +308,9 @@ async function logout() {
       if(i != (fileTitles.length -1))
         rows = rows + ('<br>');
     }
+
+    //Verify Button
+    rows = rows + `<button onclick=\"verify(\'${UID}\')\">Verify</button>`
     rows = rows + ('</td></tr>'); 
 
 
@@ -595,12 +599,13 @@ async function deny(){
 }
 
 //This Function is used to download stuff from the server
-async function download(){
-  alert("HERE");
+async function test(){
+  //alert("HERE");
   var file_name = clicked.innerText;
   console.log("FILE NAME: " + file_name);
+
   let response = await fetch(`/download/file?file_name=${file_name}`, {method: 'GET'})
-  let response_blob = await response.blob();
+  let response_blob = await response.blob()
 
   //MAKE PDF CLIENT SIDE 
   const link = document.createElement('a');
@@ -633,6 +638,22 @@ async function downloadOrders(){
   link.remove();
 }
 
+async function verify(UID){
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+  let response = await fetch('/update/user', {
+    method: 'PATCH',
+    body: JSON.stringify({
+      uid: UID,
+      phoneNumber: user_record.phoneNumber,
+      address: user_record["Address"],
+      documentationVerified: true
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  })
+
+}
 
 function exit(){
     document.querySelector('.overlay').style.opacity = 0;

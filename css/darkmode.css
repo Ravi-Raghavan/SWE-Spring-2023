@@ -198,6 +198,26 @@ body.dark .shop-item-price {
   color: var(--primary);
 }
 
+body.dark .shop-items {
+  background-color: var(--primary-dark);
+  border: 2px solid var(--suppliment);
+}
+
+body.dark .shop-item-title {
+  color:var(--suppliment);
+}
+
+body.dark .shop-item-button,
+body.dark .btn-primary:hover {
+  background-color: var(--tertiary);
+  color: var(--secondary-dark);
+}
+
+body.dark .btn-primary{
+  background-color: var(--secondary);
+  color:var(--secondary-dark);
+}
+
 /* FAQ */
 
 /* search box for both FAQs and knowledge base */

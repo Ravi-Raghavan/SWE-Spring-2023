@@ -147,7 +147,8 @@ const public_paths_images = [
   "/images/redx.png",
   "/images/quadis_img.png",
   "/images/kristina_img.png",
-  "/images/DHLogo2Transp.png"
+  "/images/DHLogo2Transp.png",
+  "/images/ColorlessLogo.png"
 ];
 
 const public_paths_product = [
@@ -197,7 +198,7 @@ const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 const cloudStorage = require("./js/cloudStorage");
-const { removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess } = require("./js/prescriptionController");
+const { removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess } = require("./js/prescriptionController");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -362,6 +363,24 @@ async function sendValidatedPrescriptionNotificationProcess(req,res,queryStringP
     };
     res.writeHead(200, {"Content-type": "application/json"});
     res.end(JSON.stringify(dataToSend));
+  }catch (err){
+    console.log(err);
+  }
+}
+
+async function sendErrorEmailProcess(req,res){
+  try{
+    let body = await getPostData(req);
+    const {prescriptionNumber,email,accountType} = JSON.parse(body);
+    if(accountType=="PATIENT"){
+      await SMTP.sendErrorEmailPatient(email,prescriptionNumber);
+      res.writeHead(200);
+      res.end();
+    }else{
+      await SMTP.sendErrorEmailDoctor(email,prescriptionNumber);
+      res.writeHead(201);
+      res.end();
+    }
   }catch (err){
     console.log(err);
   }
@@ -662,13 +681,14 @@ async function downloadUserFile(request, response, queryStringParameters) {
   });
 
   request.on("end", async () => {
-    credentials = JSON.parse(credentials);
     var file_name = queryStringParameters.file_name;
+
+    console.log("FILE NAME: " + file_name);
     // Downloads the file into a buffer in memory.
     const contents = await bucket.file(file_name).download();
-    response.writeHead(200, { "Content-type": "application/pdf", "Content-Length": contents.length, "Content-Disposition": `attachment; filename=${file_name}`});
-    response.end(contents);
-    
+    console.log(contents[0]);
+    response.writeHead(200, { "Content-type": "application/pdf", "Content-Length": contents[0].length, "Content-Disposition": `attachment; filename=${file_name}`});
+    response.end(contents[0]);
   });
 }
 
@@ -748,8 +768,16 @@ const server = http.createServer((request, response) => {
         sendValidatedPrescriptionNotificationProcess(request,response,queryStringParameters);
         break;
 
+      case "/prescription/send/error/email":
+        sendErrorEmailProcess(request,response);
+        break;
+
       case "/prescription/remove/doctor":
         removeDoctorPrescriptionProcess(request,response);
+        break;
+
+      case "/prescription/remove/patient":
+        removePatientPrescriptionProcess(request,response);
         break;
       /**
        * Prescription Section End
@@ -870,6 +898,9 @@ const server = http.createServer((request, response) => {
       
       case "/download/file":
         downloadUserFile(request, response, queryStringParameters);
+        break;
+      
+      case "/verify/documentation":
         break;
     }
   }

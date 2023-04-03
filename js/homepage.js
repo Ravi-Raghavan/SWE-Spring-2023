@@ -53,7 +53,8 @@ async function login_logout(){
             body: JSON.stringify({
             uid: user_record["uid"],
             phoneNumber: user_record.phoneNumber,
-            address: user_record["Address"]
+            address: user_record["Address"],
+            documentationVerified: user_record["Documentation Verified"]
             }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
