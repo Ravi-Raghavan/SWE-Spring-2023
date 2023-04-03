@@ -270,22 +270,7 @@ async function logout() {
 
     rows = '<tr style=\"display: none;\"><td></td><td>';
 
-    
-    //Orders
-    for(i = 0; i < OrderNumbers.length; i++){
-      rows = rows + "#"+(OrderNumbers[i]);
-      if(i != (OrderNumbers.length -1))
-        rows = rows + ('<br>');
-    }
-    rows = rows + ('</td><td>');
 
-    //Prescriptions
-    for(i = 0; i < PrescriptionNumbers.length; i++){
-      rows = rows + '#'+(PrescriptionNumbers[i]);
-      if(i != (PrescriptionNumbers.length -1))
-        rows = rows + ('<br>');
-    }
-    rows = rows + ('</td><td>');    
 
     //fileTitles
     for(i = 0; i < fileTitles.length; i++){
@@ -308,6 +293,8 @@ async function logout() {
       if(i != (fileTitles.length -1))
         rows = rows + ('<br>');
     }
+    rows = rows + ('</td><td>');    
+
 
     //Verify Button
     rows = rows + `<button onclick=\"verify(\'${UID}\')\">Verify</button>`
