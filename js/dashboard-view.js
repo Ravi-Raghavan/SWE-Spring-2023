@@ -550,6 +550,7 @@ async function accept(){
     file_name: file_name, 
     file_status: file_status
   }
+  exit();
 
   let response = await fetch('/update/documentation/status', {
         method: 'PUT',
@@ -558,7 +559,6 @@ async function accept(){
           'Content-type': 'application/json; charset=UTF-8',
         },
   })
-  exit();
 }
 
 async function deny(){
@@ -574,6 +574,8 @@ async function deny(){
     file_status: file_status
   }
 
+  exit();
+
   let response = await fetch('/update/documentation/status', {
         method: 'PUT',
         body: JSON.stringify(data),
@@ -582,7 +584,7 @@ async function deny(){
         },
   })
 
-  exit();
+
 }
 
 //This Function is used to download stuff from the server
