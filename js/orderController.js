@@ -155,6 +155,7 @@ async function updateCart(req, res) {
 
         let body = await getPostData(req); //data must have orderID, costs, quantity, status, and drug
         const {cartTotal, drugs, uid} = JSON.parse(body);
+        console.log(req)
 
         await Order.updateUserCart(cartTotal, drugs, uid);
         
