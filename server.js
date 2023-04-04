@@ -24,6 +24,7 @@ const public_paths_html = [
   "/html/contact-us.html",
   "/html/dashboard.html",
   "/html/deliverypage.html",
+  "/html/deliveryTracking.html",
   "/html/email-validated.html",
   "/html/FAQ.html",
   "/html/fileUploadTest.html",
