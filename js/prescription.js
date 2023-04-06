@@ -65,7 +65,11 @@ function getFirstName(){
 function getLastName(){
   var name = getName();
   const names = name.split(" ");
-  return names[1];
+  if(names.length<2){
+    return names[0];
+  }else{
+    return names[1];
+  }
 }
 
 document.querySelector(".acknowledgement-box").addEventListener("click",() =>{
