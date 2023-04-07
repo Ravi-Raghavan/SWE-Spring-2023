@@ -8,7 +8,6 @@ function startType(){
     //console.log(ourPromise);
     ourPromise.then((result) =>{
       let ourType = result;
-      
       if(ourType.toUpperCase() == "DOCTOR"){
         document.querySelector(".main-boxtwo").className = document.querySelector(".main-boxtwo").className.substring(0,8);
         document.getElementById("demail").value = getEmail();
@@ -23,7 +22,6 @@ function startType(){
       }
     })
   })
-  
 }
 
 function getUID(){
@@ -181,8 +179,7 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
   }
   var dosage = document.getElementById("ddosage").value;
   if(dosage==""){
-    alert("Dosage Not Specified!");
-    return;
+    dosage = "default";
   }
   var refills = document.getElementById("drefills").value;
   if(refills==""){
@@ -211,31 +208,40 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
     cache:"no-cache"
   }).then((response)=>{
     if(response.status==200){
-      var doctorPrescriptionPackage = {
-        patientFirstName:pfName.toUpperCase(),
-        patientLastName:plName.toUpperCase(),
-        patientDOB:pdob,
-        doctorFirstName:dfName.toUpperCase(),
-        doctorLastName:dlName.toUpperCase(),
-        doctorAccountEmail:demail,
-        expireDate:dexpiredate,
-        medication:medication,
-        dosage:dosage,
-        refills:refills,
-        prescriptionNumber:prescriptionNumber,
-        instructions:instructions,
-        uid:getUID()
-      }
-      fetch("/prescription/add/doctor",{
-        method:"POST",
-        cache:"no-cache",
-        body:JSON.stringify(doctorPrescriptionPackage)
+      fetch(`/prescription/get/drugs?drug=${medication}`,{
+        method:"GET",
+        cache:"no-cache"
       }).then((response)=>{
         if(response.status==200){
-          /**
-           * If prescription is added successfully ---> do some action below
-           */
-          validatePrescription("DOCTOR",prescriptionNumber,demail,dfName,dlName);
+          var doctorPrescriptionPackage = {
+            patientFirstName:pfName.toUpperCase(),
+            patientLastName:plName.toUpperCase(),
+            patientDOB:pdob,
+            doctorFirstName:dfName.toUpperCase(),
+            doctorLastName:dlName.toUpperCase(),
+            doctorAccountEmail:demail,
+            expireDate:dexpiredate,
+            medication:medication,
+            dosage:dosage,
+            refills:refills,
+            prescriptionNumber:prescriptionNumber,
+            instructions:instructions,
+            uid:getUID()
+          }
+          fetch("/prescription/add/doctor",{
+            method:"POST",
+            cache:"no-cache",
+            body:JSON.stringify(doctorPrescriptionPackage)
+          }).then((response)=>{
+            if(response.status==200){
+              /**
+               * If prescription is added successfully ---> do some action below
+               */
+              validatePrescription("DOCTOR",prescriptionNumber,demail,dfName,dlName);
+            }
+          })
+        }else{
+          alert("Medication Provided is Invalid!");
         }
       })
     }else{
@@ -417,6 +423,3 @@ function checkRefills(refills){
   }
   return signal;
 }
-
-  
-

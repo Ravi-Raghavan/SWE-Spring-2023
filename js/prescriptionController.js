@@ -14,6 +14,28 @@ async function getTypeProcess(req,res,queryStringParameters){
     }
 }
 
+async function getDrugsProcess(req,res,queryStringParameters){
+    try{
+        var drug = queryStringParameters.drug;
+        var drugPromise = await prescriptionModel.getDrugs();
+        let signal = false;
+        for(let i = 0;i<drugPromise.length;i++){
+            if(drug.toUpperCase()==drugPromise[i].toUpperCase()){
+                signal = true;
+            }
+        }
+        if(signal){
+            res.writeHead(200);
+            res.end();
+        }else{
+            res.writeHead(300);
+            res.end();
+        }
+    }catch (err){
+        console.log(err);
+    }
+}
+
 async function addPatientPrescriptionProcess(req,res){
     try{
         let body = await getPostData(req);
@@ -237,5 +259,6 @@ module.exports = {
     validateProcess,
     changeStatusProcess,
     removeDoctorPrescriptionProcess,
-    removePatientPrescriptionProcess
+    removePatientPrescriptionProcess,
+    getDrugsProcess
 };
