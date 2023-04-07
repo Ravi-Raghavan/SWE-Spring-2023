@@ -188,6 +188,11 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
   if(refills==""){
     refills = 0;
   }
+  if(!checkRefills(refills)){
+    alert("refills provided is not a valid number!")
+    return;
+  }
+  refills = Number(refills);
   var prescriptionNumber = document.getElementById("dprescriptionNumber").value;
   if(prescriptionNumber==""){
     alert("Prescription Number is empty!");
@@ -390,6 +395,27 @@ function validatedPrescriptionEmail(de,df,dl,pN){
       prescriptionNumber:pN
     })
   })
+}
+
+function checkRefills(refills){
+  let signal = true;
+  let set = new Set();
+  set.add("1");
+  set.add("2");
+  set.add("3");
+  set.add("4");
+  set.add("5");
+  set.add("6");
+  set.add("7");
+  set.add("8");
+  set.add("9");
+  set.add("0");
+  for(let i = 0;i<refills.length;i++){
+    if(!set.has(refills.charAt(i))){
+      signal = false;
+    }
+  }
+  return signal;
 }
 
   
