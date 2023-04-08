@@ -55,7 +55,8 @@ async function ready() {
     var addToCartButtons = document.getElementsByClassName('shop-item-button')
     for (var i = 0; i < addToCartButtons.length; i++) {
         var button = addToCartButtons[i]
-        button.addEventListener('click', addToCartClicked)
+        button.addEventListener('click', addToCartClicked);
+        button.addEventListener('click', swapbutton);
     }
 
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
@@ -112,67 +113,88 @@ function quantityChanged(event) {
     updateCartTotal()
 }
 
+function swapbutton(event) {
+    var button = event.target;
+    if (button.innerText == "Add to Cart") {
+        button.innerText = "\u2715 Remove";
+        button.setAttribute("class", "btn btn-danger");
+    } else {
+        button.innerText = "Add to Cart";
+        button.setAttribute("class", "btn btn-primary shop-item-button");
 
+        var func = button.getAttribute("onclick");
+        var title = func.match(/'[a-zA-Z]*\s?\d*[a-zA-Z]*'/)[0];
+        title = title.replace(/'/g, '');
+
+        var cartItems = document.getElementsByClassName('cart-items')[0]
+        var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
+
+        for (var i = 0; i < cartItemNames.length; i++) {
+            if (cartItemNames[i].innerText == title) {
+                cartItemNames[i].parentElement.parentElement.remove();
+                updateCartTotal();
+            }
+        }
+    }
+}
 
 function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     var button = event.target;
 
     var theme = document.getElementsByTagName("body")[0];
     if (theme.classList.contains('dark')) {
-         button.style.outline = "2px solid var(--primary)";
+        button.style.outline = "2px solid var(--primary)";
 
-         setTimeout(function () {
-           button.style.outline = "transparent";
-         }, 1000);
+        setTimeout(function () {
+            button.style.outline = "transparent";
+        }, 1000);
     } else {
         button.style.outline = "2px solid var(--primary)";
 
         setTimeout(function () {
-          button.style.outline = "transparent";
+            button.style.outline = "transparent";
         }, 1000);
     }
 
-   
-
-  var shopItem = button.parentElement.parentElement;
-  var title =
-        shopItem.getElementsByClassName(itemTitle)[0].innerText;
+    var shopItem = button.parentElement.parentElement;
+    // var title = shopItem.getElementsByClassName(itemTitle)[0].innerText;
+    var title = itemTitle;
     console.log(shopItem);
-  var price = shopItem.getElementsByClassName(itemPrice)[0].innerText;
-  var priceVal = parseFloat(
-    shopItem
-      .getElementsByClassName(itemPrice)[0]
-      .innerText.replace("$", "")
+    var price = shopItem.getElementsByClassName(itemPrice)[0].innerText;
+    var priceVal = parseFloat(
+        shopItem
+        .getElementsByClassName(itemPrice)[0]
+        .innerText.replace("$", "")
     );
 
-  // var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
-  var imageSrc = shopItem.getElementsByClassName(itemImg)[0].src;
-  console.log(title, price);
-  //Add item to order JSON.
-  order.push({ "item-name": title, price: priceVal, quantity: 1 });
-  console.log(order);
+    // var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
+    var imageSrc = shopItem.getElementsByClassName(itemImg)[0].src;
+    console.log(title, price);
+    //Add item to order JSON.
+    order.push({ "item-name": title, price: priceVal, quantity: 1 });
+    console.log(order);
 
-  addItemToCart(title, price, imageSrc, 1);
+    addItemToCart(title, price, imageSrc, 1);
     updateCartTotal();
 
-  //This fetch will request the uri path to update the cost of the cart and add drugs
-  //we can update quantity too if we add a variable to this javascript file that updates quantity aswell.
-  // fetch('http://localhost:8000/api/updateCart', {
-  //         method : 'PATCH',
-  //         body : JSON.stringify({
-  //             costs : total,
-  //             quantity : 1,
-  //             drugs : title
-  //         }),
-  //         headers: {
-  //             'Content-type': 'application/json',
-  //     },
-  // })
-  // .then((response) => response.json())
-  // .then((json) => console.log(json));
+    //This fetch will request the uri path to update the cost of the cart and add drugs
+    //we can update quantity too if we add a variable to this javascript file that updates quantity aswell.
+    // fetch('http://localhost:8000/api/updateCart', {
+    //         method : 'PATCH',
+    //         body : JSON.stringify({
+    //             costs : total,
+    //             quantity : 1,
+    //             drugs : title
+    //         }),
+    //         headers: {
+    //             'Content-type': 'application/json',
+    //     },
+    // })
+    // .then((response) => response.json())
+    // .then((json) => console.log(json));
 
-  // order.push({"costs" : total+priceVal, "drugs" : title , "quantity" : 1})
-  // console.log(order)
+    // order.push({"costs" : total+priceVal, "drugs" : title , "quantity" : 1})
+    // console.log(order)
 }
 
 function addItemToCart(title, price, imageSrc, drugQuantity) {
@@ -184,7 +206,7 @@ function addItemToCart(title, price, imageSrc, drugQuantity) {
 
     for (var i = 0; i < cartItemNames.length; i++) {
         if (cartItemNames[i].innerText == title) {
-            alert('This item is already added to the cart')
+            // alert('This item is already added to the cart')
             return
         }
     }
@@ -243,26 +265,26 @@ function updateCartTotal() {
     console.log("Drug Data: " + drugData);
 
     fetch('http://localhost:8000/api/updateCart', {
-            method : 'PATCH',
-            body : JSON.stringify({
-                cartTotal : total,
-                drugs: drugData,
-                uid: JSON.parse(window.localStorage.getItem("User Record")).uid
-            }),
-            headers: {
-                'Content-type': 'application/json',
+        method : 'PATCH',
+        body : JSON.stringify({
+            cartTotal : total,
+            drugs: drugData,
+            uid: JSON.parse(window.localStorage.getItem("User Record")).uid
+        }),
+        headers: {
+            'Content-type': 'application/json',
         },
     })
-    .then((response) => response.json())
-    .then((json) => console.log("Success:", json))
-    .catch((error) => console.error("Error: ", error));
+        .then((response) => response.json())
+        .then((json) => console.log("Success:", json))
+        .catch((error) => console.error("Error: ", error));
 
 }
 
 window.onload = async function (){
     if (localStorage.getItem("User Record") == null) {
         //
-      } else {
+    } else {
 
         var user_record = JSON.parse(localStorage.getItem("User Record"));
         var uid = user_record["uid"];
@@ -270,7 +292,7 @@ window.onload = async function (){
 
         let response = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
             method: 'GET'
-          })
+        })
 
         let responseStatus = response.status;
         let prescriptions = await response.json()
@@ -281,13 +303,13 @@ window.onload = async function (){
         document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
         var counter = 0;
         if (responseStatus == 200){
-          for (var prescriptionNumber in prescriptions){
-            console.log("ran");
-            counter++;
-          }
+            for (var prescriptionNumber in prescriptions){
+                console.log("ran");
+                counter++;
+            }
         }
         if(counter == 0){
-        document.getElementById("prescriptionMedication").remove();
+            document.getElementById("prescriptionMedication").remove();
         }
     }
 }
