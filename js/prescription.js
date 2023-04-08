@@ -256,7 +256,20 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
           /**
            * Medication error message display
            */
-          document.querySelector(".main-box").className+="two";
+          medicationErrorDisplay();
+          /**
+           * Medication error message display
+           */
+        }
+      })
+    }else{
+      alert("Prescription Number is Invalid!")
+    }
+  })
+})
+
+function medicationErrorDisplay(){
+  document.querySelector(".main-box").className+="two";
           document.querySelector(".error-boxthree").className = document.querySelector(".error-boxthree").className.substring(0,9);
           fetch("/prescription/get/list",{
             method:"GET",
@@ -281,16 +294,7 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
               })
             })
           })
-          /**
-           * Medication error message display
-           */
-        }
-      })
-    }else{
-      alert("Prescription Number is Invalid!")
-    }
-  })
-})
+}
 
 function pAckClicked(accountType){
   if(accountType=="PATIENT"){
