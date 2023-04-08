@@ -49,6 +49,10 @@ body{
   display: none;
 }
 
+.error-boxthree{
+  display: none;
+}
+
 .error-box{
   margin-left: auto;
   margin-right: auto;
@@ -74,6 +78,27 @@ body{
 
 .message{
   font-family: var(--soft);
+}
+
+.message span{
+  color:#0072c6;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.error-box .message .edit-right .drug-item{
+  margin-top: 0.5rem;
+  font-style: italic;
+  cursor: pointer;
+  color: black;
+  transition: 0.1s ease-in-out;
+}
+.error-box .message .edit-right .drug-item:hover{
+  margin-top: 0.5rem;
+  font-style: italic;
+  cursor: pointer;
+  color: #e12222;
+  transition: 0.1s ease-in-out;
 }
 
 .error-box .submit{
@@ -140,6 +165,16 @@ body{
       width: 50%;
       cursor: pointer;
     }
+
+.error-box .back-button-b{
+  margin-left: auto;
+      margin-right: auto;
+      margin-top: 40px;
+      justify-content: center;
+      text-align: center;
+      width: 50%;
+      cursor: pointer;
+}
 
 .generate-box{
   color: var(--tertiary);
@@ -288,6 +323,14 @@ body{
   text-align: left;
 }
 
+.error-box .edit-right {
+  margin-top: 1.5rem;
+  margin-left: 2rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  text-align: left;
+}
+
 .main-boxone{
   display: none;
 }
@@ -380,25 +423,25 @@ background-color: var(--tertiary);
   .main-box .acknowledgement-box span{
       font-size: 2rem;
       color: var(--warning);
-      transition: 0.3s ease-in-out;
+      transition: 0.2s ease-in-out;
     }
 
   .main-box .acknowledgement-box.clicked span{
       font-size: 2rem;
       color: var(--tertiary);
-      transition: 0.3s ease-in-out;
+      transition: 0.2s ease-in-out;
   }
 
   .main-box .acknowledgement-box-doctor span{
     font-size: 2rem;
     color: var(--warning);
-    transition: 0.3s ease-in-out;
+    transition: 0.2s ease-in-out;
   }
 
 .main-box .acknowledgement-box-doctor.clicked span{
     font-size: 2rem;
     color: var(--tertiary);
-    transition: 0.3s ease-in-out;
+    transition: 0.2s ease-in-out;
 }
 
 .main-box .submit:hover{

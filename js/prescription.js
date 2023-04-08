@@ -1,5 +1,5 @@
-window.onload = startType();
-function startType(){
+window.onload = startType(0,null);
+function startType(code,value){
     fetch(`/prescription/get/accountType?uid=${getUID()}`,{
       method: "GET",
       cache: "no-cache"
@@ -13,6 +13,9 @@ function startType(){
         document.getElementById("demail").value = getEmail();
         document.getElementById("dfname").value = getFirstName();
         document.getElementById("dlname").value = getLastName();
+        if(code==1){
+          document.getElementById("dmedication").value = value;
+        }
       }
       if(ourType.toUpperCase() == "PATIENT"){
         document.querySelector(".main-boxone").className = document.querySelector(".main-boxone").className.substring(0,8);
@@ -20,6 +23,15 @@ function startType(){
         document.getElementById("fname").value = getFirstName();
         document.getElementById("lname").value = getLastName();
       }
+
+
+    /**
+    * Test Section Start
+    */
+    
+    /**
+    * Test Section End
+    */
     })
   })
 }
@@ -241,7 +253,37 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
             }
           })
         }else{
-          alert("Medication Provided is Invalid!");
+          /**
+           * Medication error message display
+           */
+          document.querySelector(".main-box").className+="two";
+          document.querySelector(".error-boxthree").className = document.querySelector(".error-boxthree").className.substring(0,9);
+          fetch("/prescription/get/list",{
+            method:"GET",
+            cache:"no-cache"
+          }).then((response)=>{
+            response.json().then((result)=>{
+              const P = result.Prescription;
+              let PKeys = Object.keys(P);
+              let Ptext = "";
+              for(let i =0;i<PKeys.length;i++){
+                Ptext += `<div class = "drug-item"><p>&#x2022; ${PKeys[i]}</p></div>`;
+              }
+              document.querySelector(".edit-right").innerHTML = Ptext;
+              var drugs = document.querySelectorAll(".drug-item");
+              drugs.forEach((drug)=>{
+                drug.addEventListener("click",()=>{
+                  let inText = drug.innerHTML;
+                  inText = inText.substring(5,inText.length-4);
+                  document.querySelector(".error-box").className += "three";
+                  startType(1,inText);
+                })
+              })
+            })
+          })
+          /**
+           * Medication error message display
+           */
         }
       })
     }else{
@@ -371,14 +413,18 @@ function validatePrescription(accountType,prescriptionNumber,doctorEmail,doctorF
 
 document.querySelector(".back-button-p").addEventListener("click",()=>{
   document.querySelector(".error-box").className+="one";
-  startType();
+  startType(0,null);
 })
 
 document.querySelector(".back-button-d").addEventListener("click",()=>{
   document.querySelector(".error-box").className+="two";
-  startType();
+  startType(0,null);
 })
 
+document.querySelector(".back-button-b").addEventListener("click",()=>{
+  document.querySelector(".error-box").className+="three";
+  startType(0,null);
+})
 
 function changeStatus(pN){
   var data = {
@@ -423,3 +469,9 @@ function checkRefills(refills){
   }
   return signal;
 }
+
+document.querySelector(".message span").addEventListener("click",()=>{
+  window.location.href = "./contact-us.html";
+})
+
+

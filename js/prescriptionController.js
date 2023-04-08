@@ -251,6 +251,16 @@ async function removePatientPrescriptionProcess(req,res){
     }
 }
 
+async function getDrugListProcess(req,res){
+    try{
+        let returnData = await prescriptionModel.getDrugList();
+        res.writeHead(200,'Content-Type:application/json');
+        res.end(JSON.stringify(returnData));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     getTypeProcess,
     addPatientPrescriptionProcess,
@@ -260,5 +270,6 @@ module.exports = {
     changeStatusProcess,
     removeDoctorPrescriptionProcess,
     removePatientPrescriptionProcess,
-    getDrugsProcess
+    getDrugsProcess,
+    getDrugListProcess
 };

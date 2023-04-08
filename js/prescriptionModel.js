@@ -176,6 +176,16 @@ async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
         return list;
     }
 
+    async function getDrugList(){
+        let path = db.ref(`/Drugs/`);
+        const list = await new Promise((resolve,reject)=>{
+            path.get().then((snapshot)=>{
+                resolve(snapshot.val());
+            })
+        })
+        return list;
+    }
+
 module.exports = {
     getType,
     addPatientPrescription,
@@ -187,5 +197,6 @@ module.exports = {
     changeStatus,
     removeDoctorPrescription,
     removePatientPrescription,
-    getDrugs
+    getDrugs,
+    getDrugList
 };
