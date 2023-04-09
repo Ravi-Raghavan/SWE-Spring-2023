@@ -8,7 +8,7 @@
   },
   {
     "name": "Aspirin",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/Aspirin.jpg",
     "price": 15.99
@@ -29,7 +29,7 @@
   },
   {
     "name": "Ibuprofen",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/Ibuprofen.jpg",
     "price": 15.99
@@ -57,7 +57,7 @@
   },
   {
     "name": "Naproxen",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/Naproxen.jpg",
     "price": 15.99
@@ -106,63 +106,63 @@
   },
   {
     "name": "Albuterol",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/Albuterol.jpg",
     "price": 15.99
   },
   {
     "name": "Amlodipine",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/Amlodipine.jpg",
     "price": 15.99
   },
   {
     "name": "Atorvastatin",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/Atorvastatin.jpg",
     "price": 15.99
   },
   {
     "name": "Lisinopril",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/Lisinopril.avif",
     "price": 15.99
   },
   {
     "name": "Metformin",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/Metformin.jpg",
     "price": 15.99
   },
   {
     "name": "Metoprolol",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/Metoprolol.jpg",
     "price": 15.99
   },
   {
     "name": "Tylenol 500mg",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/Tylenol500mg.jpg",
     "price": 15.99
   },
   {
     "name": "Nyquil Severe Cold & Flu",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/NyquilSevereColdFlu.jpg",
     "price": 15.99
   },
   {
     "name": "Simvastatin",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/Simvastatin.jpg",
     "price": 15.99
@@ -176,7 +176,7 @@
   },
   {
     "name": "Tramadol",
-    "Prescription": false,
+    "Prescription": true,
     "limit": 3,
     "imgPath": "../product/Tramadol.jpg",
     "price": 15.99
