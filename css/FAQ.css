@@ -303,3 +303,41 @@ h3{
 .white_space{
     height: 120px;
 }
+
+/* ! search box */
+.search-container input[type="text"] {
+  /* float: left; */
+  padding: 6px;
+  padding-left: 20px;
+  padding-right: 60px;
+  border: none;
+  margin-top: 30px;
+  font-size: 17px;
+  border-radius: 10px;
+  height: 50px;
+  width: 450px;
+  font-size: 30px;
+  color: var(--tertiary);
+}
+
+
+
+.search-container .search {
+  margin-top: 32.5px;
+  margin-bottom: 10px;
+  height: 42px;
+  width: 42px;
+  border: none;
+  transform: translate(-51px, -2px);
+  border-radius: 10px;
+  background-color: var(--tertiary);
+}
+
+.text-box .search_icon {
+  color: var(--primary);
+  margin-top: 2px;
+}
+
+.text-box .search::placeholder {
+  width: 30px;
+}
