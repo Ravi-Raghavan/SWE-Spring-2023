@@ -355,3 +355,41 @@ tr a:visited{
 .reset-style * {
   all: revert;
 }
+
+/* ! search box */
+.text-box input[type="text"] {
+  /* float: left; */
+  padding: 6px;
+  padding-left: 20px;
+  padding-right: 60px;
+  border: none;
+  margin-top: 30px;
+  font-size: 17px;
+  border-radius: 10px;
+  height: 50px;
+  width: 450px;
+  font-size: 30px;
+  color: var(--tertiary);
+}
+
+
+
+.text-box .search {
+  margin-top: 32.5px;
+  margin-bottom: 10px;
+  height: 44px;
+  width: 44px;
+  border: none;
+  transform: translate(-51px, -3px);
+  border-radius: 10px;
+  background-color: var(--tertiary);
+}
+
+.text-box .search_icon {
+  color: var(--primary);
+  margin-top: 2px;
+}
+
+.text-box .search::placeholder {
+  width: 30px;
+}
