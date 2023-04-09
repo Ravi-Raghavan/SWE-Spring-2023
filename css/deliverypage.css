@@ -1,5 +1,128 @@
 @import url("/css/static.css");
 
+
+.main-box {
+    padding-top: 150px;
+    /* width: 800px; */
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.order-items-box {
+    padding:20px 20px;
+    width: 500px;
+    border-radius: 10px;
+    background-color: var(--suppliment);
+}
+
+.order-items-box h1,
+.order-items-box h2 {
+    background-color: var(--secondary);
+    padding: 5px 10px;
+    margin-left: -5px;
+    margin-right: -5px;
+    border-radius: 10px;
+    color:var(--primary);
+}
+
+.order-items-box h2 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+
+
+.payment-box {
+    margin-top: 20px;
+}
+
+.order-items-box-right {
+    padding: 20px 25px;
+    width: 350px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: var(--suppliment);
+}
+
+.item-frame{
+    display: flex;
+    flex-direction: column ;
+}
+
+.item-details {
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+    padding-top: 20px;
+    width: 100%;
+    margin-top: 10px;
+    background-color: var(--primary);
+    padding: 7px;
+    border-radius: 10px;
+    color:var(--fourth);
+}
+
+
+
+.item-details img {
+    height: 140px;
+    width: 140px;
+    border-radius: 10px;
+    border: 3px solid var(--secondary);
+}
+
+.item-details .item-name{
+    flex: 1;
+    /* margin-right: 40px; */
+}
+
+.item-price-details {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+
+.google-map-box iframe {
+    width: 300px;
+    height: 400px;
+    border-radius: 10px;
+    margin-bottom: -20px;
+}
+
+.payment-box  {
+    text-align: right;
+    border-radius: 10px;
+    width: 300px;
+    padding: 10px;
+}
+
+.payment-box section {
+    margin-top: 5px;
+}
+
+.payment-box section{
+    padding-right: 20px;
+}
+.payment-box .heading {
+    font-size: 25px;
+    font-weight: bold;
+    padding: 2px 10px;
+    border-radius: 10px;
+    background-color: var(--secondary);
+    /* border: 2px solid var(--secondary); */
+    color: var(--primary);
+}
+
+.payment-box :not(.heading){
+    font-size: 18px;
+    color: var(--fourth);
+}
+
 .imagecontainer {
     padding-top: 100px;
     width: 30%;
