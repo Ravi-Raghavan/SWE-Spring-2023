@@ -194,7 +194,8 @@ body.dark .second .item_list .item_price {
 body.dark .cart-total strong,
 body.dark .cart-total span,
 body.dark .cart-row span,
-body.dark .shop-item-price {
+body.dark .shop-item-price,
+body.dark .shop-items span {
   color: var(--primary);
 }
 

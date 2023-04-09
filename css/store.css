@@ -316,3 +316,9 @@
     color: var(--primary)
 }
 
+/* ?  text before items are loaded */
+.shop-items span{
+    font-size: 20px;
+    color:var(--fourth);
+    font-family: var(--soft);
+}

@@ -102,7 +102,8 @@ const public_paths_js = [
   "/js/prescriptionModel.js",
   "/js/prescriptonController.js",
   "/js/FAQ-view.js",
-  "/js/profilePic.js"
+  "/js/profilePic.js",
+  "/json/ProductsSold.json",
 ];
 
 const public_paths_images = [
