@@ -445,3 +445,7 @@ body.dark .item-details {
 body.dark .item-details img {
   border-color: var(--tertiary);
 }
+
+body.dark .item-details:hover {
+    border: 3px solid var(--suppliment);
+}

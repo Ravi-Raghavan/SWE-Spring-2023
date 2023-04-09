@@ -27,12 +27,13 @@
     margin-right: -5px;
     border-radius: 10px;
     color:var(--primary);
-    font-family: var(--strong);
+    font-family: var(--soft);
 }
 
 .order-items-box h2 {
     margin-top: 10px;
     margin-bottom: 20px;
+    padding: 2px 10px;
 }
 
 
@@ -65,10 +66,13 @@
     padding: 7px;
     border-radius: 10px;
     color:var(--fourth);
+    border: 3px solid transparent;
     transition: 0.5s ease-out;
 }
 
-
+.item-details:hover {
+    border: 3px solid var(--fourth);
+}
 
 
 .item-details img {
@@ -128,7 +132,7 @@
 .payment-box :not(.heading){
     font-size: 18px;
     color: var(--fourth);
-    font-family: var(--soft);
+    font-family: var(--strong);
     margin-right: -20px;
 }
 
