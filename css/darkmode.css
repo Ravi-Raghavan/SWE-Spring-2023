@@ -413,6 +413,7 @@ body.dark .contact-col div h5 {
 }
 
 /* dark mode for the google map */
+/* ! used for delivry page too */
 body.dark .dark-mode-map {
   filter: invert(1) hue-rotate(180deg);
   filter: invert(1) hue-rotate(180deg) brightness(85%) contrast(120%)
@@ -420,3 +421,27 @@ body.dark .dark-mode-map {
   filter: invert(1) hue-rotate(180deg) brightness(100%) saturate(60%);
 }
 
+/*  ? Delivery Page */
+body.dark .order-items-box,
+body.dark .order-items-box-right {
+  background-color: var(--primary-dark);
+}
+
+body.dark .order-items-box h1,
+body.dark .order-items-box h2,
+body.dark .payment-box .heading {
+  background-color: var(--tertiary);
+  color: var(--primary-dark);
+}
+
+body.dark .payment-box section {
+  color:var(--suppliment);
+}
+
+body.dark .item-details {
+  background-color: var(--secondary-dark);
+}
+
+body.dark .item-details img {
+  border-color: var(--tertiary);
+}
