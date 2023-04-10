@@ -427,7 +427,7 @@
                 </div>
             </div> -->
 
-        
+
 
 
         </div>
@@ -504,10 +504,10 @@
             .then(data => {
 
             // store html content for all prescrible items and non
-            var productsHTMLPresp = ""; 
+            var productsHTMLPresp = "";
             var productsHTMLPrespNon = "";
 
-            // iterate through products dicitonary 
+            // iterate through products dicitonary
             for (let i = 0; i < data.products.length; i++) {
 
                 // pulls one prodcut at a time
@@ -521,20 +521,20 @@
 
                 // checks if item is prescrible
                 if( name != '' && prescrible == true && limit != '' && imgPath != '' && price != ''){
-                    
+
                     const productHTML = `
                         <div class="shop-item">
                             <span class="shop-item-title itemTitle-${i}">${product.name}</span>
                             <img class="shop-item-image itemImg-${i}" src="${product.imgPath}" />
                             <div class="shop-item-details">
                             <span class="shop-item-price itemPrice-${i}">$${product.price}</span>
-                            <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${product.name}');">
+                            <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${product.name}'); swapbutton(event);">
                                 Add to Cart
                             </button>
                             </div>
                         </div>
                         `;
-                    
+
                     // appends single item html code
                     productsHTMLPresp = productsHTMLPresp +  productHTML;
 
@@ -545,7 +545,7 @@
                             <img class="shop-item-image itemImg-${i}" src="${product.imgPath}" />
                             <div class="shop-item-details">
                             <span class="shop-item-price itemPrice-${i}">$${product.price}</span>
-                            <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${product.name}');">
+                            <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${product.name}'); swapbutton(event);">
                                 Add to Cart
                             </button>
                             </div>
@@ -554,7 +554,7 @@
                      // appends single item html code
                     productsHTMLPrespNon = productsHTMLPrespNon +  productHTML;
                 }
-            
+
             }
                 // end of for loop
                 // added all prescrible items
@@ -564,7 +564,7 @@
                 const innerTag = parentTag.querySelector("span");
                 // console.log(innerTag);
                 innerTag.outerHTML = productsHTMLPrespNon;
-                
+
                 // selects the parent tag to add the products under prescripiton tab
                 const parentElement = document.getElementById("shop-items-prescription");
                 const innerTagElement = parentElement.querySelector("span");
