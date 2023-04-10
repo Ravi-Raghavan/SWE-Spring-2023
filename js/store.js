@@ -44,7 +44,6 @@ async function ready() {
     for (var i = 0; i < removeCartItemButtons.length; i++) {
         var button = removeCartItemButtons[i]
         button.addEventListener('click', removeCartItem)
-
     }
     var quantityInputs = document.getElementsByClassName('cart-quantity-input')
     for (var i = 0; i < quantityInputs.length; i++) {
@@ -101,6 +100,23 @@ function purchaseClicked() {
 function removeCartItem(event) {
     var buttonClicked = event.target;
     buttonClicked.parentElement.parentElement.remove()
+
+    var title = buttonClicked.parentElement.parentElement
+        .getElementsByClassName("cart-item cart-column")[0]
+        .getElementsByClassName("cart-item-title")[0]
+        .innerText;
+    var shopItems = document.getElementsByClassName("shop-item");
+    for (var i = 0; i < shopItems.length; i++) {
+        var item = document.getElementsByClassName("shop-item-title")[i];
+        var shopItemName = item.innerText;
+        if (shopItemName == title) {
+            var a = item.parentElement
+                .getElementsByClassName("shop-item-details")[0]
+                .getElementsByClassName("btn btn-danger")[0];
+            a.innerText = "Add to Cart";
+            a.setAttribute("class", "btn btn-primary shop-item-button");
+        }
+    }
     console.log("clicked")
     updateCartTotal()
 }
@@ -113,7 +129,8 @@ function quantityChanged(event) {
     updateCartTotal()
 }
 
-function swapbutton(event) {
+function swapbutton(event, title) {
+    a = title;
     var button = event.target;
     if (button.innerText == "Add to Cart") {
         button.innerText = "\u2715 Remove";
@@ -122,13 +139,12 @@ function swapbutton(event) {
         button.innerText = "Add to Cart";
         button.setAttribute("class", "btn btn-primary shop-item-button");
 
-        var func = button.getAttribute("onclick");
-        var title = func.match(/'[a-zA-Z]*\s?\d*[a-zA-Z]*'/)[0];
-        title = title.replace(/'/g, '');
+        // var func = button.getAttribute("onclick");
+        // title = func.match(/'[a-zA-Z]*\s?\d*[a-zA-Z]*'/)[0];
+        // title = title.replace(/'/g, '');
 
         var cartItems = document.getElementsByClassName('cart-items')[0]
         var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
-
         for (var i = 0; i < cartItemNames.length; i++) {
             if (cartItemNames[i].innerText == title) {
                 cartItemNames[i].parentElement.parentElement.remove();
