@@ -141,20 +141,29 @@ function swapbutton(event) {
 function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     var button = event.target;
 
-    var theme = document.getElementsByTagName("body")[0];
-    if (theme.classList.contains('dark')) {
-        button.style.outline = "2px solid var(--primary)";
+    button.style.transistion = "0.5s ease-in-out";
+    button.style.opacity = 0.5
+    button.style.cursor = "not-allowed";
 
-        setTimeout(function () {
-            button.style.outline = "transparent";
-        }, 1000);
-    } else {
-        button.style.outline = "2px solid var(--primary)";
+    setTimeout(function () {
+        button.style.opacity = 1;
+        button.style.cursor = "pointer";
+    }, 300);
 
-        setTimeout(function () {
-            button.style.outline = "transparent";
-        }, 1000);
-    }
+    // var theme = document.getElementsByTagName("body")[0];
+    // if (theme.classList.contains('dark')) {
+    //     button.style.outline = "2px solid var(--primary)";
+
+        // setTimeout(function () {
+        //     button.style.outline = "transparent";
+        // }, 1000);
+    // } else {
+    //     button.style.outline = "2px solid var(--primary)";
+
+    //     setTimeout(function () {
+    //         button.style.outline = "transparent";
+    //     }, 1000);
+    // }
 
     var shopItem = button.parentElement.parentElement;
     // var title = shopItem.getElementsByClassName(itemTitle)[0].innerText;
