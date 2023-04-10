@@ -232,6 +232,14 @@ body.dark .btn-primary:hover {
   background-color: var(--secondary);
 }
 
+body.dark .btn-purchase {
+  background-color: var(--secondary);
+}
+
+body.dark .btn-purchase:hover {
+  background-color: var(--tertiary);
+}
+
 /* FAQ */
 
 /* search box for both FAQs and knowledge base */

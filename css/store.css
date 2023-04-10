@@ -268,9 +268,11 @@
     color: var(--primary);
     background-color: #EB5757;
     border: none;
-    border-radius: .3em;
-    font-weight: bold;
+    border-radius: 10px;
+    /* font-weight: bold; */
     font-family: var(--soft);
+    padding: 7px 12px;
+    font-size: 15px;
     transition: 0.3s ease-in-out;
 }
 
