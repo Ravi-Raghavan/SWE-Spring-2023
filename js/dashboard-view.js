@@ -117,11 +117,13 @@ async function logout() {
         for (var orderNumber in orders){
           var order = orders[orderNumber];
           var drugs = []
+          var quantities = []
           for (var drugNumber in order["drugs"]){
             var drug = order["drugs"][drugNumber];
             drugs.push(drug["title"]);
+            quantities.push(parseInt(drug["quantity"]))
           }
-          addOrder(orderNumber, drugs, "placed");
+          addOrder(orderNumber, drugs, quantities, "placed");
         }
       }
 
@@ -252,7 +254,7 @@ async function logout() {
   //HELPER FUNCTION TO ADD ORDERS TO ORDER TABLE
   //Params: Integer (Order Number), Array of Strings (List of Items and Quanitity), String (Order Status)
   //Usage Example: addOrder(599212, ["Drug1 x2", "Drug2 x3"], "Delivered");
-  function addOrder(OrderNumber, ItemList, Status){
+  function addOrder(OrderNumber, ItemList, quantityList, Status){
     if(OrderNumber == null || ItemList == null || ItemList.length == 0||Status == null)
       return;
     
@@ -261,6 +263,7 @@ async function logout() {
         size = ItemList.length;
         for(i = 0; i < size; i++){
           rows = rows+(ItemList[i]);
+          rows = rows + (` x${quantityList[i]}`)
           
           if(i != (size-1))
           rows= rows+ ( "<br>");
