@@ -1,20 +1,10 @@
 // import { initializeApp } from "firebase-admin/app";
 // import { getDatabase } from "firebase-admin/database";
-
-var order = [
-
-    {
-        "item-name": "tylenol",
-        "price": 10.99,
-        "quantity": 2
-    },
-    {
-        "item-name": "ibuprophen",
-        "price": 11.99,
-        "quantity": 1
+if (localStorage.getItem("User Record") == null) {
+        alert("You must login to access the cart page");
+        
+        window.location.href = "http://localhost:8000/html/homepage.html";
     }
-
-]
 
 if (document.readyState == 'loading') {
     //wait for webpage to be loaded
@@ -117,7 +107,7 @@ function removeCartItem(event) {
             a.setAttribute("class", "btn btn-primary shop-item-button");
         }
     }
-    console.log("clicked")
+    console.log("clicked\n")
     updateCartTotal()
 }
 
@@ -299,7 +289,10 @@ function updateCartTotal() {
 
 window.onload = async function (){
     if (localStorage.getItem("User Record") == null) {
-        //
+        alert("You cannot log in");
+        
+        window.location.href("/html/homepage.html");
+
     } else {
 
         var user_record = JSON.parse(localStorage.getItem("User Record"));
