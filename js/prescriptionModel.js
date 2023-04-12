@@ -186,6 +186,16 @@ async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
         return list;
     }
 
+    async function getRandomPrescription(){
+        let path = db.ref(`/prescriptionBank/`);
+        const promise = await new Promise((resolve,reject)=>{
+            path.get().then((snapshot)=>{
+                resolve(Object.keys(snapshot.val()));
+            })
+        })
+        return promise;
+    }
+
 module.exports = {
     getType,
     addPatientPrescription,
@@ -198,5 +208,6 @@ module.exports = {
     removeDoctorPrescription,
     removePatientPrescription,
     getDrugs,
-    getDrugList
+    getDrugList,
+    getRandomPrescription
 };

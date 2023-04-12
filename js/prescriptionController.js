@@ -103,6 +103,25 @@ async function addDoctorPrescriptionProcess(req,res){
     }
 }
 
+function getRandomNumber(N) {
+    return Math.floor(Math.random() * (N + 1));
+  }
+
+async function getRandomPrescriptionProcess(req,res){
+    try{
+        let returnValue = await prescriptionModel.getRandomPrescription();
+        let length = returnValue.length;
+        let randomNumber = getRandomNumber(length-1);
+        let dataToReturn = {
+            item:returnValue[randomNumber]
+        }
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(dataToReturn));
+    }catch(err){
+        console.log(err);
+    }
+}
+
 async function checkPrescriptionProcess(req,res,queryStringParameters){
     try{
         let pN = queryStringParameters.prescriptionNumber;
@@ -271,5 +290,6 @@ module.exports = {
     removeDoctorPrescriptionProcess,
     removePatientPrescriptionProcess,
     getDrugsProcess,
-    getDrugListProcess
+    getDrugListProcess,
+    getRandomPrescriptionProcess
 };

@@ -21,6 +21,26 @@ async function logout() {
   }
 
   window.onload = async function () {
+
+    /**
+     * Doctor Generate Prescription Tab
+     */
+    fetch(`/prescription/get/accountType?uid=${getUID()}`,{
+      method: "GET",
+      cache: "no-cache"
+  }).then((response) =>{
+    var ourPromise = response.json();
+    //console.log(ourPromise);
+    ourPromise.then((result) =>{
+      let ourType = result;
+      if(ourType.toUpperCase() == "DOCTOR"){
+        addSideBarItem();
+      }
+    })
+  })
+
+
+
     //GET LIST OF USERS WITH NAMES OF THEIR DOCUMENTATION AS A JSON OBJECT
     let userDocumentation = await fetch(`/fetch/user/documentation`, {
       method: 'GET'
@@ -662,3 +682,63 @@ function exit(){
     document.querySelector('.overlay').style.visibility = "hidden";
 }
 
+function getUID(){
+  if(localStorage.getItem("User Record")==null){
+    alert("Please create an account / log in, to add a prescription. Thank You!");
+  }else{
+    var user_record = JSON.parse(localStorage.getItem("User Record"));
+    var uid = user_record.uid;
+    return uid;
+  }
+}
+
+function getEmail(){
+  if(localStorage.getItem("User Record")==null){
+    alert("Please create an account / log in, to add a prescription. Thank You!");
+  }else{
+    var user_record = JSON.parse(localStorage.getItem("User Record"));
+    var email = user_record.email;
+    return email;
+  }
+}
+
+function addSideBarItem(){
+  var innerStuff = document.getElementById("sideMenu").innerHTML;
+  //console.log(innerStuff);
+  //console.log(innerStuff.substring(0,460));
+  //console.log(innerStuff.substring(460));
+  let temp = `<a id="prescriptionNumberOption"
+  class=""
+  href="#"
+  onclick='swapDisplay("request-prescription-number", "prescriptionNumberOption")'
+  >Request Prescription Number</a>`;
+  var finalStuff = innerStuff.substring(0,460) + temp + innerStuff.substring(460);
+  document.getElementById("sideMenu").innerHTML = finalStuff;
+}
+
+function sendPrescriptionNumber(){
+  document.querySelector(".my-button").setAttribute("disable",true);
+  fetch("/html/random/prescription",{
+    method:"GET",
+    cache:"no-cache"
+  }).then((response)=>{
+    response.json().then((result)=>{
+      emailFunction(result.item);
+    })
+  })
+}
+
+function emailFunction(prescriptionNumber){
+  let email = getEmail();
+  let dataToSend = {
+    doctorEmail:email,
+    prescriptionNumber:prescriptionNumber
+  }
+  fetch("prescription/request/email",{
+    method:"POST",
+    cache:"no-cache",
+    body:JSON.stringify(dataToSend)
+  }).then(()=>{
+    window.location.href = "./requestPrescriptionNumberConfirmation.html";
+  })
+}
