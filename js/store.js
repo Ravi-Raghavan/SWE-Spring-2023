@@ -2,7 +2,7 @@
 // import { getDatabase } from "firebase-admin/database";
 if (localStorage.getItem("User Record") == null) {
         alert("You must login to access the cart page");
-        
+
         window.location.href = "http://localhost:8000/html/homepage.html";
     }
 
@@ -177,8 +177,8 @@ function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     var imageSrc = shopItem.getElementsByClassName(itemImg)[0].src;
     console.log(title, price);
     //Add item to order JSON.
-    order.push({ "item-name": title, price: priceVal, quantity: 1 });
-    console.log(order);
+    // order.push({ "item-name": title, price: priceVal, quantity: 1 });
+    // console.log(order);
 
     addItemToCart(title, price, imageSrc, 1);
     updateCartTotal();
@@ -290,7 +290,7 @@ function updateCartTotal() {
 window.onload = async function (){
     if (localStorage.getItem("User Record") == null) {
         alert("You cannot log in");
-        
+
         window.location.href("/html/homepage.html");
 
     } else {
