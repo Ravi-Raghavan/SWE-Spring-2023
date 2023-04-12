@@ -1,5 +1,5 @@
-window.onload = startType();
-function startType(){
+window.onload = startType(0,null);
+function startType(code,value){
     fetch(`/prescription/get/accountType?uid=${getUID()}`,{
       method: "GET",
       cache: "no-cache"
@@ -8,12 +8,14 @@ function startType(){
     //console.log(ourPromise);
     ourPromise.then((result) =>{
       let ourType = result;
-      
       if(ourType.toUpperCase() == "DOCTOR"){
         document.querySelector(".main-boxtwo").className = document.querySelector(".main-boxtwo").className.substring(0,8);
         document.getElementById("demail").value = getEmail();
         document.getElementById("dfname").value = getFirstName();
         document.getElementById("dlname").value = getLastName();
+        if(code==1){
+          document.getElementById("dmedication").value = value;
+        }
       }
       if(ourType.toUpperCase() == "PATIENT"){
         document.querySelector(".main-boxone").className = document.querySelector(".main-boxone").className.substring(0,8);
@@ -21,9 +23,17 @@ function startType(){
         document.getElementById("fname").value = getFirstName();
         document.getElementById("lname").value = getLastName();
       }
+
+
+    /**
+    * Test Section Start
+    */
+    
+    /**
+    * Test Section End
+    */
     })
   })
-  
 }
 
 function getUID(){
@@ -65,7 +75,11 @@ function getFirstName(){
 function getLastName(){
   var name = getName();
   const names = name.split(" ");
-  return names[1];
+  if(names.length<2){
+    return names[0];
+  }else{
+    return names[1];
+  }
 }
 
 document.querySelector(".acknowledgement-box").addEventListener("click",() =>{
@@ -106,6 +120,9 @@ document.querySelector(".submit-box1").addEventListener("click",() =>{
     cache:"no-cache"
   }).then((response)=>{
     if(response.status==200){
+      /**
+       * Code to add prescription start
+       */
       var patientPrescriptionPackage ={
         firstName:pfName.toUpperCase(),
         lastName:plName.toUpperCase(),
@@ -126,6 +143,9 @@ document.querySelector(".submit-box1").addEventListener("click",() =>{
           validatePrescription("PATIENT",prescriptionNumber,null,null,null);
         }
       })
+      /**
+       * end
+       */
     }else{
       alert("Prescription Number is Invalid!")
     }
@@ -171,13 +191,17 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
   }
   var dosage = document.getElementById("ddosage").value;
   if(dosage==""){
-    alert("Dosage Not Specified!");
-    return;
+    dosage = "default";
   }
   var refills = document.getElementById("drefills").value;
   if(refills==""){
     refills = 0;
   }
+  if(!checkRefills(refills)){
+    alert("refills provided is not a valid number!")
+    return;
+  }
+  refills = Number(refills);
   var prescriptionNumber = document.getElementById("dprescriptionNumber").value;
   if(prescriptionNumber==""){
     alert("Prescription Number is empty!");
@@ -196,31 +220,46 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
     cache:"no-cache"
   }).then((response)=>{
     if(response.status==200){
-      var doctorPrescriptionPackage = {
-        patientFirstName:pfName.toUpperCase(),
-        patientLastName:plName.toUpperCase(),
-        patientDOB:pdob,
-        doctorFirstName:dfName.toUpperCase(),
-        doctorLastName:dlName.toUpperCase(),
-        doctorAccountEmail:demail,
-        expireDate:dexpiredate,
-        medication:medication,
-        dosage:dosage,
-        refills:refills,
-        prescriptionNumber:prescriptionNumber,
-        instructions:instructions,
-        uid:getUID()
-      }
-      fetch("/prescription/add/doctor",{
-        method:"POST",
-        cache:"no-cache",
-        body:JSON.stringify(doctorPrescriptionPackage)
+      fetch(`/prescription/get/drugs?drug=${medication}`,{
+        method:"GET",
+        cache:"no-cache"
       }).then((response)=>{
         if(response.status==200){
+          var doctorPrescriptionPackage = {
+            patientFirstName:pfName.toUpperCase(),
+            patientLastName:plName.toUpperCase(),
+            patientDOB:pdob,
+            doctorFirstName:dfName.toUpperCase(),
+            doctorLastName:dlName.toUpperCase(),
+            doctorAccountEmail:demail,
+            expireDate:dexpiredate,
+            medication:medication,
+            dosage:dosage,
+            refills:refills,
+            prescriptionNumber:prescriptionNumber,
+            instructions:instructions,
+            uid:getUID()
+          }
+          fetch("/prescription/add/doctor",{
+            method:"POST",
+            cache:"no-cache",
+            body:JSON.stringify(doctorPrescriptionPackage)
+          }).then((response)=>{
+            if(response.status==200){
+              /**
+               * If prescription is added successfully ---> do some action below
+               */
+              validatePrescription("DOCTOR",prescriptionNumber,demail,dfName,dlName);
+            }
+          })
+        }else{
           /**
-           * If prescription is added successfully ---> do some action below
+           * Medication error message display
            */
-          validatePrescription("DOCTOR",prescriptionNumber,demail,dfName,dlName);
+          medicationErrorDisplay();
+          /**
+           * Medication error message display
+           */
         }
       })
     }else{
@@ -228,6 +267,34 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
     }
   })
 })
+
+function medicationErrorDisplay(){
+  document.querySelector(".main-box").className+="two";
+          document.querySelector(".error-boxthree").className = document.querySelector(".error-boxthree").className.substring(0,9);
+          fetch("/prescription/get/list",{
+            method:"GET",
+            cache:"no-cache"
+          }).then((response)=>{
+            response.json().then((result)=>{
+              const P = result.Prescription;
+              let PKeys = Object.keys(P);
+              let Ptext = "";
+              for(let i =0;i<PKeys.length;i++){
+                Ptext += `<div class = "drug-item"><p>&#x2022; ${PKeys[i]}</p></div>`;
+              }
+              document.querySelector(".edit-right").innerHTML = Ptext;
+              var drugs = document.querySelectorAll(".drug-item");
+              drugs.forEach((drug)=>{
+                drug.addEventListener("click",()=>{
+                  let inText = drug.innerHTML;
+                  inText = inText.substring(5,inText.length-4);
+                  document.querySelector(".error-box").className += "three";
+                  startType(1,inText);
+                })
+              })
+            })
+          })
+}
 
 function pAckClicked(accountType){
   if(accountType=="PATIENT"){
@@ -248,18 +315,82 @@ function pAckClicked(accountType){
 }
 
 function validatePrescription(accountType,prescriptionNumber,doctorEmail,doctorFirstName,doctorLastName){
+  var sender = {
+    prescriptionNumber:prescriptionNumber
+  }
   fetch("/prescription/attempt/validation",{
     method:"POST",
-    cache:"no-cache"
+    cache:"no-cache",
+    body:JSON.stringify(sender)
   }).then((response) =>{
     console.log(response.status)
     if(response.status==301){
       if(accountType=="PATIENT"){
         document.querySelector(".main-box").className+="one";
         document.querySelector(".error-boxone").className = document.querySelector(".error-boxone").className.substring(0,9);
+        document.querySelector(".link").addEventListener("click",()=>{
+          document.querySelector(".link").classList.toggle("clicked");
+          response.json().then((result)=>{
+            let dE = result.dE;
+            let dUID = result.dUID;
+            var data = {
+              pN:prescriptionNumber,
+              dUID:dUID
+            }
+            /**
+             * API to clean up database
+             */
+            fetch(`/prescription/remove/doctor`,{
+              method:"POST",
+              cache:"no-cache",
+              body:JSON.stringify(data)
+            })
+            var emailData = {
+              prescriptionNumber:prescriptionNumber,
+              email:dE,
+              accountType:"DOCTOR"
+            };
+            fetch("/prescription/send/error/email",{
+              method: "POST",
+              cache:"no-cache",
+              body:JSON.stringify(emailData)
+            })
+          })
+          window.location.href = "./submitted-prescription-patient-wait.html";
+        })
       }else{
         document.querySelector(".main-box").className+="two";
         document.querySelector(".error-boxtwo").className = document.querySelector(".error-boxtwo").className.substring(0,9);
+        document.querySelector(".linkd").addEventListener("click",()=>{
+          document.querySelector(".linkd").classList.toggle("clicked");
+          response.json().then((result)=>{
+            let pE = result.pE;
+            let pUID = result.pUID;
+            var data ={
+              pN:prescriptionNumber,
+              pUID:pUID
+            }
+            /**
+             * API to clean up database
+             */
+            fetch(`/prescription/remove/patient`,{
+              method:"POST",
+              cache:"no-cache",
+              body:JSON.stringify(data)
+            })
+            var emailData = {
+              prescriptionNumber:prescriptionNumber,
+              email:pE,
+              accountType:"PATIENT"
+            };
+            fetch("/prescription/send/error/email",{
+              method: "POST",
+              cache:"no-cache",
+              body:JSON.stringify(emailData)
+            })
+          })
+          window.location.href = "./submitted-prescription-doctor-wait.html";
+        })
       }
     }else{
       if(accountType=="PATIENT"){
@@ -286,22 +417,18 @@ function validatePrescription(accountType,prescriptionNumber,doctorEmail,doctorF
 
 document.querySelector(".back-button-p").addEventListener("click",()=>{
   document.querySelector(".error-box").className+="one";
-  startType();
+  startType(0,null);
 })
 
 document.querySelector(".back-button-d").addEventListener("click",()=>{
   document.querySelector(".error-box").className+="two";
-  startType();
+  startType(0,null);
 })
 
-document.querySelector(".link").addEventListener("click",()=>{
-  document.querySelector(".link").classList.toggle("clicked");
+document.querySelector(".back-button-b").addEventListener("click",()=>{
+  document.querySelector(".error-box").className+="three";
+  startType(0,null);
 })
-
-document.querySelector(".linkd").addEventListener("click",()=>{
-  document.querySelector(".linkd").classList.toggle("clicked");
-})
-
 
 function changeStatus(pN){
   var data = {
@@ -326,5 +453,29 @@ function validatedPrescriptionEmail(de,df,dl,pN){
   })
 }
 
-  
+function checkRefills(refills){
+  let signal = true;
+  let set = new Set();
+  set.add("1");
+  set.add("2");
+  set.add("3");
+  set.add("4");
+  set.add("5");
+  set.add("6");
+  set.add("7");
+  set.add("8");
+  set.add("9");
+  set.add("0");
+  for(let i = 0;i<refills.length;i++){
+    if(!set.has(refills.charAt(i))){
+      signal = false;
+    }
+  }
+  return signal;
+}
+
+document.querySelector(".message span").addEventListener("click",()=>{
+  window.location.href = "./contact-us.html";
+})
+
 

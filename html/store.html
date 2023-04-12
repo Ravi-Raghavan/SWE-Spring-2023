@@ -16,42 +16,150 @@
 </head>
 
 <body>
-    <script src="../js/store.js" defer></script>
+    <script src="../js/store.js" ></script>
     <script src="../js/darkmode.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&commit=false"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&commit=false" ></script>
 
     <div id="header"></div>
 
     <section class="container content-section">
-        <h2 class="section-header">Over-The-Counter</h2>
+
+        <section class="shop-container" id="shop-container-over-counter">
+             <h2 class="section-header">Over-The-Counter</h2>
         <div class="shop-items">
-            <div class="shop-item">
-                <span class="shop-item-title">Ibuprofen</span>
-                <img class="shop-item-image" src="../images/Ibuprofen.jpg" />
+
+            <span>Over the counter items loading...</span>
+            <!-- <div class="shop-item">
+                <span class="shop-item-title itemTitle-1">Cafine</span>
+                <img class="shop-item-image itemImg-1" src="../product/Cafine.avif" />
                 <div class="shop-item-details">
-                    <span class="shop-item-price">$12.99</span>
-                    <button class="btn btn-primary shop-item-button" type="button">
-                        ADD TO CART
+                    <span class="shop-item-price itemPrice-1">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-1', 'itemPrice-1', 'Cafine');">
+                        Add to Cart
                     </button>
                 </div>
             </div>
+
             <div class="shop-item">
-                <span class="shop-item-title">Happy Juice</span>
-                <img class="shop-item-image" src="../images/Codeine.jpg" />
+                <span class="shop-item-title itemTitle-2">Calcium</span>
+                <img class="shop-item-image itemImg-2" src="../product/Calcium.webp" />
                 <div class="shop-item-details">
-                    <span class="shop-item-price">$14.99</span>
-                    <button class="btn btn-primary shop-item-button" type="button">
-                        ADD TO CART
+                    <span class="shop-item-price itemPrice-2">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-2', 'itemPrice-2', 'Calcium');">
+                        Add to Cart
                     </button>
                 </div>
             </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-3">Creatine</span>
+                <img class="shop-item-image itemImg-3" src="../product/creatine.webp" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-3">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-3', 'itemPrice-3', 'Creatine');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-4">HMB</span>
+                <img class="shop-item-image itemImg-4" src="../product/HMB.webp" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-4">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-4', 'itemPrice-4', 'HMB');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-5">Vitamin C</span>
+                <img class="shop-item-image itemImg-5" src="../product/VitaminC.avif" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-5">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-5', 'itemPrice-5', 'Vitamin C');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-6">Vitamin D</span>
+                <img class="shop-item-image itemImg-6" src="../product/vitaminD.jpeg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-6">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-6', 'itemPrice-6', 'Vitamin D');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-7">Whey Protien</span>
+                <img class="shop-item-image itemImg-7" src="../product/WheyProtien.avif" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-7">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-7', 'itemPrice-7', 'Whey Protien');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-8">Zinc</span>
+                <img class="shop-item-image itemImg-8" src="../product/zinc.webp    " />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-8">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-8', 'itemPrice-8', 'Zinc');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+             <div class="shop-item">
+                <span class="shop-item-title itemTitle-9">Omega 3</span>
+                <img class="shop-item-image itemImg-9" src="../product/Omega3.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-9">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-9', 'itemPrice-9', 'Omega 3');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-10">Phosphatidic Acid</span>
+                <img class="shop-item-image itemImg-10" src="../product/PhosphatidicAcid.webp" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-10">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-10', 'itemPrice-10', 'Phosphatidic Acid');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-11">Tiger Balm</span>
+                <img class="shop-item-image itemImg-11" src="../product/tigerBalm.avif" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-11">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-11', 'itemPrice-11', 'Tiger Balm');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div> -->
+
+
+        </section>
+
             <!-- <div class="shop-item">
                     <span class="shop-item-title">Album 3</span>
                     <img class="shop-item-image" src="Images/Album 3.png" />
                     <div class="shop-item-details">
                     <span class="shop-item-price">$9.99</span>
                     <button class="btn btn-primary shop-item-button" type="button">
-                    ADD TO CART
+                    Add to Cart
                     </button>
                     </div>
                     </div> -->
@@ -61,37 +169,273 @@
                         <div class="shop-item-details">
                         <span class="shop-item-price">$19.99</span>
                         <button class="btn btn-primary shop-item-button" type="button">
-                        ADD TO CART
+                        Add to Cart
                         </button>
                         </div>
                         </div> -->
         </div>
     </section>
+
     <section class="container content-section">
-        <h2 class="section-header">Prescriptions</h2>
-        <div class="shop-items">
-            <div class="shop-item" id = "prescriptionMedication">
-                <span class="shop-item-title">Oxycotin</span>
-                <img class="shop-item-image" src="../images/Oxycotin.jpg" />
+
+        <section class="shop-container">
+             <h2 class="section-header">Prescriptions</h2>
+
+        <div class="shop-items" id="shop-items-prescription">
+            <!-- tempalte to add items from json -->
+            <span>No Prescription Items Available</span>
+
+            <!-- <div class="shop-item">
+                <span class="shop-item-title itemTitle-1">Albuterol</span>
+                <img class="shop-item-image itemImg-1" src="../product/Albuterol.jpg" />
                 <div class="shop-item-details">
-                    <span class="shop-item-price">$19.99</span>
-                    <button class="btn btn-primary shop-item-button" type="button">
-                        ADD TO CART
+                    <span class="shop-item-price itemPrice-1">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-1', 'itemPrice-1', 'Albuterol');">
+                        Add to Cart
                     </button>
                 </div>
             </div>
-            <!-- <div class="shop-item">
-                    <span class="shop-item-title">Coffee Cup</span>
-                    <img class="shop-item-image" src="Images/Cofee.png" />
-                    <div class="shop-item-details">
-                    <span class="shop-item-price">$6.99</span>
-                    <button class="btn btn-primary shop-item-button" type="button">
-                    ADD TO CART
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-2">Amlodipine</span>
+                <img class="shop-item-image itemImg-2" src="../product/Amlodipine.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-2">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-2', 'itemPrice-2', 'Amlodipine');">
+                        Add to Cart
                     </button>
-                    </div>
-                    </div> -->
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-3">Ashwagandha</span>
+                <img class="shop-item-image itemImg-3" src="../product/Ashwagandha.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-3">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-3', 'itemPrice-3', 'Ashwagandha');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-4">Atorvastatin</span>
+                <img class="shop-item-image itemImg-4" src="../product/Atorvastatin.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-4">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-4', 'itemPrice-4', 'Atorvastatin');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-5">Fentanyl</span>
+                <img class="shop-item-image itemImg-5" src="../product/Fentanyl.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-5">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-5', 'itemPrice-5', 'Fentanyl');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-6">Gabapentin</span>
+                <img class="shop-item-image itemImg-6" src="../product/Gabapentin.avif" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-6">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-6', 'itemPrice-6', 'Gabapentin');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-7">Ibuprofen</span>
+                <img class="shop-item-image itemImg-7" src="../product/Ibuprofen.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-7">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-7', 'itemPrice-7', 'Ibuprofen');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-8">ketaset</span>
+                <img class="shop-item-image itemImg-8" src="../product/ketaset.png" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-8">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-8', 'itemPrice-8', 'ketaset');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+             <div class="shop-item">
+                <span class="shop-item-title itemTitle-9">Levothyroxine</span>
+                <img class="shop-item-image itemImg-9" src="../product/Levothyroxine.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-9">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-9', 'itemPrice-9', 'Levothyroxine');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-10">Lisinopril</span>
+                <img class="shop-item-image itemImg-10" src="../product/Lisinopril.avif" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-10">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-10', 'itemPrice-10', 'Lisinopril');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-11">Losartan</span>
+                <img class="shop-item-image itemImg-11" src="../product/Losartan.jpeg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-11">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-11', 'itemPrice-11', 'Losartan');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-9">Metformin</span>
+                <img class="shop-item-image itemImg-9" src="../product/Metformin.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-9">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-9', 'itemPrice-9', 'Metformin');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-10">Metoprolol</span>
+                <img class="shop-item-image itemImg-10" src="../product/Metoprolol.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-10">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-10', 'itemPrice-10', 'Metoprolol');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-11">Naproxen</span>
+                <img class="shop-item-image itemImg-11" src="../product/Naproxen.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-11">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-11', 'itemPrice-11', 'Naproxen');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-9">Nyquil</span>
+                <img class="shop-item-image itemImg-9" src="../product/NyquilSevereColdFlu.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-9">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-9', 'itemPrice-9', 'Nyquil');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-10">Omeprazole</span>
+                <img class="shop-item-image itemImg-10" src="../product/Omeprazole.webp" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-10">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-10', 'itemPrice-10', 'Omeprazole');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-11">Pantoprazole</span>
+                <img class="shop-item-image itemImg-11" src="../product/Pantoprazole.jpeg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-11">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-11', 'itemPrice-11', 'Pantoprazole');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-9">Prednisone</span>
+                <img class="shop-item-image itemImg-9" src="../product/Prednisone.avif" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-9">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-9', 'itemPrice-9', 'Prednisone');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-10">Simvastatin</span>
+                <img class="shop-item-image itemImg-10" src="../product/Simvastatin.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-10">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-10', 'itemPrice-10', 'Simvastatin');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-11">Tramadol</span>
+                <img class="shop-item-image itemImg-11" src="../product/Tramadol.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-11">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-11', 'itemPrice-11', 'Tramadol');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-9">Tylenol</span>
+                <img class="shop-item-image itemImg-9" src="../product/Tylenol500mg.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-9">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-9', 'itemPrice-9', 'Tylenol');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="shop-item">
+                <span class="shop-item-title itemTitle-10">Warfarin</span>
+                <img class="shop-item-image itemImg-10" src="../product/Warfarin.jpg" />
+                <div class="shop-item-details">
+                    <span class="shop-item-price itemPrice-10">$12.99</span>
+                    <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-10', 'itemPrice-10', 'Warfarin');">
+                        Add to Cart
+                    </button>
+                </div>
+            </div> -->
+
+
+
+
         </div>
+
+        </section>
     </section>
+
+
     <section class="container content-section">
         <h2 class="section-header">CART</h2>
         <div class="cart-row">
@@ -153,15 +497,78 @@
 
     <div id="footer"></div>
 
+    <script>
+        // fetching json file
+            fetch("../json/ProductsSold.json")
+            .then(response =>   response.json())
+            .then(data => {
+
+            // store html content for all prescrible items and non
+            var productsHTMLPresp = "";
+            var productsHTMLPrespNon = "";
+
+            // iterate through products dicitonary
+            for (let i = 0; i < data.products.length; i++) {
+
+                // pulls one prodcut at a time
+                const product = data.products[i];
+
+                // checks if item is prescrible
+                if( product.Prescription == true){
+
+                    const productHTML = `
+                        <div class="shop-item">
+                            <span class="shop-item-title itemTitle-${i}">${product.name}</span>
+                            <img class="shop-item-image itemImg-${i}" src="${product.imgPath}" />
+                            <div class="shop-item-details">
+                            <span class="shop-item-price itemPrice-${i}">$${product.price}</span>
+                            <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${product.name}'); swapbutton(event, '${product.name}');">
+                                Add to Cart
+                            </button>
+                            </div>
+                        </div>
+                        `;
+
+                    // appends single item html code
+                    productsHTMLPresp = productsHTMLPresp +  productHTML;
+                } else if (product.Prescription == false){
+                    const productHTML = `
+                        <div class="shop-item">
+                            <span class="shop-item-title itemTitle-${i}">${product.name}</span>
+                            <img class="shop-item-image itemImg-${i}" src="${product.imgPath}" />
+                            <div class="shop-item-details">
+                            <span class="shop-item-price itemPrice-${i}">$${product.price}</span>
+                            <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${product.name}'); swapbutton(event, '${product.name}');">
+                                Add to Cart
+                            </button>
+                            </div>
+                        </div>
+                        `;
+                     // appends single item html code
+                    productsHTMLPrespNon = productsHTMLPrespNon +  productHTML;
+                }
+
+            }
+                // end of for loop
+                // added all prescrible items
+
+                // selects parent tag for over the counter parent
+                const parentTag = document.getElementById("shop-container-over-counter");
+                const innerTag = parentTag.querySelector("span");
+                // console.log(innerTag);
+                innerTag.outerHTML = productsHTMLPrespNon;
+
+                // selects the parent tag to add the products under prescripiton tab
+                const parentElement = document.getElementById("shop-items-prescription");
+                const innerTagElement = parentElement.querySelector("span");
+                // console.log(innerTagElement.outerHTML);
+                innerTagElement.outerHTML = productsHTMLPresp;
+            })
+    </script>
+
 </body>
-<script>
-    function toggleDarkMode() {
-        const body = document.body;
-        body.classList.toggle("dark");
-    }
 
+<script src="../js/homepage.js" ></script>
+<script src="../js/profilePic.js" ></script>
 
-</script>
-<script src="../js/homepage.js"></script>
-<script src="../js/profilePic.js"></script>
 </html>

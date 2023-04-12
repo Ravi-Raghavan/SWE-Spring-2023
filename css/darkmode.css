@@ -194,8 +194,29 @@ body.dark .second .item_list .item_price {
 body.dark .cart-total strong,
 body.dark .cart-total span,
 body.dark .cart-row span,
-body.dark .shop-item-price {
+body.dark .shop-item-price,
+body.dark .shop-items span {
   color: var(--primary);
+}
+
+body.dark .shop-items {
+  background-color: var(--primary-dark);
+  border: 2px solid var(--suppliment);
+}
+
+body.dark .shop-item-title {
+  color:var(--suppliment);
+}
+
+body.dark .shop-item-button,
+body.dark .btn-primary:hover {
+  background-color: var(--tertiary);
+  color: var(--secondary-dark);
+}
+
+body.dark .btn-primary{
+  background-color: var(--secondary);
+  color:var(--secondary-dark);
 }
 
 /* FAQ */
@@ -393,6 +414,7 @@ body.dark .contact-col div h5 {
 }
 
 /* dark mode for the google map */
+/* ! used for delivry page too */
 body.dark .dark-mode-map {
   filter: invert(1) hue-rotate(180deg);
   filter: invert(1) hue-rotate(180deg) brightness(85%) contrast(120%)
@@ -400,3 +422,31 @@ body.dark .dark-mode-map {
   filter: invert(1) hue-rotate(180deg) brightness(100%) saturate(60%);
 }
 
+/*  ? Delivery Page */
+body.dark .order-items-box,
+body.dark .order-items-box-right {
+  background-color: var(--primary-dark);
+}
+
+body.dark .order-items-box h1,
+body.dark .order-items-box h2,
+body.dark .payment-box .heading {
+  background-color: var(--tertiary);
+  color: var(--primary-dark);
+}
+
+body.dark .payment-box section {
+  color:var(--suppliment);
+}
+
+body.dark .item-details {
+  background-color: var(--secondary-dark);
+}
+
+body.dark .item-details img {
+  border-color: var(--tertiary);
+}
+
+body.dark .item-details:hover {
+    border: 3px solid var(--suppliment);
+}

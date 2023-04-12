@@ -119,8 +119,101 @@ async function sendValidatedPrescriptionNotification(email,doctorFirstName,docto
     console.log("Done with sending Notification");
 }
 
+async function sendErrorEmailDoctor(email,prescriptionNumber){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+        user: 'swespring2023@gmail.com',
+        pass: 'lotrlepvzmwdnsny'
+    }
+    });
+
+    var mailOptions = {
+        from: 'swespring2023@gmail.com',
+        to: `${email}`,
+        subject: 'Prescription Validation Error',
+        text: `Dear Valued Doctor,\n\n     There has been an error with Prescription ${"'"+prescriptionNumber+"'"}. We believe that some of the contents of the "DOCTOR PRESCRIPTION FILL FORM" may have been filled incorrectly. Please log in to your DrugHub account and re-submit your patient's Prescription. Thank you for choosing DrubHub, we appreciate your patience\n\nBest,\nThe DrugHub Team`
+    };
+
+    result = await new Promise((resolve, reject) =>{
+        transporter.sendMail(mailOptions,function(error, info){
+            if(error){
+                reject(error);
+            }else{
+                resolve('Email sent: '+ info.response);
+                console.log("Email sent " + info.response);
+            }
+        });
+    })
+    console.log("Done with sending Notification");
+}
+
+async function sendErrorEmailPatient(email,prescriptionNumber){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+        user: 'swespring2023@gmail.com',
+        pass: 'lotrlepvzmwdnsny'
+    }
+    });
+
+    var mailOptions = {
+        from: 'swespring2023@gmail.com',
+        to: `${email}`,
+        subject: 'Prescription Validation Error',
+        text: `Dear Valued Patient,\n\n     There has been an error with Prescription ${"'"+prescriptionNumber+"'"}. We believe that some of the contents of the "PATIENT PRESCRIPTION REQUEST FORM" may have been filled incorrectly. Please log in to your DrugHub account and re-submit your prescription. Thank you for choosing DrubHub, we appreciate your patience\n\nBest,\nThe DrugHub Team`
+    };
+
+    result = await new Promise((resolve, reject) =>{
+        transporter.sendMail(mailOptions,function(error, info){
+            if(error){
+                reject(error);
+            }else{
+                resolve('Email sent: '+ info.response);
+                console.log("Email sent " + info.response);
+            }
+        });
+    })
+    console.log("Done with sending Notification");
+}
+
+async function sendDocumentationEmail(email, fileName, status){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+        user: 'swespring2023@gmail.com',
+        pass: 'lotrlepvzmwdnsny'
+    }
+    });
+
+    var subject = status == "verified" ? "Documentation Verified" : "Documentation Denied";
+    var text = status == "verified" ? `Your Documentation ${fileName} has been verified` : `Your Documentation ${fileName} has been denied`
+
+    var mailOptions = {
+        from: 'swespring2023@gmail.com',
+        to: `${email}`,
+        subject: subject,
+        text: text
+    };
+
+    result = await new Promise((resolve, reject) =>{
+        transporter.sendMail(mailOptions,function(error, info){
+            if(error){
+                reject(error);
+            }else{
+                resolve('Email sent: '+ info.response);
+                console.log("Email sent " + info.response);
+            }
+        });
+    })
+    console.log("Done with sending email");
+}
+
 module.exports = {
     sendContactEmail: sendContactEmail, 
     sendValidationEmail: sendValidationEmail,
-    sendValidatedPrescriptionNotification:sendValidatedPrescriptionNotification
+    sendValidatedPrescriptionNotification:sendValidatedPrescriptionNotification,
+    sendErrorEmailDoctor:sendErrorEmailDoctor,
+    sendErrorEmailPatient:sendErrorEmailPatient,
+    sendDocumentationEmail : sendDocumentationEmail
 }

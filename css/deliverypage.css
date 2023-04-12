@@ -1,136 +1,140 @@
 @import url("/css/static.css");
 
-.imagecontainer {
-    padding-top: 100px;
-    width: 30%;
+
+.main-box {
+    padding-top: 150px;
+    /* width: 800px; */
     height: 100%;
     margin-left: auto;
-    margin-right: 40px;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 
-.imagecontainer img {
-    height: 500px;
+.order-items-box {
+    padding:20px 20px;
+    width: 500px;
+    border-radius: 10px;
+    background-color: var(--suppliment);
 }
 
-.delivery-info {
-    width: 800px;
-    margin-top: -475px;
-    padding-left: 60px;
-   /* background-color: bisque;*/
-
+.order-items-box h1,
+.order-items-box h2 {
+    background-color: var(--secondary);
+    padding: 5px 10px;
+    margin-left: -5px;
+    margin-right: -5px;
+    border-radius: 10px;
+    color:var(--primary);
+    font-family: var(--soft);
 }
 
-.delivery-info h1{
-font-size: 50px;
+.order-items-box h2 {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 2px 10px;
 }
 
-.delivery-info p{
-    font-size: 30px;
-    }
 
-.driver-info{
-    padding-left: 1100px;
-    padding-top: 180px;
-    /*background-color: aqua;*/
-    width: -200px;
-    }
-   
 
-.need-help p{
-    padding-left: 1100px;
-}
-
-.current-order {
-    background-color: #8fc0e3;
+.payment-box {
     margin-top: 20px;
-    padding-left: 50px;
-    color: white;
 }
 
-.box-1-Outline{
+.order-items-box-right {
+    padding: 20px 25px;
+    min-width: 350px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: var(--suppliment);
+}
+
+.item-frame{
+    display: flex;
+    flex-direction: column ;
+}
+
+.item-details {
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+    padding-top: 20px;
+    width: 100%;
+    margin-top: 10px;
+    background-color: var(--primary);
+    padding: 7px;
+    border-radius: 10px;
+    color:var(--fourth);
+    border: 3px solid transparent;
+    transition: 0.5s ease-out;
+}
+
+.item-details:hover {
+    border: 3px solid var(--fourth);
+}
+
+
+.item-details img {
+    height: 140px;
+    width: 140px;
+    border-radius: 10px;
+    border: 4px solid var(--secondary);
+}
+
+.item-details .item-name{
+    padding-top:5px ;
+    flex: 1;
+    font-family: var(--soft);
+}
+
+.item-price-details {
+    padding-top:5px ;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+
+.google-map-box iframe {
     width: 300px;
-    height: 200px;
-    padding-left: 5px;
-    border: 5px solid #8fc0e3;
-    margin-top: 1%;
-    margin-left: 72%;
-    
-    
+    height: 400px;
+    border-radius: 10px;
+    margin-bottom: -20px;
 }
 
-.order-total{
-    padding-left: 13px;
-    margin-top: -10%;
-    margin-left: 72%;
+.payment-box  {
+    text-align: right;
+    border-radius: 10px;
+    width: 100%;
+    padding: 10px;
 }
 
-.payment-info{
-    width: 300px;
-    border: 5px solid #8fc0e3;
-    padding-left: 5px;
-    margin-top: 2%;
-    margin-left: 72%; 
+.payment-box section {
+    margin-top: 5px;
 }
 
-.bill-to{
-    width: 300px;
-    border: 5px solid #8fc0e3;
-    padding-left: 5px;
-    margin-top: 2%;
-    margin-left: 72%; 
+.payment-box section{
+    padding-right: 20px;
+}
+.payment-box .heading {
+    font-size: 25px;
+    font-weight: bold;
+    width:100%;
+    padding: 2px 10px;
+    border-radius: 10px;
+    background-color: var(--secondary);
+    color: var(--primary);
+    font-family: var(--strong);
+    text-overflow: none;
 }
 
-.prev-orders{
-    margin-top: -20px;
-    margin-left: 50px;
-    text-decoration: underline white;
-    
+.payment-box :not(.heading){
+    font-size: 18px;
+    color: var(--fourth);
+    font-family: var(--strong);
+    margin-right: -20px;
 }
 
-.prev-orders a{
-    font-size: 15px;
-    color: white;
-}
 
-.shopitem1{
-    /*background-color:aqua;*/
-    margin-top: -430px;
-    }
-
-    .shopitem1 p{
-        padding-left: 10px;
-    }
-
-    .shopitem2 p{
-        padding-left: 0px;
-    }
-
-    .shopitem3 p{
-       margin-left: 10px;
-       margin-top: 0px;
-    }
-
-    .shopitem3 p1{
-        margin-left: 10px;
-        margin-top:300px;
-     }
-
-   
-
-.shopitem2{
-width: 275px;
-margin-left: 400px; 
-margin-top: -225px;
-}
-
-.shopitem3 img{
-    height: 250px;
-    width: 180px;
-    margin-left: 20px; 
-    margin-top: -5000px;
-    }
-
-.shopitem3{
-    margin-top: 300px;
-}
 

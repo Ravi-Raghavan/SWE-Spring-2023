@@ -8,7 +8,8 @@ async function logout() {
       body: JSON.stringify({
         uid: user_record["uid"],
         phoneNumber: user_record.phoneNumber,
-        address: user_record["Address"]
+        address: user_record["Address"],
+        documentationVerified: user_record["Documentation Verified"]
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -269,26 +270,11 @@ async function logout() {
 
     rows = '<tr style=\"display: none;\"><td></td><td>';
 
-    
-    //Orders
-    for(i = 0; i < OrderNumbers.length; i++){
-      rows = rows + "#"+(OrderNumbers[i]);
-      if(i != (OrderNumbers.length -1))
-        rows = rows + ('<br>');
-    }
-    rows = rows + ('</td><td>');
 
-    //Prescriptions
-    for(i = 0; i < PrescriptionNumbers.length; i++){
-      rows = rows + '#'+(PrescriptionNumbers[i]);
-      if(i != (PrescriptionNumbers.length -1))
-        rows = rows + ('<br>');
-    }
-    rows = rows + ('</td><td>');    
 
     //fileTitles
     for(i = 0; i < fileTitles.length; i++){
-      rows = rows + '<div onclick=\"rowListen(this)\"';
+      rows = rows + `<div onclick=\"rowListen(this, \'${UID}\')\"`;
 
       var status = fileStatus[i];
       
@@ -307,6 +293,11 @@ async function logout() {
       if(i != (fileTitles.length -1))
         rows = rows + ('<br>');
     }
+    rows = rows + ('</td><td>');    
+
+
+    //Verify Button
+    rows = rows + `<button onclick=\"verify(\'${UID}\')\">Verify</button>`
     rows = rows + ('</td></tr>'); 
 
 
@@ -521,25 +512,41 @@ async function logout() {
   }
 
   var clicked;
-  function rowListen(x){
+  var UID;
+  function rowListen(x, uid){
     clicked = x;
-    
+    UID = uid;
     document.getElementById("articleTitle").innerText = x.innerText;
 
     document.querySelector('.overlay').style.opacity = 1;
     document.querySelector('.overlay').style.visibility = "visible";
 
+    var rgb = x.style.color.toString();
+
+    rgb = rgb.substring(4, rgb.length-1)
+             .replace(/ /g, '')
+             .split(',');
+    
+    console.log(rgb);
+
  
-    if(false ){
+    if( (rgb[0] == 0 && rgb[1] == 128 && rgb[2] == 0) || (rgb[0] == 255 && rgb[1] == 0 && rgb[2] == 0)){
       document.getElementById("accept").style.display = "none";
       document.getElementById("deny").style.display = "none";
+      document.getElementById("download").style.display = "";
+      if(rgb[0] == 0 && rgb[1] == 128 && rgb[2] == 0)
+      document.getElementById("articleTitle").innerText = x.innerText + "\n\nVERIFIED!";
+
+      else{
+        document.getElementById("articleTitle").innerText = x.innerText + "\n\nDENIED!";
+      }
 
     }
 
     else{
       document.getElementById("accept").style.display = "";
       document.getElementById("deny").style.display = "";
-     
+      document.getElementById("download").style.display = "";
     }
     
 }
@@ -547,8 +554,7 @@ async function logout() {
 async function accept(){
   clicked.style.color = "#008000";
 
-  var user_record = JSON.parse(localStorage.getItem("User Record"));
-  var uid = user_record.uid;
+  var uid = UID;
   var file_name = clicked.innerText;
   var file_status = "verified";
 
@@ -557,6 +563,7 @@ async function accept(){
     file_name: file_name, 
     file_status: file_status
   }
+  exit();
 
   let response = await fetch('/update/documentation/status', {
         method: 'PUT',
@@ -565,14 +572,12 @@ async function accept(){
           'Content-type': 'application/json; charset=UTF-8',
         },
   })
-  exit();
 }
 
 async function deny(){
   clicked.style.color = "#ff0000";
 
-  var user_record = JSON.parse(localStorage.getItem("User Record"));
-  var uid = user_record.uid;
+  var uid = UID;
   var file_name = clicked.innerText;
   var file_status = "denied";
 
@@ -582,6 +587,8 @@ async function deny(){
     file_status: file_status
   }
 
+  exit();
+
   let response = await fetch('/update/documentation/status', {
         method: 'PUT',
         body: JSON.stringify(data),
@@ -590,12 +597,27 @@ async function deny(){
         },
   })
 
-  exit();
+
 }
 
 //This Function is used to download stuff from the server
-function download(){
+async function test(){
+  //alert("HERE");
+  var file_name = clicked.innerText;
+  console.log("FILE NAME: " + file_name);
 
+  let response = await fetch(`/download/file?file_name=${file_name}`, {method: 'GET'})
+  let response_blob = await response.blob()
+
+  //MAKE PDF CLIENT SIDE 
+  const link = document.createElement('a');
+  // create a blobURI pointing to our Blob
+  link.href = URL.createObjectURL(response_blob);
+  link.download = `${file_name}`;
+  // some browser needs the anchor to be in the doc
+  document.body.append(link);
+  link.click();
+  link.remove();
 }
 
 async function downloadOrders(){
@@ -618,6 +640,22 @@ async function downloadOrders(){
   link.remove();
 }
 
+async function verify(UID){
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+  let response = await fetch('/update/user', {
+    method: 'PATCH',
+    body: JSON.stringify({
+      uid: UID,
+      phoneNumber: user_record.phoneNumber,
+      address: user_record["Address"],
+      documentationVerified: true
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  })
+
+}
 
 function exit(){
     document.querySelector('.overlay').style.opacity = 0;

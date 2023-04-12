@@ -14,6 +14,28 @@ async function getTypeProcess(req,res,queryStringParameters){
     }
 }
 
+async function getDrugsProcess(req,res,queryStringParameters){
+    try{
+        var drug = queryStringParameters.drug;
+        var drugPromise = await prescriptionModel.getDrugs();
+        let signal = false;
+        for(let i = 0;i<drugPromise.length;i++){
+            if(drug.toUpperCase()==drugPromise[i].toUpperCase()){
+                signal = true;
+            }
+        }
+        if(signal){
+            res.writeHead(200);
+            res.end();
+        }else{
+            res.writeHead(300);
+            res.end();
+        }
+    }catch (err){
+        console.log(err);
+    }
+}
+
 async function addPatientPrescriptionProcess(req,res){
     try{
         let body = await getPostData(req);
@@ -104,7 +126,10 @@ async function checkPrescriptionProcess(req,res,queryStringParameters){
 }
 
 async function validateProcess(req,res){
-    let r = await prescriptionModel.validate();
+    try{
+    let body = await getPostData(req);
+    const {prescriptionNumber} = JSON.parse(body);
+    let r = await prescriptionModel.validate(prescriptionNumber);
     //console.log(r);
     if(r.length<3){
         res.writeHead(300);
@@ -131,21 +156,21 @@ async function validateProcess(req,res){
             var pDOB = r[1].patientDOB;
             var pfName = r[1].firstName;
             var pUID = r[1].patientUID;
-            var prescriptionNumber = r[0];
+            var prescriptionNumber1 = r[0];
             var refills = r[2].refills;
             var validatedPrescription = {
                 doctorEmail,dfName,dlName,dUID,dosage,
                 expireDate,instructions,
                 med,patientEmail,plName,pDOB,pfName,pUID,
-                prescriptionNumber,refills
+                prescriptionNumber1,refills
             }
             console.log(validatedPrescription);
             var addedOrNot = await prescriptionModel.addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
                 expireDate,instructions,
                 med,patientEmail,plName,pDOB,pfName,pUID,
-                prescriptionNumber,refills);
+                prescriptionNumber1,refills);
             if(addedOrNot=="added"){
-                let removeStatus = await prescriptionModel.removePrescriptions(dUID,pUID,prescriptionNumber);
+                let removeStatus = await prescriptionModel.removePrescriptions(dUID,pUID,prescriptionNumber1);
                 if(removeStatus=="Done"){
                     res.writeHead(200,'Content-Type:application/json');
                     res.end(JSON.stringify(patientEmail));
@@ -155,10 +180,24 @@ async function validateProcess(req,res){
                 }
             }
         }else{
-            res.writeHead(301);
-            res.end();
+            let dE = r[2].doctorAccountEmail;
+            let pE = r[1].patientEmail;
+            let pUID = r[1].patientUID;
+            let dUID = r[2].doctorUID;
+            var dataToSend = {
+                dE:dE,
+                pE:pE,
+                pUID:pUID,
+                dUID:dUID
+            }
+            res.writeHead(301,'Content-Type:application/json');
+            res.end(JSON.stringify(dataToSend));
         }
     }
+    }catch (err){
+        console.log(err);
+    }
+    
 }
 
 async function changeStatusProcess(req,res){
@@ -178,11 +217,59 @@ async function changeStatusProcess(req,res){
     }
 }
 
+async function removeDoctorPrescriptionProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const {pN,dUID} = JSON.parse(body);
+            let returnStatus = await prescriptionModel.removeDoctorPrescription(dUID,pN);
+        if(returnStatus=="removed"){
+            res.writeHead(205);
+            res.end();
+        }else{
+            res.writeHead(405);
+            res.end();
+        }
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function removePatientPrescriptionProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const {pN,pUID} = JSON.parse(body);
+        let returnStatus = await prescriptionModel.removePatientPrescription(pUID,pN);
+        if(returnStatus=="removed"){
+            res.writeHead(205);
+            res.end();
+        }else{
+            res.writeHead(405);
+            res.end();
+        }
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function getDrugListProcess(req,res){
+    try{
+        let returnData = await prescriptionModel.getDrugList();
+        res.writeHead(200,'Content-Type:application/json');
+        res.end(JSON.stringify(returnData));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     getTypeProcess,
     addPatientPrescriptionProcess,
     addDoctorPrescriptionProcess,
     checkPrescriptionProcess,
     validateProcess,
-    changeStatusProcess
+    changeStatusProcess,
+    removeDoctorPrescriptionProcess,
+    removePatientPrescriptionProcess,
+    getDrugsProcess,
+    getDrugListProcess
 };
