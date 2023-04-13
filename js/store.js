@@ -1,5 +1,20 @@
 // import { initializeApp } from "firebase-admin/app";
 // import { getDatabase } from "firebase-admin/database";
+
+
+/* TO DO
+    1. Get the list of prescribed medication names for the specific user once the page loads
+    2. Using that list, get each medication, from the database at address drugs/prescription/...
+    3. Additionally, on load, add all the over the counter medication to the database: For loop get request from database at address drugs/OTC/...
+    4. (Qadis) after payment has been verified, send email to user email confirming payment.
+
+    Front-End:
+    1. Swap buttons: 
+        a) addToCartClicked: when user clicks add to cart button must be swapped
+        b) removeItem: when user removes button from cart, shop item must also change back.
+        but  
+*/
+
 if (localStorage.getItem("User Record") == null) {
         alert("You must login to access the cart page");
 
@@ -46,28 +61,37 @@ async function ready() {
 
 
 
-    var removeCartItemButtons = document.getElementsByClassName('btn-danger')
+    
 
     //upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc, drugQuantity)
+    
+    function resetRemoveListener() {
+        var removeCartItemButtons = document.getElementsByClassName('btn-danger')
 
-function reset(){
-    for (var i = 0; i < removeCartItemButtons.length; i++) {
-        var button = removeCartItemButtons[i]
-        button.addEventListener('click', removeCartItem)
+        for (var i = 0; i < removeCartItemButtons.length; i++) {
+            var button = removeCartItemButtons[i]
+            button.addEventListener('click', removeCartItem)
+        }
     }
-}
+
+    resetRemoveListener();
+
     var quantityInputs = document.getElementsByClassName('cart-quantity-input')
     for (var i = 0; i < quantityInputs.length; i++) {
         var input = quantityInputs[i]
         input.addEventListener('change', quantityChanged)
     }
 
-    var addToCartButtons = document.getElementsByClassName('shop-item-button')
-    for (var i = 0; i < addToCartButtons.length; i++) {
-        var button = addToCartButtons[i]
-        button.addEventListener('click', addToCartClicked);
-        button.addEventListener('click', swapbutton);
+    function resetShopButton() {
+        var addToCartButtons = document.getElementsByClassName('shop-item-button')
+            for (var i = 0; i < addToCartButtons.length; i++) {
+                var button = addToCartButtons[i]
+                button.addEventListener('click', addToCartClicked);
+                //button.addEventListener('click', swapbutton);
+        }
     }
+
+    resetShopButton();
 
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
 
@@ -112,24 +136,24 @@ function removeCartItem(event) {
     var buttonClicked = event.target;
     buttonClicked.parentElement.parentElement.remove()
 
-    // var title = buttonClicked.parentElement.parentElement
-    //     .getElementsByClassName("cart-item cart-column")[0]
-    //     .getElementsByClassName("cart-item-title")[0]
-    //     .innerText;                                                         // get the title of the item 
-    // console.log(title);
-    // var shopItems = document.getElementsByClassName("shop-item");           // get all the shop items. Go through each one get the item and if
-    // for (var i = 0; i < shopItems.length; i++) {                            // the removed item is the same as the shop item
-    //     var item = document.getElementsByClassName("shop-item-title")[i];
-    //     var shopItemName = item.innerText;
-    //     console.log(shopItemName);
-    //     if (shopItemName == title) {
-    //         var a = item.parentElement
-    //             // .getElementsByClassName("shop-item-details")[0]
-    //             .getElementsByClassName("btn-danger")[0];
-    //         a.innerText = "Add to Cart";
-    //         a.setAttribute("class", "btn btn-primary shop-item-button");
-    //     }
-    // }
+    var title = buttonClicked.parentElement.parentElement
+        .getElementsByClassName("cart-item cart-column")[0]
+        .getElementsByClassName("cart-item-title")[0]
+        .innerText;                                                         // get the title of the item 
+    console.log(title);
+    var shopItems = document.getElementsByClassName("shop-item");           // get all the shop items. Go through each one get the item and if
+    for (var i = 0; i < shopItems.length; i++) {                            // the removed item is the same as the shop item
+        var item = document.getElementsByClassName("shop-item-title")[i];
+        var shopItemName = item.innerText;
+        console.log(shopItemName);
+        if (shopItemName == title) {
+            var a = item.parentElement
+                // .getElementsByClassName("shop-item-details")[0]
+                .getElementsByClassName("btn-danger")[0];
+            a.innerText = "Add to Cart";
+            a.setAttribute("class", "btn btn-primary shop-item-button");
+        }
+    }
     // console.log("clicked")
     updateCartTotal();
 }
@@ -140,6 +164,19 @@ function quantityChanged(event) {
         input.value = 1
     }
     updateCartTotal()
+}
+
+function swaps(event, title) {
+    var button = event.target;
+    if (button.innerText == "Add to Cart") {
+        button.innerText = "\u2715 Remove";
+        button.setAttribute("class", "btn btn-danger");
+        resetRemoveListener();
+    } else {
+        button.innerText = "Add to Cart";
+        button.setAttribute("class", "btn btn-primary shop-item-button");
+    }
+
 }
 
 function swapbutton(event, title) {
