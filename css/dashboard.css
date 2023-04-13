@@ -30,6 +30,52 @@
   margin-top: 3rem;
 }
 
+.text-field-container.clicked {
+  display: none;
+}
+
+.text-field-container {
+  position: relative;
+}
+
+.text-field {
+  display: inline-block;
+  padding: 20px 40px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  background-color: #bfcedf;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin-top: 3rem;
+}
+
+.loading-animation {
+  position: absolute;
+  top: 50%;
+  right:4rem;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  border-top-color: #333;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.my-button.clicked {
+  display: none;
+}
+
 .my-button:hover {
   background-color: #0056b3;
 }
