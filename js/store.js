@@ -19,12 +19,12 @@ else {
 
 async function ready() {
 
-    var user_record = JSON.parse(localStorage.getItem("User Record"));
-    var uid = user_record["uid"];
+    // var user_record = JSON.parse(localStorage.getItem("User Record"));
+    // var uid = user_record["uid"];
 
-    let res = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
-            method: 'GET'
-        })
+    // let res = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
+    //         method: 'GET'
+    //     })
 
     //     let responseStatus = res.status;
     //     let prescriptions = await res.json()
@@ -50,11 +50,12 @@ async function ready() {
 
     //upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc, drugQuantity)
 
-
+function reset(){
     for (var i = 0; i < removeCartItemButtons.length; i++) {
         var button = removeCartItemButtons[i]
         button.addEventListener('click', removeCartItem)
     }
+}
     var quantityInputs = document.getElementsByClassName('cart-quantity-input')
     for (var i = 0; i < quantityInputs.length; i++) {
         var input = quantityInputs[i]
@@ -188,7 +189,7 @@ function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     // var title = shopItem.getElementsByClassName(itemTitle)[0].innerText;
     var title = itemTitle;
     console.log(shopItem);
-    var price = shopItem.getElementsByClassName(itemPrice)[0].innerText;
+    var price = shopItem.getElementsByClassName(itemPrice)[0].innerText;            //error reading inner text
     var priceVal = parseFloat(
         shopItem
         .getElementsByClassName(itemPrice)[0]
