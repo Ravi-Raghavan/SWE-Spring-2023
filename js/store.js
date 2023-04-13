@@ -19,14 +19,34 @@ else {
 
 async function ready() {
 
-    var removeCartItemButtons = document.getElementsByClassName('btn-danger')
-    // console.log(removeCartItemButtons)
+    var user_record = JSON.parse(localStorage.getItem("User Record"));
+    var uid = user_record["uid"];
 
-    // var cartItems = document.getElementsByClassName('cart-items')[0]
-    // while (cartItems.hasChildNodes()) {
-    //     cartItems.removeChild(cartItems.firstChild)
-    // }
-    // updateCartTotal()
+    let res = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
+            method: 'GET'
+        })
+
+    //     let responseStatus = res.status;
+    //     let prescriptions = await res.json()
+    //     console.log("This is what is prescriptions:"+ JSON.stringify(prescriptions));
+    //     //document.getElementById("dropbtn").src = profilePicture;
+    //     //console.log(profilePicture);
+    //     //document.getElementById("dropbtn").style.filter = "none";
+    //     //document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
+    //     var counter = 0;
+    //     if (responseStatus == 200){
+    //         for (var prescriptionNumber in prescriptions){
+    //             console.log("ran");
+    //             counter++;
+    //         }
+    //     }
+    //     if(counter == 0){
+    //         document.getElementById("prescriptionMedication").remove();
+    //     }
+
+
+
+    var removeCartItemButtons = document.getElementsByClassName('btn-danger')
 
     //upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc, drugQuantity)
 
@@ -91,24 +111,26 @@ function removeCartItem(event) {
     var buttonClicked = event.target;
     buttonClicked.parentElement.parentElement.remove()
 
-    var title = buttonClicked.parentElement.parentElement
-        .getElementsByClassName("cart-item cart-column")[0]
-        .getElementsByClassName("cart-item-title")[0]
-        .innerText;
-    var shopItems = document.getElementsByClassName("shop-item");
-    for (var i = 0; i < shopItems.length; i++) {
-        var item = document.getElementsByClassName("shop-item-title")[i];
-        var shopItemName = item.innerText;
-        if (shopItemName == title) {
-            var a = item.parentElement
-                .getElementsByClassName("shop-item-details")[0]
-                .getElementsByClassName("btn btn-danger")[0];
-            a.innerText = "Add to Cart";
-            a.setAttribute("class", "btn btn-primary shop-item-button");
-        }
-    }
-    console.log("clicked\n")
-    updateCartTotal()
+    // var title = buttonClicked.parentElement.parentElement
+    //     .getElementsByClassName("cart-item cart-column")[0]
+    //     .getElementsByClassName("cart-item-title")[0]
+    //     .innerText;                                                         // get the title of the item 
+    // console.log(title);
+    // var shopItems = document.getElementsByClassName("shop-item");           // get all the shop items. Go through each one get the item and if
+    // for (var i = 0; i < shopItems.length; i++) {                            // the removed item is the same as the shop item
+    //     var item = document.getElementsByClassName("shop-item-title")[i];
+    //     var shopItemName = item.innerText;
+    //     console.log(shopItemName);
+    //     if (shopItemName == title) {
+    //         var a = item.parentElement
+    //             // .getElementsByClassName("shop-item-details")[0]
+    //             .getElementsByClassName("btn-danger")[0];
+    //         a.innerText = "Add to Cart";
+    //         a.setAttribute("class", "btn btn-primary shop-item-button");
+    //     }
+    // }
+    // console.log("clicked")
+    updateCartTotal();
 }
 
 function quantityChanged(event) {
@@ -212,7 +234,7 @@ function addItemToCart(title, price, imageSrc, drugQuantity) {
 
     for (var i = 0; i < cartItemNames.length; i++) {
         if (cartItemNames[i].innerText == title) {
-            // alert('This item is already added to the cart')
+            //alert('This item is already added to the cart')
             return
         }
     }
@@ -235,8 +257,11 @@ function addItemToCart(title, price, imageSrc, drugQuantity) {
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
 }
 
+
 var total = 0;
 var totalquantity = 0;
+
+
 function updateCartTotal() {
     var cartItemContainer = document.getElementsByClassName('cart-items')[0]
     var cartRows = cartItemContainer.getElementsByClassName('cart-row')
@@ -287,38 +312,35 @@ function updateCartTotal() {
 
 }
 
-window.onload = async function (){
-    if (localStorage.getItem("User Record") == null) {
-        alert("You cannot log in");
+// window.onload = async function (){
+//     if (localStorage.getItem("User Record") == null) {
 
-        window.location.href("/html/homepage.html");
+//     } else {
 
-    } else {
+//         var user_record = JSON.parse(localStorage.getItem("User Record"));
+//         var uid = user_record["uid"];
+//         var profilePicture = user_record.photoURL;
 
-        var user_record = JSON.parse(localStorage.getItem("User Record"));
-        var uid = user_record["uid"];
-        var profilePicture = user_record.photoURL;
+//         let response = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
+//             method: 'GET'
+//         })
 
-        let response = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
-            method: 'GET'
-        })
-
-        let responseStatus = response.status;
-        let prescriptions = await response.json()
-        console.log("This is what is prescriptions:"+ JSON.stringify(prescriptions));
-        document.getElementById("dropbtn").src = profilePicture;
-        console.log(profilePicture);
-        document.getElementById("dropbtn").style.filter = "none";
-        document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
-        var counter = 0;
-        if (responseStatus == 200){
-            for (var prescriptionNumber in prescriptions){
-                console.log("ran");
-                counter++;
-            }
-        }
-        if(counter == 0){
-            document.getElementById("prescriptionMedication").remove();
-        }
-    }
-}
+//         let responseStatus = response.status;
+//         let prescriptions = await response.json()
+//         console.log("This is what is prescriptions:"+ JSON.stringify(prescriptions));
+//         document.getElementById("dropbtn").src = profilePicture;
+//         console.log(profilePicture);
+//         document.getElementById("dropbtn").style.filter = "none";
+//         document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
+//         var counter = 0;
+//         if (responseStatus == 200){
+//             for (var prescriptionNumber in prescriptions){
+//                 console.log("ran");
+//                 counter++;
+//             }
+//         }
+//         if(counter == 0){
+//             document.getElementById("prescriptionMedication").remove();
+//         }
+//     }
+// }

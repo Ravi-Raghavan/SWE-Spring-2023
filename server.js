@@ -871,7 +871,7 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/api/updateCart":
-        console.log("updating the total cost: /api/updateCart");
+        console.log("updating the cart: /api/updateCart");
         updateCart(request, response);
         break;
 
