@@ -9,7 +9,7 @@
     4. (Qadis) after payment has been verified, send email to user email confirming payment.
 
     Front-End:
-    1. Swap buttons: 
+    1. Swap buttons:
         a) addToCartClicked: when user clicks add to cart, button must be swapped
         b) removeItem: when user removes item from cart, shop item must also change back.
         but if removing from the shop items, then must only remove the cart value associated with that medication.
@@ -61,10 +61,10 @@ async function ready() {
 
 
 
-    
+
 
     //upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc, drugQuantity)
-    
+
     function resetRemoveListener() {
         var removeCartItemButtons = document.getElementsByClassName('btn-danger')
 
@@ -114,6 +114,23 @@ async function ready() {
 
         addItemToCart(drugTitle, drugPrice, image , drugQuantity);
     }
+
+    let cartItems = document.getElementsByClassName("cart-item-title");
+    let shopItems = document.getElementsByClassName("shop-item-title");
+    if (cartItems.length > 0) {
+        for (let i = 0; i < cartItems.length; i++) {
+            for (let j = 0; j < shopItems.length; j++) {
+                if (cartItems[i].innerText == shopItems[j].innerText) {
+                    let button = shopItems[j].parentElement.getElementsByClassName("btn btn-primary shop-item-button")[0];
+                    if (button.innerText == "Add to Cart") {
+                        button.innerText = "\u2715 Remove";
+                        button.setAttribute("class", "btn btn-danger");
+                    }
+                }
+            }
+        }
+    }
+
     updateCartTotal();
 }
 
@@ -139,7 +156,7 @@ function removeCartItem(event) {
     var title = buttonClicked.parentElement.parentElement
         .getElementsByClassName("cart-item cart-column")[0]
         .getElementsByClassName("cart-item-title")[0]
-        .innerText;                                                         // get the title of the item 
+        .innerText;                                                         // get the title of the item
     console.log(title);
     var shopItems = document.getElementsByClassName("shop-item");           // get all the shop items. Go through each one get the item and if
     for (var i = 0; i < shopItems.length; i++) {                            // the removed item is the same as the shop item
@@ -148,7 +165,7 @@ function removeCartItem(event) {
         console.log(i+" "+shopItemName);
         if (shopItemName == title) {
             var a = item.parentElement
-                .getElementsByClassName("shop-item-details")[0]
+                // .getElementsByClassName("shop-item-details")[0]
                 .getElementsByClassName("btn-danger")[0];
             a.innerText = "Add to Cart";
             a.setAttribute("class", "btn btn-primary shop-item-button");
@@ -184,7 +201,6 @@ function swaps(event, title) {
 }
 
 function swapbutton(event, title) {
-    a = title;
     var button = event.target;
     if (button.innerText == "Add to Cart") {
         button.innerText = "\u2715 Remove";
@@ -196,7 +212,7 @@ function swapbutton(event, title) {
         // var func = button.getAttribute("onclick");
         // title = func.match(/'[a-zA-Z]*\s?\d*[a-zA-Z]*'/)[0];
         // title = title.replace(/'/g, '');
-        
+
 
         var cartItems = document.getElementsByClassName('cart-items')[0]
         var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
@@ -213,20 +229,20 @@ function swapbutton(event, title) {
 function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     var button = event.target;
 
-    var theme = document.getElementsByTagName("body")[0];
-    if (theme.classList.contains('dark')) {
-        button.style.outline = "2px solid var(--primary)";
+    // var theme = document.getElementsByTagName("body")[0];
+    // if (theme.classList.contains('dark')) {
+    //     button.style.outline = "2px solid var(--primary)";
 
-        setTimeout(function () {
-            button.style.outline = "transparent";
-        }, 1000);
-    } else {
-        button.style.outline = "2px solid var(--primary)";
+    //     setTimeout(function () {
+    //         button.style.outline = "transparent";
+    //     }, 1000);
+    // } else {
+    //     button.style.outline = "2px solid var(--primary)";
 
-        setTimeout(function () {
-            button.style.outline = "transparent";
-        }, 1000);
-    }
+    //     setTimeout(function () {
+    //         button.style.outline = "transparent";
+    //     }, 1000);
+    // }
 
     var shopItem = button.parentElement.parentElement;
     //var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText;
