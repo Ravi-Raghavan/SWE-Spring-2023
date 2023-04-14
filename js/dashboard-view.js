@@ -47,6 +47,7 @@ window.onload = async function () {
   })
 
   let userDocumentationJSON = await userDocumentation.json();
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
 
   for (var user in userDocumentationJSON){
     console.log("USER: " + user);
@@ -63,6 +64,19 @@ window.onload = async function () {
       for (var file in files){
         fileTitles.push(files[file]["name"])
         fileStatus.push(files[file]["status"])
+      }
+
+      if(user == user_record["uid"] ){
+        for(i=0; i < fileTitles.length; i++){
+          if(fileStatus[i] == "denied")
+          addPrevFile(fileTitles[i], 'D')
+
+          else if(fileStatus[i] =="unverified")
+          addPrevFile(fileTitles[i], 'P')
+
+          else
+          addPrevFile(fileTitles[i], 'A')
+        }
       }
 
 
@@ -278,8 +292,27 @@ function addOrder(OrderNumber, ItemList, quantityList, Status){
       return;
   }
   
+}
+
+function addPrevFile(nameOfFile, Status){
+  if(nameOfFile == null||Status == null)
+    return;
+  
+  else{
+    var rows = '<tr><td>'+ nameOfFile+'</td><td>';
+      rows= rows +(Status+'</td></tr>');
+      var table = document.getElementById('fileList');
+      var template = document.createElement('template');
+      template.innerHTML = rows;
+      console.log(rows);
+      table.append(template.content);
+      
+      return;
+  }
   
 }
+
+
 
 //HELPER FUNCTION TO ADD USERS TO USER TABLE
 //Params: Integer (UID), Array of Integers (Order Numbers), Array of Integers (Prescription Numbers), Array of Strings (File Titles)
