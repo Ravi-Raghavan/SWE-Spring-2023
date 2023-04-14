@@ -154,7 +154,7 @@ function removeCartItem(event) {
     buttonClicked.parentElement.parentElement.remove()
 
     var title = buttonClicked.parentElement.parentElement
-        .getElementsByClassName("cart-item cart-column")[0]
+        // .getElementsByClassName("cart-item cart-column")[0]
         .getElementsByClassName("cart-item-title")[0]
         .innerText;                                                         // get the title of the item
     console.log(title);
@@ -164,11 +164,11 @@ function removeCartItem(event) {
         var shopItemName = item.innerText;
         console.log(i+" "+shopItemName);
         if (shopItemName == title) {
-            var a = item.parentElement
+            let button = item.parentElement
                 // .getElementsByClassName("shop-item-details")[0]
                 .getElementsByClassName("btn-danger")[0];
-            a.innerText = "Add to Cart";
-            a.setAttribute("class", "btn btn-primary shop-item-button");
+            button.innerText = "Add to Cart";
+            button.setAttribute("class", "btn btn-primary shop-item-button");
         }
     }
     // console.log("clicked")
@@ -213,9 +213,7 @@ function swapbutton(event, title) {
         // title = func.match(/'[a-zA-Z]*\s?\d*[a-zA-Z]*'/)[0];
         // title = title.replace(/'/g, '');
 
-
-        var cartItems = document.getElementsByClassName('cart-items')[0]
-        var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
+        var cartItemNames = document.getElementsByClassName('cart-item-title');
         for (var i = 0; i < cartItemNames.length; i++) {
             if (cartItemNames[i].innerText == title) {
                 cartItemNames[i].parentElement.parentElement.remove();
