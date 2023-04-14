@@ -148,7 +148,7 @@ function removeCartItem(event) {
         console.log(i+" "+shopItemName);
         if (shopItemName == title) {
             var a = item.parentElement
-                // .getElementsByClassName("shop-item-details")[0]
+                .getElementsByClassName("shop-item-details")[0]
                 .getElementsByClassName("btn-danger")[0];
             a.innerText = "Add to Cart";
             a.setAttribute("class", "btn btn-primary shop-item-button");
