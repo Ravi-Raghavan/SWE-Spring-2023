@@ -10,9 +10,9 @@
 
     Front-End:
     1. Swap buttons: 
-        a) addToCartClicked: when user clicks add to cart button must be swapped
-        b) removeItem: when user removes button from cart, shop item must also change back.
-        but  
+        a) addToCartClicked: when user clicks add to cart, button must be swapped
+        b) removeItem: when user removes item from cart, shop item must also change back.
+        but if removing from the shop items, then must only remove the cart value associated with that medication.
 */
 
 if (localStorage.getItem("User Record") == null) {
@@ -87,7 +87,7 @@ async function ready() {
             for (var i = 0; i < addToCartButtons.length; i++) {
                 var button = addToCartButtons[i]
                 button.addEventListener('click', addToCartClicked);
-                //button.addEventListener('click', swapbutton);
+                button.addEventListener('click', swapbutton);
         }
     }
 
@@ -145,7 +145,7 @@ function removeCartItem(event) {
     for (var i = 0; i < shopItems.length; i++) {                            // the removed item is the same as the shop item
         var item = document.getElementsByClassName("shop-item-title")[i];
         var shopItemName = item.innerText;
-        console.log(shopItemName);
+        console.log(i+" "+shopItemName);
         if (shopItemName == title) {
             var a = item.parentElement
                 // .getElementsByClassName("shop-item-details")[0]
@@ -155,6 +155,7 @@ function removeCartItem(event) {
         }
     }
     // console.log("clicked")
+    // swaps(event);
     updateCartTotal();
 }
 
@@ -177,6 +178,9 @@ function swaps(event, title) {
         button.setAttribute("class", "btn btn-primary shop-item-button");
     }
 
+    resetRemoveListener();
+    resetShopButton();
+
 }
 
 function swapbutton(event, title) {
@@ -192,6 +196,7 @@ function swapbutton(event, title) {
         // var func = button.getAttribute("onclick");
         // title = func.match(/'[a-zA-Z]*\s?\d*[a-zA-Z]*'/)[0];
         // title = title.replace(/'/g, '');
+        
 
         var cartItems = document.getElementsByClassName('cart-items')[0]
         var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
@@ -202,6 +207,7 @@ function swapbutton(event, title) {
             }
         }
     }
+
 }
 
 function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
@@ -223,10 +229,11 @@ function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     }
 
     var shopItem = button.parentElement.parentElement;
-    // var title = shopItem.getElementsByClassName(itemTitle)[0].innerText;
+    //var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText;
     var title = itemTitle;
-    console.log(shopItem);
+    //console.log(shopItem);
     var price = shopItem.getElementsByClassName(itemPrice)[0].innerText;            //error reading inner text
+
     var priceVal = parseFloat(
         shopItem
         .getElementsByClassName(itemPrice)[0]
@@ -241,6 +248,7 @@ function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     // console.log(order);
 
     addItemToCart(title, price, imageSrc, 1);
+    //swaps(event);
     updateCartTotal();
 
     //This fetch will request the uri path to update the cost of the cart and add drugs
