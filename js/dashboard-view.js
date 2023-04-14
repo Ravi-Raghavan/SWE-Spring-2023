@@ -21,7 +21,7 @@ async function logout() {
 }
 
 window.onload = async function () {
-
+  document.querySelector(".text-field-container").classList.toggle("clicked");
   /**
    * Doctor Generate Prescription Tab
    */
@@ -720,7 +720,8 @@ document.getElementById("sideMenu").innerHTML = finalStuff;
 }
 
 function sendPrescriptionNumber(){
-document.querySelector(".my-button").setAttribute("disable",true);
+document.querySelector(".my-button").classList.toggle("clicked");
+document.querySelector(".text-field-container").classList.toggle("clicked");
 fetch("/html/random/prescription",{
   method:"GET",
   cache:"no-cache"
@@ -745,3 +746,4 @@ fetch("prescription/request/email",{
   window.location.href = "./requestPrescriptionNumberConfirmation.html";
 })
 }
+
