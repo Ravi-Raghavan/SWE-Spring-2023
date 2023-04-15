@@ -351,11 +351,15 @@ function addUserData(UID, OrderNumbers, PrescriptionNumbers, fileTitles, fileSta
   }
   rows = rows + ('</td><td>');    
 
+//Probably also have to add logic to check if user has already been verified or denied.
 
   //Verify Button
-  rows = rows + `<button onclick=\"verify(\'${UID}\')\">Verify</button>`
+  rows = rows + `<button class =\"dl-btn\"onclick=\"verify(\'${UID}\')\">Verify</button>`
+  //Deny Button
+  rows = rows + `<button class =\"dl-btn\"onclick=\"deny(\'${UID}\')\">Deny</button>`
   rows = rows + ('</td></tr>'); 
 
+  
 
   table = document.getElementById('userList');
   template = document.createElement('template');
