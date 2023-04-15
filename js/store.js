@@ -229,12 +229,12 @@ function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
 
     button.style.transistion = "0.5s ease-in-out";
     button.style.opacity = 0.5
-    button.style.cursor = "not-allowed";
+    button.style.cursor = "wait";
 
     setTimeout(function () {
         button.style.opacity = 1;
         button.style.cursor = "pointer";
-    }, 300);
+    }, 100);
 
     // var theme = document.getElementsByTagName("body")[0];
     // if (theme.classList.contains('dark')) {
@@ -316,7 +316,7 @@ function addItemToCart(title, price, imageSrc, drugQuantity) {
 <span class="cart-price cart-column">${price}</span>
 <div class="cart-quantity cart-column">
     <input class="cart-quantity-input" type="number" value="${drugQuantity}">
-    <button class="btn btn-danger" type="button">REMOVE</button>
+    <button class="btn btn-danger" type="button">Remove</button>
 </div>`
 
     cartRow.innerHTML = cartRowContents
