@@ -157,7 +157,7 @@ function removeCartItem(event) {
         // .getElementsByClassName("cart-item cart-column")[0]
         .getElementsByClassName("cart-item-title")[0]
         .innerText;                                                         // get the title of the item
-    console.log(title);
+    // console.log(title);
     var shopItems = document.getElementsByClassName("shop-item");           // get all the shop items. Go through each one get the item and if
     for (var i = 0; i < shopItems.length; i++) {                            // the removed item is the same as the shop item
         var item = document.getElementsByClassName("shop-item-title")[i];
