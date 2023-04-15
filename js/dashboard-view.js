@@ -69,13 +69,13 @@ window.onload = async function () {
       if(user == user_record["uid"] ){
         for(i=0; i < fileTitles.length; i++){
           if(fileStatus[i] == "denied")
-          addPrevFile(fileTitles[i], 'D')
+          addPrevFile(fileTitles[i].substring(fileTitles[i].indexOf('/')+1), 'D')
 
           else if(fileStatus[i] =="unverified")
-          addPrevFile(fileTitles[i], 'P')
+          addPrevFile(fileTitles[i].substring(fileTitles[i].indexOf('/')+1), 'P')
 
           else
-          addPrevFile(fileTitles[i], 'A')
+          addPrevFile(fileTitles[i].substring(fileTitles[i].indexOf('/')+1), 'A')
         }
       }
 
