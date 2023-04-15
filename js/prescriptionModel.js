@@ -196,6 +196,49 @@ async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
         return promise;
     }
 
+    async function dropDown(type,uid){
+        if(type=="patient"){
+            let path1 = db.ref(`/patientPrescriptions/${uid}/`);
+            let path2 = db.ref(`/validatedPrescriptions/${uid}/`);
+            const promise1 = await new Promise((resolve,reject)=>{
+                path1.get().then((snapshot)=>{
+                    if(snapshot.val()==null){
+                        resolve("none");
+                    }else{
+                        resolve(Object.keys(snapshot.val()));
+                    }
+                })
+            })
+            const promise2 = await new Promise((resolve,reject)=>{
+                path2.get().then((snapshot)=>{
+                    if(snapshot.val()==null){
+                        resolve("none");
+                    }else{
+                        resolve(Object.keys(snapshot.val()))
+                    }
+                })
+            })
+            const promiseArray = [promise1,promise2];
+            return promiseArray;
+        }else if(type == "doctor"){
+            let path1 = db.ref(`/doctorPrescriptions/`);
+            let path2 = db.ref(`/validatedPrescriptions/`);
+            
+        }else{
+            return;
+        }
+    }
+
+    async function display(uid,prescriptionNumber,path){
+        const route = db.ref(`/${path}/${uid}/${prescriptionNumber}/`);
+        const promise = await new Promise((resolve,reject)=>{
+            route.get().then((snapshot)=>{
+                resolve(snapshot.val());
+            })
+        })
+        return promise;
+    }
+
 module.exports = {
     getType,
     addPatientPrescription,
@@ -209,5 +252,7 @@ module.exports = {
     removePatientPrescription,
     getDrugs,
     getDrugList,
-    getRandomPrescription
+    getRandomPrescription,
+    dropDown,
+    display
 };

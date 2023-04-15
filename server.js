@@ -28,6 +28,7 @@ const public_paths_html = [
   "/html/email-validated.html",
   "/html/FAQ.html",
   "/html/fileUploadTest.html",
+  "/html/ppview.html",
   "/html/homepage.html",
   "/html/requestPrescriptionNumberConfirmation.html",
   "/html/index.html",
@@ -75,6 +76,7 @@ const public_paths_css = [
 const public_paths_js = [
   "/js/darkmode.js",
   "/js/dashboard-view.js",
+  "/js/ppview.js",
   "/js/script.js",
   "/js/paypal.js",
   "/js/firebase.js",
@@ -201,7 +203,7 @@ const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 const cloudStorage = require("./js/cloudStorage");
-const { getDrugListProcess, getDrugsProcess,removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess, getRandomPrescriptionProcess } = require("./js/prescriptionController");
+const { displayProcess,dropDownProcess,getDrugListProcess, getDrugsProcess,removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess, getRandomPrescriptionProcess } = require("./js/prescriptionController");
 const { getRandomPrescription } = require("./js/prescriptionModel");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
@@ -814,6 +816,15 @@ const server = http.createServer((request, response) => {
       case "/prescription/remove/patient":
         removePatientPrescriptionProcess(request,response);
         break;
+
+      case "/prescription/dropdown/patient":
+        dropDownProcess(request,response,queryStringParameters);
+        break;
+
+      case "/prescription/display":
+        displayProcess(request,response);
+        break;
+
       /**
        * Prescription Section End
        */

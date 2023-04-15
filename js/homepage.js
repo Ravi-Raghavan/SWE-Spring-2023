@@ -75,7 +75,7 @@ function prescriptionViewPage(){
         if(userObject["Account Type"] == "Doctor"){
             return;
         }else{
-            return;
+            window.location.href = "./ppview.html";
         }
     }catch (err){
         alert("Please log-in to access this page.")

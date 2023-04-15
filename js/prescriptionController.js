@@ -280,6 +280,31 @@ async function getDrugListProcess(req,res){
     }
 }
 
+async function dropDownProcess(req,res,queryStringParameters){
+    try{
+        let type = queryStringParameters.type;
+        let body = await getPostData(req);
+        const {uid} = JSON.parse(body);
+        let array = await prescriptionModel.dropDown(type,uid);
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(array));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function displayProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const {uid,prescriptionNumber,path} = JSON.parse(body);
+        let contents = await prescriptionModel.display(uid,prescriptionNumber,path);
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(contents));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     getTypeProcess,
     addPatientPrescriptionProcess,
@@ -291,5 +316,7 @@ module.exports = {
     removePatientPrescriptionProcess,
     getDrugsProcess,
     getDrugListProcess,
-    getRandomPrescriptionProcess
+    getRandomPrescriptionProcess,
+    dropDownProcess,
+    displayProcess
 };
