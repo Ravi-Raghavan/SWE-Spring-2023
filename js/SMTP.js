@@ -148,6 +148,35 @@ async function sendErrorEmailDoctor(email,prescriptionNumber){
     console.log("Done with sending Notification");
 }
 
+async function sendPrescriptionEmail(email,prescriptionNumber){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+        user: 'swespring2023@gmail.com',
+        pass: 'lotrlepvzmwdnsny'
+    }
+    });
+
+    var mailOptions = {
+        from: 'swespring2023@gmail.com',
+        to: `${email}`,
+        subject: 'Requested Prescription Number',
+        text: `Dear Valued Doctor,\n\n     The prescription number you requested has been created. \n\nPlease use prescription number: ${prescriptionNumber}\n\nYour paitent has two weeks from the moment you receive this email to submit this prescription number to DrugHub. Following two weeks the prescription number wil be invalidated if it is not yet claimed. \n\nThank you for choosing DrubHub.\n\nBest,\nThe DrugHub Team`
+    };
+
+    result = await new Promise((resolve, reject) =>{
+        transporter.sendMail(mailOptions,function(error, info){
+            if(error){
+                reject(error);
+            }else{
+                resolve('Email sent: '+ info.response);
+                console.log("Email sent " + info.response);
+            }
+        });
+    })
+    console.log("Done with sending Notification");
+}
+
 async function sendErrorEmailPatient(email,prescriptionNumber){
     var transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -215,5 +244,6 @@ module.exports = {
     sendValidatedPrescriptionNotification:sendValidatedPrescriptionNotification,
     sendErrorEmailDoctor:sendErrorEmailDoctor,
     sendErrorEmailPatient:sendErrorEmailPatient,
-    sendDocumentationEmail : sendDocumentationEmail
+    sendDocumentationEmail : sendDocumentationEmail,
+    sendPrescriptionEmail:sendPrescriptionEmail
 }

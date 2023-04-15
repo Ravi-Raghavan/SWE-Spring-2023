@@ -14,6 +14,73 @@
     max-height: 100px;
 }
 
+.my-button {
+  display: inline-block;
+  padding: 20px 40px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin-top: 3rem;
+}
+
+.text-field-container.clicked {
+  display: none;
+}
+
+.text-field-container {
+  position: relative;
+}
+
+.text-field {
+  display: inline-block;
+  padding: 20px 40px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  background-color: #bfcedf;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  margin-top: 3rem;
+}
+
+.loading-animation {
+  position: absolute;
+  top: 50%;
+  right:4rem;
+  width: 40px;
+  height: 40px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  border-top-color: #333;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.my-button.clicked {
+  display: none;
+}
+
+.my-button:hover {
+  background-color: #0056b3;
+}
+
+
 .info-container{
     display: none;
 }
@@ -364,6 +431,25 @@ background-color: var(--secondary);
 
 }
 
+.dl-btn{
+    padding: 6px;
+    min-width: 100px;
+    margin-top: 10px;
+    margin-right: 16px;
+    justify-content:center;
+    font-size: 25px;
+    border-radius: 20px;
+    text-decoration: none;
+    margin-left: auto;
+    text-align: center; 
+    vertical-align: middle;
+    cursor: pointer;
+    outline: 0;
+
+}
+.dl-btn:hover{
+    background: var(--tertiary);
+}
 .settingRow .add{
   background-color: var(--tertiary);
   border: var(--tertiary);
@@ -560,4 +646,30 @@ input:checked + .slider:before {
   text-decoration: none;
   background: var(--secondary);
   color:var(--primary);
+}
+
+input[type=file] {
+  margin-top: 15px;
+  width: 350px;
+  max-width: 100%;
+  color: #444;
+  padding: 5px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #555;
+}
+
+input[type=file]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background: var(--secondary);
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover {
+  background: #0d45a5;
 }

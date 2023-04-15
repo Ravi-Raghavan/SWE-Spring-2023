@@ -68,3 +68,16 @@ async function login_logout(){
         window.location.href = "./user-auth-form.html";
     }
 }
+
+function prescriptionViewPage(){
+    try{
+        let userObject = JSON.parse(localStorage.getItem("User Record"));
+        if(userObject["Account Type"] == "Doctor"){
+            return;
+        }else{
+            return;
+        }
+    }catch (err){
+        alert("Please log-in to access this page.")
+    }
+}

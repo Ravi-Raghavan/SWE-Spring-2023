@@ -25,8 +25,8 @@
     <section class="container content-section">
 
         <section class="shop-container" id="shop-container-over-counter">
-             <h2 class="section-header">Over-The-Counter</h2>
-        <div class="shop-items">
+            <h2 class="section-header">Over-The-Counter</h2>
+                <div class="shop-items">
 
             <span>Over the counter items loading...</span>
             <!-- <div class="shop-item">
@@ -151,7 +151,7 @@
             </div> -->
 
 
-        </section>
+
 
             <!-- <div class="shop-item">
                     <span class="shop-item-title">Album 3</span>
@@ -173,7 +173,8 @@
                         </button>
                         </div>
                         </div> -->
-        </div>
+                </div>
+        </section>
     </section>
 
     <section class="container content-section">
@@ -528,7 +529,7 @@
                             <img class="shop-item-image itemImg-${i}" src="${product.imgPath}" />
                             <div class="shop-item-details">
                             <span class="shop-item-price itemPrice-${i}">$${product.price}</span>
-                            <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${product.name}'); swapbutton(event);">
+                            <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${product.name}'); swapbutton(event, '${product.name}');">
                                 Add to Cart
                             </button>
                             </div>
@@ -545,7 +546,7 @@
                             <img class="shop-item-image itemImg-${i}" src="${product.imgPath}" />
                             <div class="shop-item-details">
                             <span class="shop-item-price itemPrice-${i}">$${product.price}</span>
-                            <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${product.name}'); swapbutton(event);">
+                            <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${product.name}'); swapbutton(event, '${product.name}');">
                                 Add to Cart
                             </button>
                             </div>

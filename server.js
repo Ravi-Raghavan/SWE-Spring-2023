@@ -29,6 +29,7 @@ const public_paths_html = [
   "/html/FAQ.html",
   "/html/fileUploadTest.html",
   "/html/homepage.html",
+  "/html/requestPrescriptionNumberConfirmation.html",
   "/html/index.html",
   "/html/knowledge-base.html",
   "/html/logoutPage.html",
@@ -200,7 +201,8 @@ const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 const cloudStorage = require("./js/cloudStorage");
-const { getDrugListProcess, getDrugsProcess,removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess } = require("./js/prescriptionController");
+const { getDrugListProcess, getDrugsProcess,removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess, getRandomPrescriptionProcess } = require("./js/prescriptionController");
+const { getRandomPrescription } = require("./js/prescriptionModel");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -360,6 +362,21 @@ async function sendValidatedPrescriptionNotificationProcess(req,res,queryStringP
     const {doctorFirstName,doctorLastName,prescriptionNumber} = JSON.parse(body);
     var email = queryStringParameters.email;
     var notificationREF = await sendValidatedPrescriptionNotification(email,doctorFirstName,doctorLastName,prescriptionNumber);
+    const dataToSend = {
+      id: notificationREF
+    };
+    res.writeHead(200, {"Content-type": "application/json"});
+    res.end(JSON.stringify(dataToSend));
+  }catch (err){
+    console.log(err);
+  }
+}
+
+async function sendPrescriptionEmailProcess(req,res){
+  try{
+    let body = await getPostData(req);
+    const {doctorEmail,prescriptionNumber} = JSON.parse(body);
+    var notificationREF = await SMTP.sendPrescriptionEmail(doctorEmail,prescriptionNumber);
     const dataToSend = {
       id: notificationREF
     };
@@ -770,6 +787,14 @@ const server = http.createServer((request, response) => {
         sendValidatedPrescriptionNotificationProcess(request,response,queryStringParameters);
         break;
 
+      case "/html/prescription/request/email":
+        sendPrescriptionEmailProcess(request,response);
+        break;  
+
+      case "/html/random/prescription":
+        getRandomPrescriptionProcess(request,response);
+        break;  
+
       case "/prescription/get/drugs":
         getDrugsProcess(request,response,queryStringParameters);
         break;
@@ -846,7 +871,7 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/api/updateCart":
-        console.log("updating the total cost: /api/updateCart");
+        console.log("updating the cart: /api/updateCart");
         updateCart(request, response);
         break;
 
