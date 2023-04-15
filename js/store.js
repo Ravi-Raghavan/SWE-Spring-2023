@@ -2,11 +2,14 @@
 // import { getDatabase } from "firebase-admin/database";
 
 
-/* TO DO
+/* TODO
     1. Get the list of prescribed medication names for the specific user once the page loads
     2. Using that list, get each medication, from the database at address drugs/prescription/...
     3. Additionally, on load, add all the over the counter medication to the database: For loop get request from database at address drugs/OTC/...
-    4. (Qadis) after payment has been verified, send email to user email confirming payment.
+*/
+
+/* DONE
+    1. (Qadis) after payment has been verified, send email to user email confirming payment.
 
     Front-End:
     1. Swap buttons:
@@ -126,6 +129,7 @@ async function ready() {
                         button.innerText = "\u2715 Remove";
                         button.setAttribute("class", "btn btn-danger");
                     }
+                    break;
                 }
             }
         }
