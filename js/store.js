@@ -129,6 +129,7 @@ async function ready() {
                         button.innerText = "\u2715 Remove";
                         button.setAttribute("class", "btn btn-danger");
                     }
+                    break;
                 }
             }
         }
