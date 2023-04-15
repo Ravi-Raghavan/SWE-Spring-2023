@@ -106,7 +106,6 @@
         <section id="info" class="DrugFo">
           <div class="row">
             <h2>Recent Orders:</h2>
-            <button onclick = 'downloadOrders()'>Download</button>
             <div class="OrderTable">
               <table id="ordersList">
                 <tr class="table_header">
@@ -132,8 +131,11 @@
                   <td>Delivered</td>
                 </tr> -->
               </table>
+              
             </div>
       </div>
+      <button class = "dl-btn" onclick = 'downloadOrders()'>Download Order History</button>
+
 
       <div class="row">
         <h2 id="DoctorPrescribedItems">Recent Prescriptions:</h2>
