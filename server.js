@@ -607,7 +607,7 @@ function uploadDocumentation(request, response, queryStringParameters){
       response.end(String(err));
       return;
     }
-    
+
     var filePath = files["myfile"]["filepath"];
     var mimeType = files["myfile"]["mimetype"];
     var originalFileName = files["myfile"]["originalFilename"]
@@ -642,7 +642,7 @@ function uploadDocumentation(request, response, queryStringParameters){
               response.end();
           })
         })
-        .catch((error) => {      
+        .catch((error) => {
             console.log("FAILURE");
             response.writeHead(404, { "Content-type": "text/plain" });
             response.write("Couldn't Upload File");
@@ -781,7 +781,7 @@ const server = http.createServer((request, response) => {
 
       case "/prescription/active":
         changeStatusProcess(request,response);
-        break;  
+        break;
 
       case "/prescription/send/validated/email":
         sendValidatedPrescriptionNotificationProcess(request,response,queryStringParameters);
@@ -789,11 +789,11 @@ const server = http.createServer((request, response) => {
 
       case "/html/prescription/request/email":
         sendPrescriptionEmailProcess(request,response);
-        break;  
+        break;
 
       case "/html/random/prescription":
         getRandomPrescriptionProcess(request,response);
-        break;  
+        break;
 
       case "/prescription/get/drugs":
         getDrugsProcess(request,response,queryStringParameters);
@@ -886,7 +886,7 @@ const server = http.createServer((request, response) => {
       case "/contact-us":
         sendContactEmail(request, response);
         break;
-      
+
       case "/get/prescriptions/user":
         getPrescriptionsUser(request, response, queryStringParameters);
         break;
@@ -918,23 +918,23 @@ const server = http.createServer((request, response) => {
       case "/upload/documentation":
         uploadDocumentation(request, response, queryStringParameters);
         break;
-      
+
       case "/download/orders":
         downloadOrders(request, response, queryStringParameters);
         break;
-      
+
       case "/fetch/user/documentation":
         getUserDocumentation(request, response);
         break;
-      
+
       case "/update/documentation/status":
         updateDocumentationStatus(request, response);
         break;
-      
+
       case "/download/file":
         downloadUserFile(request, response, queryStringParameters);
         break;
-      
+
       case "/verify/documentation":
         break;
     }
