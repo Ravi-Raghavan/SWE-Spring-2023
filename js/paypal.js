@@ -83,9 +83,26 @@ async function capturePayment(orderId) {
             .then((snapshot) => {
                 let orderPushRef = orderRef.child(uid).push();
                 orderPushRef.set(snapshot.val());
+
+                const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+                let date_time = new Date();
+
+                // get current date
+                // adjust 0 before single digit date
+                let date = ("0" + date_time.getDate()).slice(-2);
+
+                // get current month
+                let month = monthNames[date_time.getMonth()];
+
+                // get current year
+                let year = date_time.getFullYear();
+
+                orderPushRef.child("orderDate").set(`${month} ${date} ${year}`);
                 orderPushRef.child("status").set("Pending");
                 userRef.child(uid).child("/orders/").child(orderPushRef.key).set(snapshot.val());
                 userRef.child(uid).child("/orders/").child(orderPushRef.key).child("status").set("Pending");
+                userRef.child(uid).child("/orders/").child(orderPushRef.key).child("orderDate").set(`${month} ${date} ${year}`);
 
                 /**DELETE CART */
                 cartRef.child(uid).set(null)
