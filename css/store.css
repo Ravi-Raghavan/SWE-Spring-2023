@@ -272,16 +272,17 @@ width: 120px;
 
 .btn-danger {
   color: var(--primary);
-  background-color: #eb5757;
+  background-color: var(--warning);
   border: none;
   border-radius: 10px;
+  text-align: center;
   /* font-weight: bold; */
   font-family: var(--soft);
   /* padding: 7px 12px; */
-  padding: 5px 12px;
+  padding: 5px 7px;
   font-size: 15px;
-height: 30px;
-width: 100px;
+  height: 30px;
+  width: 100px;
   transition: 0.3s ease-in-out;
 }
 
