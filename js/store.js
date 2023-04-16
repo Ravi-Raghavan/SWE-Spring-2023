@@ -283,7 +283,7 @@ function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     // order.push({ "item-name": title, price: priceVal, quantity: 1 });
     // console.log(order);
 
-    addItemToCart(title, price, imageSrc, 1);
+    addItemToCart(title, price, imageSrc, 1, false);
     //swaps(event);
     updateCartTotal();
 
@@ -306,8 +306,76 @@ function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     // order.push({"costs" : total+priceVal, "drugs" : title , "quantity" : 1})
     // console.log(order)
 }
+function addToCartClicked(event, itemImg, itemPrice, itemTitle, num) {
+    var button = event.target;
 
-function addItemToCart(title, price, imageSrc, drugQuantity) {
+    button.style.transistion = "0.5s ease-in-out";
+    button.style.opacity = 0.5
+    button.style.cursor = "wait";
+
+    setTimeout(function () {
+        button.style.opacity = 1;
+        button.style.cursor = "pointer";
+    }, 100);
+
+    // var theme = document.getElementsByTagName("body")[0];
+    // if (theme.classList.contains('dark')) {
+    //     button.style.outline = "2px solid var(--primary)";
+
+        // setTimeout(function () {
+        //     button.style.outline = "transparent";
+        // }, 1000);
+    // } else {
+    //     button.style.outline = "2px solid var(--primary)";
+
+    //     setTimeout(function () {
+    //         button.style.outline = "transparent";
+    //     }, 1000);
+    // }
+
+    var shopItem = button.parentElement.parentElement;
+    //var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText;
+    var title = itemTitle;
+    //console.log(shopItem);
+    var price = shopItem.getElementsByClassName(itemPrice)[0].innerText;            //error reading inner text
+
+    var priceVal = parseFloat(
+        shopItem
+        .getElementsByClassName(itemPrice)[0]
+        .innerText.replace("$", "")
+    );
+
+    // var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
+    var imageSrc = shopItem.getElementsByClassName(itemImg)[0].src;
+    console.log(title, price);
+    //Add item to order JSON.
+    // order.push({ "item-name": title, price: priceVal, quantity: 1 });
+    // console.log(order);
+
+    addItemToCart(title, price, imageSrc, num, true);
+    //swaps(event);
+    updateCartTotal();
+
+    //This fetch will request the uri path to update the cost of the cart and add drugs
+    //we can update quantity too if we add a variable to this javascript file that updates quantity aswell.
+    // fetch('http://localhost:8000/api/updateCart', {
+    //         method : 'PATCH',
+    //         body : JSON.stringify({
+    //             costs : total,
+    //             quantity : 1,
+    //             drugs : title
+    //         }),
+    //         headers: {
+    //             'Content-type': 'application/json',
+    //     },
+    // })
+    // .then((response) => response.json())
+    // .then((json) => console.log(json));
+
+    // order.push({"costs" : total+priceVal, "drugs" : title , "quantity" : 1})
+    // console.log(order)
+}
+function addItemToCart(title, price, imageSrc, drugQuantity, Prescription) {
     var cartRow = document.createElement('div')
     cartRow.classList.add('cart-row')
     cartRow.innerText = title
@@ -320,7 +388,7 @@ function addItemToCart(title, price, imageSrc, drugQuantity) {
             return
         }
     }
-
+if(!Prescription)
     var cartRowContents = `
 <div class="cart-item cart-column">
     <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
@@ -331,7 +399,17 @@ function addItemToCart(title, price, imageSrc, drugQuantity) {
     <input class="cart-quantity-input" type="number" value="${drugQuantity}">
     <button class="btn btn-danger" type="button">Remove</button>
 </div>`
-
+else
+    var cartRowContents = `
+<div class="cart-item cart-column">
+    <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
+    <span class="cart-item-title">${title}</span>
+</div>
+<span class="cart-price cart-column">${price}</span>
+<div class="cart-quantity cart-column">
+    <input class="cart-quantity-input" type="number" value="${drugQuantity}" readonly>
+    <button class="btn btn-danger" type="button">Remove</button>
+</div>`
     cartRow.innerHTML = cartRowContents
 
     cartItems.append(cartRow)
