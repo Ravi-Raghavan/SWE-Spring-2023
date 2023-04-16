@@ -208,7 +208,7 @@ async function loadOrders(){
     return;
   
   else{
-    var rows = '<tr ><td onclick=\"swapDisplay(\'OrderBox\', this.innerText)\">'+ String(OrderNumber) +'</td><td>';
+    var rows = '<tr ><td style=\"cursor: pointer;\" onclick=\"swapDisplay(\'OrderBox\', this.innerText)\">'+ String(OrderNumber) +'</td><td>';
       
       rows= rows +(Status+'</td></tr>');
       var table = document.getElementById('ordersList');
