@@ -356,7 +356,7 @@ function addUserData(UID, OrderNumbers, PrescriptionNumbers, fileTitles, fileSta
   //Verify Button
   rows = rows + `<button class =\"dl-btn\"onclick=\"verify(\'${UID}\')\">Verify</button>`
   //Deny Button
-  rows = rows + `<button class =\"dl-btn\"onclick=\"denyUser(\'${UID}\')\">Deny</button>`
+  rows = rows + `<button class =\"dl-btn-deny\"onclick=\"denyUser(\'${UID}\')\">Deny</button>`
   rows = rows + ('</td></tr>'); 
 
   
