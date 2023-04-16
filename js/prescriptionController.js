@@ -72,7 +72,6 @@ async function addDoctorPrescriptionProcess(req,res){
             doctorAccountEmail,
             expireDate,
             medication,
-            dosage,
             refills,
             prescriptionNumber,
             instructions,
@@ -86,7 +85,6 @@ async function addDoctorPrescriptionProcess(req,res){
             doctorAccountEmail,
             expireDate,
             medication,
-            dosage,
             refills,
             prescriptionNumber,
             instructions,
@@ -100,6 +98,25 @@ async function addDoctorPrescriptionProcess(req,res){
             }
     }catch (Err){
         console.log(Err);
+    }
+}
+
+function getRandomNumber(N) {
+    return Math.floor(Math.random() * (N + 1));
+  }
+
+async function getRandomPrescriptionProcess(req,res){
+    try{
+        let returnValue = await prescriptionModel.getRandomPrescription();
+        let length = returnValue.length;
+        let randomNumber = getRandomNumber(length-1);
+        let dataToReturn = {
+            item:returnValue[randomNumber]
+        }
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(dataToReturn));
+    }catch(err){
+        console.log(err);
     }
 }
 
@@ -147,7 +164,6 @@ async function validateProcess(req,res){
             var dfName = r[2].doctorFirstName;
             var dlName = r[2].doctorLastName;
             var dUID = r[2].doctorUID;
-            var dosage = r[2].dosage;
             var expireDate = r[2].expireDate;
             var instructions = r[2].instructions;
             var med = r[2].medication;
@@ -159,13 +175,13 @@ async function validateProcess(req,res){
             var prescriptionNumber1 = r[0];
             var refills = r[2].refills;
             var validatedPrescription = {
-                doctorEmail,dfName,dlName,dUID,dosage,
+                doctorEmail,dfName,dlName,dUID,
                 expireDate,instructions,
                 med,patientEmail,plName,pDOB,pfName,pUID,
                 prescriptionNumber1,refills
             }
             console.log(validatedPrescription);
-            var addedOrNot = await prescriptionModel.addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
+            var addedOrNot = await prescriptionModel.addValidatedPrescription(doctorEmail,dfName,dlName,dUID,
                 expireDate,instructions,
                 med,patientEmail,plName,pDOB,pfName,pUID,
                 prescriptionNumber1,refills);
@@ -261,6 +277,31 @@ async function getDrugListProcess(req,res){
     }
 }
 
+async function dropDownProcess(req,res,queryStringParameters){
+    try{
+        let type = queryStringParameters.type;
+        let body = await getPostData(req);
+        const {uid} = JSON.parse(body);
+        let array = await prescriptionModel.dropDown(type,uid);
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(array));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function displayProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const {uid,prescriptionNumber,path} = JSON.parse(body);
+        let contents = await prescriptionModel.display(uid,prescriptionNumber,path);
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(contents));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     getTypeProcess,
     addPatientPrescriptionProcess,
@@ -271,5 +312,8 @@ module.exports = {
     removeDoctorPrescriptionProcess,
     removePatientPrescriptionProcess,
     getDrugsProcess,
-    getDrugListProcess
+    getDrugListProcess,
+    getRandomPrescriptionProcess,
+    dropDownProcess,
+    displayProcess
 };

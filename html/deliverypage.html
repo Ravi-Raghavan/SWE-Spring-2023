@@ -21,64 +21,86 @@
     <div id="header"></div>
 
 
-    <div class="main-box">
-      <div class="order-items-box">
-        <h1>Order ID: 3349011984 </h1>
-        <h2>Order Date Feb 16, 2022 </h2>
-        <section class="item-frame">
-          <section class="item-details">
-            
-              <img src="../product/Ashwagandha.jpg">
-            
-          <h3 class="item-name">Ashwagandha </h3>
-          <section class="item-price-details">
-            <h3 class="item-price">$260.00</h3>
-            <h4>Qty: 1</h4>
-          </section>
-
-        </section>
-
-         <section class="item-details">
-            
-              <img src="../product/vitaminD.jpeg">
-            
-          <h3 class="item-name">Vitamin D </h3>
-          <section class="item-price-details">
-            <h3 class="item-price">$260.00</h3>
-            <h4>Qty: 2</h4>
-          </section>
-
-        </section>
-        </section>
-        
-      </div>
-      <div class="order-items-box-right">
-        <div class="google-map-box">
-          <iframe class="dark-mode-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.9054679436763!2d-74.45162046815483!3d40.49947339250539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3c65473e476bb%3A0xb54ce7a70b3b0ace!2s77%20Hamilton%20St%2C%20New%20Brunswick%2C%20NJ%2008901!5e0!3m2!1sen!2sus!4v1681007856387!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-
-        <div class="payment-box">
-          <table>
-            <section class="heading">Order Details</section>
-            <section>Sales Tax: $3.29</section>
-            <section>Shipping: $5.00</section>
-            <section>Final Tax: $56.26</section>
-
-            <section class="heading">Payment Information</section>
-            <section>Visa: ************3312</section>
-            <section>Expires: 04/25</section>
-            <section>John L. Smith</section>
-
-            <section class="heading">Bill To</section>
-            <section>John L. Smith</section>
-            <section>43 Avenue E</section>
-            <section>Piscataway NJ, 08854</section>
-            <section>United States</section>
-
-            </table>
-        </div>
-      </div>
+    <div id = "interface" class="main-box">
     </div>
+      <a id = "OrderBox" class = "info-container">
+        <div >
+          <img class="left" onclick = "swapDisplay('testBox', null)" src="../images/leftArrow.png">
+      </div>
+        
+        <div class="order-items-box">
+          <h1>Order ID: 3349011984 </h1>
+          <h2>Order Date Feb 16, 2022 </h2>
+          <section class="item-frame">
+            <section class="item-details">
+              
+                <img src="../product/Ashwagandha.jpg">
+              
+            <h3 class="item-name">Ashwagandha </h3>
+            <section class="item-price-details">
+              <h3 class="item-price">$260.00</h3>
+              <h4>Qty: 1</h4>
+            </section>
+
+          </section>
+
+            <section class="item-details">
+              
+                <img src="../product/vitaminD.jpeg">
+              
+            <h3 class="item-name">Vitamin D </h3>
+            <section class="item-price-details">
+              <h3 class="item-price">$260.00</h3>
+              <h4>Qty: 2</h4>
+            </section>
+
+          </section>
+          </section>
+          
+        </div>
+        <div class="order-items-box-right">
+          <div class="google-map-box">
+            <iframe class="dark-mode-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.9054679436763!2d-74.45162046815483!3d40.49947339250539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3c65473e476bb%3A0xb54ce7a70b3b0ace!2s77%20Hamilton%20St%2C%20New%20Brunswick%2C%20NJ%2008901!5e0!3m2!1sen!2sus!4v1681007856387!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+
+          <div class="payment-box">
+            <table>
+              <section class="heading">Order Details</section>
+              <section>Sales Tax: $3.29</section>
+              <section>Shipping: $5.00</section>
+              <section>Final Tax: $56.26</section>
+
+              <section class="heading">Payment Information</section>
+              <section>Visa: ************3312</section>
+              <section>Expires: 04/25</section>
+              <section>John L. Smith</section>
+
+              <section class="heading">Bill To</section>
+              <section>John L. Smith</section>
+              <section>43 Avenue E</section>
+              <section>Piscataway NJ, 08854</section>
+              <section>United States</section>
+
+              </table>
+          </div>
+        </div>
+        
+      </a>
+      <a id ="testBox" class = "info-container">
+       
+        <div class="OrderTable">
+          <table id="ordersList">
+            <tr class="table_header">
+              <th width = "120%">Order Number</th>
+              <th>Status</th>
+            
+            </tr>
+
+          </table>
+          
+        </div>
+      </a>
+    
 
    
 
@@ -88,4 +110,75 @@
 
   <script src="../js/homepage.js"></script>
   <script src="../js/profilePic.js"></script>
+
+  <script>
+   
+async function loadOrders(){
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+  let ordersResponse = await fetch(`/get/orders/user?uid=${user_record["uid"]}`, {
+      method: 'GET'
+    })
+
+    let ordersResponseStatus = ordersResponse.status;
+    let orders = await ordersResponse.json();
+    console.log("Response Status: " + ordersResponseStatus);
+    console.log("Order Data Fetched: " + JSON.stringify(orders));
+
+    if (ordersResponseStatus == 200){
+      for (var orderNumber in orders){
+        var order = orders[orderNumber];
+        var drugs = []
+        var quantities = []
+        for (var drugNumber in order["drugs"]){
+          var drug = order["drugs"][drugNumber];
+          drugs.push(drug["title"]);
+          quantities.push(parseInt(drug["quantity"]))
+        }
+        addOrder(orderNumber, "placed");
+      }
+    }
+}
+
+
+  function swapDisplay(location, uid) {
+    
+   
+    document.getElementById("interface").innerHTML = document.getElementById(location).innerHTML;
+    if(location == "testBox")
+    loadOrders();
+    
+    if(uid != null){
+      //GRABS THE ORDER ID
+      console.log(uid);
+
+      //HERES WHERE WE WILL MANIPULATE DATA!
+    }
+  }
+
+  function addOrder(OrderNumber, Status){
+  if(OrderNumber == null||Status == null)
+    return;
+  
+  else{
+    var rows = '<tr ><td onclick=\"swapDisplay(\'OrderBox\', this.innerText)\">'+ String(OrderNumber) +'</td><td>';
+      
+      rows= rows +(Status+'</td></tr>');
+      var table = document.getElementById('ordersList');
+      var template = document.createElement('template');
+      template.innerHTML = rows;
+      console.log(rows);
+      table.append(template.content);
+      
+
+      return;
+  }
+  
+}
+
+
+
+
+swapDisplay("testBox");
+orderBoxHtml = document.getElementById("interface").innerHTML;
+  </script>
 </html>

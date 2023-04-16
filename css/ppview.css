@@ -1,0 +1,147 @@
+@import url("/css/static.css");
+
+
+h1 {
+    font-size: 36px;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: var(--secondary);
+    font-family: var(--strong);
+}
+
+.back-button{
+    font-weight: bolder;
+    font-size: larger;
+    background-color: rgb(57, 117, 42);
+    color: white;
+    padding: 10px;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 20px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.25s ease-in-out;
+}
+
+.back-button:hover{
+    transition: 0.25s ease-in-out;
+    background-color: #00ac11;
+    cursor: pointer;
+}
+
+p {
+    font-size: 18px;
+    margin: 0 0 20px;
+}
+
+
+.container {
+    max-width: 800px;
+    /* min-width: 300px; */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--primary);
+    border: 1px solid var(--suppliment);
+    /* margin-top: 500px; */
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* margin-bottom: 5px; */
+    margin-top: 50px;
+    
+}
+
+.sub-title{
+    font-family: var(--soft);
+    background-color: var(--secondary);
+    color: var(--primary);
+    height: 15px;
+    width: 200px;
+    height: 35px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    font-weight: 500;
+    padding: 10px 15px;
+    /* text-align: center; */
+    font-size: 20px;
+    border-radius: 50px;
+    text-overflow: clip;
+    align-items: center;
+    justify-content: left;
+    margin-bottom: 10px;
+    transition: 0.3s ease-in;
+}
+
+
+/* CSS styles */
+.prescription-dropdown {
+position: relative;
+width: 200px;
+align-items: center;
+    justify-content: center;
+}
+
+.prescription-dropdown.v {
+position: relative;
+width: 200px;
+align-items: center;
+    justify-content: center;
+    margin-top: 5rem;
+}
+
+.prescription-dropdown select {
+/* width: 100%; */
+width: 200px;
+    height: 35px;
+    padding: 5px 15px;
+/* padding: 10px; */
+border: none;
+outline: none;
+background-color: var(--suppliment);
+color: var(--fourth);
+font-size: 16px;
+cursor: pointer;
+border-radius: 50px;
+appearance: none; /* Remove default arrow in some browsers */
+align-items: center;
+    justify-content: center;
+    font-family: var(--soft);
+    font-weight: 500;
+}
+
+.prescription-dropdown select::-ms-expand {
+display: none; /* Remove default arrow in IE10+ */
+}
+
+.prescription-dropdown::after {
+content: '\25BC'; /* Use ▼ as the custom arrow */
+position: absolute;
+top: 79%;
+right: 15px;
+transform: translateY(-50%);
+font-size: 18px;
+color: var(--fourth);
+pointer-events: none; /* Prevents click events on the arrow */
+}
+
+.display {
+margin-top: 1rem;
+/* width: 50%; */
+/* padding: 10px; */
+border: none;
+outline: 2px solid var(--tertiary); /* Replace with your desired color */
+border-radius: 20px;
+word-wrap: break-word;
+width: 400px;
+padding: 10px 15px;
+}

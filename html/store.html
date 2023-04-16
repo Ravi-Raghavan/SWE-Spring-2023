@@ -25,8 +25,8 @@
     <section class="container content-section">
 
         <section class="shop-container" id="shop-container-over-counter">
-             <h2 class="section-header">Over-The-Counter</h2>
-        <div class="shop-items">
+            <h2 class="section-header">Over-The-Counter</h2>
+                <div class="shop-items">
 
             <span>Over the counter items loading...</span>
             <!-- <div class="shop-item">
@@ -151,7 +151,7 @@
             </div> -->
 
 
-        </section>
+
 
             <!-- <div class="shop-item">
                     <span class="shop-item-title">Album 3</span>
@@ -173,7 +173,8 @@
                         </button>
                         </div>
                         </div> -->
-        </div>
+                </div>
+        </section>
     </section>
 
     <section class="container content-section">
@@ -436,7 +437,7 @@
     </section>
 
 
-    <section class="container content-section">
+    <section class="container content-section section-cart">
         <h2 class="section-header">CART</h2>
         <div class="cart-row">
             <span class="cart-item cart-header cart-column">ITEM</span>
@@ -513,8 +514,14 @@
                 // pulls one prodcut at a time
                 const product = data.products[i];
 
+                const name = product.name;
+                const prescrible = product.Prescription;
+                const limit = product.limit;
+                const imgPath = product.imgPath;
+                const price = product.price;
+
                 // checks if item is prescrible
-                if( product.Prescription == true){
+                if( name != '' && prescrible == true && limit != '' && imgPath != '' && price != ''){
 
                     const productHTML = `
                         <div class="shop-item">
@@ -531,7 +538,8 @@
 
                     // appends single item html code
                     productsHTMLPresp = productsHTMLPresp +  productHTML;
-                } else if (product.Prescription == false){
+
+                } else if (name != '' && prescrible == false && limit != '' && imgPath != '' && price != ''){
                     const productHTML = `
                         <div class="shop-item">
                             <span class="shop-item-title itemTitle-${i}">${product.name}</span>
@@ -568,7 +576,7 @@
 
 </body>
 
-<script src="../js/homepage.js" ></script>
+<script src="../js/homepage.js" defer></script>
 <script src="../js/profilePic.js" ></script>
 
 </html>

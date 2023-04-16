@@ -28,7 +28,9 @@ const public_paths_html = [
   "/html/email-validated.html",
   "/html/FAQ.html",
   "/html/fileUploadTest.html",
+  "/html/ppview.html",
   "/html/homepage.html",
+  "/html/requestPrescriptionNumberConfirmation.html",
   "/html/index.html",
   "/html/knowledge-base.html",
   "/html/logoutPage.html",
@@ -56,6 +58,7 @@ const public_paths_css = [
   "/css/darkmode.css",
   "/css/dashboard.css",
   "/css/deliverypage.css",
+  "/css/ppview.css",
   "/css/dynamic-size.css",
   "/css/email-validated.css",
   "/css/FAQ.css",
@@ -74,6 +77,7 @@ const public_paths_css = [
 const public_paths_js = [
   "/js/darkmode.js",
   "/js/dashboard-view.js",
+  "/js/ppview.js",
   "/js/script.js",
   "/js/paypal.js",
   "/js/firebase.js",
@@ -200,7 +204,8 @@ const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 const cloudStorage = require("./js/cloudStorage");
-const { getDrugListProcess, getDrugsProcess,removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess } = require("./js/prescriptionController");
+const { displayProcess,dropDownProcess,getDrugListProcess, getDrugsProcess,removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess, getRandomPrescriptionProcess } = require("./js/prescriptionController");
+const { getRandomPrescription } = require("./js/prescriptionModel");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
 
@@ -360,6 +365,21 @@ async function sendValidatedPrescriptionNotificationProcess(req,res,queryStringP
     const {doctorFirstName,doctorLastName,prescriptionNumber} = JSON.parse(body);
     var email = queryStringParameters.email;
     var notificationREF = await sendValidatedPrescriptionNotification(email,doctorFirstName,doctorLastName,prescriptionNumber);
+    const dataToSend = {
+      id: notificationREF
+    };
+    res.writeHead(200, {"Content-type": "application/json"});
+    res.end(JSON.stringify(dataToSend));
+  }catch (err){
+    console.log(err);
+  }
+}
+
+async function sendPrescriptionEmailProcess(req,res){
+  try{
+    let body = await getPostData(req);
+    const {doctorEmail,prescriptionNumber} = JSON.parse(body);
+    var notificationREF = await SMTP.sendPrescriptionEmail(doctorEmail,prescriptionNumber);
     const dataToSend = {
       id: notificationREF
     };
@@ -590,7 +610,7 @@ function uploadDocumentation(request, response, queryStringParameters){
       response.end(String(err));
       return;
     }
-    
+
     var filePath = files["myfile"]["filepath"];
     var mimeType = files["myfile"]["mimetype"];
     var originalFileName = files["myfile"]["originalFilename"]
@@ -625,7 +645,7 @@ function uploadDocumentation(request, response, queryStringParameters){
               response.end();
           })
         })
-        .catch((error) => {      
+        .catch((error) => {
             console.log("FAILURE");
             response.writeHead(404, { "Content-type": "text/plain" });
             response.write("Couldn't Upload File");
@@ -764,10 +784,18 @@ const server = http.createServer((request, response) => {
 
       case "/prescription/active":
         changeStatusProcess(request,response);
-        break;  
+        break;
 
       case "/prescription/send/validated/email":
         sendValidatedPrescriptionNotificationProcess(request,response,queryStringParameters);
+        break;
+
+      case "/html/prescription/request/email":
+        sendPrescriptionEmailProcess(request,response);
+        break;
+
+      case "/html/random/prescription":
+        getRandomPrescriptionProcess(request,response);
         break;
 
       case "/prescription/get/drugs":
@@ -789,6 +817,15 @@ const server = http.createServer((request, response) => {
       case "/prescription/remove/patient":
         removePatientPrescriptionProcess(request,response);
         break;
+
+      case "/prescription/dropdown/patient":
+        dropDownProcess(request,response,queryStringParameters);
+        break;
+
+      case "/prescription/display":
+        displayProcess(request,response);
+        break;
+
       /**
        * Prescription Section End
        */
@@ -846,7 +883,7 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/api/updateCart":
-        console.log("updating the total cost: /api/updateCart");
+        console.log("updating the cart: /api/updateCart");
         updateCart(request, response);
         break;
 
@@ -861,7 +898,7 @@ const server = http.createServer((request, response) => {
       case "/contact-us":
         sendContactEmail(request, response);
         break;
-      
+
       case "/get/prescriptions/user":
         getPrescriptionsUser(request, response, queryStringParameters);
         break;
@@ -893,23 +930,23 @@ const server = http.createServer((request, response) => {
       case "/upload/documentation":
         uploadDocumentation(request, response, queryStringParameters);
         break;
-      
+
       case "/download/orders":
         downloadOrders(request, response, queryStringParameters);
         break;
-      
+
       case "/fetch/user/documentation":
         getUserDocumentation(request, response);
         break;
-      
+
       case "/update/documentation/status":
         updateDocumentationStatus(request, response);
         break;
-      
+
       case "/download/file":
         downloadUserFile(request, response, queryStringParameters);
         break;
-      
+
       case "/verify/documentation":
         break;
     }

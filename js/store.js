@@ -1,5 +1,23 @@
 // import { initializeApp } from "firebase-admin/app";
 // import { getDatabase } from "firebase-admin/database";
+
+
+/* TODO
+    1. Get the list of prescribed medication names for the specific user once the page loads
+    2. Using that list, get each medication, from the database at address drugs/prescription/...
+    3. Additionally, on load, add all the over the counter medication to the database: For loop get request from database at address drugs/OTC/...
+*/
+
+/* DONE
+    1. (Qadis) after payment has been verified, send email to user email confirming payment.
+
+    Front-End:
+    1. Swap buttons:
+        a) addToCartClicked: when user clicks add to cart, button must be swapped
+        b) removeItem: when user removes item from cart, shop item must also change back.
+        but if removing from the shop items, then must only remove the cart value associated with that medication.
+*/
+
 if (localStorage.getItem("User Record") == null) {
         alert("You must login to access the cart page");
 
@@ -19,34 +37,64 @@ else {
 
 async function ready() {
 
-    var removeCartItemButtons = document.getElementsByClassName('btn-danger')
-    // console.log(removeCartItemButtons)
+    // var user_record = JSON.parse(localStorage.getItem("User Record"));
+    // var uid = user_record["uid"];
 
-    // var cartItems = document.getElementsByClassName('cart-items')[0]
-    // while (cartItems.hasChildNodes()) {
-    //     cartItems.removeChild(cartItems.firstChild)
-    // }
-    // updateCartTotal()
+    // let res = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
+    //         method: 'GET'
+    //     })
+
+    //     let responseStatus = res.status;
+    //     let prescriptions = await res.json()
+    //     console.log("This is what is prescriptions:"+ JSON.stringify(prescriptions));
+    //     //document.getElementById("dropbtn").src = profilePicture;
+    //     //console.log(profilePicture);
+    //     //document.getElementById("dropbtn").style.filter = "none";
+    //     //document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
+    //     var counter = 0;
+    //     if (responseStatus == 200){
+    //         for (var prescriptionNumber in prescriptions){
+    //             console.log("ran");
+    //             counter++;
+    //         }
+    //     }
+    //     if(counter == 0){
+    //         document.getElementById("prescriptionMedication").remove();
+    //     }
+
+
+
+
 
     //upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc, drugQuantity)
 
+    function resetRemoveListener() {
+        var removeCartItemButtons = document.getElementsByClassName('btn-danger')
 
-    for (var i = 0; i < removeCartItemButtons.length; i++) {
-        var button = removeCartItemButtons[i]
-        button.addEventListener('click', removeCartItem)
+        for (var i = 0; i < removeCartItemButtons.length; i++) {
+            var button = removeCartItemButtons[i]
+            button.addEventListener('click', removeCartItem)
+        }
     }
+
+    resetRemoveListener();
+
     var quantityInputs = document.getElementsByClassName('cart-quantity-input')
     for (var i = 0; i < quantityInputs.length; i++) {
         var input = quantityInputs[i]
         input.addEventListener('change', quantityChanged)
     }
 
-    var addToCartButtons = document.getElementsByClassName('shop-item-button')
-    for (var i = 0; i < addToCartButtons.length; i++) {
-        var button = addToCartButtons[i]
-        button.addEventListener('click', addToCartClicked);
-        button.addEventListener('click', swapbutton);
+    function resetShopButton() {
+        var addToCartButtons = document.getElementsByClassName('shop-item-button')
+            for (var i = 0; i < addToCartButtons.length; i++) {
+                var button = addToCartButtons[i]
+                button.addEventListener('click', addToCartClicked);
+                button.addEventListener('click', swapbutton);
+        }
     }
+
+    resetShopButton();
 
     document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
 
@@ -69,6 +117,24 @@ async function ready() {
 
         addItemToCart(drugTitle, drugPrice, image , drugQuantity);
     }
+
+    let cartItems = document.getElementsByClassName("cart-item-title");
+    let shopItems = document.getElementsByClassName("shop-item-title");
+    if (cartItems.length > 0) {
+        for (let i = 0; i < cartItems.length; i++) {
+            for (let j = 0; j < shopItems.length; j++) {
+                if (cartItems[i].innerText == shopItems[j].innerText) {
+                    let button = shopItems[j].parentElement.getElementsByClassName("btn btn-primary shop-item-button")[0];
+                    if (button.innerText == "Add to Cart") {
+                        button.innerText = "\u2715 Remove";
+                        button.setAttribute("class", "btn btn-danger");
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
     updateCartTotal();
 }
 
@@ -92,23 +158,26 @@ function removeCartItem(event) {
     buttonClicked.parentElement.parentElement.remove()
 
     var title = buttonClicked.parentElement.parentElement
-        .getElementsByClassName("cart-item cart-column")[0]
+        // .getElementsByClassName("cart-item cart-column")[0]
         .getElementsByClassName("cart-item-title")[0]
-        .innerText;
-    var shopItems = document.getElementsByClassName("shop-item");
-    for (var i = 0; i < shopItems.length; i++) {
+        .innerText;                                                         // get the title of the item
+    // console.log(title);
+    var shopItems = document.getElementsByClassName("shop-item");           // get all the shop items. Go through each one get the item and if
+    for (var i = 0; i < shopItems.length; i++) {                            // the removed item is the same as the shop item
         var item = document.getElementsByClassName("shop-item-title")[i];
         var shopItemName = item.innerText;
+        console.log(i+" "+shopItemName);
         if (shopItemName == title) {
-            var a = item.parentElement
-                .getElementsByClassName("shop-item-details")[0]
-                .getElementsByClassName("btn btn-danger")[0];
-            a.innerText = "Add to Cart";
-            a.setAttribute("class", "btn btn-primary shop-item-button");
+            let button = item.parentElement
+                // .getElementsByClassName("shop-item-details")[0]
+                .getElementsByClassName("btn-danger")[0];
+            button.innerText = "Add to Cart";
+            button.setAttribute("class", "btn btn-primary shop-item-button");
         }
     }
-    console.log("clicked\n")
-    updateCartTotal()
+    // console.log("clicked")
+    // swaps(event);
+    updateCartTotal();
 }
 
 function quantityChanged(event) {
@@ -119,8 +188,23 @@ function quantityChanged(event) {
     updateCartTotal()
 }
 
+function swaps(event, title) {
+    var button = event.target;
+    if (button.innerText == "Add to Cart") {
+        button.innerText = "\u2715 Remove";
+        button.setAttribute("class", "btn btn-danger");
+        resetRemoveListener();
+    } else {
+        button.innerText = "Add to Cart";
+        button.setAttribute("class", "btn btn-primary shop-item-button");
+    }
+
+    resetRemoveListener();
+    resetShopButton();
+
+}
+
 function swapbutton(event, title) {
-    a = title;
     var button = event.target;
     if (button.innerText == "Add to Cart") {
         button.innerText = "\u2715 Remove";
@@ -133,8 +217,7 @@ function swapbutton(event, title) {
         // title = func.match(/'[a-zA-Z]*\s?\d*[a-zA-Z]*'/)[0];
         // title = title.replace(/'/g, '');
 
-        var cartItems = document.getElementsByClassName('cart-items')[0]
-        var cartItemNames = cartItems.getElementsByClassName('cart-item-title')
+        var cartItemNames = document.getElementsByClassName('cart-item-title');
         for (var i = 0; i < cartItemNames.length; i++) {
             if (cartItemNames[i].innerText == title) {
                 cartItemNames[i].parentElement.parentElement.remove();
@@ -142,31 +225,42 @@ function swapbutton(event, title) {
             }
         }
     }
+
 }
 
 function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     var button = event.target;
 
-    var theme = document.getElementsByTagName("body")[0];
-    if (theme.classList.contains('dark')) {
-        button.style.outline = "2px solid var(--primary)";
+    button.style.transistion = "0.5s ease-in-out";
+    button.style.opacity = 0.5
+    button.style.cursor = "wait";
 
-        setTimeout(function () {
-            button.style.outline = "transparent";
-        }, 1000);
-    } else {
-        button.style.outline = "2px solid var(--primary)";
+    setTimeout(function () {
+        button.style.opacity = 1;
+        button.style.cursor = "pointer";
+    }, 100);
 
-        setTimeout(function () {
-            button.style.outline = "transparent";
-        }, 1000);
-    }
+    // var theme = document.getElementsByTagName("body")[0];
+    // if (theme.classList.contains('dark')) {
+    //     button.style.outline = "2px solid var(--primary)";
+
+        // setTimeout(function () {
+        //     button.style.outline = "transparent";
+        // }, 1000);
+    // } else {
+    //     button.style.outline = "2px solid var(--primary)";
+
+    //     setTimeout(function () {
+    //         button.style.outline = "transparent";
+    //     }, 1000);
+    // }
 
     var shopItem = button.parentElement.parentElement;
-    // var title = shopItem.getElementsByClassName(itemTitle)[0].innerText;
+    //var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText;
     var title = itemTitle;
-    console.log(shopItem);
-    var price = shopItem.getElementsByClassName(itemPrice)[0].innerText;
+    //console.log(shopItem);
+    var price = shopItem.getElementsByClassName(itemPrice)[0].innerText;            //error reading inner text
+
     var priceVal = parseFloat(
         shopItem
         .getElementsByClassName(itemPrice)[0]
@@ -181,6 +275,7 @@ function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     // console.log(order);
 
     addItemToCart(title, price, imageSrc, 1);
+    //swaps(event);
     updateCartTotal();
 
     //This fetch will request the uri path to update the cost of the cart and add drugs
@@ -212,7 +307,7 @@ function addItemToCart(title, price, imageSrc, drugQuantity) {
 
     for (var i = 0; i < cartItemNames.length; i++) {
         if (cartItemNames[i].innerText == title) {
-            // alert('This item is already added to the cart')
+            //alert('This item is already added to the cart')
             return
         }
     }
@@ -225,7 +320,7 @@ function addItemToCart(title, price, imageSrc, drugQuantity) {
 <span class="cart-price cart-column">${price}</span>
 <div class="cart-quantity cart-column">
     <input class="cart-quantity-input" type="number" value="${drugQuantity}">
-    <button class="btn btn-danger" type="button">REMOVE</button>
+    <button class="btn btn-danger" type="button">Remove</button>
 </div>`
 
     cartRow.innerHTML = cartRowContents
@@ -235,8 +330,11 @@ function addItemToCart(title, price, imageSrc, drugQuantity) {
     cartRow.getElementsByClassName('cart-quantity-input')[0].addEventListener('change', quantityChanged)
 }
 
+
 var total = 0;
 var totalquantity = 0;
+
+
 function updateCartTotal() {
     var cartItemContainer = document.getElementsByClassName('cart-items')[0]
     var cartRows = cartItemContainer.getElementsByClassName('cart-row')
@@ -287,38 +385,35 @@ function updateCartTotal() {
 
 }
 
-window.onload = async function (){
-    if (localStorage.getItem("User Record") == null) {
-        alert("You cannot log in");
+// window.onload = async function (){
+//     if (localStorage.getItem("User Record") == null) {
 
-        window.location.href("/html/homepage.html");
+//     } else {
 
-    } else {
+//         var user_record = JSON.parse(localStorage.getItem("User Record"));
+//         var uid = user_record["uid"];
+//         var profilePicture = user_record.photoURL;
 
-        var user_record = JSON.parse(localStorage.getItem("User Record"));
-        var uid = user_record["uid"];
-        var profilePicture = user_record.photoURL;
+//         let response = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
+//             method: 'GET'
+//         })
 
-        let response = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
-            method: 'GET'
-        })
-
-        let responseStatus = response.status;
-        let prescriptions = await response.json()
-        console.log("This is what is prescriptions:"+ JSON.stringify(prescriptions));
-        document.getElementById("dropbtn").src = profilePicture;
-        console.log(profilePicture);
-        document.getElementById("dropbtn").style.filter = "none";
-        document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
-        var counter = 0;
-        if (responseStatus == 200){
-            for (var prescriptionNumber in prescriptions){
-                console.log("ran");
-                counter++;
-            }
-        }
-        if(counter == 0){
-            document.getElementById("prescriptionMedication").remove();
-        }
-    }
-}
+//         let responseStatus = response.status;
+//         let prescriptions = await response.json()
+//         console.log("This is what is prescriptions:"+ JSON.stringify(prescriptions));
+//         document.getElementById("dropbtn").src = profilePicture;
+//         console.log(profilePicture);
+//         document.getElementById("dropbtn").style.filter = "none";
+//         document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
+//         var counter = 0;
+//         if (responseStatus == 200){
+//             for (var prescriptionNumber in prescriptions){
+//                 console.log("ran");
+//                 counter++;
+//             }
+//         }
+//         if(counter == 0){
+//             document.getElementById("prescriptionMedication").remove();
+//         }
+//     }
+// }

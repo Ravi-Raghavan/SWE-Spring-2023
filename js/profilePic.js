@@ -4,8 +4,20 @@ window.onload = function () {
   } else {
     var user_record = JSON.parse(localStorage.getItem("User Record"));
     var profilePicture = user_record.photoURL;
-      document.getElementById("dropbtn").src = profilePicture;
-      document.getElementById("dropbtn").style.filter = "none";
-      document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3"; 
+      try{
+        document.getElementById("dropbtn").src = profilePicture;
+      }catch (err){
+        console.log(err);
+      }
+      try{
+        document.getElementById("dropbtn").style.filter = "none";
+      }catch (err){
+
+      }
+      try{
+        document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
+      }catch (err){
+
+      }
   }
 };

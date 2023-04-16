@@ -29,7 +29,7 @@ async function addPatientPrescription(f,l,e,d,p,uid){
     return "added";
 }
 
-async function addDoctorPrescription(pf,pl,pdob,df,dl,demail,dexpire,med,dos,refills,pN,i,uid){
+async function addDoctorPrescription(pf,pl,pdob,df,dl,demail,dexpire,med,refills,pN,i,uid){
     let path = db.ref(`/doctorPrescriptions/${uid}/${pN}/`);
     path.set({
         patientFirstName:pf,
@@ -40,7 +40,6 @@ async function addDoctorPrescription(pf,pl,pdob,df,dl,demail,dexpire,med,dos,ref
         doctorAccountEmail:demail,
         expireDate:dexpire,
         medication:med,
-        dosage:dos,
         refills:refills,
         prescriptionNumber:pN,
         instructions:i,
@@ -111,7 +110,7 @@ async function validate(pN){
     
 }
 
-async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
+async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,
     expireDate,instructions,
     med,patientEmail,plName,pDOB,pfName,pUID,
     prescriptionNumber,refills){
@@ -121,7 +120,6 @@ async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
             doctorFirstName:dfName,
             doctorLastName:dlName,
             doctorUID:dUID,
-            dosage:dosage,
             expireDate:expireDate,
             instructions:instructions,
             medication:med,
@@ -186,6 +184,59 @@ async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
         return list;
     }
 
+    async function getRandomPrescription(){
+        let path = db.ref(`/prescriptionBank/`);
+        const promise = await new Promise((resolve,reject)=>{
+            path.get().then((snapshot)=>{
+                resolve(Object.keys(snapshot.val()));
+            })
+        })
+        return promise;
+    }
+
+    async function dropDown(type,uid){
+        if(type=="patient"){
+            let path1 = db.ref(`/patientPrescriptions/${uid}/`);
+            let path2 = db.ref(`/validatedPrescriptions/${uid}/`);
+            const promise1 = await new Promise((resolve,reject)=>{
+                path1.get().then((snapshot)=>{
+                    if(snapshot.val()==null){
+                        resolve("none");
+                    }else{
+                        resolve(Object.keys(snapshot.val()));
+                    }
+                })
+            })
+            const promise2 = await new Promise((resolve,reject)=>{
+                path2.get().then((snapshot)=>{
+                    if(snapshot.val()==null){
+                        resolve("none");
+                    }else{
+                        resolve(Object.keys(snapshot.val()))
+                    }
+                })
+            })
+            const promiseArray = [promise1,promise2];
+            return promiseArray;
+        }else if(type == "doctor"){
+            let path1 = db.ref(`/doctorPrescriptions/`);
+            let path2 = db.ref(`/validatedPrescriptions/`);
+            
+        }else{
+            return;
+        }
+    }
+
+    async function display(uid,prescriptionNumber,path){
+        const route = db.ref(`/${path}/${uid}/${prescriptionNumber}/`);
+        const promise = await new Promise((resolve,reject)=>{
+            route.get().then((snapshot)=>{
+                resolve(snapshot.val());
+            })
+        })
+        return promise;
+    }
+
 module.exports = {
     getType,
     addPatientPrescription,
@@ -198,5 +249,8 @@ module.exports = {
     removeDoctorPrescription,
     removePatientPrescription,
     getDrugs,
-    getDrugList
+    getDrugList,
+    getRandomPrescription,
+    dropDown,
+    display
 };
