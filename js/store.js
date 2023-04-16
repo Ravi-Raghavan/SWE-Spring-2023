@@ -170,18 +170,26 @@ function purchaseClicked() {
 function removeCartItem(event) {
     var buttonClicked = event.target;
     buttonClicked.parentElement.parentElement.remove()
-
+    var prescription = false;
+    
     var title = buttonClicked.parentElement.parentElement
         // .getElementsByClassName("cart-item cart-column")[0]
         .getElementsByClassName("cart-item-title")[0]
         .innerText;                                                         // get the title of the item
-    // console.log(title);
+    var oldTitle = title;
+    if(title.includes(':')){
+    title = title.substring(title.indexOf(':')+2);
+    prescription = true;
+    }
+    
+     console.log(title);
+     console.log(oldTitle);
     var shopItems = document.getElementsByClassName("shop-item");           // get all the shop items. Go through each one get the item and if
     for (var i = 0; i < shopItems.length; i++) {                            // the removed item is the same as the shop item
         var item = document.getElementsByClassName("shop-item-title")[i];
         var shopItemName = item.innerText;
         console.log(i+" "+shopItemName);
-        if (shopItemName == title) {
+        if (shopItemName == oldTitle) {
             let button = item.parentElement
                 // .getElementsByClassName("shop-item-details")[0]
                 .getElementsByClassName("btn-danger")[0];

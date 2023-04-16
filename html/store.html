@@ -558,7 +558,7 @@
                                 <img class="shop-item-image itemImg-${i}" src="${product.imgPath}" />
                                 <div class="shop-item-details">
                                 <span class="shop-item-price itemPrice-${i}">$${product.price}</span>
-                                <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${product.name}', '${prescripitonAdded[j+2]}'); swapbutton(event, '${product.name}');">
+                                <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${prescripitonAdded[j+1] +": "+product.name}', '${prescripitonAdded[j+2]}'); swapbutton(event, '${prescripitonAdded[j+1] +": "+product.name}');">
                                     Add to Cart
                                 </button>
                                 </div>
