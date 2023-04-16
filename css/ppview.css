@@ -13,8 +13,8 @@ h1 {
 .back-button{
     font-weight: bolder;
     font-size: larger;
-    background-color: rgb(57, 117, 42);
-    color: white;
+    background-color: var(--tertiary);
+    color: var(--primary);
     padding: 10px;
     height: 2rem;
     width: 2rem;
@@ -25,9 +25,13 @@ h1 {
     transition: 0.25s ease-in-out;
 }
 
+.back-button strong{
+    transform: translateY(-1px);
+}
+
 .back-button:hover{
     transition: 0.25s ease-in-out;
-    background-color: #00ac11;
+    background-color: var(--secondary);
     cursor: pointer;
 }
 
