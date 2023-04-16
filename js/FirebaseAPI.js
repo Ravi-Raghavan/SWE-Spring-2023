@@ -547,6 +547,82 @@ async function downloadOrders(credentials, response){
     })
 }
 
+async function downloadPrescriptions(credentials, response){
+    var uid = credentials.uid;
+    var prescriptionsRef = validatedPrescriptions.child(`${uid}`)
+    console.log("UID: " + uid);
+
+    prescriptionsRef.once('value', (snapshot) => {
+        var value = snapshot.val();
+        console.log("Prescriptions Data: " + JSON.stringify(value));
+        if (value == null){
+            var prescriptions_data = {"404 Error Message": "N/A"}
+            response.writeHead(404, { "Content-type": "application/json" });
+            response.write(JSON.stringify(prescriptions_data));
+            response.end();
+        }
+        else{
+            // Read HTML Template
+            var html = fs.readFileSync("./html/prescriptionTemplate.html", "utf8");
+
+            var options = {
+                format: "A3",
+                orientation: "portrait",
+                border: "10mm",
+                header: {
+                    height: "45mm",
+                    contents: '<div style="text-align: center;"></div>'
+                },
+                footer: {
+                    height: "28mm",
+                    contents: {
+                        first: 'Cover page',
+                        2: 'Second page', // Any page number is working. 1-based index
+                        default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+                        last: 'Last Page'
+                    }
+                }
+            };
+
+            var prescriptions = [];
+
+            for (var key in value){
+                var prescription = {}
+                prescription["pid"] = value[key]["prescriptionNumber"];
+                prescription["fName"] = value[key]["doctorFirstName"];
+                prescription["lName"] = value[key]["doctorLastName"];
+
+                prescription["drug"] = value[key]["medication"];
+                prescription["quantity"] = value[key]["refills"];
+                prescription["expiryDate"] = value[key]["expireDate"];
+
+                prescriptions.push(prescription);
+            }
+
+            var document = {
+                html: html,
+                data: {
+                  prescriptions: prescriptions,
+                },
+                path: `./${uid}-prescriptions.pdf`,
+                type: "buffer",
+              };
+            
+              pdf
+              .create(document, options)
+              .then((res) => {
+                console.log(res);
+                response.writeHead(200, { "Content-type": "application/pdf", "Content-Length": res.length, "Content-Disposition": `attachment; filename=${uid}-prescriptions.pdf`});
+                console.log(typeof res);
+                response.end(res);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+        }
+    })
+}
+
 async function getUserDocumentation(response){
     ref.once('value', (snapshot) => {
         var value = snapshot.val();
@@ -633,6 +709,7 @@ module.exports = {
     deleteUserAccount: deleteUserAccount,
     getUserCart: getUserCart,
     downloadOrders: downloadOrders, 
+    downloadPrescriptions:downloadPrescriptions,
     getUserDocumentation: getUserDocumentation,
     updateDocumentationStatus: updateDocumentationStatus,
     getDocumentationValidationStatus: getDocumentationValidationStatus,
