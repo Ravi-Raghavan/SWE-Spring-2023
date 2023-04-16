@@ -29,32 +29,12 @@
       </div>
         
         <div class="order-items-box">
-          <h1>Order ID: 3349011984 </h1>
-          <h2>Order Date Feb 16, 2022 </h2>
-          <section class="item-frame">
-            <section class="item-details">
-              
-                <img src="../product/Ashwagandha.jpg">
-              
-            <h3 class="item-name">Ashwagandha </h3>
-            <section class="item-price-details">
-              <h3 class="item-price">$260.00</h3>
-              <h4>Qty: 1</h4>
-            </section>
+          <h1 id = "orderID">Order ID: 3349011984 </h1>
+          <h2 id = "orderDate">Order Date Feb 16, 2022 </h2>
+          <section id = "OrderItems" class="item-frame">
 
-          </section>
 
-            <section class="item-details">
-              
-                <img src="../product/vitaminD.jpeg">
-              
-            <h3 class="item-name">Vitamin D </h3>
-            <section class="item-price-details">
-              <h3 class="item-price">$260.00</h3>
-              <h4>Qty: 2</h4>
-            </section>
-
-          </section>
+            
           </section>
           
         </div>
@@ -66,12 +46,12 @@
           <div class="payment-box">
             <table>
               <section class="heading">Order Details</section>
-              <section>Sales Tax: $3.29</section>
-              <section>Shipping: $5.00</section>
-              <section>Final Tax: $56.26</section>
+              <!-- <section>Sales Tax: $3.29</section>
+              <section>Shipping: $5.00</section> -->
+              <section id = "OrderTotal">Order Total: $56.26</section>
 
               <section class="heading">Payment Information</section>
-              <section>Visa: ************3312</section>
+              <section>Visa: ************1111</section>
               <section>Expires: 04/25</section>
               <section>John L. Smith</section>
 
@@ -124,6 +104,9 @@ async function loadOrders(){
     console.log("Response Status: " + ordersResponseStatus);
     console.log("Order Data Fetched: " + JSON.stringify(orders));
 
+    user_record["OrderData"] = orders;
+    localStorage.setItem("User Record", JSON.stringify(user_record));
+
     if (ordersResponseStatus == 200){
       for (var orderNumber in orders){
         var order = orders[orderNumber];
@@ -140,17 +123,82 @@ async function loadOrders(){
 }
 
 
-  function swapDisplay(location, uid) {
+  function swapDisplay(location, oid) {
     
    
     document.getElementById("interface").innerHTML = document.getElementById(location).innerHTML;
     if(location == "testBox")
     loadOrders();
     
-    if(uid != null){
+    if(oid != null){
       //GRABS THE ORDER ID
-      console.log(uid);
+      console.log(oid);
 
+      document.getElementById("orderID").innerText = oid;
+      var user_record = JSON.parse(localStorage.getItem("User Record"));
+      var order_data = user_record["OrderData"][oid];
+      console.log(order_data);
+      if (order_data.orderDate == null || order_data.orderDate == undefined){
+        let date_time = new Date();
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        // get current date
+        // adjust 0 before single digit date
+        let date = ("0" + date_time.getDate()).slice(-2);
+
+        // get current month
+        let month = monthNames[date_time.getMonth()];
+
+        // get current year
+        let year = date_time.getFullYear();
+        
+        document.getElementById("orderDate").innerText = `${month} ${date} ${year}`;
+
+      }
+      else{
+        document.getElementById("orderDate").innerText = order_data.orderDate;
+      }
+
+      for (var key in order_data.drugs){
+        console.log("KEY: " + key);
+        var drug_data = order_data.drugs[key];
+        console.log(JSON.stringify(drug_data));
+
+        var section = document.createElement("section");
+        section.className = "item-details"
+        var img = document.createElement("img");
+        img.width = 150;
+        img.height = 150;
+        img.src = drug_data.imageSrc;
+
+        var h3 = document.createElement("h3");
+        h3.className = "item-name";
+        h3.innerText = drug_data.title;
+
+        var item_price_details = document.createElement("section");
+        var item_price = document.createElement("h3");
+        item_price.className = "item-price";
+        var price = drug_data.price;
+        var quantity = parseFloat(drug_data.quantity);
+
+        item_price.innerText = `$${price * quantity}`;
+
+        var quantityTag = document.createElement("h4");
+        quantityTag.innerText = `Qty: ${Math.round(quantity)}`;
+        
+        item_price_details.appendChild(item_price);
+        item_price_details.appendChild(quantityTag);
+
+        section.appendChild(img);
+        section.appendChild(h3);
+        section.appendChild(item_price_details);
+
+        document.getElementById("OrderItems").appendChild(section);
+      }
+
+      
+
+      document.getElementById("OrderTotal").innerText = `Order Total: $${order_data.cartTotal}`
       //HERES WHERE WE WILL MANIPULATE DATA!
     }
   }
