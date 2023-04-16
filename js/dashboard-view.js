@@ -318,7 +318,7 @@ function addPrevFile(nameOfFile, Status){
 //Params: Integer (UID), Array of Integers (Order Numbers), Array of Integers (Prescription Numbers), Array of Strings (File Titles)
 //Usage Example: addUserData(599212, [123123, 13231], [2314, 2134123], ["test.jpg", "works.png"]);
 function addUserData(UID, OrderNumbers, PrescriptionNumbers, fileTitles, fileStatus){
-  var rows = "<tr onclick=\"showOrHide(this)\"> <td>"+UID+"</td><td></td><td></td></tr>";
+  var rows = "<tr onclick=\"showOrHide(this)\"> <td style = \"cursor: pointer;\">"+UID+"</td><td></td><td></td></tr>";
   var table = document.getElementById('userList');
   var template = document.createElement('template');
   template.innerHTML = rows;
@@ -336,13 +336,13 @@ function addUserData(UID, OrderNumbers, PrescriptionNumbers, fileTitles, fileSta
     
     //Change this depending on fileStatus.
     if (status == "denied"){
-      rows = rows + 'style=\"color: #ff0000;\">';
+      rows = rows + 'style=\"cursor: pointer;color: #ff0000;\">';
     }
     else if (status == "unverified"){
-      rows = rows + 'style=\"color: #ffa500;\">';
+      rows = rows + 'style=\"cursor: pointer;color: #ffa500;\">';
     }
     else if(status == "verified"){
-      rows = rows + 'style=\"color: #008000;\">';
+      rows = rows + 'style=\"cursor: pointer;color: #008000;\">';
     }
     
     rows = rows + fileTitles[i] +'</div>';
