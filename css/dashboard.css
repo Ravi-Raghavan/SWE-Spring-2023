@@ -293,7 +293,9 @@ background-color: var(--secondary);
 }
 
 
-.UserTable tbody{background-color: var(--suppliment)}
+.UserTable tr:nth-child(odd){background-color:#9fbde0}
+.UserTable tr:nth-child(even){background-color: var(--soft)}
+
 
 
 
