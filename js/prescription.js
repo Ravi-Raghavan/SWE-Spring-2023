@@ -487,7 +487,7 @@ function loadPharmacies(){
     cache:"no-cache"
   }).then((response)=>{
     response.json().then((result)=>{
-      let innerAddition = `<option value="">Select Prescription</option>`;
+      let innerAddition = `<option value="">Select Pharmacy</option>`;
       for(let i = 0;i<result.length;i++){
         let currPharm = result[i];
         innerAddition += `<option value="${currPharm[0]}">${currPharm[2]} - ${currPharm[1]}</option>`;
