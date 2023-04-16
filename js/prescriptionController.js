@@ -302,6 +302,27 @@ async function displayProcess(req,res){
     }
 }
 
+async function getPharamacyProcess(req,res){
+    try{
+        let contents = await prescriptionModel.getPharamacy();
+        let uids = Object.keys(contents);
+        let data = Object.values(contents);
+        const fullData = [];
+        let count = 0;
+        for(let i = 0;i<data.length;i++){
+            if(data[i].accountType=="Pharmacy"){
+                const package = [uids[i],data[i].address,data[i].displayName];
+                fullData[count] = package;
+                count++;
+            }
+        }
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(fullData));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     getTypeProcess,
     addPatientPrescriptionProcess,
@@ -315,5 +336,6 @@ module.exports = {
     getDrugListProcess,
     getRandomPrescriptionProcess,
     dropDownProcess,
-    displayProcess
+    displayProcess,
+    getPharamacyProcess
 };

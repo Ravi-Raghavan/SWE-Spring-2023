@@ -1,5 +1,6 @@
 window.onload = startType(0,null);
 function startType(code,value){
+  
     fetch(`/prescription/get/accountType?uid=${getUID()}`,{
       method: "GET",
       cache: "no-cache"
@@ -13,6 +14,7 @@ function startType(code,value){
         document.getElementById("demail").value = getEmail();
         document.getElementById("dfname").value = getFirstName();
         document.getElementById("dlname").value = getLastName();
+        loadPharmacies();
         if(code==1){
           document.getElementById("dmedication").value = value;
         }
@@ -473,4 +475,19 @@ document.querySelector(".message span").addEventListener("click",()=>{
   window.location.href = "./contact-us.html";
 })
 
+function loadPharmacies(){
+  fetch("/prescription/pharmacy/list",{
+    method:"GET",
+    cache:"no-cache"
+  }).then((response)=>{
+    response.json().then((result)=>{
+      let innerAddition = `<option value="">Select Prescription</option>`;
+      for(let i = 0;i<result.length;i++){
+        let currPharm = result[i];
+        innerAddition += `<option value="${currPharm[0]}">${currPharm[2]} - ${currPharm[1]}</option>`;
+      }
+      document.querySelector(".pharmacy-options").innerHTML = innerAddition;
+    })
+  })
+}
 
