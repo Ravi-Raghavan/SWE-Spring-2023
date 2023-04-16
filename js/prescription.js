@@ -189,10 +189,6 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
     alert("Medication Not Specified!");
     return;
   }
-  var dosage = document.getElementById("ddosage").value;
-  if(dosage==""){
-    dosage = "default";
-  }
   var refills = document.getElementById("drefills").value;
   if(refills==""){
     refills = 0;
@@ -234,7 +230,6 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
             doctorAccountEmail:demail,
             expireDate:dexpiredate,
             medication:medication,
-            dosage:dosage,
             refills:refills,
             prescriptionNumber:prescriptionNumber,
             instructions:instructions,

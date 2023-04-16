@@ -72,7 +72,6 @@ async function addDoctorPrescriptionProcess(req,res){
             doctorAccountEmail,
             expireDate,
             medication,
-            dosage,
             refills,
             prescriptionNumber,
             instructions,
@@ -86,7 +85,6 @@ async function addDoctorPrescriptionProcess(req,res){
             doctorAccountEmail,
             expireDate,
             medication,
-            dosage,
             refills,
             prescriptionNumber,
             instructions,
@@ -166,7 +164,6 @@ async function validateProcess(req,res){
             var dfName = r[2].doctorFirstName;
             var dlName = r[2].doctorLastName;
             var dUID = r[2].doctorUID;
-            var dosage = r[2].dosage;
             var expireDate = r[2].expireDate;
             var instructions = r[2].instructions;
             var med = r[2].medication;
@@ -178,13 +175,13 @@ async function validateProcess(req,res){
             var prescriptionNumber1 = r[0];
             var refills = r[2].refills;
             var validatedPrescription = {
-                doctorEmail,dfName,dlName,dUID,dosage,
+                doctorEmail,dfName,dlName,dUID,
                 expireDate,instructions,
                 med,patientEmail,plName,pDOB,pfName,pUID,
                 prescriptionNumber1,refills
             }
             console.log(validatedPrescription);
-            var addedOrNot = await prescriptionModel.addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
+            var addedOrNot = await prescriptionModel.addValidatedPrescription(doctorEmail,dfName,dlName,dUID,
                 expireDate,instructions,
                 med,patientEmail,plName,pDOB,pfName,pUID,
                 prescriptionNumber1,refills);

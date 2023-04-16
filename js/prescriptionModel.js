@@ -29,7 +29,7 @@ async function addPatientPrescription(f,l,e,d,p,uid){
     return "added";
 }
 
-async function addDoctorPrescription(pf,pl,pdob,df,dl,demail,dexpire,med,dos,refills,pN,i,uid){
+async function addDoctorPrescription(pf,pl,pdob,df,dl,demail,dexpire,med,refills,pN,i,uid){
     let path = db.ref(`/doctorPrescriptions/${uid}/${pN}/`);
     path.set({
         patientFirstName:pf,
@@ -40,7 +40,6 @@ async function addDoctorPrescription(pf,pl,pdob,df,dl,demail,dexpire,med,dos,ref
         doctorAccountEmail:demail,
         expireDate:dexpire,
         medication:med,
-        dosage:dos,
         refills:refills,
         prescriptionNumber:pN,
         instructions:i,
@@ -111,7 +110,7 @@ async function validate(pN){
     
 }
 
-async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
+async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,
     expireDate,instructions,
     med,patientEmail,plName,pDOB,pfName,pUID,
     prescriptionNumber,refills){
@@ -121,7 +120,6 @@ async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
             doctorFirstName:dfName,
             doctorLastName:dlName,
             doctorUID:dUID,
-            dosage:dosage,
             expireDate:expireDate,
             instructions:instructions,
             medication:med,
