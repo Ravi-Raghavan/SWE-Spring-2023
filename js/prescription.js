@@ -484,7 +484,7 @@ function loadPharmacies(){
       let innerAddition = `<option value="">Select Prescription</option>`;
       for(let i = 0;i<result.length;i++){
         let currPharm = result[i];
-        innerAddition += `<option value="${currPharm[0]}">${currPharm[2]} - ${currPharm[1]}</option>`;
+        innerAddition += `<option value="${currPharm.uid}">${currPharm.displayName} - ${currPharm.address}</option>`;
       }
       document.querySelector(".pharmacy-options").innerHTML = innerAddition;
     })

@@ -238,9 +238,9 @@ async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,
     }
 
     async function getPharamacy(){
-        const path = db.ref(`/users/`);
+        const ref = db.ref(`/users/`).orderByChild('accountType').equalTo('Pharmacy');
         const promise = await new Promise((resolve,reject)=>{
-            path.get().then((snapshot)=>{
+            ref.get().then((snapshot)=>{
                 resolve(snapshot.val());
             })
         })

@@ -20,8 +20,64 @@ async function getDoctorPrescriptionRef(doctorUID) {
     return dPresRef.orderByChild('doctorUID').equalTo(doctorUID);
 }
 
-// TODO: FINISH
 async function verifyPrescription(prescriptionNumber) {
+    let patientInfo = null;
+    let doctorInfo = null;
+
+    await pPresRef.child(prescriptionNumber).once('value', (snapshot) => {
+        patientInfo = snapshot.val();
+    });
+
+    await dPresRef.child(prescriptionNumber).once('value', (snapshot) => {
+        doctorInfo = snapshot.val();
+    })
+
+    if(patientInfo === null || doctorInfo === null) {
+        return;
+    }
+
+    const allMatch = (
+        patientInfo.dateOfBirth === doctorInfo.dateOfBirth &&
+        patientInfo.issueDate === doctorInfo.issueDate &&
+        patientInfo.firstName === doctorInfo.patientFirstName &&
+        patientInfo.lastName === doctorInfo.patientLastName
+    );
+
+    console.log(allMatch);
+
+    if(allMatch) {
+        const validRef = vPresRef.child(prescriptionNumber);
+        validRef.set({
+            dateOfBirth: doctorInfo.dateOfBirth,
+            doctorAccountEmail: doctorInfo.doctorEmail,
+            doctorFirstName: doctorInfo.doctorFirstName,
+            doctorLastName: doctorInfo.doctorLastName,
+            doctorUID: doctorInfo.doctorUID,
+            dosage: doctorInfo.dosage,
+            expireDate: doctorInfo.expireDate,
+            instructions: doctorInfo.instructions,
+            issueDate: doctorInfo.issueDate,
+            medication: doctorInfo.medication,
+            patientAccountEmail: patientInfo.patientEmail,
+            patientFirstName: patientInfo.firstName,
+            patientLastName: patientInfo.lastName,
+            patientUID: patientInfo.patientUID,
+            prescriptionNumber: prescriptionNumber,
+            refills:doctorInfo.refills
+        });
+
+        pPresRef.child(prescriptionNumber).remove();
+        dPresRef.child(prescriptionNumber).remove();
+    } else {
+        await pPresRef.child(prescriptionNumber).remove();
+        await dPresRef.child(prescriptionNumber).remove();
+
+        throw Error("prescriptions do not match");
+    }
+}
+
+// TODO: FINISH
+async function verifyPrescription0(prescriptionNumber) {
 
 
     let patientInfo = {
@@ -121,7 +177,12 @@ async function processPatientPrescription(dateOfBirth, firstName, issueDate, las
             patientUID: patientUID,
             prescriptionNumber: prescriptionNumber
         }).then(() => {
-            verifyPrescription(prescriptionNumber);
+            // verifyPrescription(prescriptionNumber).catch(err => {throw err});
+            try {
+                verifyPrescription(prescriptionNumber);
+            } catch(err) {
+                console.log(err);
+            }
         });
     } else {
         throw Error("email doesn't match uid");
@@ -163,7 +224,7 @@ async function processDoctorPrescription(dateOfBirth,doctorEmail,doctorFirstName
             prescriptionNumber:prescriptionNumber,
             refills:refills
         }).then(() => {
-            verifyPrescription(prescriptionNumber);
+            verifyPrescription(prescriptionNumber).catch(err => {console.log(err)});
         })
     } else {
         throw Error("email doesn't match uid");

@@ -11,15 +11,15 @@ const {getEmail} = require("./js/FirebaseAPI");
 //     "TEST001"
 // );
 
-// processPatientPrescription(
-//     "09/10/2002",
-//     "Simon",
-//     "03/30/2023",
-//     "Grishin",
-//     "simon.grishin@gmail.com",
-//     "52kStzCOKHSWunO1CW8wJcJiR933",
-//     "TEST003"
-// ).catch((err) => console.log(err));
+processPatientPrescription(
+    "09/11/2002",
+    "Simon",
+    "03/30/2023",
+    "Grishin",
+    "simon.grishin@gmail.com",
+    "52kStzCOKHSWunO1CW8wJcJiR933",
+    "PRESUIDTEST001"
+).catch((err) => console.log(err));
 
 processDoctorPrescription(
     "09/10/2002",
@@ -34,7 +34,7 @@ processDoctorPrescription(
     "Tobramycin",
     "Simon",
     "Grishin", 
-    "TEST003",
+    "PRESUIDTEST001",
     "None"
 ).catch((err) => console.log(err));
 
