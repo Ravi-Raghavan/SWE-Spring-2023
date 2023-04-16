@@ -138,3 +138,38 @@
 
 
 
+.info-container {
+    display: none;
+  }
+
+  .OrderTable {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 80%;
+    border: 1px solid var(--fourth);
+    font-family: var(--soft);
+  }
+  
+  .OrderTable th,
+  td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid var(--primary);
+    color: var(--fourth);
+  }
+  
+  .OrderTable tr.table_header th {
+    background-color: var(--tertiary);
+    font-family: var(--strong);
+    color: var(--primary);
+  }
+  
+  .OrderTable tr.second th {
+    background-color: var(--secondary);
+  }
+  
+  .OrderTable tr:nth-child(even) {
+    background-color: var(--suppliment);
+  }
+
+  
