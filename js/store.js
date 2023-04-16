@@ -193,8 +193,10 @@ function removeCartItem(event) {
             let button = item.parentElement
                 // .getElementsByClassName("shop-item-details")[0]
                 .getElementsByClassName("btn-danger")[0];
+            if(button != null){
             button.innerText = "Add to Cart";
             button.setAttribute("class", "btn btn-primary shop-item-button");
+            }
         }
     }
     // console.log("clicked")
@@ -250,7 +252,7 @@ function swapbutton(event, title) {
 
 }
 
-function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
+function addToCartClicked2(event, itemImg, itemPrice, itemTitle) {
     var button = event.target;
 
     button.style.transistion = "0.5s ease-in-out";
