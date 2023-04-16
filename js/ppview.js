@@ -27,8 +27,6 @@ window.onload = function (){
                 let part1 = document.getElementById("validated").innerHTML.substring(0,document.getElementById("validated").innerHTML.length - 22);
                 let part2 = document.getElementById("validated").innerHTML.substring( document.getElementById("validated").innerHTML.length-22);
                 document.getElementById("validated").innerHTML = part1 + innerAddition +part2;
-                console.log(part1);
-                console.log(part2);
             }
         })
     })
