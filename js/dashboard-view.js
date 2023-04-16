@@ -222,7 +222,25 @@ window.onload = async function () {
       template.innerHTML = rows;
       menu.appendChild(template.content);
     }
+    
+    
 
+    
+    if(user_record["Account Type"] == "Driver")
+    {
+
+      document.getElementById("loggingOut").remove();
+      var rows = "<a id=\"claimOption\" class=\"\" href=\"#\" onclick='swapDisplay(\"claim-info\", \"claimOption\")' >Claim Orders</a>";
+      var menu = document.getElementById("sideMenu");
+      var template = document.createElement('template');
+      template.innerHTML = rows;
+      
+      menu.appendChild(template.content);
+
+      rows = "<a id =\"loggingOut\" onclick=\"logout()\">Logout</a>";
+      template.innerHTML = rows;
+      menu.appendChild(template.content);
+    }
     
   }
 };
@@ -338,6 +356,33 @@ function addPharmOrder(OrderNumber, ItemList, quantityList){
   }
   
 }
+
+function addDriverClaim(OrderNumber, ItemList, quantityList){
+  if(OrderNumber == null || ItemList == null || ItemList.length == 0)
+    return;
+  
+  else{
+    var rows = '<tr><td>'+ String(OrderNumber) +'</td><td>';
+      size = ItemList.length;
+      for(i = 0; i < size; i++){
+        rows = rows+(ItemList[i]);
+        rows = rows + (` x${quantityList[i]}`)
+        
+        if(i != (size-1))
+        rows= rows+ ( "<br>");
+      }
+      rows= rows +( '</td><td><button class =\"dl-btn\">Claim!</button></td></tr>');
+      var table = document.getElementById('claimList');
+      var template = document.createElement('template');
+      template.innerHTML = rows;
+      console.log(rows);
+      table.append(template.content);
+      
+      return;
+  }
+  
+}
+
 function addPrevFile(nameOfFile, Status){
   if(nameOfFile == null||Status == null)
     return;

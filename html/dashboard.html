@@ -61,6 +61,7 @@
 
 
 
+
           
 
         <a id ="loggingOut" onclick="logout()">Logout</a>
@@ -658,6 +659,31 @@
           
         </section>
       </div>
+
+      <!---CLAIM ORDER INFORMATION-->
+      <div id="claim-info" class="info-container">
+        <section id="info" class="DrugFo">
+          
+            <div class="row">
+            
+              <div class="OrderTable">
+                <table id="claimList" style="width: 100%;">
+                  <tr class="table_header">
+                    <th style="width: 20%;">Order Number</th>
+                    <th style="width: 60%;">Items</th>
+                    <th style="width: 20%;">Claim</th>
+                  </tr>
+
+                </table>
+              </div>
+             
+              </div>
+
+              </div>
+    
+          
+        </section>
+      </div>      
       
 
     </div>
@@ -1345,6 +1371,6 @@
           $rows.eq(x.rowIndex+1).show();
       });
     }
-
+    addDriverClaim("asdsadqweascz", ["test", "tester", "testest"], [1,2,3]);
   </script>
 </html>
