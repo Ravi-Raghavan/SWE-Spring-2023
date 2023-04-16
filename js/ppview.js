@@ -24,9 +24,11 @@ window.onload = function (){
                 for(let i = 0;i<result[1].length;i++){
                     innerAddition += `<option value="${result[1][i]}">${result[1][i]}</option>`;
                 }
-                let part1 = document.getElementById("validated").innerHTML.substring(0,document.getElementById("validated").innerHTML.length - 20);
-                let part2 = document.getElementById("validated").innerHTML.substring( document.getElementById("validated").innerHTML.length-20);
+                let part1 = document.getElementById("validated").innerHTML.substring(0,document.getElementById("validated").innerHTML.length - 22);
+                let part2 = document.getElementById("validated").innerHTML.substring( document.getElementById("validated").innerHTML.length-22);
                 document.getElementById("validated").innerHTML = part1 + innerAddition +part2;
+                console.log(part1);
+                console.log(part2);
             }
         })
     })

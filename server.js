@@ -58,6 +58,7 @@ const public_paths_css = [
   "/css/darkmode.css",
   "/css/dashboard.css",
   "/css/deliverypage.css",
+  "/css/ppview.css",
   "/css/dynamic-size.css",
   "/css/email-validated.css",
   "/css/FAQ.css",
