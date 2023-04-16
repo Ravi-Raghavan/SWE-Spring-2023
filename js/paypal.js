@@ -30,9 +30,12 @@ var transporter = mailer.createTransport({
 // }
 
 var uid;
-async function createOrder(userID) {
+var pid; //pharmacy id
+async function createOrder(userID, pharmacyID) {
     var purchaseAmount;
     uid = userID;
+    pid = pharmacyID;
+
     cartRef.child(userID).once("value")
         .then((snapshot) => {
             purchaseAmount = snapshot.val().cartTotal;
@@ -103,6 +106,9 @@ async function capturePayment(orderId) {
                 userRef.child(uid).child("/orders/").child(orderPushRef.key).set(snapshot.val());
                 userRef.child(uid).child("/orders/").child(orderPushRef.key).child("status").set("Pending");
                 userRef.child(uid).child("/orders/").child(orderPushRef.key).child("orderDate").set(`${month} ${date} ${year}`);
+
+                console.log("PID: " + pid);
+                userRef.child(pid).child("/orders/").child(orderPushRef.key).set(snapshot.val());
 
                 /**DELETE CART */
                 cartRef.child(uid).set(null)

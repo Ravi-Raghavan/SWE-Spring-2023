@@ -152,7 +152,12 @@ function purchaseClicked() {
 
 
 
-
+    //HARDCODED VALUES JUST FOR TESTING PLEASE DELETE LATER
+    var pid = "PsgwJjIBD9PVWoQChxjh9UH9lwo1" //hardcoded pharmacy ID
+    var user_record = JSON.parse(window.localStorage.getItem("User Record"));
+    user_record["pid"] = pid;
+    window.localStorage.setItem("User Record", JSON.stringify(user_record));
+    //
 
     //
     if (total != 0) {
