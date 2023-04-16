@@ -75,7 +75,8 @@ async function addDoctorPrescriptionProcess(req,res){
             refills,
             prescriptionNumber,
             instructions,
-            uid
+            uid,
+            pharmacy
         } = JSON.parse(body);
         let returnString = await prescriptionModel.addDoctorPrescription(patientFirstName,
             patientLastName,
@@ -88,7 +89,7 @@ async function addDoctorPrescriptionProcess(req,res){
             refills,
             prescriptionNumber,
             instructions,
-            uid);
+            uid,pharmacy);
             if(returnString=="added"){
                 res.writeHead(200,{'Content-Type':'application/json'});
                 res.end();
@@ -164,6 +165,7 @@ async function validateProcess(req,res){
             var dfName = r[2].doctorFirstName;
             var dlName = r[2].doctorLastName;
             var dUID = r[2].doctorUID;
+            var pharmacyUID = r[2].pharmacyUID;
             var expireDate = r[2].expireDate;
             var instructions = r[2].instructions;
             var med = r[2].medication;
@@ -174,17 +176,10 @@ async function validateProcess(req,res){
             var pUID = r[1].patientUID;
             var prescriptionNumber1 = r[0];
             var refills = r[2].refills;
-            var validatedPrescription = {
-                doctorEmail,dfName,dlName,dUID,
-                expireDate,instructions,
-                med,patientEmail,plName,pDOB,pfName,pUID,
-                prescriptionNumber1,refills
-            }
-            console.log(validatedPrescription);
             var addedOrNot = await prescriptionModel.addValidatedPrescription(doctorEmail,dfName,dlName,dUID,
                 expireDate,instructions,
                 med,patientEmail,plName,pDOB,pfName,pUID,
-                prescriptionNumber1,refills);
+                prescriptionNumber1,refills,pharmacyUID);
             if(addedOrNot=="added"){
                 let removeStatus = await prescriptionModel.removePrescriptions(dUID,pUID,prescriptionNumber1);
                 if(removeStatus=="Done"){

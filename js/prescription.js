@@ -191,6 +191,11 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
     alert("Medication Not Specified!");
     return;
   }
+  var pharmacy = document.querySelector(".pharmacy-options").value;
+  if(pharmacy==""){
+    alert("Please select a pharmacy!");
+    return;
+  }
   var refills = document.getElementById("drefills").value;
   if(refills==""){
     refills = 0;
@@ -235,7 +240,8 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
             refills:refills,
             prescriptionNumber:prescriptionNumber,
             instructions:instructions,
-            uid:getUID()
+            uid:getUID(),
+            pharmacy:pharmacy
           }
           fetch("/prescription/add/doctor",{
             method:"POST",
@@ -481,7 +487,7 @@ function loadPharmacies(){
     cache:"no-cache"
   }).then((response)=>{
     response.json().then((result)=>{
-      let innerAddition = `<option value="">Select Prescription</option>`;
+      let innerAddition = `<option value="">Select Pharmacy</option>`;
       for(let i = 0;i<result.length;i++){
         let currPharm = result[i];
         innerAddition += `<option value="${currPharm.uid}">${currPharm.displayName} - ${currPharm.address}</option>`;

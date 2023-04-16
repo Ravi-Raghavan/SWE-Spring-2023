@@ -69,10 +69,9 @@ function displayValue(path,value){
             }).then((response)=>{
                 response.json().then((result)=>{
                     let subValues = Object.values(result);
-                    console.log(result);
                     let expiration = subValues[5];
                     let med = subValues[7];
-                    let refills = subValues[13];
+                    let refills = subValues[14];
                     let doctor = subValues[2]+" "+subValues[3];
                     let instructions = subValues[6];
                     let message = "";
