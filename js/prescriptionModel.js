@@ -237,6 +237,16 @@ async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,
         return promise;
     }
 
+    async function getPharamacy(){
+        const path = db.ref(`/users/`);
+        const promise = await new Promise((resolve,reject)=>{
+            path.get().then((snapshot)=>{
+                resolve(snapshot.val());
+            })
+        })
+        return promise;
+    }
+
 module.exports = {
     getType,
     addPatientPrescription,
@@ -252,5 +262,6 @@ module.exports = {
     getDrugList,
     getRandomPrescription,
     dropDown,
-    display
+    display,
+    getPharamacy
 };
