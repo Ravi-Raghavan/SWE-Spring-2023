@@ -499,7 +499,18 @@
     <div id="footer"></div>
 
     <script>
+        var prescriptionItems = [];
         // fetching json file
+            
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        var uid = user_record["uid"];
+
+
+        fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {method: 'GET' })
+           .then(response => response.json())
+           .then(data =>{
+                prescriptionItems = data; 
+                
             fetch("../json/ProductsSold.json")
             .then(response =>   response.json())
             .then(data => {
@@ -507,7 +518,23 @@
             // store html content for all prescrible items and non
             var productsHTMLPresp = "";
             var productsHTMLPrespNon = "";
+            console.log(prescriptionItems)
+            var prescripitonAdded = [];
+            var user_record = JSON.parse(localStorage.getItem("User Record"));
+            var uid = user_record["uid"];
+            for (var prescriptionNumber in prescriptionItems){
+        var prescription = prescriptionItems[prescriptionNumber];
+        prescripitonAdded.push([prescription.medication][0]);
+        prescripitonAdded.push(prescriptionNumber);
+        prescripitonAdded.push([prescription.refills][0]);
+      }
+      console.log(prescripitonAdded)
+        
 
+           
+    
+           
+            
             // iterate through products dicitonary
             for (let i = 0; i < data.products.length; i++) {
 
@@ -522,7 +549,7 @@
 
                 // checks if item is prescrible
                 if( name != '' && prescrible == true && limit != '' && imgPath != '' && price != ''){
-
+                    if(prescripitonAdded.includes(name)){
                     const productHTML = `
                         <div class="shop-item">
                             <span class="shop-item-title itemTitle-${i}">${product.name}</span>
@@ -538,6 +565,7 @@
 
                     // appends single item html code
                     productsHTMLPresp = productsHTMLPresp +  productHTML;
+                    }
 
                 } else if (name != '' && prescrible == false && limit != '' && imgPath != '' && price != ''){
                     const productHTML = `
@@ -572,6 +600,14 @@
                 // console.log(innerTagElement.outerHTML);
                 innerTagElement.outerHTML = productsHTMLPresp;
             })
+            
+            
+            });
+        
+        
+
+       
+            
     </script>
 
 </body>
