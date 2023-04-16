@@ -11,6 +11,12 @@
     justify-content: center;
     gap: 10px;
 }
+body{
+    display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  
+}
 
 .order-items-box {
     padding:20px 20px;
@@ -146,6 +152,7 @@
     border-collapse: collapse;
     border-spacing: 0;
     width: 80%;
+    min-width: 150vh;
     border: 1px solid var(--fourth);
     font-family: var(--soft);
   }
