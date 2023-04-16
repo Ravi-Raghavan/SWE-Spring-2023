@@ -59,6 +59,8 @@
 
 
 
+
+
           
 
         <a id ="loggingOut" onclick="logout()">Logout</a>
@@ -631,6 +633,31 @@
           
         </section>
       </div>
+
+      <!---VIEW PHARM INFORMATION-->
+      <div id="pharm-info" class="info-container">
+        <section id="info" class="DrugFo">
+          
+            <div class="row">
+            
+              <div class="OrderTable">
+                <table id="pharmList" style="width: 100%;">
+                  <tr class="table_header">
+                    <th style="width: 20%;">Order Number</th>
+                    <th style="width: 60%;">Items</th>
+                    <th style="width: 20%;">Staus</th>
+                  </tr>
+
+                </table>
+              </div>
+             
+              </div>
+
+              </div>
+    
+          
+        </section>
+      </div>
       
 
     </div>
@@ -651,6 +678,7 @@
           $rows.eq(x.rowIndex+1).show();
       });
     }
+    addPharmOrder("123asdasxzcqa", ["asdasd", "sadqwexzcasd", "sadqwexzdcasdsad"], [1, 2, 3]);
 
   </script>
 </html>

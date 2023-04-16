@@ -207,6 +207,22 @@ window.onload = async function () {
       menu.appendChild(template.content);
     }
 
+    if(user_record["Account Type"] == "Pharmacy")
+    {
+
+      document.getElementById("loggingOut").remove();
+      var rows = "<a id=\"viewPharmOption\" class=\"\" href=\"#\" onclick='swapDisplay(\"pharm-info\", \"viewPharmOption\")' >View Pharmacy Order</a>";
+      var menu = document.getElementById("sideMenu");
+      var template = document.createElement('template');
+      template.innerHTML = rows;
+      
+      menu.appendChild(template.content);
+
+      rows = "<a id =\"loggingOut\" onclick=\"logout()\">Logout</a>";
+      template.innerHTML = rows;
+      menu.appendChild(template.content);
+    }
+
     
   }
 };
@@ -294,6 +310,34 @@ function addOrder(OrderNumber, ItemList, quantityList, Status){
   
 }
 
+//HELPER FUNCTION TO ADD PHARM ORDERS TO PHARM ORDER TABLE TABLE
+//Params: Integer (Order Number), Array of Strings (List of Items and Quanitity), Array of Numbers
+//Usage Example: addOrder(599212, ["Drug1", "Drug2"], [1,2,3]);
+function addPharmOrder(OrderNumber, ItemList, quantityList){
+  if(OrderNumber == null || ItemList == null || ItemList.length == 0)
+    return;
+  
+  else{
+    var rows = '<tr><td>'+ String(OrderNumber) +'</td><td>';
+      size = ItemList.length;
+      for(i = 0; i < size; i++){
+        rows = rows+(ItemList[i]);
+        rows = rows + (` x${quantityList[i]}`)
+        
+        if(i != (size-1))
+        rows= rows+ ( "<br>");
+      }
+      rows= rows +( '</td><td><button class =\"dl-btn\">Ready!</button></td></tr>');
+      var table = document.getElementById('pharmList');
+      var template = document.createElement('template');
+      template.innerHTML = rows;
+      console.log(rows);
+      table.append(template.content);
+      
+      return;
+  }
+  
+}
 function addPrevFile(nameOfFile, Status){
   if(nameOfFile == null||Status == null)
     return;
