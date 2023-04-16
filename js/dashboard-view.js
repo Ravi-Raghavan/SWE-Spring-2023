@@ -356,7 +356,7 @@ function addUserData(UID, OrderNumbers, PrescriptionNumbers, fileTitles, fileSta
   //Verify Button
   rows = rows + `<button class =\"dl-btn\"onclick=\"verify(\'${UID}\')\">Verify</button>`
   //Deny Button
-  rows = rows + `<button class =\"dl-btn\"onclick=\"deny(\'${UID}\')\">Deny</button>`
+  rows = rows + `<button class =\"dl-btn\"onclick=\"denyUser(\'${UID}\')\">Deny</button>`
   rows = rows + ('</td></tr>'); 
 
   
@@ -715,6 +715,22 @@ let response = await fetch('/update/user', {
   },
 })
 
+}
+
+async function denyUser(UID){
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+let response = await fetch('/update/user', {
+  method: 'PATCH',
+  body: JSON.stringify({
+    uid: UID,
+    phoneNumber: user_record.phoneNumber,
+    address: user_record["Address"],
+    documentationVerified: false
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+})
 }
 
 function exit(){
