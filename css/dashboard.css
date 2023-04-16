@@ -86,8 +86,7 @@
 .sidebar {
   margin: 0;
   padding: 0;
-  margin-top: -28px;
-  transform: translateY(-5px);
+  margin-top: 31px;
   width: 200px;
   background-color: var(--secondary);
   position: fixed;
