@@ -10,6 +10,27 @@ h1 {
     font-family: var(--strong);
 }
 
+.back-button{
+    font-weight: bolder;
+    font-size: larger;
+    background-color: rgb(57, 117, 42);
+    color: white;
+    padding: 10px;
+    height: 2rem;
+    width: 2rem;
+    border-radius: 20px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.25s ease-in-out;
+}
+
+.back-button:hover{
+    transition: 0.25s ease-in-out;
+    background-color: #00ac11;
+    cursor: pointer;
+}
+
 p {
     font-size: 18px;
     margin: 0 0 20px;
