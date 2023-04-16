@@ -24,6 +24,10 @@
     <div id = "interface" class="main-box">
     </div>
       <a id = "OrderBox" class = "info-container">
+        <div >
+          <img class="left" onclick = "swapDisplay('testBox')" src="../images/leftArrow.png">
+      </div>
+        
         <div class="order-items-box">
           <h1>Order ID: 3349011984 </h1>
           <h2>Order Date Feb 16, 2022 </h2>
@@ -80,6 +84,7 @@
               </table>
           </div>
         </div>
+        
       </a>
       <a id ="testBox" class = "info-container">
        
@@ -107,30 +112,8 @@
   <script src="../js/profilePic.js"></script>
 
   <script>
-  function swapDisplay(location) {
-    document.getElementById("interface").innerHTML = document.getElementById(location).innerHTML;
-  }
-
-  function addOrder(OrderNumber, Status){
-  if(OrderNumber == null||Status == null)
-    return;
-  
-  else{
-    var rows = '<tr onclick=\"swapDisplay(\'OrderBox\')\"><td >'+ String(OrderNumber) +'</td><td>';
-      
-      rows= rows +(Status+'</td></tr>');
-      var table = document.getElementById('ordersList');
-      var template = document.createElement('template');
-      template.innerHTML = rows;
-      console.log(rows);
-      table.append(template.content);
-      
-      return;
-  }
-  
-}
-
-window.onload = async function () {
+   
+async function loadOrders(){
   var user_record = JSON.parse(localStorage.getItem("User Record"));
   let ordersResponse = await fetch(`/get/orders/user?uid=${user_record["uid"]}`, {
       method: 'GET'
@@ -155,10 +138,40 @@ window.onload = async function () {
       }
     }
 }
-swapDisplay("testBox");
-swapDisplay("OrderBox");
-swapDisplay("OrderBox");
-swapDisplay("testBox");
 
+
+  function swapDisplay(location) {
+    
+   
+    document.getElementById("interface").innerHTML = document.getElementById(location).innerHTML;
+    if(location == "testBox")
+    loadOrders();    
+  }
+
+  function addOrder(OrderNumber, Status){
+  if(OrderNumber == null||Status == null)
+    return;
+  
+  else{
+    var rows = '<tr onclick=\"swapDisplay(\'OrderBox\')\"><td >'+ String(OrderNumber) +'</td><td>';
+      
+      rows= rows +(Status+'</td></tr>');
+      var table = document.getElementById('ordersList');
+      var template = document.createElement('template');
+      template.innerHTML = rows;
+      console.log(rows);
+      table.append(template.content);
+      
+
+      return;
+  }
+  
+}
+
+
+
+
+swapDisplay("testBox");
+orderBoxHtml = document.getElementById("interface").innerHTML;
   </script>
 </html>

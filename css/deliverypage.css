@@ -172,4 +172,16 @@
     background-color: var(--suppliment);
   }
 
-  
+  .previous {
+    display: absolute;
+    flex-direction: row;
+    text-decoration: none;
+  padding: 8px 16px;
+    color: black;
+  }
+  .left{
+    height: 150px;
+    width: auto;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
