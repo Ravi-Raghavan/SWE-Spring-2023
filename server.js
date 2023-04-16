@@ -668,6 +668,17 @@ function downloadOrders(request, response, queryStringParameters){
   });
 }
 
+function downloadPrescriptions(request, response, queryStringParameters){
+  var credentials = "";
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.downloadPrescriptions(queryStringParameters, response);
+  });
+}
+
 function getUserDocumentation(request, response){
   var credentials = "";
 
@@ -936,6 +947,10 @@ const server = http.createServer((request, response) => {
 
       case "/download/orders":
         downloadOrders(request, response, queryStringParameters);
+        break;
+      
+      case "/download/prescriptions":
+        downloadPrescriptions(request, response, queryStringParameters);
         break;
 
       case "/fetch/user/documentation":

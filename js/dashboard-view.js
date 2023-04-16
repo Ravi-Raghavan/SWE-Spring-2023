@@ -700,6 +700,26 @@ link.click();
 link.remove();
 }
 
+async function downloadPrescriptions(){
+  //Step 1 is to get the current User UID
+var user_record = JSON.parse(localStorage.getItem("User Record"));
+var uid = user_record.uid;
+
+//GET REQUEST TO SERVER TO FETCH PDF DATA. 
+let response = await fetch(`/download/prescriptions?uid=${uid}`, {method: 'GET'})
+let response_blob = await response.blob();
+
+//MAKE PDF CLIENT SIDE 
+const link = document.createElement('a');
+// create a blobURI pointing to our Blob
+link.href = URL.createObjectURL(response_blob);
+link.download = `${uid}-prescriptions.pdf`;
+// some browser needs the anchor to be in the doc
+document.body.append(link);
+link.click();
+link.remove();
+}
+
 async function verify(UID){
 var user_record = JSON.parse(localStorage.getItem("User Record"));
 let response = await fetch('/update/user', {

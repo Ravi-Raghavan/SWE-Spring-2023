@@ -146,6 +146,15 @@ function purchaseClicked() {
     // while (cartItems.hasChildNodes()) {
     //     cartItems.removeChild(cartItems.firstChild)
     // }
+
+
+    //INSERT LOGIC TO CHECK IF ORDER MATCHES PRESCRIPTION HERE
+
+
+
+
+
+    //
     if (total != 0) {
         document.getElementById("paypal-button-container").style.display = "block";
     } else {

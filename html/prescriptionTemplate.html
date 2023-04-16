@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Prescription History</title>
+  </head>
+  <body>
+    <h2>Recent Prescriptions:</h2>
+    <div class="PrescriptionTable">
+        <table id="prescriptionList">
+            <tr class="table_header">
+                <th>Prescription Number</th>
+                <th>Doctor Name</th>
+                <th>Drug Name</th>
+                <th>Quantity</th>
+                <th>Expiry Date</th>
+                
+            </tr>
+
+            {{#each prescriptions}}
+            <tr>
+                <td>{{this.pid}}</td>
+                <td>{{this.fName}} {{this.lName}}</td>
+                <td>{{this.drug}}</td>
+                <td>{{this.quantity}}</td>
+                <td>{{this.expiryDate}}</td>
+                
+            </tr>
+            {{/each}}
+
+        </table>
+    </div>
+  </body>
+</html>
