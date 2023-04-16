@@ -452,6 +452,26 @@ background-color: var(--secondary);
 .dl-btn:hover{
     background: var(--tertiary);
 }
+
+.dl-btn-deny{
+  padding: 6px;
+  min-width: 100px;
+  margin-top: 10px;
+  margin-right: 16px;
+  justify-content:center;
+  font-size: 25px;
+  border-radius: 20px;
+  text-decoration: none;
+  margin-left: auto;
+  text-align: center; 
+  vertical-align: middle;
+  cursor: pointer;
+  outline: 0;
+
+}
+.dl-btn-deny:hover{
+  background: var(--warning);
+}
 .settingRow .add{
   background-color: var(--tertiary);
   border: var(--tertiary);
