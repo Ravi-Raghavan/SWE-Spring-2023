@@ -37,7 +37,7 @@ async function ready() {
     // var user_record = JSON.parse(localStorage.getItem("User Record"));
     // var uid = user_record["uid"];
 
-    // let res = await fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {
+    // let res = await fetch(`/get/prescriptions?uid=${user_record["uid"]}`, {
     //         method: 'GET'
     //     })
 
