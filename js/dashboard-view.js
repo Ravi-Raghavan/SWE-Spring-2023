@@ -69,13 +69,13 @@ window.onload = async function () {
       if(user == user_record["uid"] ){
         for(i=0; i < fileTitles.length; i++){
           if(fileStatus[i] == "denied")
-          addPrevFile(fileTitles[i], 'D')
+          addPrevFile(fileTitles[i].substring(fileTitles[i].indexOf('/')+1), 'D')
 
           else if(fileStatus[i] =="unverified")
-          addPrevFile(fileTitles[i], 'P')
+          addPrevFile(fileTitles[i].substring(fileTitles[i].indexOf('/')+1), 'P')
 
           else
-          addPrevFile(fileTitles[i], 'A')
+          addPrevFile(fileTitles[i].substring(fileTitles[i].indexOf('/')+1), 'A')
         }
       }
 
@@ -207,6 +207,40 @@ window.onload = async function () {
       menu.appendChild(template.content);
     }
 
+    if(user_record["Account Type"] == "Pharmacy")
+    {
+
+      document.getElementById("loggingOut").remove();
+      var rows = "<a id=\"viewPharmOption\" class=\"\" href=\"#\" onclick='swapDisplay(\"pharm-info\", \"viewPharmOption\")' >View Pharmacy Order</a>";
+      var menu = document.getElementById("sideMenu");
+      var template = document.createElement('template');
+      template.innerHTML = rows;
+      
+      menu.appendChild(template.content);
+
+      rows = "<a id =\"loggingOut\" onclick=\"logout()\">Logout</a>";
+      template.innerHTML = rows;
+      menu.appendChild(template.content);
+    }
+    
+    
+
+    
+    if(user_record["Account Type"] == "Driver")
+    {
+
+      document.getElementById("loggingOut").remove();
+      var rows = "<a id=\"claimOption\" class=\"\" href=\"#\" onclick='swapDisplay(\"claim-info\", \"claimOption\")' >Claim Orders</a>";
+      var menu = document.getElementById("sideMenu");
+      var template = document.createElement('template');
+      template.innerHTML = rows;
+      
+      menu.appendChild(template.content);
+
+      rows = "<a id =\"loggingOut\" onclick=\"logout()\">Logout</a>";
+      template.innerHTML = rows;
+      menu.appendChild(template.content);
+    }
     
   }
 };
@@ -294,6 +328,61 @@ function addOrder(OrderNumber, ItemList, quantityList, Status){
   
 }
 
+//HELPER FUNCTION TO ADD PHARM ORDERS TO PHARM ORDER TABLE TABLE
+//Params: Integer (Order Number), Array of Strings (List of Items and Quanitity), Array of Numbers
+//Usage Example: addOrder(599212, ["Drug1", "Drug2"], [1,2,3]);
+function addPharmOrder(OrderNumber, ItemList, quantityList){
+  if(OrderNumber == null || ItemList == null || ItemList.length == 0)
+    return;
+  
+  else{
+    var rows = '<tr><td>'+ String(OrderNumber) +'</td><td>';
+      size = ItemList.length;
+      for(i = 0; i < size; i++){
+        rows = rows+(ItemList[i]);
+        rows = rows + (` x${quantityList[i]}`)
+        
+        if(i != (size-1))
+        rows= rows+ ( "<br>");
+      }
+      rows= rows +( '</td><td><button class =\"dl-btn\">Ready!</button></td></tr>');
+      var table = document.getElementById('pharmList');
+      var template = document.createElement('template');
+      template.innerHTML = rows;
+      console.log(rows);
+      table.append(template.content);
+      
+      return;
+  }
+  
+}
+
+function addDriverClaim(OrderNumber, ItemList, quantityList){
+  if(OrderNumber == null || ItemList == null || ItemList.length == 0)
+    return;
+  
+  else{
+    var rows = '<tr><td>'+ String(OrderNumber) +'</td><td>';
+      size = ItemList.length;
+      for(i = 0; i < size; i++){
+        rows = rows+(ItemList[i]);
+        rows = rows + (` x${quantityList[i]}`)
+        
+        if(i != (size-1))
+        rows= rows+ ( "<br>");
+      }
+      rows= rows +( '</td><td><button class =\"dl-btn\">Claim!</button></td></tr>');
+      var table = document.getElementById('claimList');
+      var template = document.createElement('template');
+      template.innerHTML = rows;
+      console.log(rows);
+      table.append(template.content);
+      
+      return;
+  }
+  
+}
+
 function addPrevFile(nameOfFile, Status){
   if(nameOfFile == null||Status == null)
     return;
@@ -318,7 +407,7 @@ function addPrevFile(nameOfFile, Status){
 //Params: Integer (UID), Array of Integers (Order Numbers), Array of Integers (Prescription Numbers), Array of Strings (File Titles)
 //Usage Example: addUserData(599212, [123123, 13231], [2314, 2134123], ["test.jpg", "works.png"]);
 function addUserData(UID, OrderNumbers, PrescriptionNumbers, fileTitles, fileStatus){
-  var rows = "<tr onclick=\"showOrHide(this)\"> <td>"+UID+"</td><td></td><td></td><td></td></tr>";
+  var rows = "<tr onclick=\"showOrHide(this)\"> <td style = \"cursor: pointer;\">"+UID+"</td><td></td><td></td></tr>";
   var table = document.getElementById('userList');
   var template = document.createElement('template');
   template.innerHTML = rows;
@@ -336,26 +425,30 @@ function addUserData(UID, OrderNumbers, PrescriptionNumbers, fileTitles, fileSta
     
     //Change this depending on fileStatus.
     if (status == "denied"){
-      rows = rows + 'style=\"color: #ff0000;\">';
+      rows = rows + 'style=\"cursor: pointer;color: #ff0000;\">';
     }
     else if (status == "unverified"){
-      rows = rows + 'style=\"color: #ffa500;\">';
+      rows = rows + 'style=\"cursor: pointer;color: #ffa500;\">';
     }
     else if(status == "verified"){
-      rows = rows + 'style=\"color: #008000;\">';
+      rows = rows + 'style=\"cursor: pointer;color: #008000;\">';
     }
     
     rows = rows + fileTitles[i] +'</div>';
     if(i != (fileTitles.length -1))
       rows = rows + ('<br>');
   }
-  rows = rows + ('</td><td>');    
+  rows = rows + ('</td><td style = \"width=5%;\">');    
 
+//Probably also have to add logic to check if user has already been verified or denied.
 
   //Verify Button
-  rows = rows + `<button onclick=\"verify(\'${UID}\')\">Verify</button>`
+  rows = rows + `<button class =\"dl-btn\"onclick=\"verify(\'${UID}\')\">Verify</button>`
+  //Deny Button
+  rows = rows + `<button class =\"dl-btn-deny\"onclick=\"denyUser(\'${UID}\')\">Deny</button>`
   rows = rows + ('</td></tr>'); 
 
+  
 
   table = document.getElementById('userList');
   template = document.createElement('template');
@@ -696,6 +789,26 @@ link.click();
 link.remove();
 }
 
+async function downloadPrescriptions(){
+  //Step 1 is to get the current User UID
+var user_record = JSON.parse(localStorage.getItem("User Record"));
+var uid = user_record.uid;
+
+//GET REQUEST TO SERVER TO FETCH PDF DATA. 
+let response = await fetch(`/download/prescriptions?uid=${uid}`, {method: 'GET'})
+let response_blob = await response.blob();
+
+//MAKE PDF CLIENT SIDE 
+const link = document.createElement('a');
+// create a blobURI pointing to our Blob
+link.href = URL.createObjectURL(response_blob);
+link.download = `${uid}-prescriptions.pdf`;
+// some browser needs the anchor to be in the doc
+document.body.append(link);
+link.click();
+link.remove();
+}
+
 async function verify(UID){
 var user_record = JSON.parse(localStorage.getItem("User Record"));
 let response = await fetch('/update/user', {
@@ -711,6 +824,22 @@ let response = await fetch('/update/user', {
   },
 })
 
+}
+
+async function denyUser(UID){
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+let response = await fetch('/update/user', {
+  method: 'PATCH',
+  body: JSON.stringify({
+    uid: UID,
+    phoneNumber: user_record.phoneNumber,
+    address: user_record["Address"],
+    documentationVerified: false
+  }),
+  headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+})
 }
 
 function exit(){

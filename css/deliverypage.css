@@ -11,6 +11,12 @@
     justify-content: center;
     gap: 10px;
 }
+body{
+    display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  
+}
 
 .order-items-box {
     padding:20px 20px;
@@ -138,3 +144,51 @@
 
 
 
+.info-container {
+    display: none;
+  }
+
+  .OrderTable {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 80%;
+    min-width: 150vh;
+    border: 1px solid var(--fourth);
+    font-family: var(--soft);
+  }
+  
+  .OrderTable th,
+  td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid var(--primary);
+    color: var(--fourth);
+  }
+  
+  .OrderTable tr.table_header th {
+    background-color: var(--tertiary);
+    font-family: var(--strong);
+    color: var(--primary);
+  }
+  
+  .OrderTable tr.second th {
+    background-color: var(--secondary);
+  }
+  
+  .OrderTable tr:nth-child(even) {
+    background-color: var(--suppliment);
+  }
+
+  .previous {
+    display: absolute;
+    flex-direction: row;
+    text-decoration: none;
+  padding: 8px 16px;
+    color: black;
+  }
+  .left{
+    height: 150px;
+    width: auto;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}

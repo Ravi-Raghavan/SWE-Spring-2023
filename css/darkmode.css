@@ -199,24 +199,45 @@ body.dark .shop-items span {
   color: var(--primary);
 }
 
-body.dark .shop-items {
+/* body.dark .shop-items {
   background-color: var(--primary-dark);
   border: 2px solid var(--suppliment);
+} */
+
+body.dark .shop-item {
+  background-color: var(--primary-dark);
+  border-color: var(--suppliment);
 }
 
-body.dark .shop-item-title {
-  color:var(--suppliment);
-}
-
-body.dark .shop-item-button,
-body.dark .btn-primary:hover {
+body.dark .shop-item-button {
   background-color: var(--tertiary);
-  color: var(--secondary-dark);
 }
+
+/* body.dark .shop-item-title {
+  color:var(--suppliment);
+} */
+
+/* body.dark .shop-item-button,
+body.dark .btn-primary:hover {
+  background-color: black;
+  color: var(--secondary-dark);
+} */
 
 body.dark .btn-primary{
-  background-color: var(--secondary);
+  background-color: var(--tertiary);
   color:var(--secondary-dark);
+}
+
+body.dark .btn-primary:hover {
+  background-color: var(--secondary);
+}
+
+body.dark .btn-purchase {
+  background-color: var(--secondary);
+}
+
+body.dark .btn-purchase:hover {
+  background-color: var(--tertiary);
 }
 
 /* FAQ */

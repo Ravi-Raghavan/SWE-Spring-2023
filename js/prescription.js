@@ -1,5 +1,6 @@
 window.onload = startType(0,null);
 function startType(code,value){
+  
     fetch(`/prescription/get/accountType?uid=${getUID()}`,{
       method: "GET",
       cache: "no-cache"
@@ -13,6 +14,7 @@ function startType(code,value){
         document.getElementById("demail").value = getEmail();
         document.getElementById("dfname").value = getFirstName();
         document.getElementById("dlname").value = getLastName();
+        loadPharmacies();
         if(code==1){
           document.getElementById("dmedication").value = value;
         }
@@ -189,9 +191,10 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
     alert("Medication Not Specified!");
     return;
   }
-  var dosage = document.getElementById("ddosage").value;
-  if(dosage==""){
-    dosage = "default";
+  var pharmacy = document.querySelector(".pharmacy-options").value;
+  if(pharmacy==""){
+    alert("Please select a pharmacy!");
+    return;
   }
   var refills = document.getElementById("drefills").value;
   if(refills==""){
@@ -234,11 +237,11 @@ document.querySelector(".submit-box2").addEventListener("click",() =>{
             doctorAccountEmail:demail,
             expireDate:dexpiredate,
             medication:medication,
-            dosage:dosage,
             refills:refills,
             prescriptionNumber:prescriptionNumber,
             instructions:instructions,
-            uid:getUID()
+            uid:getUID(),
+            pharmacy:pharmacy
           }
           fetch("/prescription/add/doctor",{
             method:"POST",
@@ -478,4 +481,19 @@ document.querySelector(".message span").addEventListener("click",()=>{
   window.location.href = "./contact-us.html";
 })
 
+function loadPharmacies(){
+  fetch("/prescription/pharmacy/list",{
+    method:"GET",
+    cache:"no-cache"
+  }).then((response)=>{
+    response.json().then((result)=>{
+      let innerAddition = `<option value="">Select Pharmacy</option>`;
+      for(let i = 0;i<result.length;i++){
+        let currPharm = result[i];
+        innerAddition += `<option value="${currPharm.uid}">${currPharm.displayName} - ${currPharm.address}</option>`;
+      }
+      document.querySelector(".pharmacy-options").innerHTML = innerAddition;
+    })
+  })
+}
 

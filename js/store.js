@@ -2,11 +2,14 @@
 // import { getDatabase } from "firebase-admin/database";
 
 
-/* TO DO
+/* TODO
     1. Get the list of prescribed medication names for the specific user once the page loads
     2. Using that list, get each medication, from the database at address drugs/prescription/...
     3. Additionally, on load, add all the over the counter medication to the database: For loop get request from database at address drugs/OTC/...
-    4. (Qadis) after payment has been verified, send email to user email confirming payment.
+*/
+
+/* DONE
+    1. (Qadis) after payment has been verified, send email to user email confirming payment.
 
     Front-End:
     1. Swap buttons:
@@ -126,6 +129,7 @@ async function ready() {
                         button.innerText = "\u2715 Remove";
                         button.setAttribute("class", "btn btn-danger");
                     }
+                    break;
                 }
             }
         }
@@ -142,6 +146,20 @@ function purchaseClicked() {
     // while (cartItems.hasChildNodes()) {
     //     cartItems.removeChild(cartItems.firstChild)
     // }
+
+
+    //INSERT LOGIC TO CHECK IF ORDER MATCHES PRESCRIPTION HERE. GET PHARMACY NAME AND STORE IT IN LOCAL STORAGE
+
+
+
+    //HARDCODED VALUES JUST FOR TESTING PLEASE DELETE LATER
+    var pid = "PsgwJjIBD9PVWoQChxjh9UH9lwo1" //hardcoded pharmacy ID
+    var user_record = JSON.parse(window.localStorage.getItem("User Record"));
+    user_record["pid"] = pid;
+    window.localStorage.setItem("User Record", JSON.stringify(user_record));
+    //
+
+    //
     if (total != 0) {
         document.getElementById("paypal-button-container").style.display = "block";
     } else {
@@ -152,23 +170,33 @@ function purchaseClicked() {
 function removeCartItem(event) {
     var buttonClicked = event.target;
     buttonClicked.parentElement.parentElement.remove()
-
+    var prescription = false;
+    
     var title = buttonClicked.parentElement.parentElement
         // .getElementsByClassName("cart-item cart-column")[0]
         .getElementsByClassName("cart-item-title")[0]
         .innerText;                                                         // get the title of the item
-    console.log(title);
+    var oldTitle = title;
+    if(title.includes(':')){
+    title = title.substring(title.indexOf(':')+2);
+    prescription = true;
+    }
+    
+     console.log(title);
+     console.log(oldTitle);
     var shopItems = document.getElementsByClassName("shop-item");           // get all the shop items. Go through each one get the item and if
     for (var i = 0; i < shopItems.length; i++) {                            // the removed item is the same as the shop item
         var item = document.getElementsByClassName("shop-item-title")[i];
         var shopItemName = item.innerText;
         console.log(i+" "+shopItemName);
-        if (shopItemName == title) {
+        if (shopItemName == oldTitle) {
             let button = item.parentElement
                 // .getElementsByClassName("shop-item-details")[0]
                 .getElementsByClassName("btn-danger")[0];
+            if(button != null){
             button.innerText = "Add to Cart";
             button.setAttribute("class", "btn btn-primary shop-item-button");
+            }
         }
     }
     // console.log("clicked")
@@ -224,16 +252,25 @@ function swapbutton(event, title) {
 
 }
 
-function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
+function addToCartClicked2(event, itemImg, itemPrice, itemTitle) {
     var button = event.target;
+
+    button.style.transistion = "0.5s ease-in-out";
+    button.style.opacity = 0.5
+    button.style.cursor = "wait";
+
+    setTimeout(function () {
+        button.style.opacity = 1;
+        button.style.cursor = "pointer";
+    }, 100);
 
     // var theme = document.getElementsByTagName("body")[0];
     // if (theme.classList.contains('dark')) {
     //     button.style.outline = "2px solid var(--primary)";
 
-    //     setTimeout(function () {
-    //         button.style.outline = "transparent";
-    //     }, 1000);
+        // setTimeout(function () {
+        //     button.style.outline = "transparent";
+        // }, 1000);
     // } else {
     //     button.style.outline = "2px solid var(--primary)";
 
@@ -261,7 +298,7 @@ function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     // order.push({ "item-name": title, price: priceVal, quantity: 1 });
     // console.log(order);
 
-    addItemToCart(title, price, imageSrc, 1);
+    addItemToCart(title, price, imageSrc, 1, false);
     //swaps(event);
     updateCartTotal();
 
@@ -284,8 +321,76 @@ function addToCartClicked(event, itemImg, itemPrice, itemTitle) {
     // order.push({"costs" : total+priceVal, "drugs" : title , "quantity" : 1})
     // console.log(order)
 }
+function addToCartClicked(event, itemImg, itemPrice, itemTitle, num) {
+    var button = event.target;
 
-function addItemToCart(title, price, imageSrc, drugQuantity) {
+    button.style.transistion = "0.5s ease-in-out";
+    button.style.opacity = 0.5
+    button.style.cursor = "wait";
+
+    setTimeout(function () {
+        button.style.opacity = 1;
+        button.style.cursor = "pointer";
+    }, 100);
+
+    // var theme = document.getElementsByTagName("body")[0];
+    // if (theme.classList.contains('dark')) {
+    //     button.style.outline = "2px solid var(--primary)";
+
+        // setTimeout(function () {
+        //     button.style.outline = "transparent";
+        // }, 1000);
+    // } else {
+    //     button.style.outline = "2px solid var(--primary)";
+
+    //     setTimeout(function () {
+    //         button.style.outline = "transparent";
+    //     }, 1000);
+    // }
+
+    var shopItem = button.parentElement.parentElement;
+    //var title = shopItem.getElementsByClassName('shop-item-title')[0].innerText;
+    var title = itemTitle;
+    //console.log(shopItem);
+    var price = shopItem.getElementsByClassName(itemPrice)[0].innerText;            //error reading inner text
+
+    var priceVal = parseFloat(
+        shopItem
+        .getElementsByClassName(itemPrice)[0]
+        .innerText.replace("$", "")
+    );
+
+    // var imageSrc = shopItem.getElementsByClassName('shop-item-image')[0].src
+    var imageSrc = shopItem.getElementsByClassName(itemImg)[0].src;
+    console.log(title, price);
+    //Add item to order JSON.
+    // order.push({ "item-name": title, price: priceVal, quantity: 1 });
+    // console.log(order);
+
+    addItemToCart(title, price, imageSrc, num, true);
+    //swaps(event);
+    updateCartTotal();
+
+    //This fetch will request the uri path to update the cost of the cart and add drugs
+    //we can update quantity too if we add a variable to this javascript file that updates quantity aswell.
+    // fetch('http://localhost:8000/api/updateCart', {
+    //         method : 'PATCH',
+    //         body : JSON.stringify({
+    //             costs : total,
+    //             quantity : 1,
+    //             drugs : title
+    //         }),
+    //         headers: {
+    //             'Content-type': 'application/json',
+    //     },
+    // })
+    // .then((response) => response.json())
+    // .then((json) => console.log(json));
+
+    // order.push({"costs" : total+priceVal, "drugs" : title , "quantity" : 1})
+    // console.log(order)
+}
+function addItemToCart(title, price, imageSrc, drugQuantity, Prescription) {
     var cartRow = document.createElement('div')
     cartRow.classList.add('cart-row')
     cartRow.innerText = title
@@ -298,7 +403,7 @@ function addItemToCart(title, price, imageSrc, drugQuantity) {
             return
         }
     }
-
+if(!Prescription)
     var cartRowContents = `
 <div class="cart-item cart-column">
     <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
@@ -307,9 +412,19 @@ function addItemToCart(title, price, imageSrc, drugQuantity) {
 <span class="cart-price cart-column">${price}</span>
 <div class="cart-quantity cart-column">
     <input class="cart-quantity-input" type="number" value="${drugQuantity}">
-    <button class="btn btn-danger" type="button">REMOVE</button>
+    <button class="btn btn-danger" type="button">Remove</button>
 </div>`
-
+else
+    var cartRowContents = `
+<div class="cart-item cart-column">
+    <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
+    <span class="cart-item-title">${title}</span>
+</div>
+<span class="cart-price cart-column">${price}</span>
+<div class="cart-quantity cart-column">
+    <input class="cart-quantity-input" type="number" value="${drugQuantity}" readonly>
+    <button class="btn btn-danger" type="button">Remove</button>
+</div>`
     cartRow.innerHTML = cartRowContents
 
     cartItems.append(cartRow)

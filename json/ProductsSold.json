@@ -155,7 +155,7 @@
       "price": 15.99
     },
     {
-      "name": "Nyquil Severe Cold & Flu",
+      "name": "Nyquil Severe",
       "Prescription": true,
       "limit": 3,
       "imgPath": "../product/NyquilSevereColdFlu.jpg",

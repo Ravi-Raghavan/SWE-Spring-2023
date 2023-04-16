@@ -72,11 +72,11 @@ async function addDoctorPrescriptionProcess(req,res){
             doctorAccountEmail,
             expireDate,
             medication,
-            dosage,
             refills,
             prescriptionNumber,
             instructions,
-            uid
+            uid,
+            pharmacy
         } = JSON.parse(body);
         let returnString = await prescriptionModel.addDoctorPrescription(patientFirstName,
             patientLastName,
@@ -86,11 +86,10 @@ async function addDoctorPrescriptionProcess(req,res){
             doctorAccountEmail,
             expireDate,
             medication,
-            dosage,
             refills,
             prescriptionNumber,
             instructions,
-            uid);
+            uid,pharmacy);
             if(returnString=="added"){
                 res.writeHead(200,{'Content-Type':'application/json'});
                 res.end();
@@ -166,7 +165,7 @@ async function validateProcess(req,res){
             var dfName = r[2].doctorFirstName;
             var dlName = r[2].doctorLastName;
             var dUID = r[2].doctorUID;
-            var dosage = r[2].dosage;
+            var pharmacyUID = r[2].pharmacyUID;
             var expireDate = r[2].expireDate;
             var instructions = r[2].instructions;
             var med = r[2].medication;
@@ -177,17 +176,10 @@ async function validateProcess(req,res){
             var pUID = r[1].patientUID;
             var prescriptionNumber1 = r[0];
             var refills = r[2].refills;
-            var validatedPrescription = {
-                doctorEmail,dfName,dlName,dUID,dosage,
+            var addedOrNot = await prescriptionModel.addValidatedPrescription(doctorEmail,dfName,dlName,dUID,
                 expireDate,instructions,
                 med,patientEmail,plName,pDOB,pfName,pUID,
-                prescriptionNumber1,refills
-            }
-            console.log(validatedPrescription);
-            var addedOrNot = await prescriptionModel.addValidatedPrescription(doctorEmail,dfName,dlName,dUID,dosage,
-                expireDate,instructions,
-                med,patientEmail,plName,pDOB,pfName,pUID,
-                prescriptionNumber1,refills);
+                prescriptionNumber1,refills,pharmacyUID);
             if(addedOrNot=="added"){
                 let removeStatus = await prescriptionModel.removePrescriptions(dUID,pUID,prescriptionNumber1);
                 if(removeStatus=="Done"){
@@ -280,6 +272,48 @@ async function getDrugListProcess(req,res){
     }
 }
 
+async function dropDownProcess(req,res,queryStringParameters){
+    try{
+        let type = queryStringParameters.type;
+        let body = await getPostData(req);
+        const {uid} = JSON.parse(body);
+        let array = await prescriptionModel.dropDown(type,uid);
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(array));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function displayProcess(req,res){
+    try{
+        let body = await getPostData(req);
+        const {uid,prescriptionNumber,path} = JSON.parse(body);
+        let contents = await prescriptionModel.display(uid,prescriptionNumber,path);
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(contents));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function getPharamacyProcess(req,res){
+    try{        
+        const data = Object.values(await prescriptionModel.getPharamacy()).map((userInfo) => {
+            return {
+                uid: userInfo.uid,
+                address: userInfo.address,
+                displayName: userInfo.displayName
+            }
+        });
+
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(data));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     getTypeProcess,
     addPatientPrescriptionProcess,
@@ -291,5 +325,8 @@ module.exports = {
     removePatientPrescriptionProcess,
     getDrugsProcess,
     getDrugListProcess,
-    getRandomPrescriptionProcess
+    getRandomPrescriptionProcess,
+    dropDownProcess,
+    displayProcess,
+    getPharamacyProcess
 };

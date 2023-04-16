@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<link rel ="stylesheet" href="../css/ppview.css">
+    </head>
+    <body>
+        
+        <section class="logo">
+            <a href="homepage.html"><img src="../images/top_logo.png" width="150"></a>
+          </section>
+    	<section class="body-container">
+            
+            <div class="container">
+                <div class="back-button">
+                    <strong>&#x2190;</strong>
+                </div>
+    		<h1>Your Prescriptions</h1>
+            <div class = "prescription-dropdown" id="pending">
+                <div class = "sub-title">
+                    Pending:
+                </div>
+                <select class="pending-select" onclick="pendingValue()">
+                    <option class="pending-values" value="">Select Prescription</option>
+                    <section class = "add-drop-pending">
+                        <!--<option value="option1">Option 1</option>-->
+                    </section>
+                </select>
+            </div>
+            <div class = "display" id="display-pending">
+
+            </div>
+
+            <div class = "prescription-dropdown v" id="validated">
+                <div class = "sub-title">
+                    Active:
+                </div>
+                <select class="valid-select" onclick="validValue()">
+                    <option class="validated-values" value="">Select Prescription</option>
+                    <section class = "add-drop-valid">
+                        <!--<option value="option1">Option 1</option>-->
+                    </section>
+                </select>
+            </div>
+            <div class = "display" id="display-valid">
+
+            </div>
+    	</div>
+        </section>
+        
+        
+        <script src="../js/ppview.js"></script>
+    </body>
+</html>

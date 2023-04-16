@@ -380,7 +380,7 @@ tr a:visited{
   height: 42px;
   width: 42px;
   border: none;
-  transform: translate(-51px, -2px);
+  transform: translate(-50px, -4.5px);
   border-radius: 10px;
   background-color: var(--tertiary);
 }

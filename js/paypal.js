@@ -8,10 +8,34 @@ const cartRef = admin.database().ref("/carts/");
 const orderRef = admin.database().ref("/orders/");
 const userRef = admin.database().ref("/users/");
 
+const mailer = require("nodemailer");
+var transporter = mailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: "swespring2023@gmail.com",
+        pass: "lotrlepvzmwdnsny"
+    }
+});
+
+// function getemail(uid) {
+//     userRef.child(uid).once("value")
+//         .then((snapshot) => {
+//             email = snapshot.val().email;
+//             console.log("Variable read from Firebase successfully:", email);
+//         })
+//         .catch((error) => {
+//             console.error("Error reading variable from Firebase:", error);
+//         });
+//     return email;
+// }
+
 var uid;
-async function createOrder(userID) {
+var pid; //pharmacy id
+async function createOrder(userID, pharmacyID) {
     var purchaseAmount;
     uid = userID;
+    pid = pharmacyID;
+
     cartRef.child(userID).once("value")
         .then((snapshot) => {
             purchaseAmount = snapshot.val().cartTotal;
@@ -57,26 +81,63 @@ async function capturePayment(orderId) {
     });
     const data = await response.json();
     console.log(data);
-    cartRef.child(uid).once("value")
-        .then((snapshot) => {
-            let orderPushRef = orderRef.child(uid).push();
-            orderPushRef.set(snapshot.val());
-            orderPushRef.child("status").set("Pending");
-            userRef.child(uid).child("/orders/").child(orderPushRef.key).set(snapshot.val());
-            userRef.child(uid).child("/orders/").child(orderPushRef.key).child("status").set("Pending");
+    if (data.status == "COMPLETED") {
+        cartRef.child(uid).once("value")
+            .then((snapshot) => {
+                let orderPushRef = orderRef.child(uid).push();
+                orderPushRef.set(snapshot.val());
 
-            /**DELETE CART */
-            cartRef.child(uid).set(null)
-            .then(() => {
-                console.log("Cart is Deleted!");
+                const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+                let date_time = new Date();
+
+                // get current date
+                // adjust 0 before single digit date
+                let date = ("0" + date_time.getDate()).slice(-2);
+
+                // get current month
+                let month = monthNames[date_time.getMonth()];
+
+                // get current year
+                let year = date_time.getFullYear();
+
+                orderPushRef.child("orderDate").set(`${month} ${date} ${year}`);
+                orderPushRef.child("status").set("Pending");
+                userRef.child(uid).child("/orders/").child(orderPushRef.key).set(snapshot.val());
+                userRef.child(uid).child("/orders/").child(orderPushRef.key).child("status").set("Pending");
+                userRef.child(uid).child("/orders/").child(orderPushRef.key).child("orderDate").set(`${month} ${date} ${year}`);
+
+                console.log("PID: " + pid);
+                userRef.child(pid).child("/orders/").child(orderPushRef.key).set(snapshot.val());
+
+                /**DELETE CART */
+                cartRef.child(uid).set(null)
+                    .then(() => {
+                        console.log("Cart is Deleted!");
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    })
             })
-            .catch((err) => {
-                console.log(err);
+            .catch((error) => {
+                console.error("Error reading variable from Firebase:", error);
             })
-        })
-        .catch((error) => {
-            console.error("Error reading variable from Firebase:", error);
-        })
+        var mailOptions = {
+            from: "swespring2023@gmail.com",
+            to: data.payment_source.paypal.email_address,
+            subject: "Order Confirmed!",
+            text: "Congratulations, your payment has been verified and the order is on its way!"
+        };
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+            } else {
+                console.log("Email sent: " + info.response);
+            }
+        });
+    } else {
+        alert("Payment could not be completed");
+    }
     return data;
 }
 

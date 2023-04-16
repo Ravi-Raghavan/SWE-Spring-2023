@@ -59,6 +59,716 @@
 
 
 
+
+
+
+          
+
+        <a id ="loggingOut" onclick="logout()">Logout</a>
+      </div>
+
+      <div id="interface" class="interface-container"></div>
+
+      <!---PROFILE INFORMATION-->
+      <div id="profile-info" class="info-container">
+        <section id="info" class="DrugFo">
+          <image
+            id="profile-pic"
+            class="profile-pic"
+            src="../images/profile.png"
+          ></image>
+          <h1 id="welcome-text">Welcome, Anonymous!</h1>
+
+          <div class="row">
+            <h2>Personal Information:</h2>
+            <div class="col colDash">
+              <h3>Full Name</h3>
+              <p id="full-name">Some Random Full Name</p>
+              <hr class="dashTable"/>
+
+              <h3>Email</h3>
+              <p id="email">randomassemail@random.com</p>
+              <hr class="dashTable" />
+
+              <h3>Address</h3>
+              <p><a id="address">220 Poopoo Pl, Kailua, HI 96734</a> <i onclick ="addressChange()" class="fa fa-pencil fa-lg" style="margin-left: 10px; cursor:pointer;" ></i></p> 
+              <hr class="dashTable"/>
+
+              <h3>Phone</h3>
+              <p ><a id="phone">666-420-6666</a><i onclick="phoneNumberChange()" class="fa fa-pencil fa-lg" style="margin-left: 10px; cursor: pointer;"></i></p>
+            </div>
+
+          </div>
+        </section>
+      </div>
+
+
+
+      <!---ORDER INFORMATION-->
+      <div id="order-AND-prescription-info" class="info-container">
+        <section id="info" class="DrugFo">
+          <div class="row">
+            <h2>Recent Orders:</h2>
+            <div class="OrderTable">
+              <table id="ordersList">
+                <tr class="table_header">
+                  <th>Order Number</th>
+                  <th width = "150%">Items</th>
+                  <th>Status</th>
+                
+                </tr>
+                <!-- <tr>
+                  <td>69420</td>
+                  <td>Tylenol x1 <br> Iburprofen x2 <br> Rubbing Alcohol x3</td>
+                  <td>Not Delivered</td>
+                  
+                </tr>
+                <tr>
+                  <td>69421</td>
+                  <td>Iburprofen x1</td>
+                  <td>Processing</td>
+                </tr>
+                <tr>
+                  <td>69422</td>
+                  <td>Viagra x1</td>
+                  <td>Delivered</td>
+                </tr> -->
+              </table>
+              
+            </div>
+      </div>
+      <button class = "dl-btn" onclick = 'downloadOrders()'>Download Order History</button>
+
+
+      <div class="row">
+        <h2 id="DoctorPrescribedItems">Recent Prescriptions:</h2>
+      
+        <div class="OrderTable">
+          <table id="prescriptionList">
+            <tr class="table_header second">
+              <th>Prescription ID</th>
+              <th width = "150%">Items</th>
+              <th>Prescriber</th>
+              <th>Approval Status</th>
+            
+            </tr>
+            <!-- <tr>
+              <td>42069</td>
+              <td>Tylenol x1 <br> Iburprofen x2 <br> Rubbing Alcohol x3</td>
+              <td>Dr. Ravi</td>
+              <td>Approved</td>
+              
+            </tr>
+            <tr>
+              <td>42070</td>
+              <td>Iburprofen x1</td>
+              <td>Dr. Jeff</td>
+              <td>Pending</td>
+            </tr>
+            <tr>
+              <td>42071</td>
+              <td>Viagra x1</td>
+              <td>Dr. Mayank</td>
+              <td>Denied</td>
+            </tr> -->
+          </table>
+        </div>
+  </div>
+  <button class = "dl-btn" onclick = 'downloadPrescriptions()'>Download Prescription History</button>
+        </section>
+      </div>
+
+      <!---UPLOAD INFORMATION-->
+      <div id="upload-info" class="info-container">
+        <section id="info" class="DrugFo">
+
+          <div class="row">
+            <h1 class="up-title">Upload Medical Documents/Prescriptions Here!</h1>
+
+
+
+  <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+
+  <form action = "/upload/documentation" method="post" enctype="multipart/form-data" action = "#" id = "uploadDocumentationForm" target = "dummyframe">
+      <input type="file" id="fileupload" name = "myfile" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" />
+      <br /><br />
+      <input class = "dl-btn" type = "submit" value="Submit" id="submit" />
+  </form>
+          </div>
+          <br><br>
+          <h1 class="up-title">Previously Uploaded Documents</h1>
+          <br><br>
+          <div class="OrderTable">
+            <table id="fileList">
+              <tr class="table_header">
+                <th style="width: 150%">File Name</th>
+                <th style="width: 50px;">Status</th>
+
+              </tr>
+
+            </table>
+          </div>
+      </div>
+
+      <!---PAYMENT INFORMATION-->
+      <div id="payment-info" class="info-container">
+        <section id="info" class="DrugFo">
+          <div class="row">
+            <h2>Saved Card Info:</h2>
+          
+            <div class="OrderTable">
+              <table id="paymentList">
+                <tr class="table_header">
+                  <th style="width: 20%;">Name on Card</th>
+                  <th style="width: 30%;">Card Number</th>
+                  <th style="width: 40%;">Billing Address</th>
+                  <th style="width: 10%;">Expiration Date</th>
+                  <th>Remove</th>
+                
+                </tr>
+                
+              </table>
+            </div>
+      </div>
+          <div class="paymentRow">
+            <div class="row">
+              <div class="col-75">
+                <div class="container">
+                  <form onsubmit = "return false">
+            
+                    <div class="row">
+                      <div class="col-50">
+                        <h3>Billing Address</h3>
+                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe" required>
+                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                        <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
+                        <input type="text" id="adr" name="address" placeholder="542 W. 15th Street" required>
+                        <label for="city"><i class="fa fa-institution"></i> City</label>
+                        <input type="text" id="city" name="city" placeholder="New York" required>
+            
+                        <div class="row">
+                          <div class="col-50">
+                            <label for="state">State</label>
+                            <input type="text" id="state" name="state" placeholder="NY" required>
+                          </div>
+                          <div class="col-50">
+                            <label for="zip">Zip</label>
+                            <input type="text" id="zip" name="zip" placeholder="10001" required>
+                          </div>
+                        </div>
+                      </div>
+            
+                      <div class="col-50">
+                        <h3>Payment</h3>
+                        <label for="fname">Accepted Cards</label>
+                        <div class="icon-container">
+                          <i class="fa fa-cc-visa" style="color:navy;"></i>
+                          <i class="fa fa-cc-amex" style="color:blue;"></i>
+                          <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                          <i class="fa fa-cc-discover" style="color:orange;"></i>
+                        </div>
+                        <label for="cname">Name on Card</label>
+                        <input type="text" id="cname" name="cardname" placeholder="John More Doe" required>
+                        <label for="ccnum">Credit card number</label>
+                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111 2222 3333 4444" required>
+                        <label for="expmonth">Exp Month</label>
+                        <input type="text" id="expmonth" name="expmonth" placeholder="September" required>
+            
+                        <div class="row">
+                          <div class="col-50">
+                            <label for="expyear">Exp Year</label>
+                            <input type="text" id="expyear" name="expyear" placeholder="2018" required>
+                          </div>
+                          <div class="col-50">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv" placeholder="352" minlength ="3" maxlength="4" required>
+                          </div>
+                        </div>
+                      </div>
+            
+                    </div>
+                    <button  class="btn btnDash" onclick = "addCard()"> Add Card Information </button>
+                  </form>
+                </div>
+              </div>
+          </div>
+        </section>
+      </div>
+
+      
+      <!---SETTINGS INFORMATION-->
+      <div id="settings-info" class="info-container">
+        <section id="info" class="DrugFo">
+          
+            <div class="row">
+              <h2>Settings:</h2>
+              <div class="settingsCol colDash">
+                
+                <div class="settingRow">
+                  <h3>Dark Mode</h3>
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+
+                <hr class="dashTable" />
+                
+                <div class="settingRow">
+                  <h3>Send Emails</h3>
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                </div> 
+
+                <hr class="dashTable" /> 
+
+                <div class="settingRow">
+                  <h3>Add Email Address</h3>
+                  <button class="log-btn add" ><body>Add</body></button>
+                </div>
+                
+                <hr class="dashTable"/>
+
+                <div class="settingRow">
+                  <h3>Delete Account</h3>
+                  <button class="log-btn delete" onclick = 'deleteAccount()'><body>Delete</body></button>
+              </div>
+
+              </div>
+    
+            </div>
+          
+        </section>
+      </div>
+
+      <!---PRESCRIPTION APPROVAL INFORMATION-->
+      <div id="approval-info" class="info-container">
+        <section id="info" class="DrugFo">
+          
+          <div class="row"> <!-- START OF PATIENT LIST-->
+
+            <div class="patient-list-container"> <!-- do CSS on this class -->
+              <div class="col-lg-12">
+                <div class="main-box clearfix">
+                  <div class="table-responsive">
+                    <table class="table user-list">
+                      <thead>
+                        <tr>
+                          <th><span>User</span></th>
+                          <th><span>Created</span></th>
+                          <th class="text-center"><span>Status</span></th>
+                          <th><span>Email</span></th>
+                          <th>&nbsp;</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+
+                        <tr>
+                          <td>
+                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+                            <a href="#" class="user-link">Mila Kunis</a>
+                            <span class="user-subhead">Admin</span>
+                          </td>
+                          <td>
+                            2013/08/08
+                          </td>
+                          <td class="text-center">
+                            <span class="label label-default">Inactive</span>
+                          </td>
+                          <td>
+                            <a href="#">mila@kunis.com</a>
+                          </td>
+                          <td style="width: 20%;">
+                            <a href="#" class="table-link">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                            <a href="#" class="table-link">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                            <a href="#" class="table-link danger">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="">
+                            <a href="#" class="user-link">George Clooney</a>
+                            <span class="user-subhead">Member</span>
+                          </td>
+                          <td>
+                            2013/08/12
+                          </td>
+                          <td class="text-center">
+                            <span class="label label-success">Active</span>
+                          </td>
+                          <td>
+                            <a href="#">marlon@brando.com</a>
+                          </td>
+                          <td style="width: 20%;">
+                            <a href="#" class="table-link">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                            <a href="#" class="table-link">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                            <a href="#" class="table-link danger">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>
+                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+                            <a href="#" class="user-link">Ryan Gossling</a>
+                            <span class="user-subhead">Registered</span>
+                          </td>
+                          <td>
+                            2013/03/03
+                          </td>
+                          <td class="text-center">
+                            <span class="label label-danger">Banned</span>
+                          </td>
+                          <td>
+                            <a href="#">jack@nicholson</a>
+                          </td>
+                          <td style="width: 20%;">
+                            <a href="#" class="table-link">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                            <a href="#" class="table-link">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                            <a href="#" class="table-link danger">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                          </td>
+                        </tr>
+                        
+                        <tr>
+                          <td>
+                            <img src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="">
+                            <a href="#" class="user-link">Emma Watson</a>
+                            <span class="user-subhead">Registered</span>
+                          </td>
+                          <td>
+                            2004/01/24
+                          </td>
+                          <td class="text-center">
+                            <span class="label label-warning">Pending</span>
+                          </td>
+                          <td>
+                            <a href="#">humphrey@bogart.com</a>
+                          </td>
+                          <td style="width: 20%;">
+                            <a href="#" class="table-link">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                            <a href="#" class="table-link">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                            <a href="#" class="table-link danger">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                          </td>
+                        </tr>
+                        
+                        <tr>
+                          <td>
+                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
+                            <a href="#" class="user-link">Mila Kunis</a>
+                            <span class="user-subhead">Admin</span>
+                          </td>
+                          <td>
+                            2013/08/08
+                          </td>
+                          <td class="text-center">
+                            <span class="label label-default">Inactive</span>
+                          </td>
+                          <td>
+                            <a href="#">mila@kunis.com</a>
+                          </td>
+                          <td style="width: 20%;">
+                            <a href="#" class="table-link">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                            <a href="#" class="table-link">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                            <a href="#" class="table-link danger">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                          </td>
+                        </tr>
+                        
+                        <tr>
+                          <td>
+                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="">
+                            <a href="#" class="user-link">Robert Downey Jr.</a>
+                            <span class="user-subhead">Admin</span>
+                          </td>
+                          <td>
+                            2013/12/31
+                          </td>
+                          <td class="text-center">
+                            <span class="label label-success">Active</span>
+                          </td>
+                          <td>
+                            <a href="#">spencer@tracy</a>
+                          </td>
+                          <td style="width: 20%;">
+                            <a href="#" class="table-link">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-search-plus fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                            <a href="#" class="table-link">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-pencil fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                            <a href="#" class="table-link danger">
+                              <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-trash-o fa-stack-1x fa-inverse"></i>
+                              </span>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!---VIEW USERS INFORMATION-->
+      <div id="viewUser-info" class="info-container">
+        <section id="info" class="DrugFo">
+          
+            <div class="row">
+
+              <div id="popup1" class="overlay">
+                <div class="popup">
+                  <a class="xButton" onclick='exit()'>&times;</a>
+                    <h2 id="articleTitle" style="text-align: center;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat nihil rerum omnis nulla non odit esse quasi eius maiores fuga ducimus quod, optio repudiandae porro recusandae laudantium animi adipisci rem!</h2>
+                    <div id="articleContent" class="content"></div>
+                    <a  id = "accept" class ="close" onclick='accept()'>Accept</a>
+                    <a  id = "download" class="close" onclick='test()'>Download</a>
+                    <a  id = "deny" class="close" onclick='deny()'>Deny</a>
+                </div>
+            </div>
+            
+              <div class="UserTable">
+                <table id="userList" style="width: 100%;">
+                  <tr class="table_header">
+                    <th style="width: 20%;">User</th>
+                    <th style="width: 60%;">Documentation</th>
+                    <th style="width: 20%;">Verify</th>
+                  </tr>
+                </table>
+              </div>
+             
+              </div>
+
+              </div>
+    
+          
+        </section>
+      </div>
+
+      <!---VIEW PHARM INFORMATION-->
+      <div id="pharm-info" class="info-container">
+        <section id="info" class="DrugFo">
+          
+            <div class="row">
+            
+              <div class="OrderTable">
+                <table id="pharmList" style="width: 100%;">
+                  <tr class="table_header">
+                    <th style="width: 20%;">Order Number</th>
+                    <th style="width: 60%;">Items</th>
+                    <th style="width: 20%;">Staus</th>
+                  </tr>
+
+                </table>
+              </div>
+             
+              </div>
+
+              </div>
+    
+          
+        </section>
+      </div>
+
+      <!---CLAIM ORDER INFORMATION-->
+      <div id="claim-info" class="info-container">
+        <section id="info" class="DrugFo">
+          
+            <div class="row">
+            
+              <div class="OrderTable">
+                <table id="claimList" style="width: 100%;">
+                  <tr class="table_header">
+                    <th style="width: 20%;">Order Number</th>
+                    <th style="width: 60%;">Items</th>
+                    <th style="width: 20%;">Claim</th>
+                  </tr>
+
+                </table>
+              </div>
+             
+              </div>
+
+              </div>
+    
+          
+        </section>
+      </div>      
+      
+
+    </div>
+  </body>
+
+  <script src="/js/dashboard-view.js"></script>
+  <script src = "../js/homepage.js"></script>
+  <!-- <script src="../js/profilePic.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+  <script type="text/javascript">
+    function showOrHide(x) {
+      var $rows = $('#userList tr');
+      $(document).ready(function(){
+        if($rows.eq(x.rowIndex+1).is(":visible"))
+          $rows.eq(x.rowIndex+1).hide();
+        
+        else
+          $rows.eq(x.rowIndex+1).show();
+      });
+    }
+    addPharmOrder("123asdasxzcqa", ["asdasd", "sadqwexzcasd", "sadqwexzdcasdsad"], [1, 2, 3]);
+
+  </script>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+  <head> 
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/dashboard.css" />
+    <link rel="stylesheet" type="text/css" href="../css/dynamic-size.css" >
+    <link rel="stylesheet" type="text/css" href="../css/darkmode.css" >
+
+
+    <title>DrugHub | Dashboard</title>
+
+    <script src="../js/dynamicHeaderFooter.js"></script>
+
+  </head>
+
+  <body>
+    <script src="../js/darkmode.js"></script>
+    
+    <div id="header"></div>
+
+
+    <div class="container">
+      <div id="sideMenu" class="sidebar">
+        <a
+          id="infoOption"
+          class="active"
+          href="#"
+          onclick='swapDisplay("profile-info", "infoOption")'
+          >Profile Information</a
+        >
+        <a id="uploadOption"
+        class=""
+        href="#"
+        onclick='swapDisplay("upload-info", "uploadOption")'
+        >Upload Documentation</a>
+
+        <a id="orderOption"
+          class=""
+          href="#"
+          onclick='swapDisplay("order-AND-prescription-info", "orderOption")'
+          >Order/Prescription History</a>
+
+        <a id="paymentOption"
+          class=""
+          href="#"
+          onclick='swapDisplay("payment-info", "paymentOption")'
+          >Payment Information</a>
+
+        <a id="settingsOption"
+          class=""
+          href="#"
+          onclick='swapDisplay("settings-info", "settingsOption")'
+          >Settings</a>
+
+
+
           
 
         <a id ="loggingOut" onclick="logout()">Logout</a>
@@ -661,6 +1371,6 @@
           $rows.eq(x.rowIndex+1).show();
       });
     }
-
+    addDriverClaim("asdsadqweascz", ["test", "tester", "testest"], [1,2,3]);
   </script>
 </html>
