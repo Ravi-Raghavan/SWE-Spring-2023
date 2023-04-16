@@ -28,8 +28,8 @@
 
 
   /* only fonts used */
-  --soft: Arial, Helvetica, sans-serif;
-  --strong: Georgia, 'Times New Roman',  serif;
+  --soft: Verdana, Tahoma, sans-serif;
+  --strong: 'Times New Roman',  serif;
 }
 
 html{ 
