@@ -767,6 +767,18 @@ async function getReadyOrders(request, response){
   });
 }
 
+async function getPharmacies(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.getPharmacies(response);
+  });
+}
+
 
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
@@ -1020,6 +1032,10 @@ const server = http.createServer((request, response) => {
       
       case "/get/ready/orders":
         getReadyOrders(request, response);
+        break;
+      
+      case "/get/pharmacies":
+        getPharmacies(request, response);
         break;
     }
   }

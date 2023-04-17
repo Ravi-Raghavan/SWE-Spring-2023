@@ -138,7 +138,7 @@ async function ready() {
     updateCartTotal();
 }
 
-function purchaseClicked() {
+async function purchaseClicked() {
     // alert('Thank you for your purchase')                                // Insert HTTP request here to transfer to payment page.
     // Each time an order is changed the product is added to User/Orders/ in Firebase
 
@@ -149,11 +149,22 @@ function purchaseClicked() {
 
 
     //INSERT LOGIC TO CHECK IF ORDER MATCHES PRESCRIPTION HERE. GET PHARMACY NAME AND STORE IT IN LOCAL STORAGE
+    var response = await fetch("/get/pharmacies", {method: "GET"});
+    var pharmacies = await response.json();
+    console.log(pharmacies);
+    var pharmacy_keys = []
 
+    for (var index in pharmacies){
+        for (var key in pharmacies[index]){
+            pharmacy_keys.push(key);
+        }
+    }
+
+    console.log("Pharmacies: " + pharmacy_keys);
 
 
     //HARDCODED VALUES JUST FOR TESTING PLEASE DELETE LATER
-    var pid = "PsgwJjIBD9PVWoQChxjh9UH9lwo1" //hardcoded pharmacy ID
+    var pid = pharmacy_keys[Math.floor(Math.random() * pharmacy_keys.length)]; //hardcoded pharmacy ID
     var user_record = JSON.parse(window.localStorage.getItem("User Record"));
     user_record["pid"] = pid;
     window.localStorage.setItem("User Record", JSON.stringify(user_record));

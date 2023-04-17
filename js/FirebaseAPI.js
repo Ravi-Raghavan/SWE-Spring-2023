@@ -865,6 +865,27 @@ async function getReadyOrders(response){
     })
 }
 
+async function getPharmacies(response){
+    ref.once("value", (snapshot) => {
+        var userData = snapshot.val();
+        var pharmacies = []
+
+        for (var userKey in userData){
+            var userInfo = userData[userKey];
+            if (userInfo["accountType"] === "Pharmacy"){
+                var key = `${userKey}`
+                var JSON_Obj = {}
+                JSON_Obj[key] = userInfo;
+                pharmacies.push(JSON_Obj)
+            }
+        }
+
+        response.writeHead(200, { "Content-type": "application/json" });
+        response.write(JSON.stringify(pharmacies));
+        response.end();
+    })
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -890,5 +911,6 @@ module.exports = {
     login: login,
     markOrderReady:markOrderReady,
     markOrderClaimed: markOrderClaimed,
-    getReadyOrders:getReadyOrders
+    getReadyOrders:getReadyOrders,
+    getPharmacies : getPharmacies
 }
