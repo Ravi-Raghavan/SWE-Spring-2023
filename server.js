@@ -750,6 +750,60 @@ async function downloadUserFile(request, response, queryStringParameters) {
 }
 
 
+async function makeOrderReady(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    var oid = JSON.parse(credentials).oid;
+    var pid = JSON.parse(credentials).pid;
+    await FirebaseAPI.markOrderReady(oid, pid, response);
+  });
+
+}
+
+async function makeOrderClaimed(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    var oid = JSON.parse(credentials).oid;
+    await FirebaseAPI.markOrderClaimed(oid, response);
+  });
+
+}
+
+async function getReadyOrders(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.getReadyOrders(response);
+  });
+}
+
+async function getPharmacies(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.getPharmacies(response);
+  });
+}
+
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -999,6 +1053,22 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/verify/documentation":
+        break;
+      
+      case "/ready/order":
+        makeOrderReady(request, response, queryStringParameters);
+        break;
+      
+      case "/claim/order":
+        makeOrderClaimed(request, response, queryStringParameters);
+        break;
+      
+      case "/get/ready/orders":
+        getReadyOrders(request, response);
+        break;
+      
+      case "/get/pharmacies":
+        getPharmacies(request, response);
         break;
     }
   }

@@ -53,13 +53,13 @@
               <section class="heading">Payment Information</section>
               <section>Visa: ************1111</section>
               <section>Expires: 04/25</section>
-              <section>John L. Smith</section>
+              <section id = "CustomerName">John L. Smith</section>
 
               <section class="heading">Bill To</section>
-              <section>John L. Smith</section>
-              <section>43 Avenue E</section>
-              <section>Piscataway NJ, 08854</section>
-              <section>United States</section>
+              <section id = "BillingName">John L. Smith</section>
+              <section id = "Address">43 Avenue E</section>
+              <section id = "Location">Piscataway NJ, 08854</section>
+              <section id = "Country">United States</section>
 
               </table>
           </div>
@@ -118,7 +118,7 @@ async function loadOrders(){
           drugs.push(drug["title"]);
           quantities.push(parseInt(drug["quantity"]))
         }
-        addOrder(orderNumber, "placed");
+        addOrder(orderNumber, order["status"]);
       }
     }
 }
@@ -200,6 +200,18 @@ async function loadOrders(){
       
 
       document.getElementById("OrderTotal").innerText = `Order Total: $${order_data.cartTotal}`
+      document.getElementById("BillingName").innerText = user_record.displayName
+      document.getElementById("CustomerName").innerText = user_record.displayName
+
+      var address = user_record.Address;
+
+      var splitString = address.split(",");
+
+      document.getElementById("Address").innerText = splitString[0]
+      document.getElementById("Location").innerText = splitString[1] + ", " + splitString[2]
+      document.getElementById("Country").innerText = splitSplit[3]
+
+
       //HERES WHERE WE WILL MANIPULATE DATA!
     }
   }

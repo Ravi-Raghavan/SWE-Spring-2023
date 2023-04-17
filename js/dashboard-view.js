@@ -116,28 +116,70 @@ window.onload = async function () {
       }
     }
 
-
+    console.log("Going to Fetch Orders!");
     /**FETCH ORDERS */
-    let ordersResponse = await fetch(`/get/orders/user?uid=${user_record["uid"]}`, {
-      method: 'GET'
-    })
+    if (user_record["Account Type"] == "Delivery Driver"){
 
-    let ordersResponseStatus = ordersResponse.status;
-    let orders = await ordersResponse.json();
-    console.log("Response Status: " + ordersResponseStatus);
-    console.log("Order Data Fetched: " + JSON.stringify(orders));
+      console.log("For Delivery Drivers");
+      let ordersResponse = await fetch(`/get/ready/orders`, {
+        method: 'GET'
+      })
 
-    if (ordersResponseStatus == 200){
-      for (var orderNumber in orders){
-        var order = orders[orderNumber];
-        var drugs = []
-        var quantities = []
-        for (var drugNumber in order["drugs"]){
-          var drug = order["drugs"][drugNumber];
-          drugs.push(drug["title"]);
-          quantities.push(parseInt(drug["quantity"]))
+      let ordersResponseStatus = ordersResponse.status;
+      let orders = await ordersResponse.json();
+  
+      console.log("Response Status: " + ordersResponseStatus);
+      console.log("Order Data Fetched: " + JSON.stringify(orders));
+
+      if (ordersResponseStatus == 200){
+        for (var userOrder in orders){
+          for (var orderNumber in orders[userOrder]){
+            console.log(orderNumber);
+            var order = orders[userOrder][orderNumber];
+            var drugs = []
+            var quantities = []
+            for (var drugNumber in order["drugs"]){
+              var drug = order["drugs"][drugNumber];
+              drugs.push(drug["title"]);
+              quantities.push(parseInt(drug["quantity"]))
+            }
+    
+            console.log(orderNumber);
+            console.log(drugs);
+            addDriverClaim(orderNumber, drugs, quantities, "ready");
+          }
         }
-        addOrder(orderNumber, drugs, quantities, "placed");
+      }
+    }
+    else{
+      let ordersResponse = await fetch(`/get/orders/user?uid=${user_record["uid"]}`, {
+        method: 'GET'
+      })
+  
+      let ordersResponseStatus = ordersResponse.status;
+      let orders = await ordersResponse.json();
+      console.log("Response Status: " + ordersResponseStatus);
+      console.log("Order Data Fetched: " + JSON.stringify(orders));
+  
+      if (ordersResponseStatus == 200){
+        for (var orderNumber in orders){
+          var order = orders[orderNumber];
+          var drugs = []
+          var quantities = []
+          var orderStatus = order["status"];
+          for (var drugNumber in order["drugs"]){
+            var drug = order["drugs"][drugNumber];
+            drugs.push(drug["title"]);
+            quantities.push(parseInt(drug["quantity"]))
+          }
+  
+          if (user_record['Account Type'] == "Pharmacy"){
+            addPharmOrder(orderNumber, drugs, quantities);
+          }
+          else{
+            addOrder(orderNumber, drugs, quantities, orderStatus);
+          }
+        }
       }
     }
 
@@ -226,7 +268,7 @@ window.onload = async function () {
     
 
     
-    if(user_record["Account Type"] == "Driver")
+    if(user_record["Account Type"] === "Delivery Driver")
     {
 
       document.getElementById("loggingOut").remove();
@@ -336,6 +378,7 @@ function addPharmOrder(OrderNumber, ItemList, quantityList){
     return;
   
   else{
+    var oid = String(OrderNumber);
     var rows = '<tr><td>'+ String(OrderNumber) +'</td><td>';
       size = ItemList.length;
       for(i = 0; i < size; i++){
@@ -345,7 +388,7 @@ function addPharmOrder(OrderNumber, ItemList, quantityList){
         if(i != (size-1))
         rows= rows+ ( "<br>");
       }
-      rows= rows +( '</td><td><button class =\"dl-btn\">Ready!</button></td></tr>');
+      rows= rows +( `</td><td><button class =\"dl-btn\" onclick = \"markReady(this.parentNode.parentNode.rowIndex, '${oid}')\" >Ready!</button></td></tr>`);
       var table = document.getElementById('pharmList');
       var template = document.createElement('template');
       template.innerHTML = rows;
@@ -362,6 +405,7 @@ function addDriverClaim(OrderNumber, ItemList, quantityList){
     return;
   
   else{
+    var oid = String(OrderNumber);
     var rows = '<tr><td>'+ String(OrderNumber) +'</td><td>';
       size = ItemList.length;
       for(i = 0; i < size; i++){
@@ -371,7 +415,7 @@ function addDriverClaim(OrderNumber, ItemList, quantityList){
         if(i != (size-1))
         rows= rows+ ( "<br>");
       }
-      rows= rows +( '</td><td><button class =\"dl-btn\">Claim!</button></td></tr>');
+      rows= rows +( `</td><td><button class =\"dl-btn\"  onclick = \"markClaimed(this.parentNode.parentNode.rowIndex, '${oid}')\">Claim!</button></td></tr>`);
       var table = document.getElementById('claimList');
       var template = document.createElement('template');
       template.innerHTML = rows;
@@ -840,6 +884,44 @@ let response = await fetch('/update/user', {
     'Content-type': 'application/json; charset=UTF-8',
   },
 })
+}
+
+//MARK ORDER AS READY FOR DELIVERY
+async function markReady(rowIndex, OID){
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+
+  let response = await fetch('/ready/order', {
+    method: 'PATCH',
+    body: JSON.stringify({
+      oid: OID,
+      pid: user_record.uid
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  })
+
+  var row = document.getElementById("pharmList").rows[parseInt(rowIndex)]
+  console.log(row);
+  document.getElementById("pharmList").deleteRow(parseInt(rowIndex));
+}
+
+async function markClaimed(rowIndex, OID){
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+
+  let response = await fetch('/claim/order', {
+    method: 'PATCH',
+    body: JSON.stringify({
+      oid: OID
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  })
+
+  var row = document.getElementById("claimList").rows[parseInt(rowIndex)]
+  console.log(row);
+  document.getElementById("claimList").deleteRow(parseInt(rowIndex));
 }
 
 function exit(){
