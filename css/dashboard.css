@@ -248,14 +248,14 @@ td {
 }
 
 .OrderTable tr.table_header th {
-  background-color: var(--tertiary);
+  background-color: var(--secondary);
   font-family: var(--strong);
   color: var(--primary);
 }
 
-.OrderTable tr.second th {
+/* .OrderTable tr.second th {
   background-color: var(--secondary);
-}
+} */
 
 .OrderTable tr:nth-child(even) {
   background-color: var(--suppliment);
@@ -328,7 +328,7 @@ td {
 }
 
 .paymentRow .container {
-  background-color: #f2f2f2;
+  background-color: var(--suppliment);
   padding: 5px 20px 15px 20px;
   border: 1px solid var(--fourth);
   border-radius: 3px;
@@ -361,6 +361,7 @@ td {
 .paymentRow label {
   margin-bottom: 10px;
   display: block;
+  color: var(--fourth);
 }
 
 .paymentRow .icon-container {
@@ -425,27 +426,30 @@ td {
 }
 
 .dl-btn {
-  padding: 6px;
+  padding: 5px;
   min-width: 100px;
   margin-top: 10px;
   margin-right: 16px;
   justify-content: center;
   font-size: 25px;
-  border-radius: 20px;
+  border-radius: 10px;
   text-decoration: none;
   margin-left: auto;
   text-align: center;
   vertical-align: middle;
   cursor: pointer;
   outline: 0px;
-  background-color: var(--primary);
-  color: var(--fourth);
-  transition: all 0.5s ease-in;
+  background-color: var(--fourth);
+  border: 2px solid transparent;
+  color: var(--primary);
+  transition: all 0.3s ease-in;
+  opacity: 0.5;
 }
 .dl-btn:hover {
-  color: var(--primary);
   background: var(--tertiary);
+  opacity: 1;
 }
+
 
 .dl-btn-deny {
   padding: 6px;
@@ -666,11 +670,12 @@ input[type="file"] {
   margin-top: 15px;
   width: 350px;
   max-width: 100%;
-  color: #444;
+  color: var(--fourth);
   padding: 5px;
-  background: #fff;
+  background: var(--primary);
   border-radius: 10px;
-  border: 1px solid #555;
+  border: 1px solid var(--fourth);
+  font-family: var(--soft);
 }
 
 input[type="file"]::file-selector-button {
@@ -679,11 +684,12 @@ input[type="file"]::file-selector-button {
   background: var(--secondary);
   padding: 10px 20px;
   border-radius: 10px;
-  color: #fff;
+  color: var(--primary);
   cursor: pointer;
+  font-family: var(--soft);
   transition: background 0.2s ease-in-out;
 }
 
 input[type="file"]::file-selector-button:hover {
-  background: #0d45a5;
+  background: var(--tertiary);
 }

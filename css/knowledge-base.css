@@ -370,6 +370,7 @@ tr a:visited{
   width: 450px;
   font-size: 30px;
   color: var(--tertiary);
+  background-color: var(--primary);
 }
 
 

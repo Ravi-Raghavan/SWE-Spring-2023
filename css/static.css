@@ -11,19 +11,24 @@
 :root {
 
   /* light mode colors */
-  --primary: #fff;
-  --secondary: #8fc0e3;
-  --tertiary: #4b7a5b;
+  /* --primary: #fff; */
+  --primary: #FAF9F6;
+  /* --secondary: #8fc0e3; */
+  --secondary: #a1d2f5;
+  /* --tertiary: #4b7a5b; */
+  --tertiary: #006A4E;
   --fourth: #707173;
 
-  --suppliment: #e6e6e6;
-
+  /* --suppliment: #e6e6e6; */
+  --suppliment: #f3f3f3;
   /* color to show warning */
   --warning : red;
   
   /*  dark mode colors */
-  --primary-dark: #181818;
-  --secondary-dark: #313131;
+  /* --primary-dark: #181818; */
+  --primary-dark: #1b2227;
+  /* --secondary-dark: #313131; */
+  --secondary-dark: #212a30;
 
 
 
@@ -34,4 +39,8 @@
 
 html{ 
     scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--primary);
 }

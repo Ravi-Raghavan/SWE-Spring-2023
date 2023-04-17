@@ -832,6 +832,10 @@ const server = http.createServer((request, response) => {
     console.log(file);
   }
 
+  if (path == "/get/products"){
+    file = __dirname + "/json" + "/ProductsSold.json";
+  }
+
   if (file == "") {
     // If client is not requesting a file, they are simply requesting for data. Handle that HERE
 
