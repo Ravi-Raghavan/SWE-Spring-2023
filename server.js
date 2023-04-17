@@ -726,6 +726,21 @@ async function downloadUserFile(request, response, queryStringParameters) {
 }
 
 
+async function makeOrderReady(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    var oid = JSON.parse(credentials).oid;
+    await FirebaseAPI.markOrderReady(oid, response);
+  });
+
+}
+
+
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
   let path = url.parse(request.url, true).path;
@@ -966,6 +981,10 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/verify/documentation":
+        break;
+      
+      case "/ready/order":
+        makeOrderReady(request, response, queryStringParameters);
         break;
     }
   }
