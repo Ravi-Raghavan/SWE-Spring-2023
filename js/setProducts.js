@@ -11,7 +11,27 @@ fetch("../json/ProductsSold.json")
   .then((response) => response.json())
   .then((data) => {
     json = data;
-  })
+    for (let i = 0; i < json.products.length; i++) {
+      console.log(json.products[i]);
+      if (json.products[i].Prescription) {
+        p.child(json.products[i].name).set({
+          name: json.products[i].name,
+          stock: 100,
+          limit: json.products[i].limit,
+          imgPath: json.products[i].imgPath,
+          price: json.products[i].price,
+        });
+      } else {
+        o.child(json.products[i].name).set({
+          name: json.products[i].name,
+          stock: 100,
+          limit: json.products[i].limit,
+          imgPath: json.products[i].imgPath,
+          price: json.products[i].price,
+        });
+      }
+    }
+  });
 
 // var json = {
 //     "products": [
@@ -263,23 +283,4 @@ fetch("../json/ProductsSold.json")
 //     ]
 // }
 
-for (let i = 0; i < json.products.length; i++) {
-  console.log(json.products[i]);
-  if (json.products[i].Prescription) {
-    p.child(json.products[i].name).set({
-      name: json.products[i].name,
-      stock: 100,
-      limit: json.products[i].limit,
-      imgPath: json.products[i].imgPath,
-      price: json.products[i].price,
-    });
-  } else {
-    o.child(json.products[i].name).set({
-      name: json.products[i].name,
-      stock: 100,
-      limit: json.products[i].limit,
-      imgPath: json.products[i].imgPath,
-      price: json.products[i].price,
-    });
-  }
-}
+
