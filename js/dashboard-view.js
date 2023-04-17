@@ -404,6 +404,7 @@ function addDriverClaim(OrderNumber, ItemList, quantityList){
     return;
   
   else{
+    var oid = String(OrderNumber);
     var rows = '<tr><td>'+ String(OrderNumber) +'</td><td>';
       size = ItemList.length;
       for(i = 0; i < size; i++){
@@ -413,7 +414,7 @@ function addDriverClaim(OrderNumber, ItemList, quantityList){
         if(i != (size-1))
         rows= rows+ ( "<br>");
       }
-      rows= rows +( '</td><td><button class =\"dl-btn\">Claim!</button></td></tr>');
+      rows= rows +( `</td><td><button class =\"dl-btn\"  onclick = \"markClaimed(this.parentNode.parentNode.rowIndex, '${oid}')\">Claim!</button></td></tr>`);
       var table = document.getElementById('claimList');
       var template = document.createElement('template');
       template.innerHTML = rows;
@@ -902,6 +903,24 @@ async function markReady(rowIndex, OID){
   var row = document.getElementById("pharmList").rows[parseInt(rowIndex)]
   console.log(row);
   document.getElementById("pharmList").deleteRow(parseInt(rowIndex));
+}
+
+async function markClaimed(rowIndex, OID){
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+
+  let response = await fetch('/claim/order', {
+    method: 'PATCH',
+    body: JSON.stringify({
+      oid: OID
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  })
+
+  var row = document.getElementById("claimList").rows[parseInt(rowIndex)]
+  console.log(row);
+  document.getElementById("claimList").deleteRow(parseInt(rowIndex));
 }
 
 function exit(){

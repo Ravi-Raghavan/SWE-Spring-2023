@@ -741,6 +741,20 @@ async function makeOrderReady(request, response, queryStringParameters){
 
 }
 
+async function makeOrderClaimed(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    var oid = JSON.parse(credentials).oid;
+    await FirebaseAPI.markOrderClaimed(oid, response);
+  });
+
+}
+
 async function getReadyOrders(request, response){
   var credentials = "";
 
@@ -998,6 +1012,10 @@ const server = http.createServer((request, response) => {
       
       case "/ready/order":
         makeOrderReady(request, response, queryStringParameters);
+        break;
+      
+      case "/claim/order":
+        makeOrderClaimed(request, response, queryStringParameters);
         break;
       
       case "/get/ready/orders":
