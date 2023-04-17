@@ -735,7 +735,8 @@ async function makeOrderReady(request, response, queryStringParameters){
 
   request.on("end", async () => {
     var oid = JSON.parse(credentials).oid;
-    await FirebaseAPI.markOrderReady(oid, response);
+    var pid = JSON.parse(credentials).pid;
+    await FirebaseAPI.markOrderReady(oid, pid, response);
   });
 
 }

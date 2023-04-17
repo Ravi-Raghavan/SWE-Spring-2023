@@ -387,7 +387,7 @@ function addPharmOrder(OrderNumber, ItemList, quantityList){
         if(i != (size-1))
         rows= rows+ ( "<br>");
       }
-      rows= rows +( `</td><td><button class =\"dl-btn\" onclick = markReady(\"${oid}\") >Ready!</button></td></tr>`);
+      rows= rows +( `</td><td><button class =\"dl-btn\" onclick = \"markReady(this.parentNode.parentNode.rowIndex, '${oid}')\" >Ready!</button></td></tr>`);
       var table = document.getElementById('pharmList');
       var template = document.createElement('template');
       template.innerHTML = rows;
@@ -885,16 +885,23 @@ let response = await fetch('/update/user', {
 }
 
 //MARK ORDER AS READY FOR DELIVERY
-async function markReady(OID){
+async function markReady(rowIndex, OID){
+  var user_record = JSON.parse(localStorage.getItem("User Record"));
+
   let response = await fetch('/ready/order', {
     method: 'PATCH',
     body: JSON.stringify({
-      oid: OID
+      oid: OID,
+      pid: user_record.uid
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
   })
+
+  var row = document.getElementById("pharmList").rows[parseInt(rowIndex)]
+  console.log(row);
+  document.getElementById("pharmList").deleteRow(parseInt(rowIndex));
 }
 
 function exit(){

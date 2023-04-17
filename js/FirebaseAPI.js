@@ -692,7 +692,7 @@ async function updateDocumentationStatus(credentials, response){
     });
 }
 
-async function markOrderReady(OID, response){
+async function markOrderReady(OID, PID, response){
     //Get USER corresponding to this OID
     console.log(OID);
     orderRef.once("value", (snapshot) => {
@@ -719,11 +719,12 @@ async function markOrderReady(OID, response){
             orderRef.child(UID).child(OID).update({
                 status: "Ready"
             })
-            .then(() => {
+            .then(async () => {
                 //SEND EMAIL TO DRIVERS INDICATING THAT ORDER HAS BEEN MARKED AS READY
 
                 //
 
+                await ref.child(PID).child("orders").child(OID).set(null);
                 console.log("Going to update user collection as well");
                 ref.child(UID).child("orders").child(OID).update({
                     status: "Ready"
