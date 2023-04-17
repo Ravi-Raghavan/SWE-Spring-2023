@@ -328,7 +328,7 @@ td {
 }
 
 .paymentRow .container {
-  background-color: #f2f2f2;
+  background-color: var(--suppliment);
   padding: 5px 20px 15px 20px;
   border: 1px solid var(--fourth);
   border-radius: 3px;
@@ -361,6 +361,7 @@ td {
 .paymentRow label {
   margin-bottom: 10px;
   display: block;
+  color: var(--fourth);
 }
 
 .paymentRow .icon-container {
