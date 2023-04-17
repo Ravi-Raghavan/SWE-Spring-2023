@@ -198,6 +198,7 @@ async function purchaseClicked() {
     //
     if (total != 0) {
         document.getElementById("paypal-button-container").style.display = "block";
+        window.location.href = "http://localhost:8000/html/store.html";
     } else {
         alert("Please add items to cart first")
     }
