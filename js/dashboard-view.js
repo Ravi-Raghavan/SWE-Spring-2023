@@ -137,7 +137,13 @@ window.onload = async function () {
           drugs.push(drug["title"]);
           quantities.push(parseInt(drug["quantity"]))
         }
-        addOrder(orderNumber, drugs, quantities, "placed");
+
+        if (user_record['Account Type'] == "Pharmacy"){
+          addPharmOrder(orderNumber, drugs, quantities);
+        }
+        else{
+          addOrder(orderNumber, drugs, quantities, "placed");
+        }
       }
     }
 
