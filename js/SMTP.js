@@ -2,6 +2,37 @@
 const nodemailer = require('nodemailer');
 
 
+async function sendDriverEmail(email){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+        user: `swespring2023@gmail.com`,
+        pass: 'lotrlepvzmwdnsny'
+    }
+      });
+
+      var mailOptions = {
+        from: `swespring2023@gmail.com`,
+        to: `${email}`,
+        subject: `Order Ready for Delivery`,
+        text: `Order Ready for Delivery`
+    };
+
+    result = await new Promise((resolve, rejects) => {
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log("Error: " + error);
+                rejects("Unsuccessfuly Communication");
+            } else {
+                console.log("Email Sent: " + info.response);
+                resolve("Successful Communication");
+            }
+        });
+
+    })
+
+}
+
 //This function will send an email to swespring2023@gmail.com 
 async function sendContactEmail(emailParameters){
     var user_name = emailParameters.user_name;
@@ -245,5 +276,6 @@ module.exports = {
     sendErrorEmailDoctor:sendErrorEmailDoctor,
     sendErrorEmailPatient:sendErrorEmailPatient,
     sendDocumentationEmail : sendDocumentationEmail,
-    sendPrescriptionEmail:sendPrescriptionEmail
+    sendPrescriptionEmail:sendPrescriptionEmail,
+    sendDriverEmail:sendDriverEmail
 }

@@ -721,7 +721,7 @@ async function markOrderReady(OID, PID, response){
             })
             .then(async () => {
                 //SEND EMAIL TO DRIVERS INDICATING THAT ORDER HAS BEEN MARKED AS READY
-
+                notifyDrivers();
                 //
 
                 await ref.child(PID).child("orders").child(OID).set(null);
@@ -754,7 +754,25 @@ async function markOrderReady(OID, PID, response){
 }
 
 async function notifyDrivers(){
+    ref.once("value", (snapshot) => {
+        var userData = snapshot.val();
+        var email_list = []
 
+        for (var userKey in userData){
+            var userInfo = userData[userKey];
+            if (userInfo["accountType"] === "Delivery Driver"){
+                email_list.push(userInfo["email"])
+            }
+        }
+
+        for (var email in email_list){
+            console.log("Email: " + email_list[email]);
+
+            if (email_list[email] != undefined && email_list[email] != null){
+                SMTP.sendDriverEmail(email_list[email]);
+            }
+        }
+    })
 }
 
 async function getReadyOrders(response){
