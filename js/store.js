@@ -39,25 +39,50 @@ async function ready() {
 
     // var user_record = JSON.parse(localStorage.getItem("User Record"));
     // var uid = user_record["uid"];
-
-    // let res = await fetch(`/get/prescriptions?uid=${user_record["uid"]}`, {
-    //         method: 'GET'
+    
+    // let res = await fetch(`/get/medications?uid=${user_record["uid"]}`, {
+    //          method: 'GET'
     //     })
 
-    //     let responseStatus = res.status;
-    //     let prescriptions = await res.json()
-    //     console.log("This is what is prescriptions:"+ JSON.stringify(prescriptions));
-    //     //document.getElementById("dropbtn").src = profilePicture;
-    //     //console.log(profilePicture);
-    //     //document.getElementById("dropbtn").style.filter = "none";
-    //     //document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
-    //     var counter = 0;
+    // let responseStatus = res.status;
+    // let medications = await res.json()
+    // console.log("These are the medications:"+ JSON.stringify(medications));
+
+    
+
+    // // let list = JSON.parse(medications);
+    // // const medArray = Object.values(list);
+
+    // //document.getElementById("dropbtn").src = profilePicture;
+    // //console.log(profilePicture);
+    // //document.getElementById("dropbtn").style.filter = "none";
+    // //document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
+    // //     var counter = 0;
     //     if (responseStatus == 200){
-    //         for (var prescriptionNumber in prescriptions){
-    //             console.log("ran");
+    //         for (var medicine in medications){
+    //             // input function that takes each medication name and gets the fields we want from the JSON object and call AddItemToCart();
+
+    //             var medRes = await fetch(`/get/prescriptionDrugs?medicine=${medicine}`, {
+    //                 method: 'GET'
+    //             })
+
+    //             var res_status = medRes.status;
+    //             var temp = await medRes.json();
+    //             var drugData = JSON.parse(temp);
+
+    //             // var ref = JSON.parse(drugData);
+    //             var name = drugData.name;    // string name of medication
+    //             var price = drugData.price;  // double value
+    //             var limit = drugData.limit;  // int value
+    //             var stock = drugData.stock;  // int value
+    //             var imageSrc = drugData.imgPath;    // string image path
+                
+    //             console.log("Medicine name: "+name+", price: "+ price);
+    //             console.log(drugData);
     //             counter++;
     //         }
     //     }
+
     //     if(counter == 0){
     //         document.getElementById("prescriptionMedication").remove();
     //     }

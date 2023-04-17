@@ -502,6 +502,30 @@ function sendContactEmail(request, response){
   response.end();
 }
 
+function getMedicationsUser(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.getMedicationsUser(queryStringParameters["uid"], response);
+  });
+}
+
+function getDrugData(request, response, queryStringParameters){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.getDrugData(queryStringParameters["medicine"], response);
+  });
+}
+
 function getPrescriptionsUser(request, response, queryStringParameters){
   var credentials = "";
 
@@ -911,6 +935,15 @@ const server = http.createServer((request, response) => {
 
       case "/contact-us":
         sendContactEmail(request, response);
+        break;
+
+      case "/get/medications":
+        getMedicationsUser(request, response, queryStringParameters);
+        break;
+
+      case "/get/prescriptionDrugs":
+        console.log("the query parameters are" +queryStringParameters);
+        getDrugData(request, response, queryStringParameters);
         break;
 
       case "/get/prescriptions/user":

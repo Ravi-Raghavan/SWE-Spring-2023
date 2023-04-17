@@ -4,6 +4,7 @@ const admin = require("./firebase").admin;
 var db = admin.database();
 var ref = db.ref(`/users/`);
 var validatedPrescriptions = db.ref(`/validatedPrescriptions/`);
+var prescriptionDrugs = db.ref(`/Drugs/Prescription/`);
 var cartRef = db.ref("/carts/")
 var pdf = require("pdf-creator-node");
 var fs = require("fs");
@@ -302,6 +303,50 @@ async function updateUser(userParameters, response){
         response.write("Failed to Update User");
         response.end();
     })
+}
+async function getMedicationsUser(uid, response){
+    var medicationArray = [];
+
+    validatedPrescriptions.child(`${uid}`).once('value', (snapshot) => {
+        var value = snapshot.val();
+        if (value == null){
+            var prescription_data = {"404 Error Message": "N/A"}
+            response.writeHead(404, { "Content-type": "application/json" });
+            response.write(JSON.stringify(prescription_data));
+            response.end();
+        }
+        else{
+            snapshot.forEach((childSnapshot) => {
+                const medication = childSnapshot.val().medication;
+
+                medicationArray.push(medication);
+            })
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(medicationArray));
+            response.end();
+        }
+    })
+}
+
+async function getDrugData(medicine, response){
+    // console.log(medicine);
+    prescriptionDrugs.child(`${medicine}`).once('value', (snapshot) => {
+        var data = snapshot.val();
+        console.log(data);
+        if (data == null){
+            var prescription_data = {"404 Error Message": "N/A"}
+            response.writeHead(404, { "Content-type": "application/json" });
+            response.write(JSON.stringify(prescription_data));
+            response.end();
+        }
+        else{
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(data));
+            response.end();
+        }
+    }, (errorObject) => {
+        console.log('The read failed: ' + errorObject.name);
+    });
 }
 
 async function getPrescriptionsUser(uid, response){
@@ -701,6 +746,8 @@ module.exports = {
     getEmail: getEmail,
     getAddress: getAddress, 
     updateUser: updateUser,
+    getMedicationsUser: getMedicationsUser,
+    getDrugData: getDrugData,
     getPrescriptionsUser: getPrescriptionsUser,
     getOrdersUser: getOrdersUser,
     addPaymentCard: addPaymentCard, 
