@@ -308,6 +308,8 @@ function loadProfile(){
     document.getElementById("dropbtn").src = profilePicture;
     document.getElementById("dropbtn").style.filter = "none";
     document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
+    document.getElementById("dropbtn").style.width = "30px";
+    document.getElementById("dropbtn").style.height = "30px";
   }
 
 }
