@@ -7,7 +7,7 @@ var p = ref.child("/Prescription/");
 
 var json;
 
-fetch("../json/ProductsSold.json")
+fetch("http://localhost:8000/get/products")
   .then((response) => response.json())
   .then((data) => {
     json = data;
