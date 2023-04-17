@@ -38,7 +38,10 @@ paypal.Buttons({
                         transaction.id +
                         "\n\nSee console for all available details"
                     );
-
+                    /**
+                     * Nikhil Add code here
+                     */
+                    window.location.href="../html/store.html";
                     // When ready to go live, remove the alert and show a success message within this page. For example:
                     // var element = document.getElementById('paypal-button-container');
                     // element.innerHTML = '';
