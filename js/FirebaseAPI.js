@@ -722,10 +722,8 @@ async function markOrderReady(OID, response){
             .then(() => {
                 //SEND EMAIL TO DRIVERS INDICATING THAT ORDER HAS BEEN MARKED AS READY
 
-
-
                 //
-                
+
                 console.log("Going to update user collection as well");
                 ref.child(UID).child("orders").child(OID).update({
                     status: "Ready"
@@ -754,6 +752,44 @@ async function markOrderReady(OID, response){
     })
 }
 
+async function notifyDrivers(){
+
+}
+
+async function getReadyOrders(response){
+    orderRef.once("value", (snapshot) => {
+        if (!snapshot.exists()){
+            console.log("NOOOOOO");
+            response.writeHead(404, { "Content-type": "text/plain" });
+            response.write("Order doesn't exist");
+            response.end();
+        }
+        else{
+            var orders = snapshot.val()
+
+            var ready_orders = []
+
+
+            for (var user in orders){
+                var user_orders = orders[user];
+                for (var user_order in user_orders){
+                    if (user_orders[user_order].status == "Ready"){
+                        var key = `${user_order}`
+                        var JSON_Obj = {}
+                        JSON_Obj[key] = user_orders[user_order];
+                        console.log(JSON_Obj)
+                        ready_orders.push(JSON_Obj);
+                    }
+                }
+            }
+
+            response.writeHead(200, { "Content-type": "application/json" });
+            response.write(JSON.stringify(ready_orders));
+            response.end();
+        }
+    })
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -777,5 +813,6 @@ module.exports = {
     updateDocumentationStatus: updateDocumentationStatus,
     getDocumentationValidationStatus: getDocumentationValidationStatus,
     login: login,
-    markOrderReady:markOrderReady
+    markOrderReady:markOrderReady,
+    getReadyOrders:getReadyOrders
 }

@@ -116,33 +116,68 @@ window.onload = async function () {
       }
     }
 
-
+    console.log("Going to Fetch Orders!");
     /**FETCH ORDERS */
-    let ordersResponse = await fetch(`/get/orders/user?uid=${user_record["uid"]}`, {
-      method: 'GET'
-    })
+    if (user_record["Account Type"] == "Delivery Driver"){
 
-    let ordersResponseStatus = ordersResponse.status;
-    let orders = await ordersResponse.json();
-    console.log("Response Status: " + ordersResponseStatus);
-    console.log("Order Data Fetched: " + JSON.stringify(orders));
+      console.log("For Delivery Drivers");
+      let ordersResponse = await fetch(`/get/ready/orders`, {
+        method: 'GET'
+      })
 
-    if (ordersResponseStatus == 200){
-      for (var orderNumber in orders){
-        var order = orders[orderNumber];
-        var drugs = []
-        var quantities = []
-        for (var drugNumber in order["drugs"]){
-          var drug = order["drugs"][drugNumber];
-          drugs.push(drug["title"]);
-          quantities.push(parseInt(drug["quantity"]))
+      let ordersResponseStatus = ordersResponse.status;
+      let orders = await ordersResponse.json();
+  
+      console.log("Response Status: " + ordersResponseStatus);
+      console.log("Order Data Fetched: " + JSON.stringify(orders));
+
+      if (ordersResponseStatus == 200){
+        for (var userOrder in orders){
+          for (var orderNumber in orders[userOrder]){
+            console.log(orderNumber);
+            var order = orders[userOrder][orderNumber];
+            var drugs = []
+            var quantities = []
+            for (var drugNumber in order["drugs"]){
+              var drug = order["drugs"][drugNumber];
+              drugs.push(drug["title"]);
+              quantities.push(parseInt(drug["quantity"]))
+            }
+    
+            console.log(orderNumber);
+            console.log(drugs);
+            addDriverClaim(orderNumber, drugs, quantities, "ready");
+          }
         }
-
-        if (user_record['Account Type'] == "Pharmacy"){
-          addPharmOrder(orderNumber, drugs, quantities);
-        }
-        else{
-          addOrder(orderNumber, drugs, quantities, "placed");
+      }
+    }
+    else{
+      let ordersResponse = await fetch(`/get/orders/user?uid=${user_record["uid"]}`, {
+        method: 'GET'
+      })
+  
+      let ordersResponseStatus = ordersResponse.status;
+      let orders = await ordersResponse.json();
+      console.log("Response Status: " + ordersResponseStatus);
+      console.log("Order Data Fetched: " + JSON.stringify(orders));
+  
+      if (ordersResponseStatus == 200){
+        for (var orderNumber in orders){
+          var order = orders[orderNumber];
+          var drugs = []
+          var quantities = []
+          for (var drugNumber in order["drugs"]){
+            var drug = order["drugs"][drugNumber];
+            drugs.push(drug["title"]);
+            quantities.push(parseInt(drug["quantity"]))
+          }
+  
+          if (user_record['Account Type'] == "Pharmacy"){
+            addPharmOrder(orderNumber, drugs, quantities);
+          }
+          else{
+            addOrder(orderNumber, drugs, quantities, "placed");
+          }
         }
       }
     }
@@ -232,7 +267,7 @@ window.onload = async function () {
     
 
     
-    if(user_record["Account Type"] == "Driver")
+    if(user_record["Account Type"] === "Delivery Driver")
     {
 
       document.getElementById("loggingOut").remove();

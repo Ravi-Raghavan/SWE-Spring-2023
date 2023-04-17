@@ -740,6 +740,18 @@ async function makeOrderReady(request, response, queryStringParameters){
 
 }
 
+async function getReadyOrders(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    await FirebaseAPI.getReadyOrders(response);
+  });
+}
+
 
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
@@ -985,6 +997,10 @@ const server = http.createServer((request, response) => {
       
       case "/ready/order":
         makeOrderReady(request, response, queryStringParameters);
+        break;
+      
+      case "/get/ready/orders":
+        getReadyOrders(request, response);
         break;
     }
   }
