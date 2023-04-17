@@ -720,6 +720,12 @@ async function markOrderReady(OID, response){
                 status: "Ready"
             })
             .then(() => {
+                //SEND EMAIL TO DRIVERS INDICATING THAT ORDER HAS BEEN MARKED AS READY
+
+
+
+                //
+                
                 console.log("Going to update user collection as well");
                 ref.child(UID).child("orders").child(OID).update({
                     status: "Ready"
