@@ -12,45 +12,33 @@
     <title>Drug Hub | Cart</title>
 
     <script src="../js/dynamicHeaderFooter.js"></script>
-
 </head>
 
 <body>
-    <script src="../js/store.js" ></script>
+    <script src="../js/store.js"></script>
     <script src="../js/darkmode.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&commit=false" ></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&commit=false"></script>
 
     <div id="header"></div>
 
     <section class="container content-section">
-
         <section class="shop-container" id="shop-container-over-counter">
             <h2 class="section-header">Over-The-Counter</h2>
-                <div class="shop-items">
-
-                     <span>Over the counter items loading...</span>
-            
-                </div>
+            <div class="shop-items">
+                <span>Over the counter items loading...</span>
+            </div>
         </section>
     </section>
 
     <section class="container content-section">
-
         <section class="shop-container">
-             <h2 class="section-header">Prescriptions</h2>
-
-        <div class="shop-items" id="shop-items-prescription">
-            <!-- tempalte to add items from json -->
-            <span>No Prescription Items Available</span>
-
-           
-
-
-        </div>
-
+            <h2 class="section-header">Prescriptions</h2>
+            <div class="shop-items" id="shop-items-prescription">
+                <!-- tempalte to add items from json -->
+                <span>No Prescription Items Available</span>
+            </div>
         </section>
     </section>
-
 
     <section class="container content-section section-cart">
         <h2 class="section-header">CART</h2>
@@ -112,84 +100,71 @@
     </center>
 
     <div id="footer"></div>
-
     <script>
         var prescriptionItems = [];
         // fetching json file
-            
+
         var user_record = JSON.parse(localStorage.getItem("User Record"));
         var uid = user_record["uid"];
 
-
-        fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {method: 'GET' })
-           .then(response => response.json())
-           .then(data =>{
-                prescriptionItems = data; 
-                
-            fetch("../json/ProductsSold.json")
-            .then(response =>   response.json())
+        fetch(`/get/prescriptions/user?uid=${user_record["uid"]}`, {method: 'GET'})
+            .then(response => response.json())
             .then(data => {
+                prescriptionItems = data;
+                fetch("../json/ProductsSold.json")
+                    .then(response => response.json())
+                    .then(data => {
+                        // store html content for all prescrible items and non
+                        var productsHTMLPresp = "";
+                        var productsHTMLPrespNon = "";
+                        console.log(prescriptionItems)
+                        var prescripitonAdded = [];
+                        var user_record = JSON.parse(localStorage.getItem("User Record"));
+                        var uid = user_record["uid"];
+                        for (var prescriptionNumber in prescriptionItems) {
+                            var prescription = prescriptionItems[prescriptionNumber];
+                            prescripitonAdded.push([prescription.medication][0]);
+                            prescripitonAdded.push(prescriptionNumber);
+                            prescripitonAdded.push([prescription.refills][0]);
+                        }
+                        console.log(prescripitonAdded)
 
-            // store html content for all prescrible items and non
-            var productsHTMLPresp = "";
-            var productsHTMLPrespNon = "";
-            console.log(prescriptionItems)
-            var prescripitonAdded = [];
-            var user_record = JSON.parse(localStorage.getItem("User Record"));
-            var uid = user_record["uid"];
-            for (var prescriptionNumber in prescriptionItems){
-        var prescription = prescriptionItems[prescriptionNumber];
-        prescripitonAdded.push([prescription.medication][0]);
-        prescripitonAdded.push(prescriptionNumber);
-        prescripitonAdded.push([prescription.refills][0]);
-      }
-      console.log(prescripitonAdded)
-        
+                        // iterate through products dicitonary
+                        for (let i = 0; i < data.products.length; i++) {
 
-           
-    
-           
-            
-            // iterate through products dicitonary
-            for (let i = 0; i < data.products.length; i++) {
+                            // pulls one prodcut at a time
+                            const product = data.products[i];
 
-                // pulls one prodcut at a time
-                const product = data.products[i];
+                            const name = product.name;
+                            const prescrible = product.Prescription;
+                            const limit = product.limit;
+                            const imgPath = product.imgPath;
+                            const price = product.price;
 
-                const name = product.name;
-                const prescrible = product.Prescription;
-                const limit = product.limit;
-                const imgPath = product.imgPath;
-                const price = product.price;
-
-                // checks if item is prescrible
-                if( name != '' && prescrible == true && limit != '' && imgPath != '' && price != ''){
-                    if(prescripitonAdded.includes(name)){
-                        for( j =0; j < prescripitonAdded.length; j+=3){
-                            if(prescripitonAdded[j] == name){
-                            const productHTML = `
+                            // checks if item is prescrible
+                            if (name != '' && prescrible == true && limit != '' && imgPath != '' && price != '') {
+                                if (prescripitonAdded.includes(name)) {
+                                    for (j = 0; j < prescripitonAdded.length; j += 3) {
+                                        if (prescripitonAdded[j] == name) {
+                                            const productHTML = `
                             <div class="shop-item">
-                                <span class="shop-item-title itemTitle-${i}">${prescripitonAdded[j+1] +": "+product.name}</span>
+                                <span class="shop-item-title itemTitle-${i}">${prescripitonAdded[j + 1] + ": " + product.name}</span>
                                 <img class="shop-item-image itemImg-${i}" src="${product.imgPath}" />
                                 <div class="shop-item-details">
                                 <span class="shop-item-price itemPrice-${i}">$${product.price}</span>
-                                <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${prescripitonAdded[j+1] +": "+product.name}', '${prescripitonAdded[j+2]}'); swapbutton(event, '${prescripitonAdded[j+1] +": "+product.name}');">
+                                <button class="btn btn-primary shop-item-button" type="button" onclick="addToCartClicked(event, 'itemImg-${i}', 'itemPrice-${i}', '${prescripitonAdded[j + 1] + ": " + product.name}', '${prescripitonAdded[j + 2]}'); swapbutton(event, '${prescripitonAdded[j + 1] + ": " + product.name}');">
                                     Add to Cart
                                 </button>
                                 </div>
                             </div>
                             `;
-                            // appends single item html code
-                        productsHTMLPresp = productsHTMLPresp +  productHTML;
-                    }
-                   
-
-                        }
-                    
-                    }
-
-                } else if (name != '' && prescrible == false && limit != '' && imgPath != '' && price != ''){
-                    const productHTML = `
+                                            // appends single item html code
+                                            productsHTMLPresp = productsHTMLPresp + productHTML;
+                                        }
+                                    }
+                                }
+                            } else if (name != '' && prescrible == false && limit != '' && imgPath != '' && price != '') {
+                                const productHTML = `
                         <div class="shop-item">
                             <span class="shop-item-title itemTitle-${i}">${product.name}</span>
                             <img class="shop-item-image itemImg-${i}" src="${product.imgPath}" />
@@ -201,39 +176,31 @@
                             </div>
                         </div>
                         `;
-                     // appends single item html code
-                    productsHTMLPrespNon = productsHTMLPrespNon +  productHTML;
-                }
+                                // appends single item html code
+                                productsHTMLPrespNon = productsHTMLPrespNon + productHTML;
+                            }
 
-            }
-                // end of for loop
-                // added all prescrible items
+                        }
+                        // end of for loop
+                        // added all prescrible items
 
-                // selects parent tag for over the counter parent
-                const parentTag = document.getElementById("shop-container-over-counter");
-                const innerTag = parentTag.querySelector("span");
-                // console.log(innerTag);
-                innerTag.outerHTML = productsHTMLPrespNon;
+                        // selects parent tag for over the counter parent
+                        const parentTag = document.getElementById("shop-container-over-counter");
+                        const innerTag = parentTag.querySelector("span");
+                        // console.log(innerTag);
+                        innerTag.outerHTML = productsHTMLPrespNon;
 
-                // selects the parent tag to add the products under prescripiton tab
-                const parentElement = document.getElementById("shop-items-prescription");
-                const innerTagElement = parentElement.querySelector("span");
-                // console.log(innerTagElement.outerHTML);
-                innerTagElement.outerHTML = productsHTMLPresp;
-            })
-            
-            
+                        // selects the parent tag to add the products under prescripiton tab
+                        const parentElement = document.getElementById("shop-items-prescription");
+                        const innerTagElement = parentElement.querySelector("span");
+                        // console.log(innerTagElement.outerHTML);
+                        innerTagElement.outerHTML = productsHTMLPresp;
+                    })
             });
-        
-        
-
-       
-            
     </script>
-
 </body>
 
 <script src="../js/homepage.js" defer></script>
-<script src="../js/profilePic.js" ></script>
+<script src="../js/profilePic.js"></script>
 
 </html>
