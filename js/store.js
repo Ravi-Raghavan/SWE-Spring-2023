@@ -35,6 +35,134 @@ else {
 
 }
 
+async function ready() {
+
+    // var user_record = JSON.parse(localStorage.getItem("User Record"));
+    // var uid = user_record["uid"];
+    
+    // let res = await fetch(`/get/medications?uid=${user_record["uid"]}`, {
+    //          method: 'GET'
+    //     })
+
+    // let responseStatus = res.status;
+    // let medications = await res.json()
+    // console.log("These are the medications:"+ JSON.stringify(medications));
+
+    
+
+    // // let list = JSON.parse(medications);
+    // // const medArray = Object.values(list);
+
+    // //document.getElementById("dropbtn").src = profilePicture;
+    // //console.log(profilePicture);
+    // //document.getElementById("dropbtn").style.filter = "none";
+    // //document.getElementById("dropbtn").style.backgroundColor = "#8fc0e3";
+    // //     var counter = 0;
+    //     if (responseStatus == 200){
+    //         for (var medicine in medications){
+    //             // input function that takes each medication name and gets the fields we want from the JSON object and call AddItemToCart();
+
+    //             var medRes = await fetch(`/get/prescriptionDrugs?medicine=${medicine}`, {
+    //                 method: 'GET'
+    //             })
+
+    //             var res_status = medRes.status;
+    //             var temp = await medRes.json();
+    //             var drugData = JSON.parse(temp);
+
+    //             // var ref = JSON.parse(drugData);
+    //             var name = drugData.name;    // string name of medication
+    //             var price = drugData.price;  // double value
+    //             var limit = drugData.limit;  // int value
+    //             var stock = drugData.stock;  // int value
+    //             var imageSrc = drugData.imgPath;    // string image path
+                
+    //             console.log("Medicine name: "+name+", price: "+ price);
+    //             console.log(drugData);
+    //             counter++;
+    //         }
+    //     }
+
+    //     if(counter == 0){
+    //         document.getElementById("prescriptionMedication").remove();
+    //     }
+
+
+
+
+
+    //upload customer's data convert from JSON into html and add to the cart using addItemToCart(title, price, imageSrc, drugQuantity)
+
+    function resetRemoveListener() {
+        var removeCartItemButtons = document.getElementsByClassName('btn-danger')
+
+        for (var i = 0; i < removeCartItemButtons.length; i++) {
+            var button = removeCartItemButtons[i]
+            button.addEventListener('click', removeCartItem)
+        }
+    }
+
+    resetRemoveListener();
+
+    var quantityInputs = document.getElementsByClassName('cart-quantity-input')
+    for (var i = 0; i < quantityInputs.length; i++) {
+        var input = quantityInputs[i]
+        input.addEventListener('change', quantityChanged)
+    }
+
+    function resetShopButton() {
+        var addToCartButtons = document.getElementsByClassName('shop-item-button')
+            for (var i = 0; i < addToCartButtons.length; i++) {
+                var button = addToCartButtons[i]
+                button.addEventListener('click', addToCartClicked);
+                button.addEventListener('click', swapbutton);
+        }
+    }
+
+    resetShopButton();
+
+    document.getElementsByClassName('btn-purchase')[0].addEventListener('click', purchaseClicked)
+
+    var user_record = JSON.parse(localStorage.getItem("User Record"));
+    var uid = user_record.uid;
+
+    let response = await fetch(`/get/cart?uid=${uid}`, {method: "GET"})
+    let cartJSON = await response.json();
+
+    let drugs = cartJSON["drugs"]
+    //alert(JSON.stringify(drugs));
+    for (var i = 0; i < drugs.length; i ++){
+        var drug = drugs[i];
+        var drugPrice = drug["price"]
+        var drugQuantity = drug["quantity"]
+        var drugTitle = drug["title"]
+        var image = drug['imageSrc']
+
+        //"../images/Ibuprofen.jpg"
+
+        addItemToCart(drugTitle, drugPrice, image , drugQuantity);
+    }
+
+    let cartItems = document.getElementsByClassName("cart-item-title");
+    let shopItems = document.getElementsByClassName("shop-item-title");
+    if (cartItems.length > 0) {
+        for (let i = 0; i < cartItems.length; i++) {
+            for (let j = 0; j < shopItems.length; j++) {
+                if (cartItems[i].innerText == shopItems[j].innerText) {
+                    let button = shopItems[j].parentElement.getElementsByClassName("btn btn-primary shop-item-button")[0];
+                    if (button.innerText == "Add to Cart") {
+                        button.innerText = "\u2715 Remove";
+                        button.setAttribute("class", "btn btn-danger");
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    updateCartTotal();
+}
+
 async function purchaseClicked() {
     // alert('Thank you for your purchase')                                // Insert HTTP request here to transfer to payment page.
     // Each time an order is changed the product is added to User/Orders/ in Firebase
