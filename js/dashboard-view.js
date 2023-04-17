@@ -166,6 +166,7 @@ window.onload = async function () {
           var order = orders[orderNumber];
           var drugs = []
           var quantities = []
+          var orderStatus = order["status"];
           for (var drugNumber in order["drugs"]){
             var drug = order["drugs"][drugNumber];
             drugs.push(drug["title"]);
@@ -176,7 +177,7 @@ window.onload = async function () {
             addPharmOrder(orderNumber, drugs, quantities);
           }
           else{
-            addOrder(orderNumber, drugs, quantities, "placed");
+            addOrder(orderNumber, drugs, quantities, orderStatus);
           }
         }
       }
