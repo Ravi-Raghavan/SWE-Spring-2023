@@ -139,8 +139,10 @@ async function ready() {
         var image = drug['imageSrc']
 
         //"../images/Ibuprofen.jpg"
-
-        addItemToCart(drugTitle, drugPrice, image , drugQuantity);
+        if(!drugTitle.includes(":"))
+        addItemToCart(drugTitle, drugPrice, image , drugQuantity, false);
+        else
+        addItemToCart(drugTitle, drugPrice, image , drugQuantity, true);
     }
 
     let cartItems = document.getElementsByClassName("cart-item-title");
