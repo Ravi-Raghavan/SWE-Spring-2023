@@ -285,8 +285,41 @@ body.dark .sidebar,
 body.dark .delete,
 body.dark .settingRow .add:hover,
 /* slider */
-body.dark input:checked + .slider {
+body.dark input:checked + .slider{
   background-color: var(--tertiary);
+}
+
+
+/* ? upload button styling */
+body.dark input[type="file"]::file-selector-button {
+  background-color: var(--tertiary);
+  color:var(--secondary-dark);
+}
+
+body.dark input[type="file"] {
+  background-color: var(--secondary-dark);
+  color:var(--primary);
+  border-color: var(--primary);
+}
+
+/* * dash board submit file button */
+body.dark .dl-btn {
+  background-color: var(--primary);
+  color:var(--secondary-dark);
+  opacity: 0.5;
+}
+
+body.dark .dl-btn:hover {
+  background-color: var(--secondary);
+  /* color:var(--suppliment); */
+  opacity: 1;
+}
+
+
+/* TODO chnage talbe header color */
+body.dark .OrderTable tr.table_header th {
+  background-color: var(--tertiary);
+  color: var(--secondary-dark);
 }
 
 body.dark .delete,
@@ -301,7 +334,8 @@ body.dark .col-50 h3 {
 }
 
 body.dark .sidebar a.active,
-body.dark .settingRow .add  {
+body.dark .settingRow .add,
+body.dark input[type="file"]::file-selector-button:hover  {
   background-color: var(--secondary);
   color: var(--secondary-dark);
 }

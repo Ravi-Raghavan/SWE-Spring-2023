@@ -4,7 +4,8 @@ header {
   display: flex;
   align-items: center;
   padding: 30px 40px;
-  background-color: var(--primary);
+  /* background-color: var(--primary); */
+  background-color: var(--suppliment);
   border-bottom: 5px solid var(--secondary);
   font-size: 30px;
   font-weight: 520;
