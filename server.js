@@ -1096,9 +1096,10 @@ const server = http.createServer((request, response) => {
     request.on("end", async () => {
       var uid = JSON.parse(credentials).uid;
       var pid = JSON.parse(credentials).pid;
+      var pharmacyAddress = JSON.parse(credentials).pharmacyAddress;
       console.log("User's UID: ", uid);
       paypal
-      .createOrder(uid, pid)
+      .createOrder(uid, pid, pharmacyAddress)
       .then((order) => {
         response.statusCode = 200;
         response.setHeader("Content-Type", "application/json");

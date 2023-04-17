@@ -5,7 +5,8 @@ paypal.Buttons({
                 method: "POST",
                 body: JSON.stringify({
                     uid: JSON.parse(window.localStorage.getItem("User Record")).uid,
-                    pid: JSON.parse(window.localStorage.getItem("User Record")).pid
+                    pid: JSON.parse(window.localStorage.getItem("User Record")).pid,
+                    pharmacyAddress: JSON.parse(window.localStorage.getItem("User Record")).pharmacyAddress
                   }),
                   headers: {
                     'Content-type': 'application/json; charset=UTF-8',

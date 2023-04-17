@@ -180,20 +180,28 @@ async function purchaseClicked() {
     var pharmacies = await response.json();
     console.log(pharmacies);
     var pharmacy_keys = []
+    var pharmacy_addresses = []
 
     for (var index in pharmacies){
         for (var key in pharmacies[index]){
             pharmacy_keys.push(key);
+            pharmacy_addresses.push(pharmacies[index][key]["address"])
         }
     }
 
+    console.log("JSON Data: " + JSON.stringify(pharmacies));
     console.log("Pharmacies: " + pharmacy_keys);
+    console.log("Addresses: " + pharmacy_addresses);
 
 
     //HARDCODED VALUES JUST FOR TESTING PLEASE DELETE LATER
-    var pid = pharmacy_keys[Math.floor(Math.random() * pharmacy_keys.length)]; //hardcoded pharmacy ID
+    var index = Math.floor(Math.random() * pharmacy_keys.length)
+    var pid = pharmacy_keys[index]; //randomly selected pharmacy ID
+    var address = pharmacy_addresses[index];
+
     var user_record = JSON.parse(window.localStorage.getItem("User Record"));
     user_record["pid"] = pid;
+    user_record["pharmacyAddress"] = address;
     window.localStorage.setItem("User Record", JSON.stringify(user_record));
     //
 
