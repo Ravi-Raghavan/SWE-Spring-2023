@@ -49,6 +49,7 @@
               <!-- <section>Sales Tax: $3.29</section>
               <section>Shipping: $5.00</section> -->
               <section id = "OrderTotal">Order Total: $56.26</section>
+              <section id = "ETA">ETA: Processing</section>
 
               <section class="heading">Payment Information</section>
               <section>Visa: ************1111</section>
@@ -124,7 +125,7 @@ async function loadOrders(){
     }
 }
 
-function GetMap(start, end) {
+function GetMap(start, end, status) {
   // Define the address of start and end locations
   var startAddress = start;
   var endAddress = end;
@@ -157,18 +158,22 @@ function GetMap(start, end) {
     directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: endAddress }));
     Microsoft.Maps.Events.addHandler(directionsManager, 'directionsUpdated', function (result) {
       var routePath = result.route[0].routePath;
+      if(status === "Claimed")
       for (var i = 0; i < routePath.length; i++) {
-        setTimeout(function(location) {
-          for (var i = map.entities.getLength() - 1; i >= 0; i--) {
-        var pushpin = map.entities.get(i);
+        setTimeout(function(location, time) {
+          for (var j = map.entities.getLength() - 1; j >= 0; j--) {
+        var pushpin = map.entities.get(j);
         if (pushpin instanceof Microsoft.Maps.Pushpin) {
-          map.entities.removeAt(i);
+          map.entities.removeAt(j);
         }
       }
       var pushpin = new Microsoft.Maps.Pushpin(location);
       pushpin.setOptions({ zIndex: 1000 });
       map.entities.push(pushpin);
-    }, i * 3000, routePath[i]);
+     
+      document.getElementById("ETA").innerText = "ETA: "+ time+ " Minutes";
+    }, i * 3000, routePath[i], (routePath.length-i)*3/60);
+     
       }
     });
     directionsManager.calculateDirections();
@@ -265,7 +270,7 @@ function GetMap(start, end) {
 
 
       //HERES WHERE WE WILL MANIPULATE DATA!
-      GetMap(order_data.pharmAddress, user_record.Address);
+      GetMap(order_data.pharmAddress, user_record.Address, order_data["status"]);
     }
   }
 
