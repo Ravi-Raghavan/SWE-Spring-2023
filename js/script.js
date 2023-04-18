@@ -44,7 +44,18 @@ paypal.Buttons({
                     /**
                      * recyle prescriptions start
                      */
-                    
+                    let cartItems = document.querySelectorAll(".cart-item-title");
+                    cartItems.forEach((item)=>{
+                        const subItems = item.innerText.split(":");
+                        if(subItems.length==2){
+                            fetch(`/prescriptions/recycle?uid=${getUID()}&prescriptionNumber=${subItems[0]}`,{
+                                method:"GET",
+                                cache:"no-cache"
+                            }).then((response)=>{
+                                console.log(response.status);
+                            })
+                        }
+                    })
                     /**
                      * recyle prescriptions end
                     */
