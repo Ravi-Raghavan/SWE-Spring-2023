@@ -137,13 +137,17 @@ function GetMap(start, end, status) {
     zoom: 10,
     disableZooming: true,
     disablePanning: true,
-    showDashboard: false
+    showDashboard: false,
   });
+  Microsoft.Maps.Events.addHandler(map, 'click', function(e) {
+    e.handled = true;
+});
 
   Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
     var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
     directionsManager.setRequestOptions({
-      routeMode: Microsoft.Maps.Directions.RouteMode.driving,
+      routeMode: Microsoft.Maps.Directions.RouteMode.bestRoute,
+    maxRoutes: 1,
       routeDraggable: false
     });
     directionsManager.setRenderOptions({
@@ -152,8 +156,10 @@ function GetMap(start, end, status) {
         strokeColor: '#0072C6',
         strokeThickness: 6
     },
-    pushpinOptions: { zIndex: 1000 } // set the zIndex property to 1000
+    pushpinOptions: { zIndex: 1000 }, // set the zIndex property to 1000
+    suppressPolylines : true
 });
+
     directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: startAddress }));
     directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: endAddress }));
     Microsoft.Maps.Events.addHandler(directionsManager, 'directionsUpdated', function (result) {
