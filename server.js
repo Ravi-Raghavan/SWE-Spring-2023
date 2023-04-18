@@ -195,7 +195,7 @@ const public_paths_product = [
   "/product/HMB.webp",
 ];
 
-const { createProduct, getProductByName } = require("./js/productController");
+const { createProduct, getProductByName, getTotalProductCount, getAllOTC, getAllPrescription} = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCart } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
 
@@ -978,8 +978,20 @@ const server = http.createServer((request, response) => {
         createProduct(request, response);
         break;
 
-      case "/api/matchProductName":
+      case "/products/matchProductName":
         getProductByName(request, response, queryStringParameters);
+        break;
+
+      case "/products/countProducts":
+        getTotalProductCount(request, response);
+        break;
+
+      case "/products/getAllOTC":
+        getAllOTC(request, response);
+        break;
+
+      case "/products/getAllPrescription":
+        getAllPrescription(request, response);
         break;
 
       case "/test/createOrder":

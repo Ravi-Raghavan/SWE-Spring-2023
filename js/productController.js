@@ -27,9 +27,45 @@ async function getProductByName(req, res, queryStringParameters) {
         // let body = await getPostData(req);
         // const {name} = JSON.parse(body);
         const name = queryStringParameters["name"];
-
         const data = await Product.matchProductName(name);
 
+        if(data === null) {
+            res.writeHead(404, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify( {"404 Error Message:": "N/A"} ));
+        } else {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify(data));
+        }
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function getTotalProductCount(req, res) {
+    try {
+        const data = {
+            numProducts: await Product.getNumProducts()
+        };
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(data));
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function getAllOTC(req, res) {
+    try {
+        const data = await Product.getAll('OTC');
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(data));
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function getAllPrescription(req, res) {
+    try {
+        const data = await Product.getAll('Prescription');
         res.writeHead(200, {'Content-Type': 'application/json'});
         res.end(JSON.stringify(data));
     } catch (err) {
@@ -39,5 +75,8 @@ async function getProductByName(req, res, queryStringParameters) {
 
 module.exports = {
     createProduct,
-    getProductByName
+    getProductByName,
+    getTotalProductCount,
+    getAllOTC,
+    getAllPrescription
 }
