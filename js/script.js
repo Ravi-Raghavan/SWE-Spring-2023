@@ -5,7 +5,8 @@ paypal.Buttons({
                 method: "POST",
                 body: JSON.stringify({
                     uid: JSON.parse(window.localStorage.getItem("User Record")).uid,
-                    pid: JSON.parse(window.localStorage.getItem("User Record")).pid
+                    pid: JSON.parse(window.localStorage.getItem("User Record")).pid,
+                    pharmacyAddress: JSON.parse(window.localStorage.getItem("User Record")).pharmacyAddress
                   }),
                   headers: {
                     'Content-type': 'application/json; charset=UTF-8',
@@ -38,7 +39,10 @@ paypal.Buttons({
                         transaction.id +
                         "\n\nSee console for all available details"
                     );
-
+                    /**
+                     * Nikhil Add code here
+                     */
+                    window.location.href="../html/store.html";
                     // When ready to go live, remove the alert and show a success message within this page. For example:
                     // var element = document.getElementById('paypal-button-container');
                     // element.innerHTML = '';

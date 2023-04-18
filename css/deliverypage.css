@@ -102,7 +102,7 @@ body{
 }
 
 
-.google-map-box iframe {
+.google-map-box{
     width: 300px;
     height: 400px;
     border-radius: 10px;

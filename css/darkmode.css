@@ -27,6 +27,7 @@ body.dark .col {
 body.dark .center_footer img {
   filter: brightness(0) invert(22%) sepia(76%) saturate(0%) hue-rotate(214deg)
     contrast(97%);
+    filter: brightness(0) invert(11%) sepia(19%) saturate(712%) hue-rotate(160deg) contrast(89%);
 }
 
 body.dark .social li img {
@@ -289,6 +290,10 @@ body.dark input:checked + .slider{
   background-color: var(--tertiary);
 }
 
+body.dark .paymentRow .container{
+  background-color: var(--primary-dark);
+}
+
 
 /* ? upload button styling */
 body.dark input[type="file"]::file-selector-button {
@@ -333,6 +338,10 @@ body.dark .col-50 h3 {
   color: var(--primary);
 }
 
+body.dark .paymentRow label {
+  color: var(--primary);
+}
+
 body.dark .sidebar a.active,
 body.dark .settingRow .add,
 body.dark input[type="file"]::file-selector-button:hover  {
@@ -342,7 +351,7 @@ body.dark input[type="file"]::file-selector-button:hover  {
 
 body.dark .OrderTable tr:nth-child(even),
 body.dark .col-75 .container {
-  background-color: var(--fourth);
+  background-color: var(--primary-dark);
 }
 body.dark .OrderTable tr:nth-child(odd),
 /* slider dot */
@@ -447,7 +456,7 @@ body.dark .contact-col textarea:not(:focus),
 body.dark .contact-col textarea:focus {
   background-color: var(--secondary-dark);
   color: var(--primary);
-  border: 1px solid var(--fourth);
+  border: 1px solid var(--suppliment);
 }
 
 body.dark .contact-col input::placeholder,

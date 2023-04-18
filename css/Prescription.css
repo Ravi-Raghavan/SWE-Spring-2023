@@ -350,6 +350,7 @@ body{
 
 .main-box .form-box input {
   border: 3px solid var(--tertiary);
+  /* background-color: transparent; */
   color: var(--tertiary);
   border-radius: 10px;
   margin-top: 20px;
@@ -516,3 +517,27 @@ background-color: var(--tertiary);
   }
 
 }
+
+
+/* ? prescription address scrollbar */
+.pharmacy-options{
+  /* background-color: red; */
+  outline: transparent;
+  color:var(--tertiary);
+  /* padding: 15px; */
+  /* padding-bottom: 5px; */
+  font-size: 15px;
+  height: 45px;
+  border-radius: 10px;
+  text-align: center;
+  justify-content: left;
+  border-width: 3px;
+  border-color: var(--tertiary);
+}
+
+.pharmacy-options option {
+  background-color: var(--suppliment);
+  font-size: 15px;
+  color:var(--tertiary);
+}
+
