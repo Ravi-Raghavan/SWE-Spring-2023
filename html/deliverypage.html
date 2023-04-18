@@ -17,7 +17,7 @@
 
   <body>
     <script src="../js/darkmode.js"></script>
-    
+
     <div id="header"></div>
 
 
@@ -39,8 +39,8 @@
           
         </div>
         <div class="order-items-box-right">
-          <div class="google-map-box">
-            <iframe class="dark-mode-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.9054679436763!2d-74.45162046815483!3d40.49947339250539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3c65473e476bb%3A0xb54ce7a70b3b0ace!2s77%20Hamilton%20St%2C%20New%20Brunswick%2C%20NJ%2008901!5e0!3m2!1sen!2sus!4v1681007856387!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div id ="myMap" class="google-map-box">
+            <!-- <iframe class="dark-mode-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.9054679436763!2d-74.45162046815483!3d40.49947339250539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3c65473e476bb%3A0xb54ce7a70b3b0ace!2s77%20Hamilton%20St%2C%20New%20Brunswick%2C%20NJ%2008901!5e0!3m2!1sen!2sus!4v1681007856387!5m2!1sen!2sus" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> -->
           </div>
 
           <div class="payment-box">
@@ -91,6 +91,7 @@
   
   <script src="../js/homepage.js"></script>
   <script src="../js/profilePic.js"></script>
+  <script src='https://www.bing.com/api/maps/mapcontrol?key=AiXIPIxpTLY6JpKpZqtvPlQHf-pBGaEqQAT2QvxWr68lbbMoaTKQqGKbnDhaqANZ'></script>
 
   <script>
    
@@ -123,7 +124,56 @@ async function loadOrders(){
     }
 }
 
+function GetMap(start, end) {
+  // Define the address of start and end locations
+  var startAddress = start;
+  var endAddress = end;
 
+  // Create a new map object
+  var map = new Microsoft.Maps.Map('#myMap', {
+    credentials: 'AiXIPIxpTLY6JpKpZqtvPlQHf-pBGaEqQAT2QvxWr68lbbMoaTKQqGKbnDhaqANZ',
+    center: new Microsoft.Maps.Location(40.730610, -73.935242),
+    zoom: 10,
+    disableZooming: true,
+    disablePanning: true,
+    showDashboard: false
+  });
+
+  Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
+    var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
+    directionsManager.setRequestOptions({
+      routeMode: Microsoft.Maps.Directions.RouteMode.driving,
+      routeDraggable: false
+    });
+    directionsManager.setRenderOptions({
+    itineraryContainer: '#itineraryDiv',
+    drivingPolylineOptions: {
+        strokeColor: '#0072C6',
+        strokeThickness: 6
+    },
+    pushpinOptions: { zIndex: 1000 } // set the zIndex property to 1000
+});
+    directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: startAddress }));
+    directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: endAddress }));
+    Microsoft.Maps.Events.addHandler(directionsManager, 'directionsUpdated', function (result) {
+      var routePath = result.route[0].routePath;
+      for (var i = 0; i < routePath.length; i++) {
+        setTimeout(function(location) {
+          for (var i = map.entities.getLength() - 1; i >= 0; i--) {
+        var pushpin = map.entities.get(i);
+        if (pushpin instanceof Microsoft.Maps.Pushpin) {
+          map.entities.removeAt(i);
+        }
+      }
+      var pushpin = new Microsoft.Maps.Pushpin(location);
+      pushpin.setOptions({ zIndex: 1000 });
+      map.entities.push(pushpin);
+    }, i * 3000, routePath[i]);
+      }
+    });
+    directionsManager.calculateDirections();
+  });
+}
   function swapDisplay(location, oid) {
     
    
@@ -134,6 +184,8 @@ async function loadOrders(){
     if(oid != null){
       //GRABS THE ORDER ID
       console.log(oid);
+
+      
 
       document.getElementById("orderID").innerText = oid;
       var user_record = JSON.parse(localStorage.getItem("User Record"));
@@ -209,10 +261,11 @@ async function loadOrders(){
 
       document.getElementById("Address").innerText = splitString[0]
       document.getElementById("Location").innerText = splitString[1] + ", " + splitString[2]
-      document.getElementById("Country").innerText = splitSplit[3]
+      document.getElementById("Country").innerText = splitString[3]
 
 
       //HERES WHERE WE WILL MANIPULATE DATA!
+      GetMap(order_data.pharmAddress, user_record.Address);
     }
   }
 
@@ -233,6 +286,7 @@ async function loadOrders(){
 
       return;
   }
+
   
 }
 
