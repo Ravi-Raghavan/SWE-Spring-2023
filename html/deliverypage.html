@@ -166,7 +166,7 @@ function GetMap(start, end, status) {
       var routePath = result.route[0].routePath;
       if(status === "Claimed")
       for (var i = 0; i < routePath.length; i++) {
-        setTimeout(function(location, time) {
+        setTimeout(function(location, time, spot, duration) {
           for (var j = map.entities.getLength() - 1; j >= 0; j--) {
         var pushpin = map.entities.get(j);
         if (pushpin instanceof Microsoft.Maps.Pushpin) {
@@ -178,7 +178,11 @@ function GetMap(start, end, status) {
       map.entities.push(pushpin);
      
       document.getElementById("ETA").innerText = "ETA: "+ time+ " Minutes";
-    }, i * 3000, routePath[i], (routePath.length-i)*3/60);
+      //Wanna save the value of spot!
+      if(spot == duration-1)
+      document.getElementById("ETA").innerText = "ETA: Arrived!";
+
+    }, i * 3000, routePath[i], (routePath.length-i)*3/60, i, routePath.length);
      
       }
     });
