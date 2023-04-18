@@ -97,6 +97,8 @@
   <script>
    var timeOuts = [];
 
+   //MAY WANNA SET A GLOBAL VARIABLE
+
 async function loadOrders(){
   var user_record = JSON.parse(localStorage.getItem("User Record"));
   let ordersResponse = await fetch(`/get/orders/user?uid=${user_record["uid"]}`, {
@@ -179,8 +181,9 @@ function GetMap(start, end, status) {
       map.entities.push(pushpin);
      console.log("run");
       document.getElementById("ETA").innerText = "ETA: "+ time+ " Minutes";
-      //Wanna save the value of spot!
-      if(spot == duration-1)
+      //Wanna save the value of spot! Could have a patch request happen everytime here (The first way)
+
+      if(spot == duration-1) //In the if state, send the patch request (The second way)
       document.getElementById("ETA").innerText = "ETA: Arrived!";
 
     }, i * 3000, routePath[i], (routePath.length-i)*3/60, i, routePath.length));
@@ -200,6 +203,7 @@ function GetMap(start, end, status) {
     for (var i=0; i<timeOuts.length; i++) {
       clearTimeout(timeOuts[i]);
     }
+    //Send the patch request here if it gets interrupted AKA if user swaps screen (The second way)
     }
     if(oid != null){
       //GRABS THE ORDER ID
