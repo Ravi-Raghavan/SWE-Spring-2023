@@ -22,6 +22,22 @@ async function createProduct(req, res) {
     }
 }
 
+async function getProductByName(req, res, queryStringParameters) {
+    try {
+        // let body = await getPostData(req);
+        // const {name} = JSON.parse(body);
+        const name = queryStringParameters["name"];
+
+        const data = await Product.matchProductName(name);
+
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify(data));
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     createProduct,
+    getProductByName
 }
