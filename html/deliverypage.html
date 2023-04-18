@@ -95,7 +95,8 @@
   <script src='https://www.bing.com/api/maps/mapcontrol?key=AiXIPIxpTLY6JpKpZqtvPlQHf-pBGaEqQAT2QvxWr68lbbMoaTKQqGKbnDhaqANZ'></script>
 
   <script>
-   
+   var timeOuts = [];
+
 async function loadOrders(){
   var user_record = JSON.parse(localStorage.getItem("User Record"));
   let ordersResponse = await fetch(`/get/orders/user?uid=${user_record["uid"]}`, {
@@ -166,7 +167,7 @@ function GetMap(start, end, status) {
       var routePath = result.route[0].routePath;
       if(status === "Claimed")
       for (var i = 0; i < routePath.length; i++) {
-        setTimeout(function(location, time, spot, duration) {
+        timeOuts.push(setTimeout(function(location, time, spot, duration) {
           for (var j = map.entities.getLength() - 1; j >= 0; j--) {
         var pushpin = map.entities.get(j);
         if (pushpin instanceof Microsoft.Maps.Pushpin) {
@@ -176,13 +177,13 @@ function GetMap(start, end, status) {
       var pushpin = new Microsoft.Maps.Pushpin(location);
       pushpin.setOptions({ zIndex: 1000 });
       map.entities.push(pushpin);
-     
+     console.log("run");
       document.getElementById("ETA").innerText = "ETA: "+ time+ " Minutes";
       //Wanna save the value of spot!
       if(spot == duration-1)
       document.getElementById("ETA").innerText = "ETA: Arrived!";
 
-    }, i * 3000, routePath[i], (routePath.length-i)*3/60, i, routePath.length);
+    }, i * 3000, routePath[i], (routePath.length-i)*3/60, i, routePath.length));
      
       }
     });
@@ -193,9 +194,13 @@ function GetMap(start, end, status) {
     
    
     document.getElementById("interface").innerHTML = document.getElementById(location).innerHTML;
-    if(location == "testBox")
+    if(location == "testBox"){
+
     loadOrders();
-    
+    for (var i=0; i<timeOuts.length; i++) {
+      clearTimeout(timeOuts[i]);
+    }
+    }
     if(oid != null){
       //GRABS THE ORDER ID
       console.log(oid);
