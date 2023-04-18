@@ -314,6 +314,22 @@ async function getPharamacyProcess(req,res){
     }
 }
 
+async function recyclePrescriptionProcess(req,res,queryStringParameters){
+    try{
+        let values = Object.values(queryStringParameters);
+        let returnValue = await prescriptionModel.recyclePrescription(values[0],values[1]);
+        if(returnValue=="done"){
+            res.writeHead(201);
+            res.end();
+        }else{
+            res.writeHead(400,{'Content-Type':'application/json'});
+            res.end(JSON.stringify(returnValue));
+        }
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     getTypeProcess,
     addPatientPrescriptionProcess,
@@ -328,5 +344,6 @@ module.exports = {
     getRandomPrescriptionProcess,
     dropDownProcess,
     displayProcess,
-    getPharamacyProcess
+    getPharamacyProcess,
+    recyclePrescriptionProcess
 };

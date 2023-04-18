@@ -204,7 +204,7 @@ const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 const cloudStorage = require("./js/cloudStorage");
-const { getPharamacyProcess,displayProcess,dropDownProcess,getDrugListProcess, getDrugsProcess,removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess, getRandomPrescriptionProcess } = require("./js/prescriptionController");
+const { recyclePrescriptionProcess,getPharamacyProcess,displayProcess,dropDownProcess,getDrugListProcess, getDrugsProcess,removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess, getRandomPrescriptionProcess } = require("./js/prescriptionController");
 const { getRandomPrescription } = require("./js/prescriptionModel");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
@@ -921,6 +921,10 @@ const server = http.createServer((request, response) => {
 
       case "/prescription/pharmacy/list":
         getPharamacyProcess(request,response);
+        break;
+
+      case "/prescriptions/recycle":
+        recyclePrescriptionProcess(request,response,queryStringParameters);
         break;
       /**
        * Prescription Section End

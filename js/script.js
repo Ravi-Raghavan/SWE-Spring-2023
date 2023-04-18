@@ -1,3 +1,5 @@
+
+
 paypal.Buttons({
         // Sets up the transaction when a payment button is clicked
         createOrder: (data, actions) => {
@@ -40,9 +42,17 @@ paypal.Buttons({
                         "\n\nSee console for all available details"
                     );
                     /**
-                     * Nikhil Add code here
+                     * recyle prescriptions start
                      */
+                    
+                    /**
+                     * recyle prescriptions end
+                    */
+
+
                     window.location.href="../html/store.html";
+
+
                     // When ready to go live, remove the alert and show a success message within this page. For example:
                     // var element = document.getElementById('paypal-button-container');
                     // element.innerHTML = '';
@@ -51,3 +61,13 @@ paypal.Buttons({
                 });
         },
     }).render("#paypal-button-container");
+
+    function getUID(){
+        if(localStorage.getItem("User Record")==null){
+          alert("Please create an account / log in, to add a prescription. Thank You!");
+        }else{
+          var user_record = JSON.parse(localStorage.getItem("User Record"));
+          var uid = user_record.uid;
+          return uid;
+        }
+      }

@@ -165,6 +165,8 @@ async function ready() {
     updateCartTotal();
 }
 
+
+
 async function purchaseClicked() {
     // alert('Thank you for your purchase')                                // Insert HTTP request here to transfer to payment page.
     // Each time an order is changed the product is added to User/Orders/ in Firebase
@@ -176,6 +178,8 @@ async function purchaseClicked() {
 
 
     //INSERT LOGIC TO CHECK IF ORDER MATCHES PRESCRIPTION HERE. GET PHARMACY NAME AND STORE IT IN LOCAL STORAGE
+    
+    
     var response = await fetch("/get/pharmacies", {method: "GET"});
     var pharmacies = await response.json();
     console.log(pharmacies);
@@ -207,6 +211,18 @@ async function purchaseClicked() {
 
     //
     if (total != 0) {
+        let cartItems = document.querySelectorAll(".cart-item-title");
+                    cartItems.forEach((item)=>{
+                        const subItems = item.innerText.split(":");
+                        if(subItems.length==2){
+                            fetch(`/prescriptions/recycle?uid=${getUID()}&prescriptionNumber=${subItems[0]}`,{
+                                method:"GET",
+                                cache:"no-cache"
+                            }).then((response)=>{
+                                console.log(response.status);
+                            })
+                        }
+                    })
         document.getElementById("paypal-button-container").style.display = "block";
         //window.location.href = "http://localhost:8000/html/store.html";
     } else {
@@ -566,3 +582,14 @@ function updateCartTotal() {
 //         }
 //     }
 // }
+
+
+function getUID(){
+    if(localStorage.getItem("User Record")==null){
+      alert("Please create an account / log in, to add a prescription. Thank You!");
+    }else{
+      var user_record = JSON.parse(localStorage.getItem("User Record"));
+      var uid = user_record.uid;
+      return uid;
+    }
+  }

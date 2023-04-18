@@ -144,6 +144,27 @@ async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,
         return "Done";
     }
 
+    async function recyclePrescription(uid,prescriptionNumber){
+        try{
+            let path1 = db.ref(`/validatedPrescriptions/${uid}/${prescriptionNumber}/`);
+            path1.remove();
+            let path2 = db.ref(`/activePrescriptions/${prescriptionNumber}/`);
+            path2.remove();
+            await movePath(prescriptionNumber);
+            return "done";
+        }catch(err){
+            return err;
+        }
+    }
+
+    async function movePath(pN){
+        let path = db.ref(`/prescriptionBank/${pN}/`);
+        path.set({
+            status:"null"
+        });
+        return "done";
+    }
+
     async function changeStatus(pN){
         let removePath = db.ref(`/prescriptionBank/${pN}/`);
         let addPath = db.ref(`/activePrescriptions/${pN}/`);
@@ -265,5 +286,6 @@ module.exports = {
     getRandomPrescription,
     dropDown,
     display,
-    getPharamacy
+    getPharamacy,
+    recyclePrescription
 };
