@@ -95,6 +95,7 @@
 
     <center>
         <div id="paypal-button-container" , style="display: none; position: relative; z-index: 1;">
+            <h1>ALL SALES ARE FINAL</h1>
             <script src="../js/script.js"></script>
         </div>
     </center>
@@ -118,18 +119,18 @@
                 prescriptionItems = data;
 
 
-                // Handle all of the over the counter drugs by fetching them from DB 
+                // Handle all of the over the counter drugs by fetching them from DB
                 let count = 0;
                 fetch("/products/getAllOTC", {method: 'GET'})
                     .then(response => response.json())
-                    .then(data => {                           
+                    .then(data => {
                         // store html content for all prescrible items and non
                         var productsHTMLPrespNon = "";
 
                         for(const drugName in data) {
                             const product = data[drugName];
                             if(product.name != '' && product.limit != '' && product.imgPath != '' && product.price != '') {
-                                // This is a valid OTC drug to display. 
+                                // This is a valid OTC drug to display.
                                 const productHTML = `
                                     <div class="shop-item">
                                         <span class="shop-item-title itemTitle-${count}">${product.name}</span>
@@ -142,7 +143,7 @@
                                         </div>
                                     </div>
                                     `;
-                                
+
                                 // Appends single item html code
                                 productsHTMLPrespNon = productsHTMLPrespNon + productHTML;
                             }
@@ -181,11 +182,11 @@
                                             </div>
                                         </div>
                                         `;
-                                    
+
                                     // productsHTMLPresp = productsHTMLPresp + productHTML;
                                     return productHTML;
                                 })
-                            
+
                             productsHTMLPresp += await promise;
                             console.log(await promise);
                         }
