@@ -29,6 +29,7 @@ const public_paths_html = [
   "/html/FAQ.html",
   "/html/fileUploadTest.html",
   "/html/ppview.html",
+  "/html/dpview.html",
   "/html/homepage.html",
   "/html/requestPrescriptionNumberConfirmation.html",
   "/html/index.html",
@@ -78,6 +79,7 @@ const public_paths_js = [
   "/js/darkmode.js",
   "/js/dashboard-view.js",
   "/js/ppview.js",
+  "/js/dpview.js",
   "/js/script.js",
   "/js/paypal.js",
   "/js/firebase.js",
@@ -204,7 +206,7 @@ const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 const cloudStorage = require("./js/cloudStorage");
-const { recyclePrescriptionProcess,getPharamacyProcess,displayProcess,dropDownProcess,getDrugListProcess, getDrugsProcess,removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess, getRandomPrescriptionProcess } = require("./js/prescriptionController");
+const { doctorDropDownValidProcess,doctorDropDownProcess,recyclePrescriptionProcess,getPharamacyProcess,displayProcess,dropDownProcess,getDrugListProcess, getDrugsProcess,removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess, getRandomPrescriptionProcess } = require("./js/prescriptionController");
 const { getRandomPrescription } = require("./js/prescriptionModel");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
@@ -925,6 +927,14 @@ const server = http.createServer((request, response) => {
 
       case "/prescriptions/recycle":
         recyclePrescriptionProcess(request,response,queryStringParameters);
+        break;
+
+      case "/prescription/dropdown/doctor":
+        doctorDropDownProcess(request,response,queryStringParameters);
+        break;
+
+      case "/prescription/dropdown/doctor/valid":
+        doctorDropDownValidProcess(request,response,queryStringParameters);
         break;
       /**
        * Prescription Section End
