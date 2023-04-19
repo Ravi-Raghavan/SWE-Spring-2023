@@ -805,6 +805,21 @@ async function getPharmacies(request, response){
   });
 }
 
+async function updateOrderLocation(request, response){
+  var credentials = "";
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    var location = credentials.location;
+    var OID = credentials.OID;
+    await FirebaseAPI.updateOrderLocation(location, OID, response);
+  });
+}
+
 
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
@@ -1111,6 +1126,10 @@ const server = http.createServer((request, response) => {
       
       case "/get/pharmacies":
         getPharmacies(request, response);
+        break;
+      
+      case "/updateLocation/order":
+        updateOrderLocation(request, response);
         break;
     }
   }

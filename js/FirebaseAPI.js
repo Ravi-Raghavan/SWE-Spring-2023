@@ -937,6 +937,61 @@ async function getPharmacies(response){
     })
 }
 
+async function updateOrderLocation(location, OID, response){
+    console.log(OID);
+    orderRef.once("value", (snapshot) => {
+        if (!snapshot.exists()){
+            console.log("NOOOOOO");
+            response.writeHead(404, { "Content-type": "text/plain" });
+            response.write("Order doesn't exist");
+            response.end();
+        }
+        else{
+            var orders = snapshot.val()
+            var UID = "";
+
+            for (var user in orders){
+                var user_orders = orders[user];
+                for (var user_order in user_orders){
+                    if (user_order == OID){
+                        UID = user;
+                        break;
+                    }
+                }
+            }
+
+            orderRef.child(UID).child(OID).update({
+                location: location
+            })
+            .then(async () => {
+                console.log("Going to update user collection as well");
+                ref.child(UID).child("orders").child(OID).update({
+                    location: location
+                })
+                .then(() => {
+                    response.writeHead(200, { "Content-type": "text/plain" });
+                    response.write("Successfully Updated");
+                    response.end();
+                })
+                .catch((err) => {
+                    console.log(err);
+                    response.writeHead(404, { "Content-type": "text/plain" });
+                    response.write("Failed to Update Order");
+                    response.end();
+                })
+
+            })
+            .catch((err) => {
+                response.writeHead(404, { "Content-type": "text/plain" });
+                response.write("Failed to Update Order");
+                response.end();
+            })
+
+
+        }
+    })
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -965,5 +1020,6 @@ module.exports = {
     markOrderReady:markOrderReady,
     markOrderClaimed: markOrderClaimed,
     getReadyOrders:getReadyOrders,
-    getPharmacies : getPharmacies
+    getPharmacies : getPharmacies,
+    updateOrderLocation: updateOrderLocation
 }
