@@ -14,7 +14,12 @@ function handleUserManagingPrescriptions(){
         alert("Please Create an Account");
     }
     else{
-        window.location.href = '../html/PrescriptionRequest.html';
+        let userObject = JSON.parse(localStorage.getItem("User Record"));
+        if(userObject["Account Type"]!="Patient" && userObject["Account Type"]!="Doctor"){
+            alert("You must be registered as a patient or doctor to access this form.")
+        }else{
+            window.location.href = '../html/PrescriptionRequest.html';
+        }
     }
 }
 
