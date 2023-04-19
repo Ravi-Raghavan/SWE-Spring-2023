@@ -290,6 +290,26 @@ async function addValidatedPrescription(doctorEmail,dfName,dlName,dUID,
         return promise;
     }
 
+    async function displayDoctorPending(uid,pN){
+        let path = db.ref(`/doctorPrescriptions/${uid}/${pN}/`);
+        let promise = await new Promise((resolve,reject)=>{
+            path.get().then((snapshot)=>{
+                resolve(snapshot.val());
+            })
+        })
+        return promise;
+    }
+
+    async function displayDoctorValid(uid,pN){
+        let path = db.ref(`/validatedPrescriptions/${uid}/${pN}/`);
+        let promise = await new Promise((resolve,reject)=>{
+            path.get().then((snapshot)=>{
+                resolve(snapshot.val());
+            })
+        })
+        return promise;
+    }
+
 module.exports = {
     getType,
     addPatientPrescription,
@@ -309,5 +329,7 @@ module.exports = {
     getPharamacy,
     recyclePrescription,
     doctorDropDown,
-    doctorDropDOwnValid
+    doctorDropDOwnValid,
+    displayDoctorPending,
+    displayDoctorValid
 };

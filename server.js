@@ -206,7 +206,7 @@ const FirebaseAPI = require("./js/FirebaseAPI");
 const { getPostData } = require("./js/utils");
 const { sendValidatedPrescriptionNotification } = require("./js//SMTP");
 const cloudStorage = require("./js/cloudStorage");
-const { doctorDropDownValidProcess,doctorDropDownProcess,recyclePrescriptionProcess,getPharamacyProcess,displayProcess,dropDownProcess,getDrugListProcess, getDrugsProcess,removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess, getRandomPrescriptionProcess } = require("./js/prescriptionController");
+const {displayDoctorValidProcess, displayDoctorPendingProcess,doctorDropDownValidProcess,doctorDropDownProcess,recyclePrescriptionProcess,getPharamacyProcess,displayProcess,dropDownProcess,getDrugListProcess, getDrugsProcess,removeDoctorPrescriptionProcess,changeStatusProcess,validateProcess,getTypeProcess,addPatientPrescriptionProcess,addDoctorPrescriptionProcess,checkPrescriptionProcess, removePatientPrescriptionProcess, getRandomPrescriptionProcess } = require("./js/prescriptionController");
 const { getRandomPrescription } = require("./js/prescriptionModel");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
@@ -935,6 +935,14 @@ const server = http.createServer((request, response) => {
 
       case "/prescription/dropdown/doctor/valid":
         doctorDropDownValidProcess(request,response,queryStringParameters);
+        break;
+
+      case "/prescription/display/doctor/pending":
+        displayDoctorPendingProcess(request,response,queryStringParameters);
+        break;
+
+      case "/prescription/display/doctor/valid":
+        displayDoctorValidProcess(request,response,queryStringParameters);
         break;
       /**
        * Prescription Section End

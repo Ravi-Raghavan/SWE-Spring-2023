@@ -1,5 +1,6 @@
 
 
+const { Predicate } = require('natural');
 const prescriptionModel = require('./prescriptionModel');
 const { getPostData } = require('./utils');
 
@@ -352,6 +353,30 @@ async function doctorDropDownValidProcess(req,res,queryStringParameters){
     }
 }
 
+async function displayDoctorPendingProcess(req,res,queryStringParameters){
+    try{
+        let uid = queryStringParameters.uid;
+        let pN = queryStringParameters.pN;
+        let returnValue = await prescriptionModel.displayDoctorPending(uid,pN);
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(returnValue));
+    }catch(err){
+        console.log(err);
+    }
+}
+
+async function displayDoctorValidProcess(req,res,queryStringParameters){
+    try{
+        let uid = queryStringParameters.uid;
+        let pN = queryStringParameters.pN;
+        let returnValue = await prescriptionModel.displayDoctorValid(uid,pN);
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(returnValue));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     getTypeProcess,
     addPatientPrescriptionProcess,
@@ -369,5 +394,7 @@ module.exports = {
     getPharamacyProcess,
     recyclePrescriptionProcess,
     doctorDropDownProcess,
-    doctorDropDownValidProcess
+    doctorDropDownValidProcess,
+    displayDoctorPendingProcess,
+    displayDoctorValidProcess
 };

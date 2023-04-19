@@ -71,9 +71,60 @@ window.onload = function(){
 }
 
 function pendingValue(){
-    console.log(document.querySelector(".pending-select").value);
+    let pN = document.querySelector(".pending-select").value;
+    if(pN==""){
+        document.getElementById("display-pending").innerHTML = "";
+        return;
+    }
+    fetch(`/prescription/display/doctor/pending?uid=${getUID()}&pN=${pN}`,{
+        method:"GET",
+        cache:"no-cache"
+    }).then((response)=>{
+        response.json().then((result)=>{
+            let patient = result.patientFirstName+" "+result.patientLastName;
+            let patientDOB = result.patientDOB;
+            let medication = result.medication;
+            let refills = result.refills;
+            let expiration = result.expireDate;
+            let instructions = result.instructions;
+            let message = "";
+            message += `<p><strong>Patient:</strong> ${patient}</p>`;
+            message += `<p><strong>Date of Birth:</strong> ${patientDOB}</p>`;
+            message += `<p><strong>Medication:</strong> ${medication}</p>`;
+            message += `<p><strong>Re-fills:</strong> ${refills}</p>`;
+            message += `<p><strong>Expiration Date:</strong> ${expiration}</p>`;
+            message += `<p><strong>Instructions:</strong> ${instructions}</p>`;
+            document.getElementById("display-pending").innerHTML = message;
+        })
+    })
 }
 
 function validValue(){
-    console.log(document.querySelector(".valid-select").value);
+    let combined = document.querySelector(".valid-select").value;
+    if(combined==""){
+        document.getElementById("display-valid").innerHTML = "";
+        return;
+    }
+    const combinedSplit = combined.split(":");
+    fetch(`/prescription/display/doctor/valid?uid=${combinedSplit[0]}&pN=${combinedSplit[1]}`,{
+        method:"GET",
+        cache:"no-cache"
+    }).then((response)=>{
+        response.json().then((result)=>{
+            let patient = result.patientFirstName+" "+result.patientLastName;
+            let patientDOB = result.dateOfBirth;
+            let medication = result.medication;
+            let refills = result.refills;
+            let expiration = result.expireDate;
+            let instructions = result.instructions;
+            let message = "";
+            message += `<p><strong>Patient:</strong> ${patient}</p>`;
+            message += `<p><strong>Date of Birth:</strong> ${patientDOB}</p>`;
+            message += `<p><strong>Medication:</strong> ${medication}</p>`;
+            message += `<p><strong>Re-fills:</strong> ${refills}</p>`;
+            message += `<p><strong>Expiration Date:</strong> ${expiration}</p>`;
+            message += `<p><strong>Instructions:</strong> ${instructions}</p>`;
+            document.getElementById("display-valid").innerHTML = message;
+        })
+    })
 }
