@@ -19,9 +19,9 @@
 */
 
 if (localStorage.getItem("User Record") == null) {
-        alert("You must login to access the cart page");
+        //alert("You must login to access the cart page");
 
-        window.location.href = "http://localhost:8000/html/homepage.html";
+        window.location.href = "http://localhost:8000/html/user-auth-form.html";
     }
 
 if (document.readyState == 'loading') {
