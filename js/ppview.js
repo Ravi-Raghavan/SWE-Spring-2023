@@ -11,22 +11,18 @@ window.onload = function (){
             console.log(result[0]);
             console.log(result[1]);
             if(result[0]!="none"){
-                let innerAddition = "";
+                let innerAddition = `<option class="pending-values" value="">Select Prescription</option>`;
                 for(let i = 0;i<result[0].length;i++){
                     innerAddition += `<option value="${result[0][i]}">${result[0][i]}</option>`;
                 }
-                let part1 = document.getElementById("pending").innerHTML.substring(0,document.getElementById("validated").innerHTML.length - 41);
-                let part2 = document.getElementById("pending").innerHTML.substring(document.getElementById("validated").innerHTML.length-41);
-                document.getElementById("pending").innerHTML = part1 + innerAddition +part2;
+                document.querySelector(".pending-select").innerHTML = innerAddition;
             }
             if(result[1]!="none"){
-                let innerAddition = "";
+                let innerAddition = `<option class="validated-values" value="">Select Prescription</option>`;
                 for(let i = 0;i<result[1].length;i++){
                     innerAddition += `<option value="${result[1][i]}">${result[1][i]}</option>`;
                 }
-                let part1 = document.getElementById("validated").innerHTML.substring(0,document.getElementById("validated").innerHTML.length - 22);
-                let part2 = document.getElementById("validated").innerHTML.substring( document.getElementById("validated").innerHTML.length-22);
-                document.getElementById("validated").innerHTML = part1 + innerAddition +part2;
+                document.querySelector(".valid-select").innerHTML = innerAddition;
             }
         })
     })

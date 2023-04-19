@@ -330,6 +330,28 @@ async function recyclePrescriptionProcess(req,res,queryStringParameters){
     }
 }
 
+async function doctorDropDownProcess(req,res,queryStringParameters){
+    try{
+        let uid = queryStringParameters.uid;
+        let returnValue = await prescriptionModel.doctorDropDown(uid);
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(returnValue));
+    }catch (err){
+        console.log(err);
+    }
+}
+
+async function doctorDropDownValidProcess(req,res,queryStringParameters){
+    try{
+        let uid = queryStringParameters.uid;
+        let returnValue = await prescriptionModel.doctorDropDOwnValid(uid);
+        res.writeHead(200,{'Content-Type':'application/json'});
+        res.end(JSON.stringify(returnValue));
+    }catch (err){
+        console.log(err);
+    }
+}
+
 module.exports = {
     getTypeProcess,
     addPatientPrescriptionProcess,
@@ -345,5 +367,7 @@ module.exports = {
     dropDownProcess,
     displayProcess,
     getPharamacyProcess,
-    recyclePrescriptionProcess
+    recyclePrescriptionProcess,
+    doctorDropDownProcess,
+    doctorDropDownValidProcess
 };

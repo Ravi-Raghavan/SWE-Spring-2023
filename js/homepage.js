@@ -73,7 +73,7 @@ function prescriptionViewPage(){
     try{
         let userObject = JSON.parse(localStorage.getItem("User Record"));
         if(userObject["Account Type"] == "Doctor"){
-            return;
+            window.location.href= "./dpview.html";
         }else{
             window.location.href = "./ppview.html";
         }
