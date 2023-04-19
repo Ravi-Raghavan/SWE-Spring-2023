@@ -430,7 +430,7 @@ function addDriverClaim(OrderNumber, ItemList, quantityList){
 }
 
 function addPrevFile(nameOfFile, Status){
-  if(nameOfFile == null||Status == null)
+  if(nameOfFile == null||Status == null || nameOfFile.length == 0)
     return;
   
   else{

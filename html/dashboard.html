@@ -192,7 +192,7 @@
   <form action = "/upload/documentation" method="post" enctype="multipart/form-data" action = "#" id = "uploadDocumentationForm" target = "dummyframe">
       <input type="file" id="fileupload" name = "myfile" accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps" />
       <br /><br />
-      <input class = "dl-btn" type = "submit" value="Submit" id="submit" />
+      <input  class = "dl-btn" type = "submit" value="Submit" id="submit" onclick = "addPrevFile(document.getElementById('fileupload').value.substring(document.getElementById('fileupload').value.lastIndexOf('\\')+1), 'P')" />
   </form>
           </div>
           <br><br>
