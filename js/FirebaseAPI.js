@@ -563,7 +563,10 @@ async function downloadOrders(credentials, response){
                     order["drugs"].push({name: value[key]["drugs"][drugKey]["title"], quantity: value[key]["drugs"][drugKey]["quantity"]})
                 }
 
-                order["status"] = "placed";
+                if (order["status"] == undefined || order["status"] == null){
+                    order["status"] = "placed";
+                }
+                
                 order["totalCost"] = value[key]["cartTotal"];
 
                 orders.push(order);
