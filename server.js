@@ -808,14 +808,18 @@ async function getPharmacies(request, response){
 async function updateOrderLocation(request, response){
   var credentials = "";
 
+
   request.on("data", (data) => {
     credentials += data;
   });
 
   request.on("end", async () => {
+    console.log(credentials)
     credentials = JSON.parse(credentials);
+    console.log(credentials)
     var location = credentials.location;
     var OID = credentials.OID;
+    console.log(OID);
     await FirebaseAPI.updateOrderLocation(location, OID, response);
   });
 }
@@ -1129,6 +1133,7 @@ const server = http.createServer((request, response) => {
         break;
       
       case "/updateLocation/order":
+        
         updateOrderLocation(request, response);
         break;
     }

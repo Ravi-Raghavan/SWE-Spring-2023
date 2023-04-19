@@ -95,7 +95,10 @@
   <script src='https://www.bing.com/api/maps/mapcontrol?key=AiXIPIxpTLY6JpKpZqtvPlQHf-pBGaEqQAT2QvxWr68lbbMoaTKQqGKbnDhaqANZ'></script>
 
   <script>
-   
+ 
+   var timeOuts = [];
+   var spot=0;
+   var lastOrder;
 async function loadOrders(){
   var user_record = JSON.parse(localStorage.getItem("User Record"));
   let ordersResponse = await fetch(`/get/orders/user?uid=${user_record["uid"]}`, {
@@ -143,7 +146,8 @@ function GetMap(start, end, status) {
   Microsoft.Maps.loadModule('Microsoft.Maps.Directions', function () {
     var directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
     directionsManager.setRequestOptions({
-      routeMode: Microsoft.Maps.Directions.RouteMode.driving,
+      routeMode: Microsoft.Maps.Directions.RouteMode.bestRoute,
+    maxRoutes: 1,
       routeDraggable: false
     });
     directionsManager.setRenderOptions({
@@ -158,33 +162,76 @@ function GetMap(start, end, status) {
     directionsManager.addWaypoint(new Microsoft.Maps.Directions.Waypoint({ address: endAddress }));
     Microsoft.Maps.Events.addHandler(directionsManager, 'directionsUpdated', function (result) {
       var routePath = result.route[0].routePath;
-      if(status === "Claimed")
-      for (var i = 0; i < routePath.length; i++) {
-        setTimeout(function(location, time) {
+
+      function doThis(i){
+        timeOuts.push(setTimeout(function(location, time, duration) {
           for (var j = map.entities.getLength() - 1; j >= 0; j--) {
         var pushpin = map.entities.get(j);
         if (pushpin instanceof Microsoft.Maps.Pushpin) {
           map.entities.removeAt(j);
         }
       }
+      spot = i;
       var pushpin = new Microsoft.Maps.Pushpin(location);
       pushpin.setOptions({ zIndex: 1000 });
       map.entities.push(pushpin);
-     
+     console.log(i);
       document.getElementById("ETA").innerText = "ETA: "+ time+ " Minutes";
-    }, i * 3000, routePath[i], (routePath.length-i)*3/60);
+
+      if(i == routePath.length-1){
+      document.getElementById("ETA").innerText = "ETA: Arrived!";
+      let response =  fetch('/updateLocation/order', {
+        method: 'PATCH',
+        body: JSON.stringify( {"location": String.valueOf(spot), "OID": lastOrder}),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+
+      }
+    }, (i-spot) * 3000, routePath[i], (routePath.length-i)*3/60), i, routePath.length);
+      }
+      if(status === "Claimed")
+      for (let i = spot; i < routePath.length; i++) {
+          doThis(i);
      
       }
     });
     directionsManager.calculateDirections();
   });
 }
-  function swapDisplay(location, oid) {
+  async function swapDisplay(location, oid) {
     
    
     document.getElementById("interface").innerHTML = document.getElementById(location).innerHTML;
-    if(location == "testBox")
-    loadOrders();
+    if(location == "testBox"){
+      loadOrders();
+      for (var i=0; i<timeOuts.length; i++) {
+        clearTimeout(timeOuts[i]);
+      }
+      if(lastOrder!= null){
+        console.log("The last order was: "+lastOrder);
+        console.log("Spot is equal to: "+spot)
+        
+        let dataToSend = {
+        "location": spot,
+        "OID": lastOrder
+      }
+        let response =    fetch('/updateLocation/order', {
+        method: 'PATCH',
+        body: JSON.stringify( dataToSend),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      })
+
+      spot = 0;
+     
+      }
+
+      
+      console.log("updated!");
+    }
     
     if(oid != null){
       //GRABS THE ORDER ID
@@ -195,6 +242,7 @@ function GetMap(start, end, status) {
       document.getElementById("orderID").innerText = oid;
       var user_record = JSON.parse(localStorage.getItem("User Record"));
       var order_data = user_record["OrderData"][oid];
+      lastOrder = oid;
       console.log(order_data);
       if (order_data.orderDate == null || order_data.orderDate == undefined){
         let date_time = new Date();
@@ -268,9 +316,10 @@ function GetMap(start, end, status) {
       document.getElementById("Location").innerText = splitString[1] + ", " + splitString[2]
       document.getElementById("Country").innerText = splitString[3]
 
-
+      spot = parseInt(order_data.location);
+      console.log("Wait the spot is: "+spot);
       //HERES WHERE WE WILL MANIPULATE DATA!
-      GetMap(order_data.pharmAddress, user_record.Address, order_data["status"]);
+      GetMap(order_data.pharmAddress, user_record.Address, order_data["status"], spot);
     }
   }
 
