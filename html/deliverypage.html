@@ -199,8 +199,10 @@ function GetMap(start, end, status) {
       }
     }, (i-spot) * 1500, routePath[i], (routePath.length-i)*1.5/60), i, routePath.length);
       }
+      console.log("HERE: "+spot+" = "+ routePath.length)
+      
       if(status === "Claimed"){
-        if(spot == routePath.length)
+        if(spot >= routePath.length)
         document.getElementById("ETA").innerText = "ETA: Delivered!";
 
       for (let i = spot; i < routePath.length; i++) {
