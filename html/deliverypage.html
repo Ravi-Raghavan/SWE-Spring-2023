@@ -184,9 +184,13 @@ function GetMap(start, end, status) {
 
       if(i == routePath.length-1){
       document.getElementById("ETA").innerText = "ETA: Arrived!";
-      let response =  fetch('/updateLocation/order', {
+      let dataToSend = {
+        "location": spot,
+        "OID": lastOrder
+      }
+      let response =    fetch('/updateLocation/order', {
         method: 'PATCH',
-        body: JSON.stringify( {"location": String.valueOf(spot), "OID": lastOrder}),
+        body: JSON.stringify( dataToSend),
         headers: {
           'Content-type': 'application/json; charset=UTF-8',
         },
@@ -195,11 +199,15 @@ function GetMap(start, end, status) {
       }
     }, (i-spot) * 1500, routePath[i], (routePath.length-i)*1.5/60), i, routePath.length);
       }
-      if(status === "Claimed")
+      if(status === "Claimed"){
+        if(spot == routePath.length)
+        document.getElementById("ETA").innerText = "ETA: Delivered!";
+
       for (let i = spot; i < routePath.length; i++) {
           doThis(i);
      
       }
+    } 
     });
     directionsManager.calculateDirections();
   });
