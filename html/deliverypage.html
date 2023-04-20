@@ -99,8 +99,9 @@
    var timeOuts = [];
    var spot=0;
    var lastOrder;
-async function loadOrders(){
-  var user_record = JSON.parse(localStorage.getItem("User Record"));
+   var user_record = JSON.parse(localStorage.getItem("User Record"));
+
+async function loadOrders(spot, lastOrder){
   let ordersResponse = await fetch(`/get/orders/user?uid=${user_record["uid"]}`, {
       method: 'GET'
     })
@@ -109,6 +110,9 @@ async function loadOrders(){
     let orders = await ordersResponse.json();
     console.log("Response Status: " + ordersResponseStatus);
     console.log("Order Data Fetched: " + JSON.stringify(orders));
+
+    if(spot != null && lastOrder != null)
+    user_record["OrderData"][lastOrder]["location"] = spot;
 
     user_record["OrderData"] = orders;
     localStorage.setItem("User Record", JSON.stringify(user_record));
@@ -189,7 +193,7 @@ function GetMap(start, end, status) {
       })
 
       }
-    }, (i-spot) * 3000, routePath[i], (routePath.length-i)*3/60), i, routePath.length);
+    }, (i-spot) * 1500, routePath[i], (routePath.length-i)*1.5/60), i, routePath.length);
       }
       if(status === "Claimed")
       for (let i = spot; i < routePath.length; i++) {
@@ -200,12 +204,12 @@ function GetMap(start, end, status) {
     directionsManager.calculateDirections();
   });
 }
-  async function swapDisplay(location, oid) {
+   function swapDisplay(location, oid) {
     
    
     document.getElementById("interface").innerHTML = document.getElementById(location).innerHTML;
     if(location == "testBox"){
-      loadOrders();
+      
       for (var i=0; i<timeOuts.length; i++) {
         clearTimeout(timeOuts[i]);
       }
@@ -217,6 +221,9 @@ function GetMap(start, end, status) {
         "location": spot,
         "OID": lastOrder
       }
+      user_record["OrderData"][lastOrder]["location"] = spot;
+      localStorage.setItem("User Record", JSON.stringify(user_record));
+      loadOrders(spot, lastOrder);
         let response =    fetch('/updateLocation/order', {
         method: 'PATCH',
         body: JSON.stringify( dataToSend),
@@ -224,23 +231,29 @@ function GetMap(start, end, status) {
           'Content-type': 'application/json; charset=UTF-8',
         },
       })
+      
+      console.log("The end should match: "+ user_record["OrderData"][lastOrder]["location"])
 
       spot = 0;
      
       }
-
-      
+      else
+      loadOrders(null, null);
       console.log("updated!");
+      console.log(user_record["OrderData"])
+      
     }
     
-    if(oid != null){
+    else if(oid != null){
       //GRABS THE ORDER ID
-      console.log(oid);
-
       
+      console.log("The last order was: "+ lastOrder)
+      console.log(user_record["OrderData"][oid])
+      console.log("The current order clicked was: "+oid);
+
+      console.log(user_record["OrderData"][oid])
 
       document.getElementById("orderID").innerText = oid;
-      var user_record = JSON.parse(localStorage.getItem("User Record"));
       var order_data = user_record["OrderData"][oid];
       lastOrder = oid;
       console.log(order_data);
@@ -315,11 +328,26 @@ function GetMap(start, end, status) {
       document.getElementById("Address").innerText = splitString[0]
       document.getElementById("Location").innerText = splitString[1] + ", " + splitString[2]
       document.getElementById("Country").innerText = splitString[3]
-
+      console.log(user_record["OrderData"])
       spot = parseInt(order_data.location);
-      console.log("Wait the spot is: "+spot);
+      
+
+      
+
+      var test = fetch(`/get/orders/user?uid=${user_record["uid"]}`, {
+      method: 'GET'
+    }).then( (response) => {
+
+      response.json().then((json) => {
+        spot= json[oid]["location"]
+    console.log("Wait the spot is: "+spot)
       //HERES WHERE WE WILL MANIPULATE DATA!
       GetMap(order_data.pharmAddress, user_record.Address, order_data["status"], spot);
+      })
+      
+    }) 
+
+   
     }
   }
 
