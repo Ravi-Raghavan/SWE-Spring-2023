@@ -55,7 +55,6 @@ window.onload = function(){
                         thisDoctors.push(prescription.patientUID+":"+prescription.prescriptionNumber+":"+prescription.patientLastName+", "+prescription.patientFirstName);
                     }
                 })
-                console.log(thisDoctors);
                 if(thisDoctors.length!=0){
                     let message = `<option class="validated-values" value="">Select Prescription</option>`;
                     thisDoctors.map((item)=>{
@@ -118,14 +117,35 @@ function validValue(){
             let expiration = result.expireDate;
             let instructions = result.instructions;
             let message = "";
+            let yo = `<button class = "remind-button" value="0">
+            Remind Patient
+        </button>`;
             message += `<p><strong>Patient:</strong> ${patient}</p>`;
             message += `<p><strong>Date of Birth:</strong> ${patientDOB}</p>`;
             message += `<p><strong>Medication:</strong> ${medication}</p>`;
             message += `<p><strong>Re-fills:</strong> ${refills}</p>`;
             message += `<p><strong>Expiration Date:</strong> ${expiration}</p>`;
             message += `<p><strong>Instructions:</strong> ${instructions}</p>`;
-            document.getElementById("display-valid").innerHTML = message;
-            
+            document.getElementById("display-valid").innerHTML = message + yo;
+            let patientEmail = result.patientAccountEmail;
+            document.querySelector(".remind-button").addEventListener("click",()=>{
+                if(document.querySelector(".remind-button").value == 0){
+                    fetch(`/prescription/reminder/email?email=${patientEmail}&pN=${combinedSplit[1]}&dfn=${result.doctorFirstName}&dln=${result.doctorLastName}&med=${medication}&refills=${refills}`,{
+                        method:"GET",
+                        cache:"no-cache"
+                    }).then((response)=>{
+                        if(response.status == 200){
+                            document.querySelector(".remind-button").value = 1;
+                            document.querySelector(".remind-button").className = "remind-button-active";
+                            document.querySelector(".remind-button-active").disabled = true;
+                        }
+                    })
+                }
+            })
         })
     })
 }
+
+document.querySelector(".back-button").addEventListener("click",()=>{
+    window.history.back();
+})

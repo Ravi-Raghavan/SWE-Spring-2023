@@ -392,6 +392,25 @@ async function sendPrescriptionEmailProcess(req,res){
   }
 }
 
+async function sendReminderEmail(req,res,queryStringParameters){
+  try{
+    let email = queryStringParameters.email;
+    let pN = queryStringParameters.pN;
+    let doctor = queryStringParameters.dfn +" " + queryStringParameters.dln;
+    let medication = queryStringParameters.med;
+    let refills = queryStringParameters.refills;
+    console.log(doctor);
+    console.log(email);
+    console.log(pN);
+    console.log(medication);
+    console.log(refills);
+    res.writeHead(200);
+    res.end();
+  }catch (err){
+    console.log(err);
+  }
+}
+
 async function sendErrorEmailProcess(req,res){
   try{
     let body = await getPostData(req);
@@ -962,6 +981,10 @@ const server = http.createServer((request, response) => {
 
       case "/prescription/display/doctor/valid":
         displayDoctorValidProcess(request,response,queryStringParameters);
+        break;
+
+      case "/prescription/reminder/email":
+        sendReminderEmail(request,response,queryStringParameters);
         break;
       /**
        * Prescription Section End
