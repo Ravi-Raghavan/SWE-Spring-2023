@@ -125,6 +125,7 @@ function validValue(){
             message += `<p><strong>Expiration Date:</strong> ${expiration}</p>`;
             message += `<p><strong>Instructions:</strong> ${instructions}</p>`;
             document.getElementById("display-valid").innerHTML = message;
+            
         })
     })
 }
