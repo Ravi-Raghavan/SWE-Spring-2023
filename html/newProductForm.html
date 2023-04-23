@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="stylesheet" type="text/css" href="../css/Prescription.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+            integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>DrugHub | Prescription</title>
+
+    </head>
+
+    <body>
+        <!-- <form action="/new" method="POST"> -->
+        <form action="/new" method="POST">
+            <input type="text" placeholder="Drug Name" name="name" id="txtName">
+            <input type="number" placeholder="Limit" name="limit" id="numLimit">
+            <input type="number" placeholder="Price" name="price" id="numPrice">
+            <input type="checkbox" id="boxPrescription">REQUIRES PRESCRIPTION
+            File: <input type = 'file', id = 'f'>
+
+            <button id = 'submitButton'>Submit</button>
+        </form>
+
+        <script>
+            const btnSubmit = document.getElementById("submitButton");
+            const txtName = document.getElementById("txtName");
+            const numLimit = document.getElementById("numLimit");
+            const numPrice = document.getElementById("numPrice");
+            const boxPrescription = document.getElementById("boxPrescription");
+
+            const f = document.getElementById("f");
+
+            btnSubmit.addEventListener("click", () => {
+
+                const reader = new FileReader();
+                const file = f.files[0];
+                const usePlaceholder = f.files.length === 0;
+                // console.log(f.files + " " + file);
+
+
+                if(!txtName.value || !numLimit.value || !numPrice.value) {
+                    console.log('fill out all fields'); // how do we make this look nice???
+                    return;
+                }
+
+                const productInfo = {
+                    filename: (!usePlaceholder ? file.name : 'placeholder.jpg'),
+                    limit: parseInt(numLimit.value),
+                    name: txtName.value,
+                    price: parseFloat(numPrice.value),
+                    requiresPrescription: boxPrescription.checked,
+                };
+
+                console.log(productInfo);
+                fetch("/products/create", {
+                    method: 'POST',
+                    body: JSON.stringify(productInfo)
+                })
+                .then((res) => {
+                    if(res.status === 201) {
+                        /* We are good. */
+                        console.log('affirmation goes here');
+                        fetch("/products/refreshImg", {
+                            method: 'PATCH'
+                        })
+                    } else {
+                        /* there has been some problem */
+                        res.json().then((data) => {
+                            // console.log(`The error is as follows: ${data}`);
+                            console.log(data);
+                        });
+                    }
+                })
+
+                if(!usePlaceholder) {
+                    reader.onload = async ev => {
+                        const CHUNK_SIZE = 5000;
+                        const chunkCount = ev.target.result.byteLength / CHUNK_SIZE;
+
+                        console.log("Read successfully");
+                        const fileName = file.name;
+                        for (let chunkId = 0; chunkId < chunkCount + 1; chunkId ++ )
+                        {
+                            const chunk = ev.target.result.slice(chunkId * CHUNK_SIZE, chunkId * CHUNK_SIZE + CHUNK_SIZE );
+                            await fetch ("/products/receiveProductImage", {
+                                "method": "POST",
+                                "headers": {
+                                    "content-type": "application/octet-stream",
+                                    "content-length": chunk.length,
+                                    "filename": fileName
+                                },
+                                "body": chunk
+                            });
+                            // divOutput.textContent = Math.round(chunkId * 100/chunkCount,0) + "%"
+                            
+
+                        }
+                        console.log(ev.target.result.byteLength);
+                    }
+
+                    reader.readAsArrayBuffer(file);
+                }
+                
+
+                // const drugInfo = {
+                //     imgPath: 
+                // }
+                
+                // await fetch("/products/create", {
+                //             "method": "POST",
+                //             "body": 
+                //         });
+                
+            })
+        </script>
+    </body>
+</html>

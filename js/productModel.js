@@ -1,23 +1,20 @@
 const admin = require('./firebase').admin;
 const db = admin.database();
-const ref = db.ref('/Products/');
 
 const drugsRef = db.ref('/Drugs/');
 const prescriptionRef = db.ref('/Drugs/Prescription/');
 const otcRef = db.ref('/Drugs/OTC/');
 
-async function create(productName, requiresPrescription, proposedLimit, imageLink) {
-    let limit = null;
-    if (requiresPrescription) {
-        limit = proposedLimit;
-    }
+/* Does no error checking. Error checking is done in the Controller. */
+async function create(productName, requiresPrescription, limit, price, imgPath) {
+    const ref = (requiresPrescription ? prescriptionRef : otcRef).child(productName);
 
-    return ref.push({
-        name: `${productName}`,
-        needsPrescription: `${requiresPrescription}`,
+    return ref.set({
+        imgPath: imgPath,
         limit: limit,
-        imageLink: imageLink,
-        quantity: 0
+        name: productName,
+        price: price,
+        stock: 100
     });
 }
 
@@ -27,7 +24,6 @@ async function matchProductName(productName) {
     let ref = null; // Caution
     ref = otcRef.orderByChild('name').equalTo(productName);
     await ref.once('value', (snapshot) => {
-        console.log(snapshot.val());
         let info = snapshot.val();
         let key = snapshot.key;
         if(info != null) {
@@ -38,7 +34,6 @@ async function matchProductName(productName) {
 
     ref = prescriptionRef.orderByChild('name').equalTo(productName);
     await ref.once('value', (snapshot) => {
-        console.log(snapshot.val());
         let info = snapshot.val();
         let key = snapshot.key;
         if(info != null) {

@@ -35,6 +35,7 @@ const public_paths_html = [
   "/html/index.html",
   "/html/knowledge-base.html",
   "/html/logoutPage.html",
+  "/html/newProductForm.html",
   "/html/PrescriptionRequest.html",
   "/html/storage.html",
   "/html/user-auth-form.html",
@@ -159,45 +160,9 @@ const public_paths_images = [
   "/images/ColorlessLogo.png"
 ];
 
-const public_paths_product = [
-  "/product/Ashwagandha.jpg",
-  "/product/Aspirin.jpg",
-  "/product/creatine.webp",
-  "/product/Fentanyl.jpg",
-  "/product/Ibuprofen.jpg",
-  "/product/ketaset.png",
-  "/product/Losartan.jpeg",
-  "/product/Morphine.jpg",
-  "/product/Naproxen.jpg",
-  "/product/Pantoprazole.jpeg",
-  "/product/tigerBalm.avif",
-  "/product/WheyProtien.avif",
-  "/product/Cafine.avif",
-  "/product/PhosphatidicAcid.webp",
-  "/product/Levothyroxine.jpg",
-  "/product/Albuterol.jpg",
-  "/product/Amlodipine.jpg",
-  "/product/Atorvastatin.jpg",
-  "/product/Lisinopril.avif",
-  "/product/Metformin.jpg",
-  "/product/Metoprolol.jpg",
-  "/product/Tylenol500mg.jpg",
-  "/product/NyquilSevereColdFlu.jpg",
-  "/product/Simvastatin.jpg",
-  "/product/Gabapentin.avif",
-  "/product/Tramadol.jpg",
-  "/product/Warfarin.jpg",
-  "/product/Prednisone.avif",
-  "/product/Omeprazole.webp",
-  "/product/VitaminC.avif",
-  "/product/Omega3.jpg",
-  "/product/Calcium.webp",
-  "/product/zinc.webp",
-  "/product/vitaminD.jpeg",
-  "/product/HMB.webp",
-];
+let public_paths_product = fs.readdirSync('./product').map(filename => `/product/${filename}`);
 
-const { createProduct, getProductByName, getTotalProductCount, getAllOTC, getAllPrescription} = require("./js/productController");
+const { createProduct, receiveDrugFileImage, getProductByName, getTotalProductCount, getAllOTC, getAllPrescription} = require("./js/productController");
 const { testCreateOrder, updateOrder, createOrder, updateCart } = require("./js/orderController");
 const { createMyMessageProcess } = require("./js/testController");
 
@@ -210,6 +175,16 @@ const {displayDoctorValidProcess, displayDoctorPendingProcess,doctorDropDownVali
 const { getRandomPrescription } = require("./js/prescriptionModel");
 
 //const { createPatientPrescription } = require("./js/patientPrescriptionController");
+
+async function refreshPathsProduct(req, res) {
+  if(req.method !== 'PATCH') {
+    res.writeHead(405, {'Content-Type': 'application/json'});
+    res.end(JSON.stringify({'405 Error Message': 'only PATCH is valid'}));
+    return;
+  }
+  public_paths_product = fs.readdirSync('./product').map(filename => `/product/${filename}`);
+  res.end("images refreshed successfully");
+}
 
 async function FAQ(request, response, queryStringParameters) {
   var searchQuery = "";
@@ -1034,8 +1009,16 @@ const server = http.createServer((request, response) => {
         getFAQ(request, response);
         break;
 
-      case "/api/products":
+      case "/products/refreshImg":
+        refreshPathsProduct(request, response);
+        break;
+
+      case "/products/create":
         createProduct(request, response);
+        break;
+
+      case "/products/receiveProductImage":
+        receiveDrugFileImage(request, response);
         break;
 
       case "/products/matchProductName":
