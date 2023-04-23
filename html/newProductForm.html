@@ -65,9 +65,36 @@
                     if(res.status === 201) {
                         /* We are good. */
                         console.log('affirmation goes here');
-                        fetch("/products/refreshImg", {
-                            method: 'PATCH'
-                        })
+
+                        /* This takes care of file upload, if the file was uploaded to begin with */
+                        if(!usePlaceholder) {
+                            reader.onload = async ev => {
+                                const CHUNK_SIZE = 8192;
+                                const chunkCount = ev.target.result.byteLength / CHUNK_SIZE;
+
+                                console.log("Read successfully");
+                                const fileName = file.name;
+                                for (let chunkId = 0; chunkId < chunkCount + 1; chunkId ++ )
+                                {
+                                    const chunk = ev.target.result.slice(chunkId * CHUNK_SIZE, chunkId * CHUNK_SIZE + CHUNK_SIZE );
+                                    await fetch ("/products/receiveProductImage", {
+                                        "method": "POST",
+                                        "headers": {
+                                            "content-type": "application/octet-stream",
+                                            "content-length": chunk.length,
+                                            "filename": fileName
+                                        },
+                                        "body": chunk
+                                    });
+                                    // divOutput.textContent = Math.round(chunkId * 100/chunkCount,0) + "%"
+                                }
+                                // console.log(ev.target.result.byteLength);
+                            }
+                            reader.readAsArrayBuffer(file);
+                            fetch("/products/refreshImg", {
+                                method: 'PATCH'
+                            })
+                        }
                     } else {
                         /* there has been some problem */
                         res.json().then((data) => {
@@ -76,37 +103,6 @@
                         });
                     }
                 })
-
-                if(!usePlaceholder) {
-                    reader.onload = async ev => {
-                        const CHUNK_SIZE = 5000;
-                        const chunkCount = ev.target.result.byteLength / CHUNK_SIZE;
-
-                        console.log("Read successfully");
-                        const fileName = file.name;
-                        for (let chunkId = 0; chunkId < chunkCount + 1; chunkId ++ )
-                        {
-                            const chunk = ev.target.result.slice(chunkId * CHUNK_SIZE, chunkId * CHUNK_SIZE + CHUNK_SIZE );
-                            await fetch ("/products/receiveProductImage", {
-                                "method": "POST",
-                                "headers": {
-                                    "content-type": "application/octet-stream",
-                                    "content-length": chunk.length,
-                                    "filename": fileName
-                                },
-                                "body": chunk
-                            });
-                            // divOutput.textContent = Math.round(chunkId * 100/chunkCount,0) + "%"
-                            
-
-                        }
-                        console.log(ev.target.result.byteLength);
-                    }
-
-                    reader.readAsArrayBuffer(file);
-                }
-                
-
                 // const drugInfo = {
                 //     imgPath: 
                 // }

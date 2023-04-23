@@ -9,13 +9,14 @@ const otcRef = db.ref('/Drugs/OTC/');
 async function create(productName, requiresPrescription, limit, price, imgPath) {
     const ref = (requiresPrescription ? prescriptionRef : otcRef).child(productName);
 
-    return ref.set({
+    ref.set({
         imgPath: imgPath,
         limit: limit,
         name: productName,
         price: price,
         stock: 100
     });
+    return ref;
 }
 
 async function matchProductName(productName) {

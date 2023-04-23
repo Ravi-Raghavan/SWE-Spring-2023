@@ -183,6 +183,7 @@ async function refreshPathsProduct(req, res) {
     return;
   }
   public_paths_product = fs.readdirSync('./product').map(filename => `/product/${filename}`);
+  console.log('refresh success');
   res.end("images refreshed successfully");
 }
 
