@@ -392,20 +392,21 @@ async function sendPrescriptionEmailProcess(req,res){
   }
 }
 
-async function sendReminderEmail(req,res,queryStringParameters){
+async function sendReminderEmailProcess(req,res,queryStringParameters){
   try{
     let email = queryStringParameters.email;
     let pN = queryStringParameters.pN;
     let doctor = queryStringParameters.dfn +" " + queryStringParameters.dln;
     let medication = queryStringParameters.med;
     let refills = queryStringParameters.refills;
-    console.log(doctor);
-    console.log(email);
-    console.log(pN);
-    console.log(medication);
-    console.log(refills);
-    res.writeHead(200);
+    let returnValue = await SMTP.sendReminderEmail(email,pN,doctor,medication,refills);
+    if(returnValue == "error"){
+      res.writeHead(400);
+      res.end();
+    }else{
+      res.writeHead(200);
     res.end();
+    }
   }catch (err){
     console.log(err);
   }
@@ -984,7 +985,7 @@ const server = http.createServer((request, response) => {
         break;
 
       case "/prescription/reminder/email":
-        sendReminderEmail(request,response,queryStringParameters);
+        sendReminderEmailProcess(request,response,queryStringParameters);
         break;
       /**
        * Prescription Section End
