@@ -138,6 +138,8 @@ function validValue(){
                             document.querySelector(".remind-button").value = 1;
                             document.querySelector(".remind-button").className = "remind-button-active";
                             document.querySelector(".remind-button-active").disabled = true;
+                        }else{
+                            alert("There was an error processing your reminder. Please reload the page and try again. Thank you.");
                         }
                     })
                 }

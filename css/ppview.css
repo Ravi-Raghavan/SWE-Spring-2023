@@ -156,7 +156,7 @@ padding: 10px 15px;
     font-weight: 500;
     font-size: 16px;
     cursor: pointer;
-    background-color: rgb(238, 206, 167);
+    background-color: rgb(233, 189, 135);
     color: rgb(61, 61, 61);
     padding: 10px;
     width:39%;
@@ -168,7 +168,7 @@ padding: 10px 15px;
 }
 
 .remind-button:hover{
-    color: rgb(238, 206, 167);
+    color: rgb(233, 189, 135);
     background-color:rgb(61, 61, 61) ;
     transition: 0.25s ease-in-out;
 }

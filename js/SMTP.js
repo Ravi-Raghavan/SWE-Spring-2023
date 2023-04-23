@@ -192,7 +192,7 @@ async function sendPrescriptionEmail(email,prescriptionNumber){
         from: 'swespring2023@gmail.com',
         to: `${email}`,
         subject: 'Requested Prescription Number',
-        text: `Dear Valued Doctor,\n\n     The prescription number you requested has been created. \n\nPlease use prescription number: ${prescriptionNumber}\n\nYour paitent has two weeks from the moment you receive this email to submit this prescription number to DrugHub. Following two weeks the prescription number wil be invalidated if it is not yet claimed. \n\nThank you for choosing DrubHub.\n\nBest,\nThe DrugHub Team`
+        text: `Dear Valued Doctor,\n\n     The prescription number you requested has been created. \n\nPlease use prescription number: ${prescriptionNumber}\n\nYour paitent has two weeks from the moment you receive this email to submit this prescription number to DrugHub. Following two weeks the prescription number will be invalidated if it is not yet claimed. \n\nThank you for choosing DrubHub.\n\nBest,\nThe DrugHub Team`
     };
 
     result = await new Promise((resolve, reject) =>{
@@ -206,6 +206,37 @@ async function sendPrescriptionEmail(email,prescriptionNumber){
         });
     })
     console.log("Done with sending Notification");
+}
+
+async function sendReminderEmail(email,pN,doctor,medication,refills){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+        user: 'swespring2023@gmail.com',
+        pass: 'lotrlepvzmwdnsny'
+    }
+    });
+
+    var mailOptions = {
+        from: 'swespring2023@gmail.com',
+        to: `${email}`,
+        subject: `DrugHub - Reminder for Prescription ${pN}`,
+        text: `Dear Valued Patient,\n\n     This email is too remind you that your doctor '${doctor}' has validated prescription '${pN}'. This Prescritpion is ready to use.\nPlease place an order for '${refills} x ${medication}' as soon as possible.\nThank you for choosing DrugHub, and have a nice day!\n\nBest,\nThe DrugHub Team`
+    };
+
+    let result = await new Promise((resolve, reject) =>{
+        transporter.sendMail(mailOptions,function(error, info){
+            if(error){
+                resolve("error");
+            }else{
+                resolve('Email sent: '+ info.response);
+                console.log("Email sent " + info.response);
+            }
+        });
+    })
+    
+    console.log("Done with sending Notification");
+    return result;
 }
 
 async function sendErrorEmailPatient(email,prescriptionNumber){
@@ -277,5 +308,6 @@ module.exports = {
     sendErrorEmailPatient:sendErrorEmailPatient,
     sendDocumentationEmail : sendDocumentationEmail,
     sendPrescriptionEmail:sendPrescriptionEmail,
-    sendDriverEmail:sendDriverEmail
+    sendDriverEmail:sendDriverEmail,
+    sendReminderEmail:sendReminderEmail
 }
