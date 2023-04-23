@@ -660,6 +660,37 @@
         </section>
       </div>
 
+      <!---ADD PRODUCT INFORMATION-->
+      <div id="addProduct-info" class="info-container">
+        <section id="info" class="DrugFo">
+          
+            <div class="row">
+            <h1>Product Submission Form:</h1>
+            <br>
+              <form id="addProductForm" action="/new" method="POST">
+                <input type="text" placeholder="Drug Name" name="name" id="txtName">
+                <input type="number" placeholder="Limit" name="limit" id="numLimit">
+                <input type="number" placeholder="Price" name="price" id="numPrice">
+                <label for="boxPrescription">REQUIRES PRESCRIPTION</label>
+                <input type="checkbox" id="boxPrescription" value = "Requires Prescription">
+                <br>
+                <br>
+                <h2 style = "text-align: center;">Upload Image </h2>
+                <input type = 'file', id = 'f'>
+                <br><br>
+                <input class = "dl-btn" type = "submit" value="Submit!" id="submit" onclick = "addAProduct()"/>
+
+            </form>
+    
+             
+            </div>
+
+              
+    
+          
+        </section>
+      </div>
+
       <!---CLAIM ORDER INFORMATION-->
       <div id="claim-info" class="info-container">
         <section id="info" class="DrugFo">

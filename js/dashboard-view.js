@@ -249,7 +249,7 @@ window.onload = async function () {
       menu.appendChild(template.content);
     }
 
-    if(user_record["Account Type"] == "Pharmacy")
+    if(user_record["Account Type"] == "Pharmacy") //Change this to patient to see addProducts.
     {
 
       document.getElementById("loggingOut").remove();
@@ -258,6 +258,10 @@ window.onload = async function () {
       var template = document.createElement('template');
       template.innerHTML = rows;
       
+      menu.appendChild(template.content);
+
+      rows = "<a id=\"addProductOption\" class=\"\" href=\"#\" onclick='swapDisplay(\"addProduct-info\", \"addProductOption\")' >Add Products</a>";
+      template.innerHTML = rows;
       menu.appendChild(template.content);
 
       rows = "<a id =\"loggingOut\" onclick=\"logout()\">Logout</a>";
@@ -993,3 +997,77 @@ fetch("prescription/request/email",{
 })
 }
 
+function addAProduct(){
+  const btnSubmit = document.getElementById("submitButton");
+  const txtName = document.getElementById("txtName");
+  const numLimit = document.getElementById("numLimit");
+  const numPrice = document.getElementById("numPrice");
+  const boxPrescription = document.getElementById("boxPrescription");
+  const f = document.getElementById("f");
+  const reader = new FileReader();
+  const file = f.files[0];
+  const usePlaceholder = f.files.length === 0;
+
+  if(!txtName.value || !numLimit.value || !numPrice.value) {
+    console.log('fill out all fields'); // how do we make this look nice???
+    return;
+  }
+
+  const productInfo = {
+    filename: (!usePlaceholder ? file.name : 'placeholder.jpg'),
+    limit: parseInt(numLimit.value),
+    name: txtName.value,
+    price: parseFloat(numPrice.value),
+    requiresPrescription: boxPrescription.checked,
+  };
+  
+  console.log(productInfo);
+  fetch("/products/create", {
+    method: 'POST',
+    body: JSON.stringify(productInfo)
+  })
+  .then((res) => {
+    if(res.status === 201) {
+        /* We are good. */
+        console.log('affirmation goes here');
+
+        /* This takes care of file upload, if the file was uploaded to begin with */
+        if(!usePlaceholder) {
+            reader.onload = async ev => {
+                const CHUNK_SIZE = 8192;
+                const chunkCount = ev.target.result.byteLength / CHUNK_SIZE;
+
+                console.log("Read successfully");
+                const fileName = file.name;
+                for (let chunkId = 0; chunkId < chunkCount + 1; chunkId ++ )
+                {
+                    const chunk = ev.target.result.slice(chunkId * CHUNK_SIZE, chunkId * CHUNK_SIZE + CHUNK_SIZE );
+                    await fetch ("/products/receiveProductImage", {
+                        "method": "POST",
+                        "headers": {
+                            "content-type": "application/octet-stream",
+                            "content-length": chunk.length,
+                            "filename": fileName
+                        },
+                        "body": chunk
+                    });
+                    // divOutput.textContent = Math.round(chunkId * 100/chunkCount,0) + "%"
+                }
+                // console.log(ev.target.result.byteLength);
+            }
+            reader.readAsArrayBuffer(file);
+            fetch("/products/refreshImg", {
+                method: 'PATCH'
+            })
+        }
+    }else {
+      /* there has been some problem */
+      res.json().then((data) => {
+          // console.log(`The error is as follows: ${data}`);
+          console.log(data);
+      });
+  }
+})
+
+  
+}
