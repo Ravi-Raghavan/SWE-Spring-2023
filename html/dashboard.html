@@ -15,12 +15,14 @@
     <title>DrugHub | Dashboard</title>
 
     <script src="../js/dynamicHeaderFooter.js"></script>
-
+    
   </head>
 
   <body>
-    <script src="../js/darkmode.js"></script>
     
+    <script src="../js/darkmode.js"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&commit=false"></script>
+
     <div id="header"></div>
 
 
@@ -33,6 +35,11 @@
           onclick='swapDisplay("profile-info", "infoOption")'
           >Profile Information</a
         >
+        <a id="subscribeOption"
+        class=""
+        href="#"
+        onclick='swapDisplay("subscribe-info", "subscribeOption")'
+        >Subscription Status</a>
         <a id="uploadOption"
         class=""
         href="#"
@@ -714,6 +721,26 @@
     
           
         </section>
+      </div>
+      
+      <!---SUBSCRIBE INFORMATION-->
+      <div id="subscribe-info" class="info-container">
+        <section id="info" class="DrugFo">
+
+            <div class="row">
+              
+                <div id="paypal-button-container" , style="display: block; position: relative; z-index: 1;">
+                    <h1>ALL SALES ARE FINAL</h1>
+                    <script src="../js/script.js"></script>
+                </div>
+            
+          
+            </div>
+
+              
+    
+          
+        </section>
       </div>      
       
 
@@ -1388,8 +1415,10 @@
 
   <script src="/js/dashboard-view.js"></script>
   <script src = "../js/homepage.js"></script>
+
   <!-- <script src="../js/profilePic.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
+
   <script type="text/javascript">
     function showOrHide(x) {
       var $rows = $('#userList tr');
