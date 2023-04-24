@@ -48,6 +48,7 @@ const public_paths_html = [
   "/html/submitted-prescription-doctor-validated.html",
   "/html/header.html",
   "/html/footer.html",
+  "/html/subscriptions.html"
 ];
 
 // const public_paths_php = [
@@ -111,6 +112,7 @@ const public_paths_js = [
   "/js/FAQ-view.js",
   "/js/profilePic.js",
   "/json/ProductsSold.json",
+  "/js/subscriptions.js"
 ];
 
 const public_paths_images = [

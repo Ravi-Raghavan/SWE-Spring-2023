@@ -32,6 +32,15 @@ function handleUserManagingDeliveries(){
     }
 }
 
+function handleUserSubscriptions(){
+    if (localStorage.getItem("User Record") == null){
+        alert("Please Create an Account");
+    }
+    else{
+        window.location.href = '../html/subscriptions.html';
+    }
+}
+
 function getUniqueID(){
         var navigator_info = window.navigator;
         var screen_info = window.screen;
