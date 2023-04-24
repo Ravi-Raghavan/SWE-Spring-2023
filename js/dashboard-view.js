@@ -34,7 +34,6 @@ window.onload = async function () {
   ourPromise.then((result) =>{
     let ourType = result;
     if(ourType.toUpperCase() == "DOCTOR"){
-      addSideBarItem();
     }
   })
 })
@@ -226,6 +225,14 @@ window.onload = async function () {
       var template = document.createElement('template');
       template.innerHTML = rows;
       
+      menu.appendChild(template.content);
+
+      rows = `<a id="prescriptionNumberOption"
+      class=""
+      href="#"
+      onclick='swapDisplay("request-prescription-number", "prescriptionNumberOption")'
+      >Request Prescription Number</a>`;
+      template.innerHTML = rows;
       menu.appendChild(template.content);
 
       rows = "<a id =\"loggingOut\" onclick=\"logout()\">Logout</a>";
