@@ -315,6 +315,7 @@ function loadProfile(){
     document.getElementById("email").innerHTML = user_record.email;   
     document.getElementById("address").innerHTML = user_record["Address"];
     document.getElementById("phone").innerHTML = user_record.phoneNumber;
+    document.getElementById("subStat").innerHTML = user_record["Subscription Plan"];
 
     document.getElementById("dropbtn").src = profilePicture;
     document.getElementById("dropbtn").style.filter = "none";
