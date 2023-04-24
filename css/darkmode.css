@@ -301,6 +301,25 @@ body.dark input[type="file"]::file-selector-button {
   color:var(--secondary-dark);
 }
 
+body.dark .user-list thead span{
+  color: var(--primary);  
+}
+
+/* * alternative row has a different background */
+body.dark .user-list tbody tr:nth-child(odd) td {
+  background-color: var(--primary-dark);
+}
+
+body.dark .user-list tr a,
+body.dark .user-list tbody td .user-link {
+  color:var(--tertiary);
+}
+
+body.dark .my-button {
+  background-color: var(--tertiary);
+}
+
+
 body.dark input[type="file"] {
   background-color: var(--secondary-dark);
   color:var(--primary);
