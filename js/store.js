@@ -521,7 +521,7 @@ function updateCartTotal() {
     // total = substatus !== "Free" ? (Math.round(total * 100) / 100 * 0.9).toFixed(2) : Math.round(total * 100) / 100;
     if (substatus !== "Free") {
         total = (Math.round(total * 100) / 100 * 0.9).toFixed(2)
-        document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total + ' <br>*discounted!';
+        document.getElementsByClassName('cart-total-price')[0].innerHTML = `$ ${total} <br>Discounted!`;
     } else {
         total = Math.round(total * 100) / 100;
         document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total;
