@@ -8,8 +8,8 @@ paypal.Buttons({
       }
 })
 .render("#paypal-button-container")
-.then(() => alert("SUCCESS"))
-.catch((err) => alert(err));
+// .then(() => alert("SUCCESS"))
+// .catch((err) => alert(err));
 
 function getUID(){
     if(localStorage.getItem("User Record")==null){
