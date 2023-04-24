@@ -39,7 +39,7 @@ async function ready() {
 
     // var user_record = JSON.parse(localStorage.getItem("User Record"));
     // var uid = user_record["uid"];
-    
+
     // let res = await fetch(`/get/medications?uid=${user_record["uid"]}`, {
     //          method: 'GET'
     //     })
@@ -48,7 +48,7 @@ async function ready() {
     // let medications = await res.json()
     // console.log("These are the medications:"+ JSON.stringify(medications));
 
-    
+
 
     // // let list = JSON.parse(medications);
     // // const medArray = Object.values(list);
@@ -76,7 +76,7 @@ async function ready() {
     //             var limit = drugData.limit;  // int value
     //             var stock = drugData.stock;  // int value
     //             var imageSrc = drugData.imgPath;    // string image path
-                
+
     //             console.log("Medicine name: "+name+", price: "+ price);
     //             console.log(drugData);
     //             counter++;
@@ -178,8 +178,8 @@ async function purchaseClicked() {
 
 
     //INSERT LOGIC TO CHECK IF ORDER MATCHES PRESCRIPTION HERE. GET PHARMACY NAME AND STORE IT IN LOCAL STORAGE
-    
-    
+
+
     var response = await fetch("/get/pharmacies", {method: "GET"});
     var pharmacies = await response.json();
     console.log(pharmacies);
@@ -211,7 +211,7 @@ async function purchaseClicked() {
 
     //
     if (total != 0) {
-        
+
         document.getElementById("paypal-button-container").style.display = "block";
         //window.location.href = "http://localhost:8000/html/store.html";
     } else {
@@ -223,7 +223,7 @@ function removeCartItem(event) {
     var buttonClicked = event.target;
     buttonClicked.parentElement.parentElement.remove()
     var prescription = false;
-    
+
     var title = buttonClicked.parentElement.parentElement
         // .getElementsByClassName("cart-item cart-column")[0]
         .getElementsByClassName("cart-item-title")[0]
@@ -233,7 +233,7 @@ function removeCartItem(event) {
     title = title.substring(title.indexOf(':')+2);
     prescription = true;
     }
-    
+
      console.log(title);
      console.log(oldTitle);
     var shopItems = document.getElementsByClassName("shop-item");           // get all the shop items. Go through each one get the item and if
@@ -516,7 +516,9 @@ function updateCartTotal() {
 
         drugData.push(drugInformation);
     }
-    total = Math.round(total * 100) / 100
+    let substatus = JSON.parse(window.localStorage.getItem("User Record"))["Subscription Plan"];
+    console.log(substatus);
+    total = substatus !== "Free" ? Math.round(total * 100) / 100 * 0.9 : Math.round(total * 100) / 100;
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
 
     console.log("UID: " + JSON.parse(window.localStorage.getItem("User Record")).uid);
