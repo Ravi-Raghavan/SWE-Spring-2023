@@ -822,6 +822,37 @@ async function updateOrderLocation(request, response){
   });
 }
 
+async function updateSubscriptionStatus(request, response){
+  var credentials = "";
+
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    var UID = credentials.UID;
+    await paypal.createSubscription();
+    await FirebaseAPI.updateSubscriptionStatus(UID, response);
+  });
+}
+
+async function captureSubscriptionPayment(request, response){
+  var credentials = "";
+
+
+  request.on("data", (data) => {
+    credentials += data;
+  });
+
+  request.on("end", async () => {
+    credentials = JSON.parse(credentials);
+    var subscriptionID = credentials.subscriptionID;
+    await paypal.captureSubscriptionPayment(subscriptionID, response);
+  });
+}
+
 
 const server = http.createServer((request, response) => {
   //   //Handle client requests and issue server response here
@@ -1145,6 +1176,14 @@ const server = http.createServer((request, response) => {
       case "/updateLocation/order":
         
         updateOrderLocation(request, response);
+        break;
+      
+      case "/update/subscriptionStatus":
+        updateSubscriptionStatus(request, response);
+        break;
+      
+      case "/update/subscriptionStatus/capture":
+        captureSubscriptionPayment(request, response);
         break;
     }
   }

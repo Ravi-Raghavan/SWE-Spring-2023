@@ -71,6 +71,60 @@ async function createOrder(userID, pharmacyID, pharmacyAddress) {
     return data;
 }
 
+async function createSubscription() {
+    var purchaseAmount = 10;
+    const accessToken = await generateAccessToken();
+    const url = `${base}/v2/checkout/orders`;
+    const response = await fetch(url, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+            intent: "CAPTURE",
+            purchase_units: [
+                {
+                    amount: {
+                        currency_code: "USD",
+                        value: purchaseAmount
+                    },
+                },
+            ],
+        }),
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
+}
+
+async function captureSubscriptionPayment(subscriptionID, response){
+    const accessToken = await generateAccessToken();
+    const url = `${base}/v2/checkout/orders/${subscriptionID}/capture`;
+    const response = await fetch(url, {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+    const data = await response.json();
+    console.log(data);
+
+    if (data.status == "COMPLETED"){
+        response.writeHead(200, { "Content-type": "text/plain" });
+        response.write("Captured Subscription Payment!");
+        response.end();
+    }
+    else{
+        response.writeHead(404, { "Content-type": "text/plain" });
+        response.write("Failed to Capture Subscription Payment");
+        response.end();
+    }
+
+    return data;
+}
+
 async function capturePayment(orderId) {
     const accessToken = await generateAccessToken();
     const url = `${base}/v2/checkout/orders/${orderId}/capture`;
@@ -162,4 +216,4 @@ async function generateAccessToken() {
     return data.access_token;
 }
 
-module.exports = { createOrder, capturePayment }
+module.exports = { createOrder, capturePayment, createSubscription, captureSubscriptionPayment }

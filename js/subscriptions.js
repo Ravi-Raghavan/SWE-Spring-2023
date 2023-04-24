@@ -1,10 +1,28 @@
 paypal.Buttons({
-    createSubscription(data, actions) {
-        alert("Creating Subscription!");
+    createOrder(data, actions) {
+        return fetch("/update/subscriptionStatus", {
+            method: "POST",
+            body: JSON.stringify({
+                UID: JSON.parse(window.localStorage.getItem("User Record")).uid
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                console.log(response);
+                return response.id;
+            });
       },
     
       onApprove(data) {
-        alert('You have successfully created subscription ' + data.subscriptionID);
+        return fetch(`/update/subscriptionStatus/capture`, {
+            method: "post",
+            body: JSON.stringify({
+                subscriptionID: data.orderID
+            })
+        })
       }
 })
 .render("#paypal-button-container")
