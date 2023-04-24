@@ -573,23 +573,46 @@ input:checked + .slider:before {
 }
 
 /* USER LIST TABLE */
+.user-list {
+  margin-left: 20%;
+}
+
+.user-list thead span{
+  font-size: 18px;
+}
+
 .user-list tbody td > img {
   position: relative;
   max-width: 50px;
   float: left;
   margin-right: 15px;
+  border-radius: 10px;
 }
 
 .user-list tbody td .user-link {
   display: block;
   font-size: 1.25em;
   padding-top: 3px;
-  margin-left: 60px;
+  margin-left: 10px;
+  color:var(--secondary);
+}
+
+/* ? chnaging email color */
+.user-list tr a {
+  text-align: center;
+  color:var(--secondary);
+  margin-left: auto;
 }
 
 .user-list tbody td .user-subhead {
   font-size: 0.875em;
   font-style: italic;
+}
+
+/* * alternative row has a different background */
+.user-list tbody tr:nth-child(odd) td {
+  background-color: var(--suppliment);
+  border-radius: 10px;
 }
 
 .overlay {
