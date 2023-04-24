@@ -315,6 +315,10 @@ body.dark .user-list tbody td .user-link {
   color:var(--tertiary);
 }
 
+body.dark .my-button {
+  background-color: var(--tertiary);
+}
+
 
 body.dark input[type="file"] {
   background-color: var(--secondary-dark);

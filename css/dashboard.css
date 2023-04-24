@@ -21,7 +21,7 @@
   font-weight: bold;
   text-align: center;
   text-decoration: none;
-  background-color: #6195cc;
+  background-color: var(--secondary);
   color: var(--primary);
   border: none;
   border-radius: 5px;
