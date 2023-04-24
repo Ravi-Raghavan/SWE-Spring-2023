@@ -992,14 +992,14 @@ async function updateOrderLocation(location, OID, response){
     })
 }
 
-async function updateSubscriptionStatus(UID, response){
+async function updateSubscriptionStatus(UID, response, subscription){
 
     ref.child(`${UID}`).update({
         subscriptionPlan: "Premium"
     })
     .then(() => {
-        response.writeHead(200, { "Content-type": "text/plain" });
-        response.write("Successfully Updated");
+        response.writeHead(200, { "Content-type": "application/json" });
+        response.write(JSON.stringify(subscription));
         response.end();
     })
     .catch((err) => {

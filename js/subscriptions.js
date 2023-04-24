@@ -22,7 +22,7 @@ paypal.Buttons({
             body: JSON.stringify({
                 subscriptionID: data.orderID
             })
-        })
+        }).then(alert("Subscription Successful!"))
       }
 })
 .render("#paypal-button-container")

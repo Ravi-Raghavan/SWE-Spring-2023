@@ -833,8 +833,17 @@ async function updateSubscriptionStatus(request, response){
   request.on("end", async () => {
     credentials = JSON.parse(credentials);
     var UID = credentials.UID;
-    await paypal.createSubscription();
-    await FirebaseAPI.updateSubscriptionStatus(UID, response);
+    var subscription = {};
+    try{
+      subscription = await paypal.createSubscription();
+      await FirebaseAPI.updateSubscriptionStatus(UID, response, subscription);
+    }
+    catch(error){
+      response.writeHead(404, { "Content-type": "text/plain" });
+      response.write("Failed to Update User");
+      response.end();
+      
+    }
   });
 }
 
