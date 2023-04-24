@@ -1,42 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head> 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html>
+    <head>
+        <meta name="viewport" content="with=device-width, initial-scale=1.0">
+        
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link rel ="stylesheet" href="../css/subscriptions.css">
+        <link rel="stylesheet" type="text/css" href="../css/darkmode.css" >
+        <link rel="stylesheet" type="text/css" href="../css/dynamic-size.css" >
+
+        <title>DrugHub | Contact</title>
+
+        <script src="../js/dynamicHeaderFooter.js"></script>
+
+    </head>
+
+    <body>
+        <script src="../js/darkmode.js"></script>
     
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <div id="header"></div>
 
-    <link rel="stylesheet" href="../css/dashboard.css" />
-    <link rel="stylesheet" type="text/css" href="../css/dynamic-size.css" >
-    <link rel="stylesheet" type="text/css" href="../css/darkmode.css" >
+        <div class="white_space">
 
 
-    <title>DrugHub | Dashboard</title>
+        </div>
 
-    <script src="../js/dynamicHeaderFooter.js"></script>
-
-    
-  </head>
-
-  <body>
-    
-    <script src="../js/darkmode.js"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&commit=false&components=buttons&vault=true&intent=subscription"></script>
+        <section class="header">
   
-    <div id="paypal-button-container" , style="display: block; position: relative; z-index: 1;">
-        <h1>ALL SALES ARE FINAL</h1>
+            <div class ="text-box">
+                <h1>Join the DrugHub Nation!</h1>
+            </div>
+        </section>
+
+        <section class = "location">
+
+           
+        </section>
+
+
+
+
+        <section class="subscribe-us">
+            <h1>Why Should you Grab a Subscription?</h1>
+            <p>It comes with a lot of perks, including:</p>
+
+            <div class="row"> 
+              <div class="sub-col">
+                  <img src = "../images/col1.png">
+                  <div class="layer">
+                    <h3>Reduced cost in shipping!</h3>
+                  </div>
+              </div>
+              <div class="sub-col">
+                <img src = "../images/col2.jpg">
+                <div class="layer">
+                  <h3>Exclusive Access to Newsletter!</h3>
+                </div>
+            </div>
+            <div class="sub-col">
+              <img src = "../images/col3.jpg">
+              <div class="layer">
+                <h3>Free Laundry Charges!</h3>
+              </div>
+          </div>
+            </div>
+        </section>
+
+        <section class="payment">
+          <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&commit=false&components=buttons&vault=true&intent=subscription"></script>
+
+      <div id="paypal-button-container" , style="display: block; position: relative; text-align:center; z-index: 1;">
+        <h1>Thinking of Subscribing? Join now:</h1> 
+        <br> 
         <script src="../js/subscriptions.js"></script>
-    </div>
+      </div>
+        </section>
+    
+        <div id="footer"></div> 
+        
+        <script src="/js/contact-us-view.js"></script>
 
-  </body>
-
-
-  <script src="../js/dashboard-view.js"></script>
-  <script src = "../js/homepage.js"></script>
-
-  <!-- <script src="../js/profilePic.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script>
-
+    </body>
+    <script src="../js/homepage.js"></script>
+    <script src="../js/profilePic.js"></script>
 </html>
-

@@ -75,6 +75,7 @@ const public_paths_css = [
   "/css/user-auth-form.css",
   "/css/user-registration-form.css",
   "/css/waiting-for-validation.css",
+  "/css/subscriptions.css",
 ];
 
 const public_paths_js = [
@@ -159,7 +160,11 @@ const public_paths_images = [
   "/images/quadis_img.png",
   "/images/kristina_img.png",
   "/images/DHLogo2Transp.png",
-  "/images/ColorlessLogo.png"
+  "/images/ColorlessLogo.png",
+  "/images/col1.png",
+  "/images/col2.jpg",
+  "/images/col3.jpg",
+  "/images/subPage.jpg",
 ];
 
 let public_paths_product = fs.readdirSync('./product').map(filename => `/product/${filename}`);
