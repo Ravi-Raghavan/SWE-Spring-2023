@@ -39,7 +39,7 @@ window.onload = async function () {
   })
 })
 
-
+//s
 
   //GET LIST OF USERS WITH NAMES OF THEIR DOCUMENTATION AS A JSON OBJECT
   let userDocumentation = await fetch(`/fetch/user/documentation`, {
@@ -1014,7 +1014,7 @@ function addAProduct(){
   }
 
   const productInfo = {
-    filename: (!usePlaceholder ? file.name : 'placeholder.jpg'),
+    filename: (!usePlaceholder ? file.name : 'placeholder.png'),
     limit: parseInt(numLimit.value),
     name: txtName.value,
     price: parseFloat(numPrice.value),

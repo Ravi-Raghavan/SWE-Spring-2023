@@ -52,7 +52,9 @@ async function createProduct(req, res) {
         res.writeHead(201, {'Content-Type': 'application/json'});
         res.end(JSON.stringify(data));
     } catch (err) {
-        console.log(err);
+        console.log('syntax error in new product js info!');
+        res.writeHead(400, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({'400 Error Message': 'malformed JSON'}));
     }
 }
 
