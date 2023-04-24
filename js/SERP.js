@@ -1,5 +1,5 @@
 const SerpApi = require('google-search-results-nodejs')
-const search = new SerpApi.GoogleSearch("6fa935658bf8886eda447f7da5cf3b135563b04b34dccb8c531726d7bc172f3f") //Stop SERP Api Search
+const search = new SerpApi.GoogleSearch("e99aa8afe3d9cdacf0687b06293a13cdb9ab12528eccc995a77f9fc9df231340") //Stop SERP Api Search
 
 async function executeQuery(query){
 

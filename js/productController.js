@@ -66,8 +66,11 @@ async function receiveDrugFileImage(req, res) {
             fs.appendFileSync(fileStoragePath, chunk);
             // console.log('')
         });
-        res.writeHead(200, {'Content-Type': 'application/json'});
-        res.end(JSON.stringify({'success': 'image received successfully'}));
+        req.on("end", async () => {
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write(JSON.stringify({'success': 'image received successfully'}));
+            res.end();
+        })
     } else {
         res.writeHead(405, {'Content-Type': 'application/json'});
         res.end(JSON.stringify({'405 Error Message': 'Tried to use endpoint while not using POST method'}));
