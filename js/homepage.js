@@ -39,10 +39,13 @@ function handleUserSubscriptions(){
     else{
         var user_record = JSON.parse(localStorage.getItem("User Record"));
         // alert(user_record["Subscription Plan"]);
-        if (user_record["Subscription Plan"] != "Premium"){
+        if (user_record["Subscription Plan"] != "Premium" && user_record["Account Type"] == "Patient"){
             window.location.href = '../html/subscriptions.html';
         }
-        else{
+        else if(user_record["Account Type"] != "Patient"){
+            alert("You need to be a patient to subscribe!");
+        }
+        else if(user_record["Subscription Plan"] == "Premium"){
             alert("You have already subscribed!");
         }
     }
