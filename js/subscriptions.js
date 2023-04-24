@@ -1,5 +1,5 @@
 paypal.Buttons({
-    createOrder(data, actions) {
+    createOrder: (data, actions) => {
         return fetch("/update/subscriptionStatus", {
             method: "POST",
             body: JSON.stringify({
@@ -16,7 +16,7 @@ paypal.Buttons({
             });
       },
     
-      onApprove(data) {
+      onApprove: (data) =>  {
         return fetch(`/update/subscriptionStatus/capture`, {
             method: "post",
             body: JSON.stringify({
