@@ -22,7 +22,13 @@ paypal.Buttons({
             body: JSON.stringify({
                 subscriptionID: data.orderID
             })
-        }).then(alert("Subscription Successful!"))
+        }).then(() => {
+            alert("Subscription Successful!");
+            var user_record = JSON.parse(window.localStorage.getItem("User Record"));
+            user_record["Subscription Plan"] = "Premium";
+            window.localStorage.setItem("User Record", JSON.stringify(user_record));
+            window.location = "homepage.html";
+        })
       }
 })
 .render("#paypal-button-container")

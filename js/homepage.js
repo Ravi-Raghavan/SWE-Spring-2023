@@ -37,7 +37,14 @@ function handleUserSubscriptions(){
         alert("Please Create an Account");
     }
     else{
-        window.location.href = '../html/subscriptions.html';
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        // alert(user_record["Subscription Plan"]);
+        if (user_record["Subscription Plan"] != "Premium"){
+            window.location.href = '../html/subscriptions.html';
+        }
+        else{
+            alert("You have already subscribed!");
+        }
     }
 }
 
