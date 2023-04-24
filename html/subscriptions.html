@@ -69,19 +69,32 @@
 
         <section class="payment">
           <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD&commit=false"></script>
-
+      <a id = "swapContainer">    
       <div id="paypal-button-container", style="display: block; position: relative; text-align:center; z-index: 1;">
         <h1>Thinking of Subscribing? Join now:</h1>
         <br>
         <script src="../js/subscriptions.js"></script>
       </div>
+      </a>
         </section>
 
         <div id="footer"></div>
 
-        <script src="/js/contact-us-view.js"></script>
 
     </body>
     <script src="../js/homepage.js"></script>
     <script src="../js/profilePic.js"></script>
+    <script>
+      if (localStorage.getItem("User Record") == null) {
+        alert("Please create an account / log in, to add a prescription. Thank You!");
+    } else {
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        console.log(user_record["Subscription Plan"])
+        if(user_record["Subscription Plan"] == "Premium"){
+            console.log("done!")
+            var rows = '<h1 style="text-align: center;">You are already subscribed, dummy!</h1>'
+            document.getElementById("swapContainer").innerHTML = rows;
+        }
+    }
+    </script>
 </html>
