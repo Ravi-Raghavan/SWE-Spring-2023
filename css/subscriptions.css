@@ -87,6 +87,11 @@ nav .fa{
 h1{
     font-size: 36px;
     font-weight: 600;
+    color:var(--fourth);
+}
+
+.text-box .text-box-text {
+    color:var(--primary);
 }
 
 h3{
@@ -174,6 +179,10 @@ h3{
     padding-top: 50px;
 }
 
+.subscribe-us .subscribe-subtitle {
+    font-size: 20px;
+}
+
 .sub-col{
     flex-basis: 32%;
     border-radius: 10px;
@@ -185,6 +194,7 @@ h3{
 
 .sub-col img{
     width:100%;
+    height: 100%;
 }
 
 .layer{
@@ -196,6 +206,11 @@ h3{
     left: 0;
     transition: 0.5s;
 }
+
+.layer h3 {
+    color:var(--primary);
+}
+
 .layer:hover{
     background: rgba(150, 153, 214, 0.7);
 }

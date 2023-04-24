@@ -454,7 +454,7 @@ body.dark .contact-col input:not(:focus),
 body.dark .contact-col input:focus,
 body.dark .contact-col textarea:not(:focus),
 body.dark .contact-col textarea:focus {
-  background-color: var(--secondary-dark);
+  background-color: var(--primary-dark);
   color: var(--primary);
   border: 1px solid var(--suppliment);
 }
