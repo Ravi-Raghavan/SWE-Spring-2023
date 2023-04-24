@@ -992,6 +992,23 @@ async function updateOrderLocation(location, OID, response){
     })
 }
 
+async function updateSubscriptionStatus(UID, response, subscription){
+
+    ref.child(`${UID}`).update({
+        subscriptionPlan: "Premium"
+    })
+    .then(() => {
+        response.writeHead(200, { "Content-type": "application/json" });
+        response.write(JSON.stringify(subscription));
+        response.end();
+    })
+    .catch((err) => {
+        response.writeHead(404, { "Content-type": "text/plain" });
+        response.write("Failed to Update User");
+        response.end();
+    })
+}
+
 module.exports = {
     register: register,
     search: search,
@@ -1021,5 +1038,6 @@ module.exports = {
     markOrderClaimed: markOrderClaimed,
     getReadyOrders:getReadyOrders,
     getPharmacies : getPharmacies,
-    updateOrderLocation: updateOrderLocation
+    updateOrderLocation: updateOrderLocation,
+    updateSubscriptionStatus: updateSubscriptionStatus
 }
