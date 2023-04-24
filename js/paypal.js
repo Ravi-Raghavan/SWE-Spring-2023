@@ -98,7 +98,7 @@ async function createSubscription() {
     return data;
 }
 
-async function captureSubscriptionPayment(subscriptionID, response){
+async function captureSubscriptionPayment(subscriptionID, clientResponse){
     const accessToken = await generateAccessToken();
     const url = `${base}/v2/checkout/orders/${subscriptionID}/capture`;
     const response = await fetch(url, {
@@ -112,14 +112,14 @@ async function captureSubscriptionPayment(subscriptionID, response){
     console.log(data);
 
     if (data.status == "COMPLETED"){
-        response.writeHead(200, { "Content-type": "text/plain" });
-        response.write("Captured Subscription Payment!");
-        response.end();
+        clientResponse.writeHead(200, { "Content-type": "text/plain" });
+        clientResponse.write("Captured Subscription Payment!");
+        clientResponse.end();
     }
     else{
-        response.writeHead(404, { "Content-type": "text/plain" });
-        response.write("Failed to Capture Subscription Payment");
-        response.end();
+        clientResponse.writeHead(404, { "Content-type": "text/plain" });
+        clientResponse.write("Failed to Capture Subscription Payment");
+        clientResponse.end();
     }
 
     return data;
