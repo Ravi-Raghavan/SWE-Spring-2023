@@ -518,7 +518,7 @@ function updateCartTotal() {
     }
     let substatus = JSON.parse(window.localStorage.getItem("User Record"))["Subscription Plan"];
     console.log(substatus);
-    total = substatus !== "Free" ? Math.round(total * 100) / 100 * 0.9 : Math.round(total * 100) / 100;
+    total = substatus !== "Free" ? (Math.round(total * 100) / 100 * 0.9).toFixed(2) : Math.round(total * 100) / 100;
     document.getElementsByClassName('cart-total-price')[0].innerText = '$' + total
 
     console.log("UID: " + JSON.parse(window.localStorage.getItem("User Record")).uid);
