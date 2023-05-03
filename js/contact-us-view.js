@@ -16,6 +16,7 @@ document.getElementById('contact-form').addEventListener('submit', function(evt)
         if(response.status == 200){
             console.log("all good :)");
             alert("Email successfully Sent!");
+            window.location.reload()
 
         }else{
             console.log("not good :(");
