@@ -34,7 +34,6 @@ window.onload = async function () {
   ourPromise.then((result) =>{
     let ourType = result;
     if(ourType.toUpperCase() == "DOCTOR"){
-      addSideBarItem();
     }
   })
 })
@@ -228,6 +227,14 @@ window.onload = async function () {
       
       menu.appendChild(template.content);
 
+      rows = `<a id="prescriptionNumberOption"
+      class=""
+      href="#"
+      onclick='swapDisplay("request-prescription-number", "prescriptionNumberOption")'
+      >Request Prescription Number</a>`;
+      template.innerHTML = rows;
+      menu.appendChild(template.content);
+
       rows = "<a id =\"loggingOut\" onclick=\"logout()\">Logout</a>";
       template.innerHTML = rows;
       menu.appendChild(template.content);
@@ -308,6 +315,7 @@ function loadProfile(){
     document.getElementById("email").innerHTML = user_record.email;   
     document.getElementById("address").innerHTML = user_record["Address"];
     document.getElementById("phone").innerHTML = user_record.phoneNumber;
+    document.getElementById("subStat").innerHTML = user_record["Subscription Plan"];
 
     document.getElementById("dropbtn").src = profilePicture;
     document.getElementById("dropbtn").style.filter = "none";

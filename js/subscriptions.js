@@ -14,9 +14,9 @@ paypal.Buttons({
                 console.log(response);
                 return response.id;
             });
-      },
-    
-      onApprove: (data) =>  {
+    },
+
+    onApprove: (data) => {
         return fetch(`/update/subscriptionStatus/capture`, {
             method: "post",
             body: JSON.stringify({
@@ -29,18 +29,18 @@ paypal.Buttons({
             window.localStorage.setItem("User Record", JSON.stringify(user_record));
             window.location = "homepage.html";
         })
-      }
-})
-.render("#paypal-button-container")
+    }
+}).render("#paypal-button-container")
 // .then(() => alert("SUCCESS"))
 // .catch((err) => alert(err));
 
-function getUID(){
-    if(localStorage.getItem("User Record")==null){
-      alert("Please create an account / log in, to add a prescription. Thank You!");
-    }else{
-      var user_record = JSON.parse(localStorage.getItem("User Record"));
-      var uid = user_record.uid;
-      return uid;
+function getUID() {
+    if (localStorage.getItem("User Record") == null) {
+        alert("Please create an account / log in, to add a prescription. Thank You!");
+    } else {
+        var user_record = JSON.parse(localStorage.getItem("User Record"));
+        var uid = user_record.uid;
+        return uid;
     }
-  }
+}
+
